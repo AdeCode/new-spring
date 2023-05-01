@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import desk from '../images/home/desk.png'
 import payment from '../images/home/payment.png'
@@ -8,6 +8,20 @@ import reports from '../images/home/reports.png'
 import card from '../images/home/card.png'
 
 function HomePage() {
+    const [formData, setFormData] = useState({
+        email: '',
+    })
+
+    const handleInputChange = event => {
+        const { name, value } = event.target;
+        setFormData({ ...formData, [name]: value });
+        console.log(formData)
+    }
+
+    async function submitForm(e) {
+        e.preventDefault()
+    }
+
   return (
     <Section className='flex flex-col w-full'>
         <div className='bg-[#EFFCF3] w-full flex flex-col justify-center items-center pb-8'>
@@ -25,16 +39,16 @@ function HomePage() {
                 <form className='w-[500px] text-white'>
                     <div className='flex lg:mb-4 gap-3 justify-between w-full'>
                         <div className='form-group w-[50%]'>
-                            <input type='text' name='businessName' placeholder='Business name' className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white'/>
+                            <input type='text' name='businessName' onChange={handleInputChange} placeholder='Business name' className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white'/>
                         </div>
                         <div className='form-group w-[50%]'>
-                            <input type='text' name='phoneNumber' placeholder='Phone Number' className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white'/>
+                            <input type='text' name='phoneNumber' onChange={handleInputChange} placeholder='Phone Number' className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white'/>
                         </div>
                     </div>
                     <div className='form-group mb-4 w-full'>
-                        <input type='text' name='email' placeholder='Email Address'  className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white'/>
+                        <input type='text' name='email' onChange={handleInputChange} placeholder='Email Address'  className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white'/>
                     </div>
-                    <button type='submit' className='text-[#6942C2] bg-white py-2 w-full'>Join our Vendor Network</button>
+                    <button type='submit' onClick={submitForm} className='text-[#6942C2] bg-white py-2 w-full'>Join our Vendor Network</button>
                 </form>
             </div>
             
