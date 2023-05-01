@@ -1,0 +1,60 @@
+.menu{
+
+}
+
+.nav-menu ul li:hover .sub-menu{
+    display: block;
+}
+
+.sub-menu{
+    display: none;
+    padding: 20px 0;
+
+}
+
+.sub-menu li{
+    height: 40px;
+    color: #001533;
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.02em;
+    font-family: 'Arial';
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+
+.sub-menu li:hover{
+    background: linear-gradient(128.03deg, rgba(97, 153, 219, 0.1) -0.78%, rgba(75, 202, 105, 0.1) 90.56%);
+}
+
+.sub-menu li .sub-menu1{
+    display: none;
+    min-width: 200px;
+}
+
+.sub-menu li:hover .sub-menu1{
+    display: block;
+    position: absolute;
+    margin-top: 50px;
+    margin-left: 100px;
+    padding: 20px 0;
+
+}
+
+.sub-menu1 li{
+    height: 40px;
+    color: #607288;
+    padding: 10px 30px;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.02em;
+    font-family: 'Arial';
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
