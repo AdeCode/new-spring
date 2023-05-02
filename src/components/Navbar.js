@@ -93,17 +93,6 @@ function Navbar() {
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* <ul className='sub-menu absolute z-[1] bg-white lg:flex-col min-w-[200px] h-fit top-12'>
-                                    <li className='lg:text-sm font-semibold'>P2P Payments</li>
-                                    <li className='lg:text-sm font-semibold'>Invoicing/Payment Link</li>
-                                    <li className='lg:text-sm font-semibold'>Multi-currency Card Issuing</li>
-                                    <li className='lg:text-sm font-semibold'>Multi-currency Digital Wallets</li>
-                                    <li className='lg:text-sm font-semibold'>Global Business Accounts</li>
-                                    <li className='lg:text-sm font-semibold'>Cargo Vendor/Business Search</li>
-                                    <li className='lg:text-sm font-semibold'>Transfers &amp; FX</li>
-                                    <li className='lg:text-sm font-semibold'>Vendor &amp; User Management Platform</li>
-                                </ul> */}
                             </li>
                             <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
                                 <NavLink to='/bus' style={style}>SpringPay</NavLink>
@@ -204,6 +193,11 @@ const Nav = styled.div`
 
     nav{
         background: #EFFCF3;
+
+        @media (max-width: 420px) {
+            background: white;
+        }
+
         .new{
             background: linear-gradient(128.03deg, rgba(97, 153, 219, 0.1) -0.78%, rgba(75, 202, 105, 0.1) 90.56%);
         }
