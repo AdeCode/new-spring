@@ -194,9 +194,9 @@ const Nav = styled.div`
     nav{
         background: #EFFCF3;
 
-        @media (max-width: 420px) {
+        /* @media (max-width: 420px) {
             background: white;
-        }
+        } */
 
         .new{
             background: linear-gradient(128.03deg, rgba(97, 153, 219, 0.1) -0.78%, rgba(75, 202, 105, 0.1) 90.56%);
