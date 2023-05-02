@@ -88,7 +88,7 @@ function Footer() {
                     <Link to='/terms-and-condition'>Terms and Conditions</Link>
                     <Link to='/privacy-policy'>Privacy policy</Link>
                 </div>
-                <Link to='terms-and-condition' href='./terms' className='hidden lg:flex font-medium text-base leading-[19px]'>Terms and Conditions</Link>
+                <Link to='terms-and-condition' href='/terms-and-condition' className='hidden lg:flex font-medium text-base leading-[19px]'>Terms and Conditions</Link>
                 <Link to='/privacy-policy' className='hidden lg:flex font-medium text-base leading-[19px]'>Privacy policy</Link>
 
                 <div className='hidden lg:flex lg:m-0'>
