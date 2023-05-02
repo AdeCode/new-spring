@@ -53,7 +53,48 @@ function Navbar() {
                                     <MdOutlineKeyboardArrowDown className=''/>
                                 </span>
 
-                                <ul className='sub-menu absolute z-[1] bg-white lg:flex-col min-w-[200px] h-fit top-12'>
+                                <div className='sub-menu absolute z-[1] bg-white lg:min-w-[500px] top-12 h-[300px] py-4 px-4'>
+                                    <div className='flex gap-4 px-4'>
+                                        <div className='lg:w-[200px]'>
+                                            <h3 className='text-left text-blue font-medium mb-2'>Multi-currency Digital Wallets</h3>
+                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For logistics firms looking to simplify budgeting and expense management processes</p> */}
+                                        </div>
+                                        <div className='lg:w-[200px]'>
+                                            <h3 className='text-left text-blue font-medium mb-2'>Invoicing/Payment Link</h3>
+                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For manufacturing firms to help streamline approval and expense management for easier production process.</p> */}
+                                        </div>
+                                        <div className='lg:w-[200px]'>
+                                            <h3 className='text-left text-blue font-medium mb-2'>Multi-currency Card Issuing</h3>
+                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For educational institutes that value a sseamless payment solution</p> */}
+                                        </div>
+                                    </div>
+                                    <div className='flex gap-4 px-4'>
+                                        <div className='lg:w-[200px]'>
+                                            <h3 className='text-left text-blue font-medium mb-2'>Communication Channels</h3>
+                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For finance companies that required a detailed and simple approach to book keeping</p> */}
+                                        </div>
+                                        <div className='lg:w-[200px]'>
+                                            <h3 className='text-left text-blue font-medium mb-2'>Global Business Accounts</h3>
+                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For food and hospitality firms to reduce purchase and service time to enable delivery of effective services.</p> */}
+                                        </div>
+                                        <div className='lg:w-[200px]'>
+                                            <h3 className='text-left text-blue font-medium mb-2'>Cargo Vendor/Business Search</h3>
+                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For fast-paced software businesses in need of a platform that can keep up with and boost their growth</p> */}
+                                        </div>
+                                    </div>
+                                    <div className='flex gap-4 px-4'>
+                                        <div className='lg:w-[200px]'>
+                                            <h3 className='text-left text-blue font-medium mb-2'>Transfers &amp; FX</h3>
+                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For event planners looking for real-time insight as they spend.</p> */}
+                                        </div>
+                                        <div className='lg:w-[200px]'>
+                                            <h3 className='text-left text-blue font-medium mb-2'>Vendor &amp; Team Management</h3>
+                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For event planners looking for real-time insight as they spend.</p> */}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* <ul className='sub-menu absolute z-[1] bg-white lg:flex-col min-w-[200px] h-fit top-12'>
                                     <li className='lg:text-sm font-semibold'>P2P Payments</li>
                                     <li className='lg:text-sm font-semibold'>Invoicing/Payment Link</li>
                                     <li className='lg:text-sm font-semibold'>Multi-currency Card Issuing</li>
@@ -62,9 +103,12 @@ function Navbar() {
                                     <li className='lg:text-sm font-semibold'>Cargo Vendor/Business Search</li>
                                     <li className='lg:text-sm font-semibold'>Transfers &amp; FX</li>
                                     <li className='lg:text-sm font-semibold'>Vendor &amp; User Management Platform</li>
-                                </ul>
+                                </ul> */}
                             </li>
                             <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
+                                <NavLink to='/bus' style={style}>SpringPay</NavLink>
+                            </li>
+                            {/* <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
                                 <span className='menu flex items-center gap-[3px] lg:gap-[6px] cursor-pointer font-semibold text-lg lg:m-0 pb-[24.6px] lg:p-0 leading-[20px]'>
                                     SpringPay
                                     <MdOutlineKeyboardArrowDown />
@@ -105,35 +149,16 @@ function Navbar() {
                                         </div>
                                     </div>
                                 </div>
-                                {/* <ul className='sub-menu absolute z-[1] bg-white lg:flex-col min-w-[200px] h-fit top-12'>
-                                    <li className='lg:text-sm'>Education
-                                        <ul className='sub-menu1 bg-white lg:min-w-[250px]'>
-                                            <li>
-                                                <NavLink to='institution'>International  Institutions</NavLink>
-                                            </li>
-                                            <li>
-                                                <NavLink>International  Students  <span className='text-light_green'>(Coming soon)</span></NavLink>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li className='lg:text-sm'>B2B
-                                        <ul className='sub-menu1 bg-white lg:min-w-[250px]'>
-                                            <li>
-                                                <NavLink to='/'>Banking as a Service <span className='text-light_green'>(Coming soon)</span></NavLink>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                </ul> */}
-                            </li>
+                            </li> */}
                             {/* <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px] text  lg:font-semibold lg:text-lg lg:m-0'>
                                 <a href='https://holidaycards.getspring.finance/'>Holiday Card</a>
                             </li> */}
-                            <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
+                            {/* <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
                                 <NavLink to='/bus' style={style}>Business Search</NavLink>
                             </li>
                             <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
                                 <NavLink to='/about' style={style}>About</NavLink>
-                            </li>
+                            </li> */}
                            
                         </ul>
 

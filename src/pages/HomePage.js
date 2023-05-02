@@ -6,6 +6,9 @@ import freight from '../images/home/freight.png'
 import search from '../images/home/search.png'
 import reports from '../images/home/reports.png'
 import card from '../images/home/card.png'
+import {validate} from '../common/index'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function HomePage() {
     const [formData, setFormData] = useState({
@@ -15,11 +18,52 @@ function HomePage() {
     const handleInputChange = event => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
-        console.log(formData)
+        //console.log(formData)
     }
 
     async function submitForm(e) {
         e.preventDefault()
+        console.log('submitting')
+        if(validate(formData.email) === false) {
+            return toast.error("The email field can not be empty.")
+        }
+        if(validate(formData.user_type) === false) {
+            return toast.error("Please select a user type.")
+        }
+        await fetch('https://geolocation-db.com/json/', { method: 'GET' }).then((res) => {
+            res.json().then((json) => {
+                console.log(json)
+                const bodyParams = {
+                    "email": formData.email,
+                    "businessName":formData.businessName,
+                    "phoneNumber":formData.phoneNumber,
+                    "ip_address": json.IPv4,
+                    "city": json.city,
+                    "state": json.state,
+                    "country": json.country_name,
+                    "latitude": json.latitude,
+                    "longitude": json.longitude,
+                    "form": 1
+                };
+                console.log(bodyParams)
+
+                fetch('https://qipbzv4fxl.execute-api.us-east-1.amazonaws.com/sandbox/admin/dashboard/waitlist', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(bodyParams)
+                })
+                    .then((data) => {
+                        data.json().then((res) => {
+                            console.log(res)
+                            toast("You have joined the waiting list succesfully.")
+                        });
+                    })
+                    .catch((err) => toast("An Error Occured!"));
+            })
+
+        })
     }
 
   return (
