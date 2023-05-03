@@ -14,3 +14,17 @@ body {
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    
+  .mobile{
+    @apply flex flex-col absolute top-0 left-0 w-[323px] bg-white px-5 py-[0.75rem] transition ease-in-out text-primary_text h-[100vh];
+  }
+  .menu{
+    @apply text-2xl mb-6 font-medium
+  }
+/* 
+  .desktop{
+    @apply  bg-orange-300 block
+  } */
+}

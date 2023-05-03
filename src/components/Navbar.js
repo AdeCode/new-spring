@@ -94,7 +94,7 @@ function Navbar() {
                                     </div>
                                 </div>
                             </li>
-                            <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
+                            <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold text-lg lg:m-0'>
                                 <NavLink to='/bus' style={style}>SpringPay</NavLink>
                             </li>
                             {/* <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
@@ -139,18 +139,11 @@ function Navbar() {
                                     </div>
                                 </div>
                             </li> */}
-                            {/* <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px] text  lg:font-semibold lg:text-lg lg:m-0'>
-                                <a href='https://holidaycards.getspring.finance/'>Holiday Card</a>
-                            </li> */}
-                            {/* <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
-                                <NavLink to='/bus' style={style}>Business Search</NavLink>
-                            </li>
-                            <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
-                                <NavLink to='/about' style={style}>About</NavLink>
-                            </li> */}
                            
+                            {/* <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
+                                <NavLink to='/about' style={style}>About</NavLink>
+                            </li>  */}
                         </ul>
-
                     </div>
                     <div className='lg:mt-0 mt-[6px] lg:flex hidden lg:gap-2 gap-[2px] lg:py-2'>
                         <a href='https://play.google.com/store/apps/details?id=com.getspring.finance' target='_blank' rel='noreferrer' className='flex play-store items-center border-[2px] border-[#E2E4E8] lg:py-[6px] py-[2px] lg:px-5 px-[5px] rounded-[4px] lg:gap-4 lg:w-[199px]'>
