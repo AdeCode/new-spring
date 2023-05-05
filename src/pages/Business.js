@@ -6,43 +6,31 @@ import pay from '../images/business/pay.png'
 import search from '../images/business/search.png'
 import invoice from '../images/business/invoice.png'
 import manage from '../images/business/manage.png'
+import WaitListForm from '../components/WaitListForm'
 
 
 function Business() {
     return (
         <Section className=''>
-            <div className='flex flex-col items-center mb-10 px-5'>
-                <h1 className='head hidden lg:flex lg:font-bold lg:text-[40px] font-normal text-2xl mb-6'>SpringPay</h1>
-                <p className='lg:w-[1039px] lg:mb-10 text-left lg:text-center text-[26px] lg:text-[40px] font-semibold lg:font-normal leading-9 lg:leading-[53px]'>
-                    Trusted Freight & Logistics Cross-border Payment Platform
-                </p>
+            <div className='lg:pb-8'>
+                <div className='flex flex-col items-center mb-10 px-5 lg:pt-6'>
+                    <h1 className='head hidden lg:flex lg:font-bold lg:text-[40px] font-normal text-2xl mb-6'>SpringPay</h1>
+                    <p className='lg:w-[1039px] lg:mb-10 text-left lg:text-center text-[26px] lg:text-[40px] font-semibold lg:font-normal leading-9 lg:leading-[53px]'>
+                        Trusted Freight & Logistics Cross-border Payment Platform
+                    </p>
+                </div>
+                <div className='flex flex-col lg:flex-row justify-center items-center gap-8 lg:mb-[50px] px-5'>
+                    <h2 className='lg:w-[500px] lg:font-normal font-bold lg:text-3xl text-sm text-blue lg:text-black'>With SpringPay, you can start making payments to your cargo vendor instantly in USD, GBP, EURO, GHC, NGN etc. from anywhere in other to process your goods on time.</h2>
+                    <img src={bus} alt='business' width='600px' height='400px' />
+                </div>
+                <WaitListForm/>
             </div>
-            <div className='flex flex-col lg:flex-row justify-center items-center gap-8 lg:mb-[50px] px-5'>
-                <h2 className='lg:w-[500px] lg:font-normal font-bold lg:text-3xl text-sm text-blue lg:text-black'>With SpringPay, you can start making payments to your cargo vendor instantly in USD, GBP, EURO, GHC, NGN etc. from anywhere in other to process your goods on time.</h2>
-                <img src={bus} alt='business' width='600px' height='400px' />
-            </div>
-            <div className='flex flex-col justify-center items-center pb-10 px-5'>
-                <p className='head lg:hidden font-bold text-[29px] mb-6 text-center'>SpringPay</p>
-                <form className='lg:w-[500px] text-white'>
-                    <div className='flex mb-4 gap-3 justify-between w-full'>
-                        <div className='form-group w-[50%]'>
-                            <input type='text' name='businessName' placeholder='Business name' className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white' />
-                        </div>
-                        <div className='form-group w-[50%]'>
-                            <input type='text' name='phoneNumber' placeholder='Phone Number' className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white' />
-                        </div>
-                    </div>
-                    <div className='form-group mb-4 w-full'>
-                        <input type='text' name='email' placeholder='Email Address' className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white' />
-                    </div>
-                    <button type='submit' className='text-[#6942C2] bg-white py-2 w-full rounded-lg'>Join our Vendor Network</button>
-                </form>
-            </div>
+           
             <div className='flex flex-col items-center py-20 bg-lightGreen gap-10 px-5'>
                 <div className='flex flex-col lg:flex-row gap-5'>
                     <div className='lg:w-[600px] lg:h-[400px] flex flex-col gap-7 items-center'>
                         <img src={vendor} alt='vendor'/>
-                        <button className='btn hidden lg:flex py-[15px] text-white lg:w-[300px]'>Join our Vendor Network</button>
+                        <button className='btn hidden lg:flex justify-center py-[15px] text-white lg:w-[300px] text-center'>Join our Vendor Network</button>
                     </div>
                     <div className='lg:w-[500px]'>
                         <h2 className='mb-5 font-medium lg:text-[40px] text-2xl leading-tight'>Register your cargo business to start receiving payments in your preferred multi-currency</h2>

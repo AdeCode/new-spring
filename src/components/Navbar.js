@@ -182,7 +182,7 @@ export default Navbar
 const Nav = styled.div`
     margin:0;
     padding: 0;
-    padding-bottom: 50px;
+    /* padding-bottom: 50px; */
 
     nav{
         background: #EFFCF3;

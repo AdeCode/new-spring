@@ -7,6 +7,7 @@ import About from './pages/About';
 import TermsAndConditions from './pages/TermsAndConditions';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import ScrollToTop from './components/ScrollToTop'
+import Login from './pages/auth/Login';
 
 function Routers (){
     return (
@@ -19,6 +20,7 @@ function Routers (){
                         <Route path='/about' element={<About/>}></Route>
                         <Route path='/terms-and-condition' element={<TermsAndConditions/>}></Route>
                         <Route path='/privacy-policy' element={<PrivacyPolicy/>}></Route>
+                        <Route path='/login' element={<Login/>}></Route>
                         <Route path='*' element={<NotFound/>}/>
                     </Route>
                     <Route path='*' element={<NotFound/>}/>
