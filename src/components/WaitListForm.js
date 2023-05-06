@@ -5,6 +5,8 @@ import { validate } from '../common'
 function WaitListForm() {
     const [formData, setFormData] = useState({
         email: '',
+        businessName:'',
+        phoneNumber:''
     })
 
     const handleInputChange = event => {
@@ -67,6 +69,11 @@ function WaitListForm() {
             toast.success(json.data.message, {
                 theme: "colored",
             })
+            setFormData({
+                email:'',
+                businessName:'',
+                phoneNumber:''
+            })
         }
         if (!response.ok) {
             toast.error(json.message, {
@@ -80,14 +87,14 @@ function WaitListForm() {
             <form className='w-[500px] text-white'>
                 <div className='flex mb-4 gap-3 justify-between w-full'>
                     <div className='form-group w-[50%]'>
-                        <input type='text' name='businessName' onChange={handleInputChange} placeholder='Business name' className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white' />
+                        <input type='text' name='businessName' value={formData.businessName} onChange={handleInputChange} placeholder='Business name' className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white' />
                     </div>
                     <div className='form-group w-[50%]'>
-                        <input type='text' name='phoneNumber' onChange={handleInputChange} placeholder='Phone Number' className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white' />
+                        <input type='text' name='phoneNumber' value={formData.phoneNumber} onChange={handleInputChange} placeholder='Phone Number' className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white' />
                     </div>
                 </div>
                 <div className='form-group mb-4 w-full'>
-                    <input type='text' name='email' onChange={handleInputChange} placeholder='Email Address' className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white' />
+                    <input type='text' name='email' value={formData.email} onChange={handleInputChange} placeholder='Email Address' className='py-2 px-2 rounded-lg w-full bg-[#6d52a7] text-white' />
                 </div>
                 <button type='submit' onClick={submitForm} className='text-[#6942C2] bg-white py-2 w-full hover:bg-[#6942C2] hover:text-white rounded-lg'>Join our Vendor Network</button>
             </form>
