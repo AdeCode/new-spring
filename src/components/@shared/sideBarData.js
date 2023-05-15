@@ -41,48 +41,6 @@ export const SidebarData = [
 	],
 },
 {
-	title: "Customers",
-	path: "",
-	iconClosed: <MdKeyboardArrowDown />,
-	iconOpened: <MdKeyboardArrowUp />,
-
-	subNav: [
-		{
-			title: "Cards",
-			path: "",
-			icon: <FiCreditCard />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Wallets",
-			path: "",
-			icon: <IoWalletOutline />,
-			cName: "sub-nav",
-		},
-	],
-},
-{
-	title: "Vendors/Businesses",
-	path: "",
-	iconClosed: <MdKeyboardArrowDown />,
-	iconOpened: <MdKeyboardArrowUp />,
-
-	subNav: [
-		{
-			title: "Countries",
-			path: "",
-			icon: <BiWorld />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Institutions",
-			path: "",
-			icon: <IoSchoolOutline />,
-			cName: "sub-nav",
-		},
-	],
-},
-{
 	title: "Invoices",
 	path: "",
 	iconClosed: <MdKeyboardArrowDown />,
@@ -134,6 +92,79 @@ export const SidebarData = [
 	],
 },
 {
+	title: "SpringPay",
+	path: "",
+	iconClosed: <MdKeyboardArrowDown />,
+	iconOpened: <MdKeyboardArrowUp />,
+
+	subNav: [
+		{
+			title: "SpringPay",
+			path: "/springpay",
+			icon: <FiBriefcase />,
+			cName: "sub-nav",
+		},
+		{
+			title: "Generate New Invoice",
+			path: "/invoice/generate",
+			icon: <FiBriefcase />,
+			cName: "sub-nav",
+		},
+		{
+			title: "Add/Receive NGN",
+			path: "",
+			icon: <IoSchoolOutline />,
+			cName: "sub-nav",
+		},
+		{
+			title: "Send NGN",
+			path: "",
+			icon: <IoSchoolOutline />,
+			cName: "sub-nav",
+		},
+		{
+			title: "Add NGN to FX Wallets",
+			path: "",
+			icon: <IoSchoolOutline />,
+			cName: "sub-nav",
+		},
+		{
+			title: "Global Payout",
+			path: "",
+			icon: <IoSchoolOutline />,
+			cName: "sub-nav",
+		},
+		{
+			title: "Receive USD, GBP & EUR",
+			path: "",
+			icon: <IoSchoolOutline />,
+			cName: "sub-nav",
+		},
+	],
+},
+
+{
+	title: "Customers",
+	path: "",
+	iconClosed: <MdKeyboardArrowDown />,
+	iconOpened: <MdKeyboardArrowUp />,
+
+	subNav: [
+		{
+			title: "Cards",
+			path: "",
+			icon: <FiCreditCard />,
+			cName: "sub-nav",
+		},
+		{
+			title: "Wallets",
+			path: "",
+			icon: <IoWalletOutline />,
+			cName: "sub-nav",
+		},
+	],
+},
+{
 	title: "Wallets/Cards",
 	path: "",
 	iconClosed: <MdKeyboardArrowDown />,
@@ -149,6 +180,27 @@ export const SidebarData = [
 		{
 			title: "Payouts",
 			path: "/dashboard/payouts",
+			icon: <IoSchoolOutline />,
+			cName: "sub-nav",
+		},
+	],
+},
+{
+	title: "Communication",
+	path: "",
+	iconClosed: <MdKeyboardArrowDown />,
+	iconOpened: <MdKeyboardArrowUp />,
+
+	subNav: [
+		{
+			title: "Countries",
+			path: "",
+			icon: <BiWorld />,
+			cName: "sub-nav",
+		},
+		{
+			title: "Institutions",
+			path: "",
 			icon: <IoSchoolOutline />,
 			cName: "sub-nav",
 		},
@@ -197,27 +249,6 @@ export const SidebarData = [
 	],
 },
 {
-	title: "Team",
-	path: "",
-	iconClosed: <MdKeyboardArrowDown />,
-	iconOpened: <MdKeyboardArrowUp />,
-
-	subNav: [
-		{
-			title: "Notification",
-			path: "/dashboard/notification",
-			icon: <FiBriefcase />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Coupons",
-			path: "/dashboard/coupon",
-			icon: <AiOutlineApi />,
-			cName: "sub-nav",
-		},
-	],
-},
-{
 	title: "Support",
 	path: "",
 	iconClosed: <MdKeyboardArrowDown />,
@@ -233,33 +264,6 @@ export const SidebarData = [
 		{
 			title: "API requests",
 			path: "",
-			icon: <AiOutlineApi />,
-			cName: "sub-nav",
-		},
-	],
-},
-{
-	title: "Credit (Coming soon)",
-	path: "",
-	iconClosed: <MdKeyboardArrowDown />,
-	iconOpened: <MdKeyboardArrowUp />,
-
-	subNav: [
-		{
-			title: "Staff of Spring finance",
-			path: "/dashboard/spring-staff",
-			icon: <FiBriefcase />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Add members",
-			path: "/dashboard/add-staff",
-			icon: <AiOutlineApi />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Roles",
-			path: "/dashboard/roles",
 			icon: <AiOutlineApi />,
 			cName: "sub-nav",
 		},
