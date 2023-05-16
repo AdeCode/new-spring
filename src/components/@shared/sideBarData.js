@@ -54,6 +54,12 @@ export const SidebarData = [
 			cName: "sub-nav",
 		},
 		{
+			title: "Invoices",
+			path: "/invoice",
+			icon: <FiBriefcase />,
+			cName: "sub-nav",
+		},
+		{
 			title: "Generate New Invoice",
 			path: "/invoice/generate",
 			icon: <FiBriefcase />,
