@@ -18,26 +18,27 @@ function InvoiceIndex() {
             </Link>
             <div className=''></div>
             <div className='box w-full flex flex-col'>
-                <div className='w-full border-b-2 border-cyan-900 pl-3 pt-2'>
-                    <h2 className=''>Invoices</h2>
+                <div className='w-full border-b-2 border-cyan-900 px-2 flex justify-between items-center py-2'>
+                    <h2 className='text-base font-semibold lg:text-xl'>Invoices</h2>
+                    <Link to='/invoice/generate' className='flex rounded-md items-center py-2 px-3 bg-green-700 hover:bg-green-600 text-white'><span class="material-symbols-outlined">add</span>Create Invoice</Link>
                 </div>
                 <div className='flex gap-2 mb-3 px-2 py-2'>
                     <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
-                        <span className='flex justify-end'>0%</span>
+                        <span className='flex justify-end font-semibold'>0%</span>
                         <div className='flex flex-col'>
                             <h2 className='font-semibold text-3xl text-green-600'>2</h2>
                             <h3 className='text-base text-gray'>Total Invoices</h3>
                         </div>
                     </div>
                     <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
-                        <span className='flex justify-end'>0%</span>
+                        <span className='flex justify-end font-semibold'>0%</span>
                         <div className='flex flex-col'>
                             <h2 className='font-semibold text-3xl text-green-600'>2</h2>
                             <h3 className='text-base text-gray'>Outstanding Invoices</h3>
                         </div>
                     </div>
                     <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
-                        <span className='flex justify-end'>0%</span>
+                        <span className='flex justify-end font-semibold'>0%</span>
                         <div className='flex flex-col'>
                             <h2 className='font-semibold text-3xl text-green-600'>2</h2>
                             <h3 className='text-base text-gray'>Overdue Invoices</h3>

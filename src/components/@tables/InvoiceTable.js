@@ -54,8 +54,11 @@ const InvoiceTable = () => {
             {
                 accessorKey: 'status', //normal accessorKey
                 header: 'Status',
-                Cell: ({ cell }) => {
-                    return <span className={`${cell.getValue() === 'success' ? 'bg-green-700' : 'bg-yellow-700'} w-5 h-5 rounded-[50%]`}></span>
+                Cell: ({ cell, row }) => {
+                    return <div className='w-[100px] h-[50px]'>
+                        {/* {row.original.status} */}
+                        <span className={`${cell.getValue() === 'success' ? 'bg-green-700' : 'bg-yellow-600'} w-20 h-10 rounded-[50%] border border-zinc-700`}></span>
+                        </div>
                 }, 
                 size:80,
             },

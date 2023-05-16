@@ -13,14 +13,45 @@ import 'react-clock/dist/Clock.css';
 function NewInvoice() {
     const navigate = useNavigate()
 
+    const [data, setData] = useState([
+        { 
+            item:'',
+            quantity:'',
+            price:'',
+        }
+    ])
+
+    const calcTotal = (quantity,price) => {
+        return parseInt(quantity)*parseInt(data)
+    }
+
     const [value, onChange] = useState(new Date());
-    console.log(value)
+    // console.log(value)
 
     const newInvoiceMutation = () => { }
 
     const onSubmit = () => {
 
     }
+
+    const handleClick = () => {
+        console.log('button clicked')
+        setData([...data,{item:'',quantity:'',price:''}])
+    }
+
+    const handleChange = (e,i) => {
+        const {name, value} = e.target
+        const onChangeVal = [...data]
+        onChangeVal[i][name]=value
+        setData(onChangeVal)
+    }
+
+    const handleDelete = (index) => {
+        const deleteVal = [...data]
+        deleteVal.splice(index,1)
+        setData(deleteVal)
+    }
+
     return (
         <Invoice className='px-[50px]'>
             <Link onClick={() => navigate(-1)} className='flex gap-2 items-center mb-6'>
@@ -80,7 +111,7 @@ function NewInvoice() {
                                     <h2 className=''>Order Items</h2>
                                     <p className=''>*You should enter at least 1 item</p>
                                     <div className='flex flex-col'>
-                                        <div className='flex w-full gap-2'>
+                                        {/* <div className='flex w-full gap-2'>
                                             <div className='grow'>
                                                 <InputField
                                                     name='item'
@@ -113,9 +144,39 @@ function NewInvoice() {
                                                     placeholder='item'
                                                 />
                                             </div>
+                                        </div> */}
+                                        <div className='flex flex-col gap-2 mb-4'>
+                                            {
+                                                data.map((val, i) => {
+                                                    return (
+                                                        <div className='flex w-full gap-2 items-center' key={i}>
+                                                            <div className='flex grow flex-col'>
+                                                                <label className='font-medium text-base text-label mb-[6px]'>Item</label>
+                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.item} onChange={(e)=>handleChange(e,i)} name='item'/>
+                                                            </div>
+                                                            <div className='flex grow-0 flex-col'>
+                                                                <label className='font-medium text-base text-label mb-[6px]'>Quantity</label>
+                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.quantity} onChange={(e)=>handleChange(e,i)} name='quantity'/>
+                                                            </div>
+                                                            <div className='flex grow-0 flex-col'>
+                                                                <label className='font-medium text-base text-label mb-[6px]'>Price</label>
+                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.price} onChange={(e)=>handleChange(e,i)} name='price'/>
+                                                            </div>
+                                                            <div className='flex grow-0 flex-col'>
+                                                                <label className='font-medium text-base text-label mb-[6px]'>Total</label>
+                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={()=>calcTotal(val.quantity,val.price)} name='total'/>
+                                                            </div>
+                                                            <span onClick={()=>handleDelete(i)} className='text-red-600 font-semibold text-xl cursor-pointer'>X</span>
+                                                        </div>
+                                                    )
+                                                })
+                                            }
+                                            {/* <p>{JSON.stringify(data)}</p> */}
                                         </div>
                                         <div className='flex'>
-                                            <button className=''>Add Item</button>
+                                            <button onClick={handleClick} type='button' className='flex border border-green-700 text-green-700 items-center py-2 px-3 rounded-md'>
+                                                <span className="material-symbols-outlined text-green-700">add</span>Add Item
+                                            </button>
                                         </div>
                                     </div>
                                     <div className='flex justify-end'>
