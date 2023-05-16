@@ -12,87 +12,56 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 //nested data is ok, see accessorKeys in ColumnDef below
 const data = [
     {
-        status: 'success',
-        invoiceNumber: '1752AF',
-        customer:'Spring Finance',
-        dateCreated: '2023/04/20',
-        amount:2345553,
-        dueDate:'2023/05/20',
+        items: 'Air conditioner',
+        quantity: 10,
+        price:20000,
+        subTotal: 200000,
     },
     {
-        status: 'pending',
-        invoiceNumber: '001KK',
-        customer:'Forte Oil',
-        dateCreated: '2023/04/20',
-        amount:29933000,
-        dueDate:'2023/05/20',
+        items: 'iPhone',
+        quantity: 5,
+        price:200000,
+        subTotal: 100000,
     },
     {
-        status: 'success',
-        invoiceNumber: '00252AF',
-        customer:'Apex Constructors',
-        dateCreated: '2023/04/20',
-        amount:2345553,
-        dueDate:'2023/05/20',
+        items: 'MacBook Laptops',
+        quantity: 10,
+        price:200000,
+        subTotal: 2000000,
     },
     {
-        status: 'pedning',
-        invoiceNumber: '1752AF',
-        customer:'Spring Finance',
-        dateCreated: '2023/04/20',
-        amount:2345553,
-        dueDate:'2023/05/20',
+        items: 'PS5',
+        quantity: 10,
+        price:20000,
+        subTotal: 200000,
     },
     
 ];
 
 
-const InvoiceTable = () => {
+const OrderItemsTable = () => {
     //should be memoized or stable
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'status', //normal accessorKey
-                header: 'Status',
-                Cell: ({ cell, row }) => {
-                    return <div className=''>
-                        {/* {row.original.status} */}
-                        <span className={`${cell.getValue() === 'success' ? 'bg-green-700' : 'bg-yellow-600'} w-20 h-10 rounded-[50%] border border-zinc-700`}></span>
-                        </div>
-                }, 
+                accessorKey: 'items', //normal accessorKey
+                header: 'Items',
                 size:80,
             },
             {
-              accessorKey: 'invoiceNumber',
-              header: 'Invoice #',
+              accessorKey: 'quantity',
+              header: 'Quantity',
               size:50,
             },
             {
-                accessorKey: 'customer',
-                header: 'Customer',
-                size:100,
-            },
-            {
-                accessorKey: 'dateCreated',
-                header: 'Created On',
+                accessorKey: 'price',
+                header: 'Price',
                 size:50,
             },
             {
-                accessorKey: 'amount',
-                header: 'Amount',
-            },
-            {
-                accessorKey: 'dueDate',
-                header: 'Due Date',
-            },
-            {
-                accessorKey: 'action',
-                header: 'Action',
-                Cell: ({ cell, row }) => {
-                    return <Link to='/invoice/details' className='cursor-pointer text-green-800'>
-                            <span class="material-symbols-outlined" >visibility</span>
-                        </Link>
-                }, 
+                accessorKey: 'subTotal',
+                header: 'Sub-Total',
+                size:50,
             },
         ],
         [],
@@ -227,4 +196,4 @@ const Section = styled.section`
   
 `
 
-export default InvoiceTable;
+export default OrderItemsTable;

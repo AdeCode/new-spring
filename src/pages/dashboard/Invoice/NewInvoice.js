@@ -44,6 +44,8 @@ function NewInvoice() {
         const onChangeVal = [...data]
         onChangeVal[i][name]=value
         setData(onChangeVal)
+        // const total = onChangeVal[i].name
+        //console.log(parseInt(onChangeVal[i]['quantity'])*parseInt(onChangeVal[i]['price']))
     }
 
     const handleDelete = (index) => {
@@ -149,7 +151,7 @@ function NewInvoice() {
                                             {
                                                 data.map((val, i) => {
                                                     return (
-                                                        <div className='flex w-full gap-2 items-center' key={i}>
+                                                        <div className='flex w-full gap-2' key={i}>
                                                             <div className='flex grow flex-col'>
                                                                 <label className='font-medium text-base text-label mb-[6px]'>Item</label>
                                                                 <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.item} onChange={(e)=>handleChange(e,i)} name='item'/>
@@ -166,7 +168,10 @@ function NewInvoice() {
                                                                 <label className='font-medium text-base text-label mb-[6px]'>Total</label>
                                                                 <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={()=>calcTotal(val.quantity,val.price)} name='total'/>
                                                             </div>
-                                                            <span onClick={()=>handleDelete(i)} className='text-red-600 font-semibold text-xl cursor-pointer'>X</span>
+                                                            {/* <span onClick={()=>handleDelete(i)} className='text-red-600 font-semibold text-xl cursor-pointer'>X</span> */}
+                                                            <div className='flex items-end lg:pb-3'>
+                                                                <span onClick={()=>handleDelete(i)} class="material-symbols-outlined cursor-pointer text-red-600">delete</span>
+                                                            </div>
                                                         </div>
                                                     )
                                                 })
@@ -239,6 +244,14 @@ const Invoice = styled.div`
         border-radius:8px;
         border: 1px solid rgba(14, 31, 48, 0.25);
         color: #6A707E;
+    }
+
+    input{
+        border: 1px solid rgba(14, 31, 48, 0.25)
+    }
+    input:focus{
+        outline: none !important;
+        border: 1px solid #1BB6EF;
     }
 `
 

@@ -21,6 +21,7 @@ import UserSettings from './pages/dashboard/UserSettings';
 import UserRoles from './pages/dashboard/UserRoles';
 import NewInvoice from './pages/dashboard/Invoice/NewInvoice';
 import InvoiceIndex from './pages/dashboard/Invoice/Index';
+import InvoiceDetails from './pages/dashboard/Invoice/InvoiceDetails';
 
 function Routers (){
     return (
@@ -50,6 +51,7 @@ function Routers (){
                         <Route path='/settings/user-roles' element={<UserRoles/>}></Route>                       
                         <Route path='/invoice/generate' element={<NewInvoice/>}></Route>                       
                         <Route path='/invoice' element={<InvoiceIndex/>}></Route>                       
+                        <Route path='/invoice/details' element={<InvoiceDetails/>}></Route>                       
                     </Route>
                 </Routes>
             </ScrollToTop>
