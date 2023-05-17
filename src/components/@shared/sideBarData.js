@@ -48,12 +48,6 @@ export const SidebarData = [
 
 	subNav: [
 		{
-			title: "SpringPay",
-			path: "/springpay",
-			icon: <FiBriefcase />,
-			cName: "sub-nav",
-		},
-		{
 			title: "Invoices",
 			path: "/invoice",
 			icon: <FiBriefcase />,
@@ -63,36 +57,6 @@ export const SidebarData = [
 			title: "Generate New Invoice",
 			path: "/invoice/generate",
 			icon: <FiBriefcase />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Add/Receive NGN",
-			path: "",
-			icon: <IoSchoolOutline />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Send NGN",
-			path: "",
-			icon: <IoSchoolOutline />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Add NGN to FX Wallets",
-			path: "",
-			icon: <IoSchoolOutline />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Global Payout",
-			path: "",
-			icon: <IoSchoolOutline />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Receive USD, GBP & EUR",
-			path: "",
-			icon: <IoSchoolOutline />,
 			cName: "sub-nav",
 		},
 	],

@@ -20,7 +20,7 @@ function InvoiceDetails() {
             <div className='box w-full flex flex-col py-3 px-3'>
                 <div className='w-full border-b-2 border-cyan-900 px-2 flex justify-between items-center py-2'>
                     <h2 className='text-base font-semibold lg:text-xl'>Invoices Details</h2>
-                    <Link to='/' className='flex rounded-md items-center py-2 px-3 bg-green-700 hover:bg-green-600 text-white'><span class="material-symbols-outlined">visibility</span>Preview Invoice</Link>
+                    <Link to='/invoice/template' className='flex rounded-md items-center py-2 px-3 bg-green-700 hover:bg-green-600 text-white'><span class="material-symbols-outlined">visibility</span>Preview Invoice</Link>
                 </div>
                 <div className='flex flex-col gap-2 mb-3 px-2 py-2 shadow-md hover:shadow-lg'>
                     <div className='flex gap-3'>
@@ -30,6 +30,18 @@ function InvoiceDetails() {
                     <div className='flex gap-3'>
                         <h2 className='min-w-[250px] text-gray text-base'>Invoice ID</h2>
                         <span className='font-medium text-base'>INV-19233804</span>
+                    </div>
+                    <div className='flex gap-3'>
+                        <h2 className='min-w-[250px] text-gray text-base'>Customer Name</h2>
+                        <span className='font-medium text-base'>Gig Logistics</span>
+                    </div>
+                    <div className='flex gap-3'>
+                        <h2 className='min-w-[250px] text-gray text-base'>Customer Phone number</h2>
+                        <span className='font-medium text-base'>07088993300</span>
+                    </div>
+                    <div className='flex gap-3'>
+                        <h2 className='min-w-[250px] text-gray text-base'>Customer Email</h2>
+                        <span className='font-medium text-base'>giglogistics@gig.com</span>
                     </div>
                     <div className='flex gap-3'>
                         <h2 className='min-w-[250px] text-gray text-base'>Status</h2>

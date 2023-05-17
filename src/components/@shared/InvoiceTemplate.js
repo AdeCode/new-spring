@@ -1,12 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
+import styled from 'styled-components'
 import gig from '../../images/dashboard/gig.png'
+import InvoiceFooter from './InvoiceFooter'
+import CheckBox from './CheckBox'
 
 function InvoiceTemplate() {
+    const [agree, setAgree] = useState(false)
   return (
+    <>
     <div className='border border-gray rounded-lg'>
         <div className="flex justify-between border-b border-gray p-4">
             <div className='flex flex-col gap-3'>
-                <h2 className='font-bold text-2xl'>INVOICE</h2>
+                <h2 className='font-bold text-2xl text-green-700'>INVOICE</h2>
                 <div className='w-[100px] h-[100px]'>
                     <img src={gig} alt='company'/>
                 </div>
@@ -37,10 +42,10 @@ function InvoiceTemplate() {
                     </div>
                 </div>
             </div>
-            <div className=''>
+            <div className='flex flex-col'>
                 <h2 className='text-green-700 font-semibold'>Invoice details</h2>
                 <div className='py-6'>
-                    <table className='w-full'>
+                    <table className='w-full border-b'>
                         <thead className='bg-green-700 text-white h-[50px] rounded-md'>
                             <tr className='py-4'>
                                 <th>Items</th>
@@ -59,11 +64,37 @@ function InvoiceTemplate() {
                         </tbody>
                     </table>
                 </div>
+                <div className='flex w-full justify-end'>
+                    <div className='border flex flex-col w-[300px]'>
+                        <div className='flex justify-between py-2 px-2'>
+                            <h2 className=''>Subtotal:</h2><span className=''>28033 USD</span>
+                        </div>
+                        <div className='flex justify-between py-2 px-2'>
+                            <h2 className=''>Tax:(5%)</h2><span className=''>833 USD</span>
+                        </div>
+                        <div className='flex justify-between py-4 px-2 bg-slate-400 text-black'>
+                            <h2 className='font-semibold'>Invoice Total:</h2><span className='font-semibold'>29833 USD</span>
+                        </div>
+                    </div>
+                </div>
+                <div className='flex flex-col border-b pb-3'>
+                    <CheckBox
+                        onChange={()=>setAgree(!agree)}
+                        checked={agree}
+                    />
+                    <div className='w-full flex justify-end'>
+                        <button type="submit" disabled={!agree} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] disabled:opacity-60 disabled:cursor-not-allowed w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>Pay Now</button>
+                    </div>
+                    {/* <button className=''>Pay Now</button> */}
+                </div>
             </div>
         </div>
-        
     </div>
+        <InvoiceFooter/>
+    </>
+    
   )
 }
+
 
 export default InvoiceTemplate
