@@ -56,8 +56,7 @@ const InvoiceTable = () => {
                 header: 'Status',
                 Cell: ({ cell, row }) => {
                     return <div className=''>
-                        {/* {row.original.status} */}
-                        <span className={`${cell.getValue() === 'success' ? 'bg-green-700' : 'bg-yellow-600'} w-20 h-10 rounded-[50%] border border-zinc-700`}></span>
+                            <div className={`${row.original.status === 'success' ? 'bg-green-700' : 'bg-yellow-600'} w-5 h-5 rounded-[50%]`}></div>
                         </div>
                 }, 
                 size:80,
@@ -87,7 +86,7 @@ const InvoiceTable = () => {
             },
             {
                 accessorKey: 'action',
-                header: 'Action',
+                header: 'View',
                 Cell: ({ cell, row }) => {
                     return <Link to='/invoice/details' className='cursor-pointer text-green-800'>
                             <span class="material-symbols-outlined" >visibility</span>

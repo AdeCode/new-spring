@@ -20,6 +20,7 @@ function NewInvoice() {
             item:'',
             quantity:'',
             price:'',
+            cbm:'',
         }
     ])
 
@@ -38,7 +39,7 @@ function NewInvoice() {
 
     const handleClick = () => {
         console.log('button clicked')
-        setData([...data,{item:'',quantity:'',price:''}])
+        setData([...data,{item:'',quantity:'',price:'',cbm:''}])
     }
 
     const handleChange = (e,i) => {
@@ -151,6 +152,10 @@ function NewInvoice() {
                                                                 <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.quantity} onChange={(e)=>handleChange(e,i)} name='quantity'/>
                                                             </div>
                                                             <div className='flex grow-0 flex-col'>
+                                                                <label className='font-medium text-base text-label mb-[6px]'>CBM</label>
+                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.cbm} onChange={(e)=>handleChange(e,i)} name='cbm'/>
+                                                            </div>
+                                                            <div className='flex grow-0 flex-col'>
                                                                 <label className='font-medium text-base text-label mb-[6px]'>Price</label>
                                                                 <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.price} onChange={(e)=>handleChange(e,i)} name='price'/>
                                                             </div>
@@ -206,7 +211,7 @@ function NewInvoice() {
                                             {
                                                 newInvoiceMutation.isLoading ?
                                                     "Loading..."
-                                                    : "Send Invoice"
+                                                    : "Create Invoice"
                                             }
                                         </button>
                                 </div>

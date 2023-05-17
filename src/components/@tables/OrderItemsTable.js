@@ -14,24 +14,28 @@ const data = [
     {
         items: 'Air conditioner',
         quantity: 10,
+        cbm:19,
         price:20000,
         subTotal: 200000,
     },
     {
         items: 'iPhone',
         quantity: 5,
+        cbm:19,
         price:200000,
         subTotal: 100000,
     },
     {
         items: 'MacBook Laptops',
         quantity: 10,
+        cbm:19,
         price:200000,
         subTotal: 2000000,
     },
     {
         items: 'PS5',
         quantity: 10,
+        cbm:19,
         price:20000,
         subTotal: 200000,
     },
@@ -46,11 +50,16 @@ const OrderItemsTable = () => {
             {
                 accessorKey: 'items', //normal accessorKey
                 header: 'Items',
-                size:80,
+                size:50,
             },
             {
               accessorKey: 'quantity',
-              header: 'Quantity',
+              header: 'Quantity (kg)',
+              size:50,
+            },
+            {
+              accessorKey: 'cbm',
+              header: 'CBM',
               size:50,
             },
             {
