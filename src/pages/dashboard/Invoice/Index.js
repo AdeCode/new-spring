@@ -5,7 +5,7 @@ import CustomerTransaction from '../../../components/@tables/CustomerTransaction
 import InvoiceTable from '../../../components/@tables/InvoiceTable'
 
 function InvoiceIndex() {
-    const [currency, setCurrency] = useState('')
+    const [currency, setCurrency] = useState('USD')
 
     const navigate = useNavigate()
 
