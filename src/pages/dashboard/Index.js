@@ -19,7 +19,7 @@ function Index() {
                     <Sidebar />
                 </div>
             </div>
-            <div className='flex flex-col w-[80%] min-h-[100vh]'>
+            <div className='flex flex-col w-[80%] h-full pb-5'>
                 <TopBar />
 
                 <div className='main min-h-full mt-4 ml-4 mr-2'>
@@ -33,8 +33,6 @@ function Index() {
 const Container = styled.div`
     /* background: rgba(246, 246, 246, 0.34); */
 
-    .main{
-        /* border: 1px solid black; */
-    }
+    
 `
 export default Index

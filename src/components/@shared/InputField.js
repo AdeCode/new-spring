@@ -3,7 +3,7 @@ import { Field, ErrorMessage } from 'formik'
 import styled from 'styled-components'
 
 
-function InputField({name, label, type, value, placeholder, icon}) {
+function InputField({name, rows, label, type, value, placeholder, icon, component}) {
   const [show, setShow] = useState(false)
 
   const toggleIcon = () => {
@@ -26,7 +26,7 @@ function InputField({name, label, type, value, placeholder, icon}) {
           : null
         }
         <label htmlFor={name} className='font-medium text-base text-label mb-[6px]'>{label}</label>
-        <Field type={show ? 'text' : type} name={name} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' placeholder={placeholder}/>
+        <Field rows={rows} component={component} type={show ? 'text' : type} name={name} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' placeholder={placeholder}/>
         <ErrorMessage name={name} component="div" className='text-red-500'/>
     </Div>
   )

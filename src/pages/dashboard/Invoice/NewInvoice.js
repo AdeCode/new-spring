@@ -8,6 +8,8 @@ import DateTimePicker from 'react-datetime-picker';
 import 'react-datetime-picker/dist/DateTimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
+import TextField from '../../../components/@shared/TextField'
+import InvoiceFooter from '../../../components/@shared/InvoiceFooter'
 
 
 function NewInvoice() {
@@ -85,22 +87,43 @@ function NewInvoice() {
                     >
                         {({ isSubmitting, values, isValid }) => (
                             <Form className='flex flex-col py-2'>
-                                <InputField
-                                    name='invoice'
-                                    type='text'
-                                    label='Invoice number'
-                                    placeholder='input invoice number'
-                                />
                                 <div className='flex w-full gap-2'>
                                     <div className='grow'>
                                         <InputField
                                             name='invoice'
                                             type='text'
-                                            label='Customer Name'
+                                            label='Invoice number'
                                             placeholder='input invoice number'
                                         />
                                     </div>
                                     <div className='grow'>
+                                        <InputField
+                                            name='customerPhone'
+                                            type='text'
+                                            label='Customer Phone'
+                                            placeholder='input customer phone'
+                                        />
+                                    </div>
+                                </div>
+                                
+                                <div className='flex w-full gap-2'>
+                                    <div className='grow'>
+                                        <InputField
+                                            name='customerName'
+                                            type='text'
+                                            label='Customer Name'
+                                            placeholder='input customer name'
+                                        />
+                                    </div>
+                                    <div className='grow-0'>
+                                        <InputField
+                                            name='customerEmail'
+                                            type='email'
+                                            label='Customer Email'
+                                            placeholder='input customer Email'
+                                        />
+                                    </div>
+                                    <div className='grow-0'>
                                         <div className='flex flex-col'>
                                             <label htmlFor='date' className='font-medium text-base text-label mb-[6px]'>Due Date</label>
                                             <DateTimePicker onChange={onChange} value={value} className=''/>
@@ -113,40 +136,7 @@ function NewInvoice() {
                                     <h2 className=''>Order Items</h2>
                                     <p className=''>*You should enter at least 1 item</p>
                                     <div className='flex flex-col'>
-                                        {/* <div className='flex w-full gap-2'>
-                                            <div className='grow'>
-                                                <InputField
-                                                    name='item'
-                                                    type='text'
-                                                    label='Item'
-                                                    placeholder='item'
-                                                />
-                                            </div>
-                                            <div className='grow-0'>
-                                                <InputField
-                                                    name='item'
-                                                    type='text'
-                                                    label='Item'
-                                                    placeholder='item'
-                                                />
-                                            </div>
-                                            <div className='grow-0'>
-                                                <InputField
-                                                    name='item'
-                                                    type='text'
-                                                    label='Item'
-                                                    placeholder='item'
-                                                />
-                                            </div>
-                                            <div className='grow-0'>
-                                                <InputField
-                                                    name='item'
-                                                    type='text'
-                                                    label='Item'
-                                                    placeholder='item'
-                                                />
-                                            </div>
-                                        </div> */}
+                                       
                                         <div className='flex flex-col gap-2 mb-4'>
                                             {
                                                 data.map((val, i) => {
@@ -200,12 +190,16 @@ function NewInvoice() {
                                             </div>
                                         </div>
                                     </div>
-                                    <InputField
+                                    <TextField
                                         name='notes'
                                         type='text'
                                         label='Notes (optional)'
                                         placeholder='Enter notes'
+                                        component="textarea"
+                                        rows='4'
                                     />
+                                    
+                                    {/* <Field component="textarea" rows="4" value={""}></Field> */}
                                 </div>
                                 <div className='flex justify-end'>
                                         <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
@@ -222,7 +216,7 @@ function NewInvoice() {
                     </Formik>
                 </div>
             </div>
-
+            <InvoiceFooter/>
         </Invoice>
     )
 }

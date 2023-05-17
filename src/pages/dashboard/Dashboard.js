@@ -14,10 +14,10 @@ function Dashboard() {
     return (
         <DashboardSection>
             <h2 className='font-normal text-lg text-gray'>Welcome SkyCargo Ltd,</h2>
-            <h2 className='font-bold text-lg text-gray'>Dashboard</h2>
             <AlertBox
                 message='Please complete your compliance requirements to access our services (Click the settings button to complete your KYC requirements)'
             />
+            <h2 className='font-bold text-lg text-gray'>Dashboard</h2>
             <div className='flex gap-2 mb-3'>
                 <div className='card w-[250px] h-[150px] py-2 px-2'>
                     <div className='flex justify-between'>
