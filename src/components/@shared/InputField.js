@@ -17,10 +17,10 @@ function InputField({name, rows, label, type, value, placeholder, icon, componen
           <div className='absolute right-2 top-10 cursor-pointer'  onClick={toggleIcon}>
             {
               show ?
-              <span class="material-symbols-outlined">visibility</span>
+              <span className="material-symbols-outlined">visibility</span>
 
               :
-              <span class="material-symbols-outlined">visibility_off</span>
+              <span className="material-symbols-outlined">visibility_off</span>
             }
           </div>
           : null

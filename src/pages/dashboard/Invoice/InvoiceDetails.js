@@ -15,12 +15,12 @@ function InvoiceDetails() {
   return (
     <Invoice className='px-[20px]'>
             <Link onClick={() => navigate(-1)} className='flex gap-2 items-center mb-6'>
-                <span class="material-symbols-outlined">keyboard_backspace</span><h2 className=''>Back</h2>
+                <span className="material-symbols-outlined">keyboard_backspace</span><h2 className=''>Back</h2>
             </Link>
             <div className='box w-full flex flex-col py-3 px-3'>
                 <div className='w-full border-b-2 border-cyan-900 px-2 flex justify-between items-center py-2'>
                     <h2 className='text-base font-semibold lg:text-xl'>Invoices Details</h2>
-                    <Link to='/invoice/template' className='flex rounded-md items-center py-2 px-3 bg-green-700 hover:bg-green-600 text-white'><span class="material-symbols-outlined">visibility</span>Preview Invoice</Link>
+                    <Link to='/invoice/template' className='flex rounded-md items-center py-2 px-3 bg-green-700 hover:bg-green-600 text-white'><span className="material-symbols-outlined">visibility</span>Preview Invoice</Link>
                 </div>
                 <div className='flex flex-col gap-2 mb-3 px-2 py-2 shadow-md hover:shadow-lg'>
                     <div className='flex gap-3'>

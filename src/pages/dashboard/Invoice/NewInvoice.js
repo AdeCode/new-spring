@@ -60,7 +60,7 @@ function NewInvoice() {
     return (
         <Invoice className='px-[50px]'>
             <Link onClick={() => navigate(-1)} className='flex gap-2 items-center mb-6'>
-                <span class="material-symbols-outlined">keyboard_backspace</span><h2 className=''>Back</h2>
+                <span className="material-symbols-outlined">keyboard_backspace</span><h2 className=''>Back</h2>
             </Link>
             <div className='box w-full flex flex-col'>
                 <div className='w-full border-b-2 border-cyan-900 pl-3 pt-2'>
@@ -165,7 +165,7 @@ function NewInvoice() {
                                                             </div>
                                                             {/* <span onClick={()=>handleDelete(i)} className='text-red-600 font-semibold text-xl cursor-pointer'>X</span> */}
                                                             <div className='flex items-end lg:pb-3'>
-                                                                <span onClick={()=>handleDelete(i)} class="material-symbols-outlined cursor-pointer text-red-600">delete</span>
+                                                                <span onClick={()=>handleDelete(i)} className="material-symbols-outlined cursor-pointer text-red-600">delete</span>
                                                             </div>
                                                         </div>
                                                     )

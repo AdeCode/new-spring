@@ -94,7 +94,7 @@ const CustomerTransaction = () => {
             },
             {
                 accessorKey: 'channel',
-                header: 'Channel',
+                header: 'Currency',
                 size:50,
             },
             {
