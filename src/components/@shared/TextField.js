@@ -3,12 +3,12 @@ import { Field, ErrorMessage } from 'formik'
 import styled from 'styled-components'
 
 
-function TextField({name, rows, label, type, value, placeholder}) {
+function TextField({name, rows, label, type, value, placeholder, readOnly}) {
  
   return (
     <Div className='form-control flex flex-col mb-4 relative border-none lg:border'>
         <label htmlFor={name} className='font-medium text-base text-label mb-[6px]'>{label}</label>
-        <Field rows={rows} component='textarea'type={type} name={name} value={value} className='py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' placeholder={placeholder}/>
+        <Field rows={rows} readOnly={readOnly} component='textarea'type={type} name={name} value={value} className='py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' placeholder={placeholder}/>
         <ErrorMessage name={name} component="div" className='text-red-500'/>
     </Div>
   )

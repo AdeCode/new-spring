@@ -37,6 +37,12 @@ function Dashboard() {
                         <h2 className='text-gray font-medium'>0%</h2>
                     </div>
                 </div>
+                <div className='card w-[250px] h-[150px] py-2 px-2'>
+                    <div className='flex justify-between'>
+                        <h3 className='text-base text-amber-600'>Paid Invoices</h3>
+                        <h2 className='text-gray font-medium'>0%</h2>
+                    </div>
+                </div>
             </div>
             <div className='flex gap-[18px] flex-wrap mb-6'>
                 <div className='flex flex-col w-[240px] px-3 py-4 bg-white rounded-md mb-5'>
@@ -121,7 +127,7 @@ function Dashboard() {
                 </div>
             </div>
             <div className='flex justify-between mb-6'>
-                <div className='max-w-[750px]'>
+                <div className='max-w-[850px]'>
                     <PendingPayment/>
                 </div>
                 <div className='bg-white p-2 w-[300px]'>

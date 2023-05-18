@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import gig from '../../images/dashboard/gig.png'
 import InvoiceFooter from './InvoiceFooter'
 import CheckBox from './CheckBox'
+import TextField from './TextField'
 
 function InvoiceTemplate() {
     const [agree, setAgree] = useState(false)
@@ -18,14 +19,14 @@ function InvoiceTemplate() {
                 {/* <p className='text-base'>Business Logo here</p> */}
             </div>
             <div className='flex flex-col gap-3'>
-                <h2 className='font-semibold text-2xl text-neutral-700'>Giglogostics</h2>
+                <h2 className='font-semibold text-2xl text-neutral-700'>GIG LOGISTICS INT'L EXPRESS</h2>
                 <p className='text-base'>No 6, Gbagada, Lagos.</p>
             </div>
         </div>
         <div className='p-4'>
             <div className='flex justify-between'>
                 <div className='flex gap-1'>
-                    <h3 className='text-neutral-700'>To: </h3><span className='text-black'>Gig Logistics</span>
+                    <h3 className='text-neutral-700'>To: </h3><span className='text-black'>Frank Edoho</span>
                 </div>
                 <div className='w-[300px] border flex flex-col'>
                     <div className='flex border-b py-1 px-2'>
@@ -50,6 +51,7 @@ function InvoiceTemplate() {
                             <tr className='py-4'>
                                 <th>Items</th>
                                 <th>Quantity</th>
+                                <th>CBM</th>
                                 <th>Price</th>
                                 <th>SubTotal</th>
                             </tr>
@@ -58,13 +60,20 @@ function InvoiceTemplate() {
                             <tr className=''>
                                 <td className='m-0 text-center py-3 text-sm font-medium'>Iron rod</td>
                                 <td className='m-0 text-center py-3 text-sm font-medium'>500</td>
+                                <td className='m-0 text-center py-3 text-sm font-medium'>40</td>
                                 <td className='m-0 text-center py-3 text-sm font-medium'>478</td>
                                 <td className='m-0 text-center py-3 text-sm font-medium'>21099</td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
-                <div className='flex w-full justify-end'>
+                <div className='flex w-full justify-between'>
+                    <div className='w-[500px] flex gap-3'>
+                        <h3 className='text-neutral-700'>Notes:</h3>
+                        <textarea className='p-2 bg-inherit border opacity-70' id="note" name="note" rows="3" cols="70" readOnly>
+                            lorem ipsum dolor   sit amet, consectetur adip  non pro id  el  aspect  et non  proident.
+                        </textarea>
+                    </div>
                     <div className='border flex flex-col w-[300px]'>
                         <div className='flex justify-between py-2 px-2'>
                             <h2 className=''>Subtotal:</h2><span className=''>28033 USD</span>
