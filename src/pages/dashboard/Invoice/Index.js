@@ -22,7 +22,7 @@ function InvoiceIndex() {
   return (
     <Invoice className='px-[20px]'>
             <Link onClick={() => navigate(-1)} className='flex gap-2 items-center mb-6'>
-                <span class="material-symbols-outlined">keyboard_backspace</span><h2 className=''>Back</h2>
+                <span className="material-symbols-outlined">keyboard_backspace</span><h2 className=''>Back</h2>
             </Link>
             <div className=''></div>
             <div className='box w-full flex flex-col pb-2'>
@@ -33,7 +33,7 @@ function InvoiceIndex() {
                             <option value='USD' defaultValue>USD</option>
                             <option value='Naira' >Naira</option>
                         </select>
-                        <Link to='/invoice/generate' className='flex rounded-md items-center py-2 px-3 bg-green-700 hover:bg-green-600 text-white'><span class="material-symbols-outlined">add</span>Create Invoice</Link>
+                        <Link to='/invoice/generate' className='flex rounded-md items-center py-2 px-3 bg-green-700 hover:bg-green-600 text-white'><span className="material-symbols-outlined">add</span>Create Invoice</Link>
                     </div>
                 </div>
                 <div className='flex gap-2 mb-3 px-2 py-2'>

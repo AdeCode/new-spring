@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import MaterialReactTable from 'material-react-table';
 import styled from 'styled-components';
 import { ExportToCsv } from 'export-to-csv';
@@ -9,49 +9,164 @@ import {
 } from '@mui/material';
 import {Link, useNavigate} from 'react-router-dom'
 import IosShareIcon from '@mui/icons-material/IosShare';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Switch from '@mui/material/Switch';
 
 
 //nested data is ok, see accessorKeys in ColumnDef below
-const data = [
-    {
-        status: 'success',
-        invoiceNumber: '1752AF',
-        customer:'Spring Finance',
-        dateCreated: '2023/04/20',
-        amount:2345553,
-        dueDate:'2023/05/20',
-    },
-    {
-        status: 'pending',
-        invoiceNumber: '001KK',
-        customer:'Forte Oil',
-        dateCreated: '2023/04/20',
-        amount:29933000,
-        dueDate:'2023/05/20',
-    },
-    {
-        status: 'success',
-        invoiceNumber: '00252AF',
-        customer:'Apex Constructors',
-        dateCreated: '2023/04/20',
-        amount:2345553,
-        dueDate:'2023/05/20',
-    },
-    {
-        status: 'pending',
-        invoiceNumber: '1752AF',
-        customer:'Spring Finance',
-        dateCreated: '2023/04/20',
-        amount:2345553,
-        dueDate:'2023/05/20',
-    },
+// let data = [
+//     {
+//         id:1,
+//         status: 'success',
+//         invoiceNumber: '1752AF',
+//         customer:'Spring Finance',
+//         dateCreated: '2023/04/20',
+//         amount:2345553,
+//         dueDate:'2023/05/20',
+//     },
+//     {
+//         id:2,
+//         status: 'pending',
+//         invoiceNumber: '001KK',
+//         customer:'Forte Oil',
+//         dateCreated: '2023/04/20',
+//         amount:29933000,
+//         dueDate:'2023/05/20',
+//     },
+//     {
+//         id:3,
+//         status: 'success',
+//         invoiceNumber: '00252AF',
+//         customer:'Apex Constructors',
+//         dateCreated: '2023/04/20',
+//         amount:2345553,
+//         dueDate:'2023/05/20',
+//     },
+//     {
+//         id:4,
+//         status: 'pending',
+//         invoiceNumber: '1752AF',
+//         customer:'Spring Finance',
+//         dateCreated: '2023/04/20',
+//         amount:2345553,
+//         dueDate:'2023/05/20',
+//     },
     
-];
+// ];
+
+const invoiceData = [
+    {
+        id:1,
+        status:'paid',
+        invoiceNum:98830,
+        customer:'Forte Oil',
+        createdAt: '2023/05/20',
+        amount:'26632.00',
+        dueDate: '2023/05/20'
+    },
+    {
+        id:2,
+        status:'paid',
+        invoiceNum:100830,
+        customer:'Spring Finance',
+        createdAt: '2023/05/20',
+        amount:'26632.00',
+        dueDate: '2023/05/20'
+    },
+    {
+        id:3,
+        status:'unpaid',
+        invoiceNum:278830,
+        customer:'Apex Constructors',
+        createdAt: '2023/05/20',
+        amount:'26632.00',
+        dueDate: '2023/05/20'
+    },
+    {
+        id:4,
+        status:'unpaid',
+        invoiceNum:10830,
+        customer:'Tesla',
+        createdAt: '2023/05/20',
+        amount:'26632.00',
+        dueDate: '2023/05/20'
+    },
+]
 
 
 const InvoiceTable = () => {
     //should be memoized or stable
+    const [toggle, setToggle] = useState(false)
     const navigate = useNavigate()
+
+    const ToggleButton = styled(Switch)({
+        "&.Mui-selected, &.Mui-selected:hover": {
+          color: "white",
+          backgroundColor: 'green'
+        }
+      });
+
+    const [data, setData] = useState([
+        {
+            id:1,
+            status: 'success',
+            invoiceNumber: '1752AF',
+            customer:'Spring Finance',
+            dateCreated: '2023/04/20',
+            amount:2345553,
+            dueDate:'2023/05/20',
+            checked:true
+        },
+        {
+            id:2,
+            status: 'pending',
+            invoiceNumber: '001KK',
+            customer:'Forte Oil',
+            dateCreated: '2023/04/20',
+            amount:29933000,
+            dueDate:'2023/05/20',
+            checked:false
+        },
+        {
+            id:3,
+            status: 'success',
+            invoiceNumber: '00252AF',
+            customer:'Apex Constructors',
+            dateCreated: '2023/04/20',
+            amount:2345553,
+            dueDate:'2023/05/20',
+            checked:true
+        },
+        {
+            id:4,
+            status: 'pending',
+            invoiceNumber: '1752AF',
+            customer:'Spring Finance',
+            dateCreated: '2023/04/20',
+            amount:2345553,
+            dueDate:'2023/05/20',
+            checked:false
+        },
+        
+    ])
+
+    const handleToggleChange = (id) => {
+        //console.log(id)
+        const newData = data.map(invoice => {
+            if(invoice.id === id){
+                if(invoice.status === 'pending'){
+                    return {...invoice, status:'success',checked:true }
+                }
+                if(invoice.status === 'success'){
+                    return {...invoice, status:'success',checked:true }
+                }
+            }
+            return invoice
+        })
+        console.log(newData)
+        setData(newData)
+    }
+
     const columns = useMemo(
         () => [
             {
@@ -87,15 +202,60 @@ const InvoiceTable = () => {
                 accessorKey: 'dueDate',
                 header: 'Due Date',
             },
-            // {
-            //     accessorKey: 'action',
-            //     header: 'View',
-            //     Cell: ({ cell, row }) => {
-            //         return <Link to='/invoice/details' className='cursor-pointer text-green-800'>
-            //                 <span class="material-symbols-outlined" >visibility</span>
-            //             </Link>
-            //     }, 
-            // },
+            {
+                accessorKey: 'action',
+                header: 'View',
+                Cell: ({ cell, row }) => {
+                    return <Link to='/invoice/details' className='cursor-pointer text-green-800'>
+                            <span class="material-symbols-outlined" >visibility</span>
+                        </Link>
+                }, 
+                size:50,
+            },
+            {
+                accessorKey: 'action',
+                header: 'Action',
+                Cell: ({ cell, row }) => {
+                    return <div>
+                         <FormControlLabel
+                            sx={{
+                            display: 'block',
+                            color:'green',
+                            '&.Mui-checked': {
+                                color: "green",
+                                //backgroundClip:"green",
+                            },
+                            '&.MuiSwitch-thumb-checked': {
+                                color: "#404042",
+                                backgroundColor:"#404042",
+                            },
+
+                            }}
+                            control={
+                            <Switch
+                                checked={row.original.checked}
+                                onChange={() => handleToggleChange(row.original.id)}
+                                name="toggle"
+                                color="primary"
+                                sx={{
+                                    color:'#404042',
+                                    '&.Mui-checked': {
+                                        color: "#404042",
+                                        backgroundColor:"#404042",
+                                    },
+                                    '&.MuiSwitch-thumb-checked': {
+                                        color: "#404042",
+                                        backgroundColor:"#404042",
+                                    },
+                                }}
+                            />
+                            }
+                            // label="Approve"
+                        />
+                    </div>
+                }, 
+                size:50,
+            },
         ],
         [],
     );
@@ -119,15 +279,13 @@ const InvoiceTable = () => {
 
     return (
         <Section>
-            {/* <div className='title bg-white w-full text-[#334D6E] text-base pl-[18px] pt-5'>Recent Customers</div> */}
-            {/* <div className='' onClick={handleExportData}>Export</div> */}
             <MaterialReactTable
                 state={{ isLoading: false }}
                 columns={columns}
                 data={data ?? []}
                 enableColumnActions={true}
                 enableRowNumbers
-                enableRowActions
+                // enableRowActions
                 rowNumberMode="original"
                 muiTablePaperProps={{
                     elevation: 0,
@@ -140,6 +298,20 @@ const InvoiceTable = () => {
                     <Box sx={{display:'flex',paddingTop: '20px', alignItems:'center', gap:'10px',paddingLeft: '12px' }}>
                         <div className=''>
                             <p className='text-[#6A707E] text-xl'>Invoices</p>
+                                {/* <FormControlLabel
+                                    sx={{
+                                    display: 'block',
+                                    }}
+                                    control={
+                                    <ToggleButton
+                                        checked={toggle}
+                                        onChange={() => {setToggle(true)}}
+                                        name="toggle"
+                                        color="primary"
+                                    />
+                                    }
+                                    label="Approve"
+                                /> */}
                         </div>
                         
                         <span className='bg-[#EFF0F2] py-1 px-3 cursor-pointer text-[13px] flex items-center gap-2' onClick={handleExportData}>
@@ -186,57 +358,44 @@ const InvoiceTable = () => {
                     },
                 }}
 
-                muiTableBodyRowProps={({ row }) => ({
-                    onClick: (event) => {
-                        //console.info(event, row.id);
-                        console.log('clicked ' + row.original.address)
-                    },
-                    sx: {
-                        cursor: 'pointer', //you might want to change the cursor too when adding an onClick
-                        border: 'none',
-                        color: '#273240',
-                        paddingLeft: '10px'
-                    },
-                })}
-
-                renderRowActionMenuItems={({ closeMenu, row }) => [
+                // renderRowActionMenuItems={({ closeMenu, row }) => [
                     
-                    row.original.status === 'pending' ?
-                        <MenuItem
-                            key={1}
-                            onClick={() => {
-                                console.log(row.original.id)
-                                //approvePaymentMutation.mutate({order_ref:row.original.order_ref})
-                                closeMenu();
-                            }}
-                            sx={{ m: 0,color:'green' }}
-                        >
-                            <ListItemIcon>
-                            <span class="material-symbols-outlined text-green-700">task_alt</span>
-                            </ListItemIcon>
-                            Approve
-                        </MenuItem>
-                    :
-                    null
-                    ,
-                    <MenuItem
-                      key={0}
-                      onClick={() => {
-                        // View profile logic...
-                        console.log(row.original.id)
-                        //navigate(`/dashboard/payment/${row.original.reference}`)
-                        navigate('/invoice/details')
-                        closeMenu();
-                      }}
-                      sx={{ m: 0 }}
-                    >
-                      <ListItemIcon>
-                        <span class="material-symbols-outlined">info</span>
-                      </ListItemIcon>
-                      View Details
-                    </MenuItem>,
+                //     row.original.status === 'pending' ?
+                //         <MenuItem
+                //             key={1}
+                //             onClick={() => {
+                //                 console.log(row.original.id)
+                //                 //approvePaymentMutation.mutate({order_ref:row.original.order_ref})
+                //                 closeMenu();
+                //             }}
+                //             sx={{ m: 0,color:'green' }}
+                //         >
+                //             <ListItemIcon>
+                //             <span className="material-symbols-outlined text-green-700">task_alt</span>
+                //             </ListItemIcon>
+                //             Approve
+                //         </MenuItem>
+                //     :
+                //     null
+                //     ,
+                //     <MenuItem
+                //       key={0}
+                //       onClick={() => {
+                //         // View profile logic...
+                //         console.log(row.original.id)
+                //         //navigate(`/dashboard/payment/${row.original.reference}`)
+                //         navigate('/invoice/details')
+                //         closeMenu();
+                //       }}
+                //       sx={{ m: 0 }}
+                //     >
+                //       <ListItemIcon>
+                //         <span className="material-symbols-outlined">info</span>
+                //       </ListItemIcon>
+                //       View Details
+                //     </MenuItem>,
                     
-                  ]}
+                //   ]}
            
             />
         </Section>

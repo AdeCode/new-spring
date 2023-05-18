@@ -15,6 +15,7 @@ const data = [
         transactionDate: '17/12/2022',
         customer:'Adewale Fashion Limited',
         method: 'invoice',
+        currency:'USD',
         transactionAmount:40899,
     },
     {
@@ -23,6 +24,7 @@ const data = [
         transactionDate: '17/12/2022',
         customer:'Motion Mobility Limited',
         method: 'invoice',
+        currency:'USD',
         transactionAmount:2345553,
     },
     {
@@ -31,6 +33,7 @@ const data = [
         transactionDate: '17/12/2022',
         customer:'Motion Mobility Limited',
         method: 'invoice',
+        currency:'USD',
         transactionAmount:63377,
     },
 ];
@@ -69,6 +72,11 @@ const PendingPayment = () => {
             {
                 accessorKey: 'method',
                 header: 'Method',
+                size:50,
+            },
+            {
+                accessorKey: 'currency',
+                header: 'Currency',
                 size:50,
             },
             {

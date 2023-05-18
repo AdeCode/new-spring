@@ -44,7 +44,7 @@ function Sidebar() {
             } */}
             <div className={`btn p-[15px] cursor-pointer flex gap-[18.5px] w-[248px] mb-9`}
                 onClick={()=>navigate('/dashboard')}>
-                <span class="material-symbols-outlined">menu</span>
+                <span className="material-symbols-outlined">menu</span>
                 <h3 className='font-medium text-base'>Dashboard</h3>
             </div>
 
@@ -56,7 +56,7 @@ function Sidebar() {
                         return <SubMenu item={item} key={index} />;
                     })}
                     <div className='lg:pl-[1.5rem] flex items-center lg:gap-4 cursor-pointer lg:mt-11 font-semibold' onClick={logout}>
-                        <span class="material-symbols-outlined">logout</span>
+                        <span className="material-symbols-outlined">logout</span>
                         <h2 className='text-base'>Logout</h2>
                     </div>
                 </div>

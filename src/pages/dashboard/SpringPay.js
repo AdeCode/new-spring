@@ -16,7 +16,7 @@ function SpringPay() {
                 <h3 className='font-normal text-xs text-[#555B6A] mb-[11px]'>Spring Account number</h3>
                 <h2 className='font-bold text-base text-blackText mb-[17px]'>{accountNumber}</h2>
                 <span className='bg-[#E7ECED] text-xs cursor-pointer mb-[18px] flex gap-[7px] items-center py-[5px] px-[10px] rounded-xl text-[#4BCA69]' 
-                onClick={() => {navigator.clipboard.writeText(accountNumber);}}><span class="material-symbols-outlined">content_copy</span>COPY</span>
+                onClick={() => {navigator.clipboard.writeText(accountNumber);}}><span className="material-symbols-outlined">content_copy</span>COPY</span>
                 <h4 className='text-[#555B6A] font-normal text-[10px]'>Powered by FCMB</h4>
             </div>
         </div>
