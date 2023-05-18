@@ -25,8 +25,8 @@ function InvoiceIndex() {
                 <span class="material-symbols-outlined">keyboard_backspace</span><h2 className=''>Back</h2>
             </Link>
             <div className=''></div>
-            <div className='box w-full flex flex-col'>
-                <div className='w-full border-b-2 border-cyan-900 px-2 flex justify-between items-center py-2'>
+            <div className='box w-full flex flex-col pb-2'>
+                <div className='w-full border-b-2 border-green-700 px-2 flex justify-between items-center py-2'>
                     <h2 className='text-base font-semibold lg:text-xl'>Invoices</h2>
                     <div className='flex gap-4'>
                         <select name='currency' onChange={handleCurrencyChange} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
@@ -61,7 +61,7 @@ function InvoiceIndex() {
                     <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
                         <span className='flex justify-end'>0%</span>
                         <div className='flex flex-col'>
-                            <h2 className='font-semibold text-3xl text-green-600'>{currency}</h2>
+                            <h2 className='font-semibold text-3xl text-green-600'>10 ({currency})</h2>
                             <h3 className='text-base text-gray'>Paid Invoices</h3>
                         </div>
                     </div>

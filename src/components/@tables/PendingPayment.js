@@ -11,27 +11,27 @@ import {
 const data = [
     {
         transactionRef: 'T293093506',
+        status: 'Unpaid',
         transactionDate: '17/12/2022',
         customer:'Adewale Fashion Limited',
         method: 'invoice',
         transactionAmount:40899,
-        status: 'Unpaid',
     },
     {
         transactionRef: 'T293093506',
+        status: 'Unpaid',
         transactionDate: '17/12/2022',
         customer:'Motion Mobility Limited',
         method: 'invoice',
         transactionAmount:2345553,
-        status: 'Unpaid',
     },
     {
         transactionRef: 'T293093506',
+        status: 'Unpaid',
         transactionDate: '17/12/2022',
         customer:'Motion Mobility Limited',
         method: 'invoice',
         transactionAmount:63377,
-        status: 'Unpaid',
     },
 ];
 
@@ -46,26 +46,7 @@ const PendingPayment = () => {
                 Cell: ({ cell }) => {
                     return <div className="text-[#171F4C] text-sm font-semibold">{cell.getValue()}</div>
                 },
-                size:80,
-            },
-            {
-              accessorKey: 'transactionDate',
-              header: 'Transaction Date',
-              size:80,
-            },
-            {
-                accessorKey: 'customer',
-                header: 'Customer',
-            },
-            {
-                accessorKey: 'method',
-                header: 'Method',
-                size:80,
-            },
-            {
-                accessorKey: 'transactionAmount',
-                header: 'Transaction Amount',
-                size:80,
+                size:50,
             },
             {
                 accessorKey: 'status',
@@ -74,7 +55,26 @@ const PendingPayment = () => {
                 Cell: ({ cell, row }) => {
                     return <div className="text-[#34A853] text-sm font-semibold" onClick={()=>console.log(row.original.transactionAmount)}>{cell.getValue()}</div>
                 },
-                size:80,
+                size:50,
+            },
+            {
+              accessorKey: 'transactionDate',
+              header: 'Transaction Date',
+              size:50,
+            },
+            {
+                accessorKey: 'customer',
+                header: 'Customer',
+            },
+            {
+                accessorKey: 'method',
+                header: 'Method',
+                size:50,
+            },
+            {
+                accessorKey: 'transactionAmount',
+                header: 'Transaction Amount',
+                size:50,
             },
            
         ],
@@ -101,7 +101,7 @@ const PendingPayment = () => {
                 renderTopToolbarCustomActions={() => (
                     <Box sx={{display:'flex',paddingTop: '20px', alignItems:'center', gap:'10px',paddingLeft: '12px' }}>
                         <div className=''>
-                        <p className='text-[#6A707E] text-xl'>Transactions History</p>
+                        <p className='text-[#6A707E] text-xl'>Your Pending Payment</p>
                         </div>
                     </Box>
 

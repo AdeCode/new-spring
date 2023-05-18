@@ -4,8 +4,10 @@ import styled from 'styled-components';
 import { ExportToCsv } from 'export-to-csv';
 import {
     Box,
+    ListItemIcon,
+    MenuItem,
 } from '@mui/material';
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 import IosShareIcon from '@mui/icons-material/IosShare';
 
 
@@ -36,7 +38,7 @@ const data = [
         dueDate:'2023/05/20',
     },
     {
-        status: 'pedning',
+        status: 'pending',
         invoiceNumber: '1752AF',
         customer:'Spring Finance',
         dateCreated: '2023/04/20',
@@ -49,14 +51,15 @@ const data = [
 
 const InvoiceTable = () => {
     //should be memoized or stable
+    const navigate = useNavigate()
     const columns = useMemo(
         () => [
             {
                 accessorKey: 'status', //normal accessorKey
                 header: 'Status',
-                Cell: ({ cell, row }) => {
-                    return <div className=''>
-                            <div className={`${row.original.status === 'success' ? 'bg-green-700' : 'bg-yellow-600'} w-5 h-5 rounded-[50%]`}></div>
+                Cell: ({ renderedCellValue, row }) => {
+                    return <div className={`${row.original.status === 'success' ? 'text-green-700' : 'text-yellow-600'} `}>
+                            <h3 className=''>{renderedCellValue}</h3>
                         </div>
                 }, 
                 size:80,
@@ -84,15 +87,15 @@ const InvoiceTable = () => {
                 accessorKey: 'dueDate',
                 header: 'Due Date',
             },
-            {
-                accessorKey: 'action',
-                header: 'View',
-                Cell: ({ cell, row }) => {
-                    return <Link to='/invoice/details' className='cursor-pointer text-green-800'>
-                            <span class="material-symbols-outlined" >visibility</span>
-                        </Link>
-                }, 
-            },
+            // {
+            //     accessorKey: 'action',
+            //     header: 'View',
+            //     Cell: ({ cell, row }) => {
+            //         return <Link to='/invoice/details' className='cursor-pointer text-green-800'>
+            //                 <span class="material-symbols-outlined" >visibility</span>
+            //             </Link>
+            //     }, 
+            // },
         ],
         [],
     );
@@ -124,6 +127,7 @@ const InvoiceTable = () => {
                 data={data ?? []}
                 enableColumnActions={true}
                 enableRowNumbers
+                enableRowActions
                 rowNumberMode="original"
                 muiTablePaperProps={{
                     elevation: 0,
@@ -194,14 +198,46 @@ const InvoiceTable = () => {
                         paddingLeft: '10px'
                     },
                 })}
-            // renderDetailPanel={({ row }) => (
-            //     <div>
-            //       <span>First Name: {row.original.name.firstName}</span>
-            //       <span>Last Name: {row.original.name.lastName}</span>
-            //       <span>Address: {row.original.address}</span>
-            //     </div>
-            //   )}
 
+                renderRowActionMenuItems={({ closeMenu, row }) => [
+                    
+                    row.original.status === 'pending' ?
+                        <MenuItem
+                            key={1}
+                            onClick={() => {
+                                console.log(row.original.id)
+                                //approvePaymentMutation.mutate({order_ref:row.original.order_ref})
+                                closeMenu();
+                            }}
+                            sx={{ m: 0,color:'green' }}
+                        >
+                            <ListItemIcon>
+                            <span class="material-symbols-outlined text-green-700">task_alt</span>
+                            </ListItemIcon>
+                            Approve
+                        </MenuItem>
+                    :
+                    null
+                    ,
+                    <MenuItem
+                      key={0}
+                      onClick={() => {
+                        // View profile logic...
+                        console.log(row.original.id)
+                        //navigate(`/dashboard/payment/${row.original.reference}`)
+                        navigate('/invoice/details')
+                        closeMenu();
+                      }}
+                      sx={{ m: 0 }}
+                    >
+                      <ListItemIcon>
+                        <span class="material-symbols-outlined">info</span>
+                      </ListItemIcon>
+                      View Details
+                    </MenuItem>,
+                    
+                  ]}
+           
             />
         </Section>
 

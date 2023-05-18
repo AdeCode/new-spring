@@ -94,7 +94,7 @@ function NewInvoice() {
                                             name='invoice'
                                             type='text'
                                             label='Invoice number'
-                                            placeholder='input invoice number'
+                                            placeholder='e.g. 09923EJ'
                                         />
                                     </div>
                                     <div className='grow'>
@@ -102,7 +102,7 @@ function NewInvoice() {
                                             name='customerPhone'
                                             type='text'
                                             label='Customer Phone'
-                                            placeholder='input customer phone'
+                                            placeholder='e.g. 08033889999'
                                         />
                                     </div>
                                 </div>
@@ -113,7 +113,7 @@ function NewInvoice() {
                                             name='customerName'
                                             type='text'
                                             label='Customer Name'
-                                            placeholder='input customer name'
+                                            placeholder='e.g. Olawale James'
                                         />
                                     </div>
                                     <div className='grow-0'>
@@ -121,7 +121,7 @@ function NewInvoice() {
                                             name='customerEmail'
                                             type='email'
                                             label='Customer Email'
-                                            placeholder='input customer Email'
+                                            placeholder='e.g. user@mail.com'
                                         />
                                     </div>
                                     <div className='grow-0'>

@@ -5,11 +5,11 @@ function InvoiceFooter() {
     <div className='flex text-black mt-12 justify-between'>
         <div className='flex flex-col'>
             <h2 className='font-normal text-xl'>Business Name</h2>
-            <h3 className='font-bold'>@giglogistics</h3>
+            <h3 className='font-bold'>GIG LOGISTICS INT'L EXPRESS</h3>
         </div>
         <div className='flex flex-col'>
             <h2 className='font-normal text-xl'>Business Tag Name</h2>
-            <h3 className='font-bold'>GIG LOGISTICS INT'L EXPRESS</h3>
+            <h3 className='font-bold'>@giglogistics</h3>
         </div>
         <div className='flex flex-col lg:w-[300px]'>
             <h2 className='font-normal text-xl'>Business NGN Bank Account</h2>
