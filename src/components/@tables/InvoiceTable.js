@@ -109,7 +109,7 @@ const InvoiceTable = () => {
     const [data, setData] = useState([
         {
             id:1,
-            status: 'success',
+            status: 'paid',
             invoiceNumber: '1752AF',
             customer:'Spring Finance',
             dateCreated: '2023/04/20',
@@ -119,7 +119,7 @@ const InvoiceTable = () => {
         },
         {
             id:2,
-            status: 'pending',
+            status: 'unpaid',
             invoiceNumber: '001KK',
             customer:'Forte Oil',
             dateCreated: '2023/04/20',
@@ -129,7 +129,7 @@ const InvoiceTable = () => {
         },
         {
             id:3,
-            status: 'success',
+            status: 'paid',
             invoiceNumber: '00252AF',
             customer:'Apex Constructors',
             dateCreated: '2023/04/20',
@@ -139,7 +139,7 @@ const InvoiceTable = () => {
         },
         {
             id:4,
-            status: 'pending',
+            status: 'unpaid',
             invoiceNumber: '1752AF',
             customer:'Spring Finance',
             dateCreated: '2023/04/20',
@@ -154,11 +154,11 @@ const InvoiceTable = () => {
         //console.log(id)
         const newData = data.map(invoice => {
             if(invoice.id === id){
-                if(invoice.status === 'pending'){
-                    return {...invoice, status:'success',checked:true }
+                if(invoice.status === 'unpaid'){
+                    return {...invoice, status:'paid',checked:true }
                 }
-                if(invoice.status === 'success'){
-                    return {...invoice, status:'success',checked:true }
+                if(invoice.status === 'paid'){
+                    return {...invoice, status:'paid',checked:true }
                 }
             }
             return invoice
@@ -173,7 +173,7 @@ const InvoiceTable = () => {
                 accessorKey: 'status', //normal accessorKey
                 header: 'Status',
                 Cell: ({ renderedCellValue, row }) => {
-                    return <div className={`${row.original.status === 'success' ? 'text-green-700' : 'text-yellow-600'} `}>
+                    return <div className={`${row.original.status === 'paid' ? 'text-green-700' : 'text-yellow-600'} `}>
                             <h3 className=''>{renderedCellValue}</h3>
                         </div>
                 }, 
@@ -197,6 +197,10 @@ const InvoiceTable = () => {
             {
                 accessorKey: 'amount',
                 header: 'Amount',
+                Cell: ({ cell }) => {
+                    return <div className="text-sm font-semibold">$ {cell.getValue()}</div>
+                },
+                size:50,
             },
             {
                 accessorKey: 'dueDate',

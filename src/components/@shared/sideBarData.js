@@ -121,17 +121,12 @@ export const SidebarData = [
 
 	subNav: [
 		{
-			title: "Cards",
-			path: "",
+			title: "Recent Customers",
+			path: "/dashboard/customers",
 			icon: <FiCreditCard />,
 			cName: "sub-nav",
 		},
-		{
-			title: "Wallets",
-			path: "",
-			icon: <IoWalletOutline />,
-			cName: "sub-nav",
-		},
+		
 	],
 },
 {

@@ -23,6 +23,7 @@ import NewInvoice from './pages/dashboard/Invoice/NewInvoice';
 import InvoiceIndex from './pages/dashboard/Invoice/Index';
 import InvoiceDetails from './pages/dashboard/Invoice/InvoiceDetails';
 import InvoiceTemplate from './components/@shared/InvoiceTemplate';
+import RecentCustomers from './pages/dashboard/RecentCustomers';
 
 function Routers (){
     return (
@@ -54,6 +55,7 @@ function Routers (){
                         <Route path='/invoice' element={<InvoiceIndex/>}></Route>                       
                         <Route path='/invoice/details' element={<InvoiceDetails/>}></Route>                       
                         <Route path='/invoice/template' element={<InvoiceTemplate/>}></Route>                       
+                        <Route path='/dashboard/customers' element={<RecentCustomers/>}></Route>                       
                     </Route>
                 </Routes>
             </ScrollToTop>

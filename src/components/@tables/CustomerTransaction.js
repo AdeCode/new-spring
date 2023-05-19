@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 
 import IosShareIcon from '@mui/icons-material/IosShare';
+import helperFunctions from '../../@helpers/helperFunctions'
 
 
 //nested data is ok, see accessorKeys in ColumnDef below
@@ -14,58 +15,56 @@ const data = [
     {
         transactionRef: 'T293093506489996',
         transactionDate: '17/12/2022',
-        reason:'Testing with Spring Finance',
-        channel: 'USD',
+        customer:'Adeleke Yussuf',
+        method:'Invoice',
         transactionAmount:2345553,
         availableBalanceBefore:2389002,
         availableBalanceAfter:2389002,
-        method:'Transfer',
-        status: 'Deposit',
     },
     {
         transactionRef: 'T293093506489996',
         transactionDate: '17/12/2022',
-        reason:'Testing with Spring Finance',
-        channel: 'GBP',
+        customer:'Kola Daisi',
+        method:'Transfer',
         transactionAmount:2345553,
         availableBalanceBefore:2389002,
         availableBalanceAfter:2389002,
+    },
+    {
+        transactionRef: 'T293093506489996',
+        transactionDate: '17/12/2022',
+        customer:'Lawal Adegoke',
         method:'Transfer',
-        status: 'Deposit',
+        transactionAmount:2345553,
+        availableBalanceBefore:2389002,
+        availableBalanceAfter:2389002,
     },
     {
         transactionRef: 'T293093506489226',
         transactionDate: '17/12/2022',
-        reason:'Testing with Spring Finance',
-        channel: 'NGN',
+        customer:'George Bush',
+        method:'Transfer',
         transactionAmount:2345553,
         availableBalanceBefore:2389002,
         availableBalanceAfter:2389002,
-        method:'Transfer',
-        status: 'Deposit',
-        amount: '9644350',
     },
     {
         transactionRef: 'T293093506489996',
         transactionDate: '17/12/2022',
-        reason:'Testing with Spring Finance',
-        channel: 'EUR',
+        customer:'Daniel Amokachi',
+        method:'Transfer',
         transactionAmount:2345553,
         availableBalanceBefore:2389002,
         availableBalanceAfter:2389002,
-        method:'Transfer',
-        status: 'Deposit',
     },
     {
         transactionRef: 'T293093506489996',
         transactionDate: '17/12/2022',
-        reason:'Testing with Spring Finance',
-        channel: 'GBP',
+        customer:'Adeleke Yussuf',
+        method:'Invoice',
         transactionAmount:2345553,
         availableBalanceBefore:2389002,
         availableBalanceAfter:2389002,
-        method:'Transfer',
-        status: 'Deposit',
     },
 ];
 
@@ -84,40 +83,40 @@ const CustomerTransaction = () => {
             },
             {
               accessorKey: 'transactionDate',
-              header: 'Transaction Date',
+              header: 'Date',
               size:50,
             },
             {
-                accessorKey: 'reason',
-                header: 'Reason',
-                size:100,
+              accessorKey: 'customer',
+              header: 'Customer',
+              size:50,
             },
             {
-                accessorKey: 'channel',
-                header: 'Currency',
+                accessorKey: 'method',
+                header: 'Method',
                 size:50,
             },
             {
                 accessorKey: 'transactionAmount',
                 header: 'Transaction Amount',
+                Cell: ({ cell,row }) => {
+                    return <div className="text-sm font-semibold text-[#34A853]">{helperFunctions.dollarFormat(row.original.transactionAmount)}</div>
+                },
+                size:50,
             },
             {
                 accessorKey: 'availableBalanceBefore',
                 header: 'Available Balance Before',
+                Cell: ({ cell,row }) => {
+                    return <div className="text-sm font-semibold">{helperFunctions.dollarFormat(row.original.availableBalanceBefore)}</div>
+                },
             },
             {
                 accessorKey: 'availableBalanceAfter',
                 header: 'Available Balance After',
-                size:100,
-            },
-            {
-                accessorKey: 'status',
-                header: 'Status',
-                enableClickToCopy: true,
-                Cell: ({ cell }) => {
-                    return <div className="text-[#34A853] text-sm font-semibold">{cell.getValue()}</div>
+                Cell: ({ cell,row }) => {
+                    return <div className="text-sm font-semibold">{helperFunctions.dollarFormat(row.original.availableBalanceAfter)}</div>
                 },
-                size:50,
             },
            
         ],

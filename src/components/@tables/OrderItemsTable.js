@@ -14,28 +14,28 @@ const data = [
     {
         items: 'Air conditioner',
         quantity: 10,
-        cbm:19,
+        cbm:1,
         price:20000,
         subTotal: 200000,
     },
     {
         items: 'iPhone',
         quantity: 5,
-        cbm:19,
+        cbm:3,
         price:200000,
         subTotal: 100000,
     },
     {
         items: 'MacBook Laptops',
         quantity: 10,
-        cbm:19,
+        cbm:2,
         price:200000,
         subTotal: 2000000,
     },
     {
         items: 'PS5',
         quantity: 10,
-        cbm:19,
+        cbm:1,
         price:20000,
         subTotal: 200000,
     },
@@ -55,6 +55,9 @@ const OrderItemsTable = () => {
             {
               accessorKey: 'quantity',
               header: 'Quantity (kg)',
+              Cell: ({ cell }) => {
+                return <div className="text-sm font-semibold">{cell.getValue()} kg</div>
+            },
               size:50,
             },
             {
@@ -65,11 +68,17 @@ const OrderItemsTable = () => {
             {
                 accessorKey: 'price',
                 header: 'Price',
+                Cell: ({ cell }) => {
+                    return <div className="text-sm font-semibold">$ {cell.getValue()}</div>
+                },
                 size:50,
             },
             {
                 accessorKey: 'subTotal',
                 header: 'Sub-Total',
+                Cell: ({ cell }) => {
+                    return <div className="text-sm font-semibold">$ {cell.getValue()}</div>
+                },
                 size:50,
             },
         ],
