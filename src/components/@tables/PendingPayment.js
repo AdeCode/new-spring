@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {
     Box,
 } from '@mui/material';
-
+import helperFunctions from '../../@helpers/helperFunctions'
 
 
 //nested data is ok, see accessorKeys in ColumnDef below
@@ -15,7 +15,6 @@ const data = [
         transactionDate: '17/12/2022',
         customer:'Adewale Fashion Limited',
         method: 'invoice',
-        currency:'USD',
         transactionAmount:40899,
     },
     {
@@ -24,7 +23,6 @@ const data = [
         transactionDate: '17/12/2022',
         customer:'Motion Mobility Limited',
         method: 'invoice',
-        currency:'USD',
         transactionAmount:2345553,
     },
     {
@@ -33,7 +31,6 @@ const data = [
         transactionDate: '17/12/2022',
         customer:'Motion Mobility Limited',
         method: 'invoice',
-        currency:'USD',
         transactionAmount:63377,
     },
 ];
@@ -75,13 +72,11 @@ const PendingPayment = () => {
                 size:50,
             },
             {
-                accessorKey: 'currency',
-                header: 'Currency',
-                size:50,
-            },
-            {
                 accessorKey: 'transactionAmount',
                 header: 'Transaction Amount',
+                Cell: ({ cell,row }) => {
+                    return <div className="text-sm font-semibold">{helperFunctions.dollarFormat(row.original.transactionAmount)}</div>
+                },
                 size:50,
             },
            
