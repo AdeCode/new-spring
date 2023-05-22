@@ -3,7 +3,7 @@ import {useNavigate} from 'react-router-dom'
 
 
 const secureInstance = axios.create({
-    baseURL: 'https://qipbzv4fxl.execute-api.us-east-1.amazonaws.com/sandbox',
+    baseURL: 'https://qipbzv4fxl.execute-api.us-east-1.amazonaws.com/sandbox/',
     headers: {
         "Content-type" : "application/json",
         'Accept': 'application/json',
@@ -11,7 +11,7 @@ const secureInstance = axios.create({
 })
 
 const guestInstance = axios.create({
-    baseURL: 'https://qipbzv4fxl.execute-api.us-east-1.amazonaws.com/sandbox',
+    baseURL: 'https://qipbzv4fxl.execute-api.us-east-1.amazonaws.com/sandbox/',
 })
 
 secureInstance.interceptors.request.use(
@@ -38,7 +38,7 @@ secureInstance.interceptors.response.use(
         return response;
     },
     error => {
-        // console.log(error)
+        console.log(error.message)
         //handle unauthorize error
         if (error.response.status === 401) {
             window.location = '/';

@@ -4,15 +4,14 @@ import styled from 'styled-components';
 import SubMenu from './SubMenu';
 import {useNavigate} from 'react-router-dom'
 import {SidebarData} from '../../components/@shared/sideBarData'
-// import { AuthContext } from '../contexts/AuthContexts';
-
+import { AuthContext } from '../../contexts/AuthContexts';
 
 
 function Sidebar() {
     const [open, setOpen] = useState(false)
     const [openMenu, setOpenMenu] = useState(false)
     const navigate = useNavigate()
-    // const {dispatch} = useContext(AuthContext)
+    const {dispatch} = useContext(AuthContext)
 
     const toggleButton = () => {
         setOpen(!open)
@@ -23,7 +22,7 @@ function Sidebar() {
     }
 
     const logout = () => {
-        //dispatch({ type: 'LOGOUT'})
+        dispatch({ type: 'LOGOUT'})
     }
 
     return (

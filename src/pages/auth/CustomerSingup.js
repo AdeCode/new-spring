@@ -8,7 +8,7 @@ import * as Yup from 'yup'
 import styled from 'styled-components'
 import authService from '../../@services/authService'
 
-function BusinessSignup() {
+function CustomerSignup() {
     const navigate = useNavigate()
 
     const signUpMutation = useMutation(authService.registerCustomer, {
@@ -21,7 +21,7 @@ function BusinessSignup() {
         },
         onError: err => {
             console.log(err)
-            toast.error(err.response.data.message, {
+            toast.error(err.response.data.error, {
                 theme: "colored",
             })
         }
@@ -35,30 +35,27 @@ function BusinessSignup() {
     return (
         <Div className='flex justify-center bg-white w-full pt-7 pb-7'>
             <div className='bg-white w-[500px] h-auto shadow pt-12 rounded-md pb-7'>
-                <h2 className='text-center font-bold text-3xl lg:text-2xl'>Create your business account</h2>
-                <p className='px-[80px]'>In a few steps, you can create invoice, globalaccount receive and send  money across the world.</p>
+                <h2 className='text-center font-bold text-3xl lg:text-2xl'>Customer Signup</h2>
+                {/* <p className='px-[80px]'>In a few steps, you can create invoice, globalaccount receive and send  money across the world.</p> */}
                 <div className='flex justify-center'>
                     <Formik
                         isValid
                         initialValues={{
-                            firstName: '',
-                            lastName: '',
-                            businessName: '',
+                            first_name: '',
+                            last_name: '',
                             pin: '',
                             email: '',
                             username:'',
+                            phone:'',
                             password: '',
                             confirmPassword: '',
                         }}
                         validationSchema={
                             Yup.object({
-                                email: Yup.string()
-                                    .email("Invalid email address")
-                                    .required("email field can not be empty"),
-                                firstName:Yup.string().required("pleas enter first name"),
-                                lastName:Yup.string().required("pleas enter last name"),
-                                businessName:Yup.string().required("pleas enter business name"),
-                                pin:Yup.string().required("Please enter pin"),
+                                email: Yup.string().required("email field can not be empty").email("Invalid email address"),
+                                first_name:Yup.string().required("pleas enter first name"),
+                                last_name:Yup.string().required("pleas enter last name"),
+                                pin:Yup.string().required("Please enter pin").min(6, 'Too Short!').max(6, 'Pin is a maximum of 6 digits'),
                                 username:Yup.string().required("pleas enter business user name"),
                                 password: Yup.string().required('Password is required')
                                 .min(8, 'Password must be 8 characters long')
@@ -80,32 +77,26 @@ function BusinessSignup() {
                                 {/* <span class="material-symbols-outlined">toggle_on</span>
                                 <span class="material-symbols-outlined">visibility</span> */}
                                 <InputField
-                                    name='firstName'
+                                    name='first_name'
                                     type='text'
                                     label='First Name'
                                     placeholder='Enter your first name'
                                 />
                                 <InputField
-                                    name='lastName'
+                                    name='last_name'
                                     type='text'
                                     label='Last Name'
                                     placeholder='Enter your last name'
                                 />
                                 <InputField
-                                    name='businessName'
-                                    type='text'
-                                    label='Business Name'
-                                    placeholder='Enter your business name'
-                                />
-                                <InputField
                                     name='username'
                                     type='text'
-                                    label='Create your Business Username'
-                                    placeholder='Enter your business user name'
+                                    label='Username'
+                                    placeholder='Enter your user name'
                                 />
                                 <InputField
                                     name='pin'
-                                    type='text'
+                                    type='number'
                                     label='Pin'
                                     placeholder='Enter your your pin'
                                 />
@@ -116,10 +107,10 @@ function BusinessSignup() {
                                     placeholder='Enter your email address'
                                 />
                                 <InputField
-                                    name='username'
+                                    name='phone'
                                     type='text'
-                                    label='Username'
-                                    placeholder='Enter username'
+                                    label='Phone'
+                                    placeholder='e.g. 08022338800'
                                 />
                                 <InputField
                                     name='password'
@@ -158,4 +149,4 @@ const Div = styled.div`
     }
 `
 
-export default BusinessSignup
+export default CustomerSignup

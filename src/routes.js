@@ -24,27 +24,36 @@ import InvoiceIndex from './pages/dashboard/Invoice/Index';
 import InvoiceDetails from './pages/dashboard/Invoice/InvoiceDetails';
 import InvoiceTemplate from './components/@shared/InvoiceTemplate';
 import RecentCustomers from './pages/dashboard/RecentCustomers';
+import CustomerSignup from './pages/auth/CustomerSingup';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function Routers (){
     return (
         <Router>
             <ScrollToTop>
                 <Routes>
+                    <Route path='/' element={<Login/>}></Route>
                     <Route element={<Layout/>}>
-                        <Route path='/' element={<HomePage/>}></Route>
+                        <Route path='/home' element={<HomePage/>}></Route>
                         <Route path='/bus' element={<Business/>}></Route>
                         <Route path='/about' element={<About/>}></Route>
                         <Route path='/terms-and-condition' element={<TermsAndConditions/>}></Route>
                         <Route path='/privacy-policy' element={<PrivacyPolicy/>}></Route>
-                        <Route path='/login' element={<Login/>}></Route>
-                        <Route path='/business-signup' element={<BusinessSignup/>}></Route>
                         <Route path='*' element={<NotFound/>}/>
                     </Route>
                     <Route path='/forgot-password' element={<ForgotPassword/>}></Route>
                     <Route path='/reset-password' element={<NewPassword/>}></Route>
                     <Route path='/reset-password-code' element={<ResetPasswordCode/>}></Route>
+                    <Route path='/business-signup' element={<BusinessSignup/>}></Route>
+                    <Route path='/customer-signup' element={<CustomerSignup/>}></Route>
+
+                    <Route path='/login' element={<Login/>}></Route>
                     <Route path='*' element={<NotFound/>}/>
-                    <Route element={<Index/>}>
+                    <Route element={
+                        <ProtectedRoute>
+                            <Index/>
+                        </ProtectedRoute>
+                    }>
                         <Route path='/vendor' element={<Vendor/>}></Route>                       
                         <Route path='/dashboard' element={<Dashboard/>}></Route>                       
                         <Route path='/springpay' element={<SpringPay/>}></Route>                       

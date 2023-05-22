@@ -1,39 +1,44 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Formik, Form } from 'formik'
 import { useNavigate, Link } from 'react-router-dom'
 import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import styled from 'styled-components'
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import InputField from '../../components/@shared/InputField'
+import authService from '../../@services/authService'
+import { AuthContext } from '../../contexts/AuthContexts'
 
 function Login() {
     const navigate = useNavigate()
-    // const loginMutation = useMutation(authService.login, {
-    //     onSuccess: res => {
-    //         console.log(res)
-    //         toast.success(res.message, {
-    //             theme: "colored",
-    //           })
-    //         navigate('/home')
-    //     },
-    //     onError: err => {
-    //         console.log(err)
-    //         toast.error(err.response.data.message, {
-    //             theme: "colored",
-    //           })
-    //     }
-    // })
 
-    const loginMutation = () => { }
+    const {dispatch} = useContext(AuthContext)
+
+    const loginMutation = useMutation(authService.login, {
+        onSuccess: res => {
+            console.log(res)
+            dispatch({type: 'LOGIN', payload:res.data})
+            toast.success(res.message, {
+                theme: "colored",
+            })
+            navigate('/dashboard')
+        },
+        onError: err => {
+            console.log(err)
+            toast.error(err.response.data.error, {
+                theme: "colored",
+            })
+        }
+    })
+
 
     const onSubmit = (values) => {
         loginMutation.mutate(values)
     }
+
     return (
         <Div className='flex justify-center bg-white w-full pt-7 pb-7'>
-            <div className='bg-white w-[500px] h-[500px] shadow pt-12 rounded-md '>
+            <div className='bg-white w-[500px] h-[500px] shadow pt-12 rounded-md mt-7'>
                 <h2 className='text-center font-bold text-3xl lg:text-2xl'>Sign in</h2>
                 <div className='flex justify-center'>
                     <Formik
@@ -70,7 +75,8 @@ function Login() {
                                     placeholder='*********'
                                     icon={true}
                                 />
-                                <Link to='/forgot-password' className='text-end text-[#1BB6EF] font-normal text-sm'>Forgot password?</Link>
+                                <Link to='/forgot-password' className='text-end text-[#1BB6EF] font-normal text-sm mb-2'>Forgot password?</Link>
+                                <Link to='/business-signup' className='text-end text-[#1BB6EF] font-normal text-sm'>Create new account</Link>
                                 <button type="submit" disabled={!isValid} className='btn w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                     {
                                         loginMutation.isLoading ?
