@@ -1,7 +1,7 @@
 import httpService from "./httpService";
 
 async function login(payload){
-    const {data} = await httpService.guestInstance.post('/customers/auth/onboarding', payload)
+    const {data} = await httpService.guestInstance.post('/customers/auth', payload)
     return data
 }
 
@@ -15,13 +15,13 @@ async function customerLogin(payload){
     return data
 }
 
-async function register(payload){
-    const {data} = await httpService.guestInstance.put('/admin/auth/onboarding', payload)
+async function registerCustomer(payload){
+    const {data} = await httpService.guestInstance.put('/customers/auth', payload)
     return data
 }
 
 async function forgotPassword(payload){
-    const {data} = await httpService.guestInstance.post('/admin/auth/password', payload)
+    const {data} = await httpService.guestInstance.post('/customers/auth/password', payload)
     return data
 }
 
@@ -42,7 +42,7 @@ async function logout(){
 
 const authService = {
     login,
-    register,
+    registerCustomer,
     logout,
     forgotPassword,
     verifyToken,

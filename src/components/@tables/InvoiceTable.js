@@ -13,85 +13,6 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
 
 
-//nested data is ok, see accessorKeys in ColumnDef below
-// let data = [
-//     {
-//         id:1,
-//         status: 'success',
-//         invoiceNumber: '1752AF',
-//         customer:'Spring Finance',
-//         dateCreated: '2023/04/20',
-//         amount:2345553,
-//         dueDate:'2023/05/20',
-//     },
-//     {
-//         id:2,
-//         status: 'pending',
-//         invoiceNumber: '001KK',
-//         customer:'Forte Oil',
-//         dateCreated: '2023/04/20',
-//         amount:29933000,
-//         dueDate:'2023/05/20',
-//     },
-//     {
-//         id:3,
-//         status: 'success',
-//         invoiceNumber: '00252AF',
-//         customer:'Apex Constructors',
-//         dateCreated: '2023/04/20',
-//         amount:2345553,
-//         dueDate:'2023/05/20',
-//     },
-//     {
-//         id:4,
-//         status: 'pending',
-//         invoiceNumber: '1752AF',
-//         customer:'Spring Finance',
-//         dateCreated: '2023/04/20',
-//         amount:2345553,
-//         dueDate:'2023/05/20',
-//     },
-    
-// ];
-
-const invoiceData = [
-    {
-        id:1,
-        status:'paid',
-        invoiceNum:98830,
-        customer:'Forte Oil',
-        createdAt: '2023/05/20',
-        amount:'26632.00',
-        dueDate: '2023/05/20'
-    },
-    {
-        id:2,
-        status:'paid',
-        invoiceNum:100830,
-        customer:'Spring Finance',
-        createdAt: '2023/05/20',
-        amount:'26632.00',
-        dueDate: '2023/05/20'
-    },
-    {
-        id:3,
-        status:'unpaid',
-        invoiceNum:278830,
-        customer:'Apex Constructors',
-        createdAt: '2023/05/20',
-        amount:'26632.00',
-        dueDate: '2023/05/20'
-    },
-    {
-        id:4,
-        status:'unpaid',
-        invoiceNum:10830,
-        customer:'Tesla',
-        createdAt: '2023/05/20',
-        amount:'26632.00',
-        dueDate: '2023/05/20'
-    },
-]
 
 
 const InvoiceTable = () => {
@@ -108,7 +29,7 @@ const InvoiceTable = () => {
 
     const [data, setData] = useState([
         {
-            id:1,
+            id:7,
             status: 'paid',
             invoiceNumber: '1752AF',
             customer:'Spring Finance',
@@ -207,11 +128,11 @@ const InvoiceTable = () => {
                 header: 'Due Date',
             },
             {
-                accessorKey: 'action',
+                accessorKey: 'view',
                 header: 'View',
                 Cell: ({ cell, row }) => {
                     return <Link to='/invoice/details' className='cursor-pointer text-green-800'>
-                            <span class="material-symbols-outlined" >visibility</span>
+                            <span className="material-symbols-outlined" >visibility</span>
                         </Link>
                 }, 
                 size:50,

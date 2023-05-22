@@ -2,17 +2,17 @@ import logo from './logo.svg';
 import './App.css';
 import Routers from './routes';
 import 'react-toastify/dist/ReactToastify.css';
-// import AuthContextProvider from "./contexts/AuthContext";
 import { ToastContainer } from 'react-toastify';
+import AuthContextProvider from './contexts/AuthContexts';
 
 
 function App() {
   return (
     <div className="App">
-      {/* <AuthContextProvider> */}
+      <AuthContextProvider>
         <Routers/>
         <ToastContainer/>
-      {/* </AuthContextProvider> */}
+      </AuthContextProvider>
     </div>
   );
 }

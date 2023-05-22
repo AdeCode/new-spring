@@ -4,17 +4,20 @@ import logo from '../../images/home/logo1.png'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import InputField from '../../components/@shared/InputField'
-import authService from '../../components/@services/authService'
+import authService from '../../@services/authService'
 import { useMutation } from 'react-query'
 import {toast} from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 
 
 function ForgotPassword() {
+    const navigate = useNavigate()
+
     const forgotPasswordMutation = useMutation(authService.forgotPassword, {
         onSuccess: res => {
             console.log(res)
-            //navigate('/dashboard')
+            navigate('/reset-password')
 
         },
         onError: err => {
@@ -42,7 +45,6 @@ function ForgotPassword() {
                 <Formik
                 initialValues={{
                     email:'',
-                    password:'',
                 }}
                 validationSchema={
                     Yup.object({                        

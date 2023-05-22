@@ -1,19 +1,24 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import {Link, useNavigate} from 'react-router-dom'
-import CustomerTransaction from '../../../components/@tables/CustomerTransaction'
 import InvoiceTable from '../../../components/@tables/InvoiceTable'
+import invoiceService from '../../../@services/invoiceService'
+import {useQuery} from 'react-query'
 
 function InvoiceIndex() {
     const [currency, setCurrency] = useState('USD')
 
     const navigate = useNavigate()
 
-    const newInvoiceMutation = () => { }
+    const {data:invices, isLoading, error} = useQuery('invices', invoiceService.getAllInvoices)
 
-    const onSubmit = () => {
+    invices && console.log(invices)
 
-    }
+    // const newInvoiceMutation = () => { }
+
+    // const onSubmit = () => {
+
+    // }
 
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value)
