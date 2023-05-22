@@ -12,12 +12,12 @@ import { AuthContext } from '../../contexts/AuthContexts'
 function Login() {
     const navigate = useNavigate()
 
-    const {dispatch} = useContext(AuthContext)
+    const { dispatch } = useContext(AuthContext)
 
     const loginMutation = useMutation(authService.login, {
         onSuccess: res => {
             console.log(res)
-            dispatch({type: 'LOGIN', payload:res.data})
+            dispatch({ type: 'LOGIN', payload: res.data })
             toast.success(res.message, {
                 theme: "colored",
             })
@@ -37,56 +37,58 @@ function Login() {
     }
 
     return (
-        <Div className='flex justify-center bg-white w-full pt-7 pb-7'>
-            <div className='bg-white w-[500px] h-[500px] shadow pt-12 rounded-md mt-7'>
-                <h2 className='text-center font-bold text-3xl lg:text-2xl'>Sign in</h2>
-                <div className='flex justify-center'>
-                    <Formik
-                        isValid
-                        initialValues={{
-                            email: '',
-                            password: '',
-                        }}
-                        validationSchema={
-                            Yup.object({
-                                email: Yup.string()
-                                    .email("Invalid email address")
-                                    .required("email field can not be empty"),
-                                password: Yup.string().required('password field can not be empty')
-                            })
-                        }
-                        onSubmit={(values, { setSubmitting }) => {
-                            setSubmitting(false)
-                            onSubmit(values)
-                        }}
-                    >
-                        {({ isSubmitting, values, isValid }) => (
-                            <Form className='flex flex-col w-[70%]'>
-                                <InputField
-                                    name='email'
-                                    type='email'
-                                    label='Email'
-                                    placeholder='input your email address'
-                                />
-                                <InputField
-                                    name='password'
-                                    type='password'
-                                    label='Password'
-                                    placeholder='*********'
-                                    icon={true}
-                                />
-                                <Link to='/forgot-password' className='text-end text-[#1BB6EF] font-normal text-sm mb-2'>Forgot password?</Link>
-                                <Link to='/business-signup' className='text-end text-[#1BB6EF] font-normal text-sm'>Create new account</Link>
-                                <button type="submit" disabled={!isValid} className='btn w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
-                                    {
-                                        loginMutation.isLoading ?
-                                            "Loading..."
-                                            : "Continue"
-                                    }
-                                </button>
-                            </Form>
-                        )}
-                    </Formik>
+        <Div className='flex justify-center bg-white w-full'>
+            <div className='bg-signinBg bg-cover w-full flex justify-center items-center h-screen'>
+                <div className='bg-white w-[500px] h-[500px] shadow pt-12 rounded-md mt-7'>
+                    <h2 className='text-center font-bold text-3xl lg:text-2xl'>Sign in</h2>
+                    <div className='flex justify-center'>
+                        <Formik
+                            isValid
+                            initialValues={{
+                                email: '',
+                                password: '',
+                            }}
+                            validationSchema={
+                                Yup.object({
+                                    email: Yup.string()
+                                        .email("Invalid email address")
+                                        .required("email field can not be empty"),
+                                    password: Yup.string().required('password field can not be empty')
+                                })
+                            }
+                            onSubmit={(values, { setSubmitting }) => {
+                                setSubmitting(false)
+                                onSubmit(values)
+                            }}
+                        >
+                            {({ isSubmitting, values, isValid }) => (
+                                <Form className='flex flex-col w-[70%]'>
+                                    <InputField
+                                        name='email'
+                                        type='email'
+                                        label='Email'
+                                        placeholder='e.g. user@example.com'
+                                    />
+                                    <InputField
+                                        name='password'
+                                        type='password'
+                                        label='Password'
+                                        placeholder='*********'
+                                        icon={true}
+                                    />
+                                    <Link to='/forgot-password' className='text-end text-[#1BB6EF] font-normal text-sm mb-2'>Forgot password?</Link>
+                                    <Link to='/customer-signup' className='text-end text-[#1BB6EF] font-normal text-sm'>Create new account</Link>
+                                    <button type="submit" disabled={!isValid} className='btn w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
+                                        {
+                                            loginMutation.isLoading ?
+                                                "Loading..."
+                                                : "Continue"
+                                        }
+                                    </button>
+                                </Form>
+                            )}
+                        </Formik>
+                    </div>
                 </div>
             </div>
         </Div>

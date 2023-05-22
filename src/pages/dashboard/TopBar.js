@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
-
+import { AuthContext } from '../../contexts/AuthContexts'
 
 function TopBar() {
+  const {state} = useContext(AuthContext)
+
+  // console.log(state)
+
   return (
     <Div className='bg-white flex justify-between w-full h-[86px] py-3 pl-[51px] pr-12'>
         <div className='flex items-center lg:py-[4px] bg-app_bar gap-3 px-2 lg:w-[526px] rounded-[5px]'>
@@ -12,8 +16,14 @@ function TopBar() {
         <div className='flex items-center gap-4'>
             <span className="material-symbols-outlined">help</span>
             <span className="material-symbols-outlined">notifications</span>
-            <span className='bg-bg_dark p-3 text-white lg:rounded-[50%] font-medium text-sm'>MH</span>
-            <span className="material-symbols-outlined" style={{color:'#1F4173', fontSize:'32px'}}>keyboard_arrow_down</span>
+              {
+                state.isAuthenticated &&
+                <div className='flex items-center cursor-pointer'>
+                  <span className='bg-bg_dark p-3 text-black lg:rounded-[50%] font-medium text-sm'>{state.user.username}</span>
+                  <span className="material-symbols-outlined" style={{color:'#1F4173', fontSize:'32px'}}>keyboard_arrow_down</span>
+                </div>
+              }
+            
             {/* <MdKeyboardArrowDown style={{color:'#1F4173', fontSize:'32px'}}/> */}
         </div>
     </Div>

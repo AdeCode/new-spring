@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import styled from 'styled-components'
 import logo from '../../images/home/logo1.png'
 import { Formik, Form } from 'formik'
@@ -7,33 +7,44 @@ import InputField from '../../components/@shared/InputField'
 import authService from '../../@services/authService'
 import { useMutation } from 'react-query'
 import {toast} from 'react-toastify'
-import { useNavigate } from 'react-router-dom'
-
+import { Link, useNavigate } from 'react-router-dom'
+import PreviousPage from '../../components/@shared/PreviousPage'
 
 
 function ForgotPassword() {
     const navigate = useNavigate()
 
+    const inputEmail = useRef('')
+
     const forgotPasswordMutation = useMutation(authService.forgotPassword, {
         onSuccess: res => {
-            console.log(res)
-            navigate('/reset-password')
+            // console.log(res)
+            toast.success(res.message, {
+                theme: "colored",
+            })
+            navigate('/reset-password',{
+                state:{
+                    email:inputEmail.current
+                }
+            })
 
         },
         onError: err => {
             console.log(err.message)
-            toast.error(err.response.data.message, {
+            toast.error(err.response.data.error, {
                 theme: "colored",
-              })
+            })
         }
     })
 
     const onSubmit = (values) => {
         forgotPasswordMutation.mutate(values)
+        inputEmail.current=values.email
     }
 
   return (
-    <Box className='flex justify-center pt-[107px]'>
+    <Box className='flex justify-center pt-[107px] flex-col'>
+        <PreviousPage/>
         <div className='flex flex-col items-center'>
             <div className='mb-5'>
                 <img src={logo} alt='logo'/>
@@ -66,6 +77,8 @@ function ForgotPassword() {
                                 placeholder='enter your email'
                                 label='Email'
                             />
+                            <Link to='/login' className='text-end text-[#1BB6EF] font-normal text-sm mb-2'>Login</Link>
+                            <Link to='/customer-signup' className='text-end text-[#1BB6EF] font-normal text-sm'>Create new account</Link>
                             <button type="submit" disabled={isSubmitting} className='w-full py-[11px] text-white text-[16px] mt-[13px]'>
                                 {
                                     forgotPasswordMutation.isLoading 

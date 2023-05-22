@@ -36,7 +36,9 @@ function CustomerSignup() {
         <Div className='flex justify-center bg-white w-full pt-7 pb-7'>
             <div className='bg-white w-[500px] h-auto shadow pt-12 rounded-md pb-7'>
                 <h2 className='text-center font-bold text-3xl lg:text-2xl'>Customer Signup</h2>
-                {/* <p className='px-[80px]'>In a few steps, you can create invoice, globalaccount receive and send  money across the world.</p> */}
+                <p className='px-[80px] mb-4'>
+                    In few steps, you can start to create invoices, order a USD, EURO, GBP & NGN account, send and receive money from your customers
+                </p>
                 <div className='flex justify-center'>
                     <Formik
                         isValid
@@ -53,10 +55,10 @@ function CustomerSignup() {
                         validationSchema={
                             Yup.object({
                                 email: Yup.string().required("email field can not be empty").email("Invalid email address"),
-                                first_name:Yup.string().required("pleas enter first name"),
-                                last_name:Yup.string().required("pleas enter last name"),
-                                pin:Yup.string().required("Please enter pin").min(6, 'Too Short!').max(6, 'Pin is a maximum of 6 digits'),
-                                username:Yup.string().required("pleas enter business user name"),
+                                first_name:Yup.string().required("Please enter first name"),
+                                last_name:Yup.string().required("Please enter last name"),
+                                pin:Yup.string().required("Pleasee enter pin").max(6, 'Pin is a maximum of 6 digits').min(4, 'Too Short!'),
+                                username:Yup.string().required("Please enter user name"),
                                 password: Yup.string().required('Password is required')
                                 .min(8, 'Password must be 8 characters long')
                                 .matches(/[0-9]/, 'Password requires a number')
@@ -80,31 +82,31 @@ function CustomerSignup() {
                                     name='first_name'
                                     type='text'
                                     label='First Name'
-                                    placeholder='Enter your first name'
+                                    placeholder='e.g. Olawale'
                                 />
                                 <InputField
                                     name='last_name'
                                     type='text'
                                     label='Last Name'
-                                    placeholder='Enter your last name'
+                                    placeholder='e.g. Adekunle'
                                 />
                                 <InputField
                                     name='username'
                                     type='text'
                                     label='Username'
-                                    placeholder='Enter your user name'
+                                    placeholder='e.g. GIGLOOGISTICS'
                                 />
                                 <InputField
                                     name='pin'
                                     type='number'
                                     label='Pin'
-                                    placeholder='Enter your your pin'
+                                    placeholder='Create a 4 or 6 digits pin for your self'
                                 />
                                 <InputField
                                     name='email'
                                     type='email'
                                     label='Email Address'
-                                    placeholder='Enter your email address'
+                                    placeholder='e.g. user@example.com'
                                 />
                                 <InputField
                                     name='phone'

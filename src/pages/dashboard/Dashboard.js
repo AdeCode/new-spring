@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import AlertBox from '../../components/AlertBox'
 import ngn from '../../images/dashboard/ngn.png'
@@ -9,11 +9,16 @@ import card from '../../images/dashboard/card.png'
 import CustomerTransaction from '../../components/@tables/CustomerTransaction'
 import DoughnutChart from '../../components/@charts/DoughnutChart'
 import PendingPayment from '../../components/@tables/PendingPayment'
+import { AuthContext } from '../../contexts/AuthContexts'
 
 function Dashboard() {
+
+    const {state} = useContext(AuthContext)
+    // console.log(state)
+
     return (
         <DashboardSection>
-            <h2 className='font-normal text-lg text-gray'>Welcome SkyCargo Ltd,</h2>
+            <h2 className='font-normal text-lg text-gray'>Welcome {state.user.first_name},</h2>
             <AlertBox
                 message='Please complete your compliance requirements to access our services (Click the settings button to complete your KYC requirements)'
             />

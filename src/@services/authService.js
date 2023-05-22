@@ -31,7 +31,7 @@ async function verifyToken(payload){
 }
 
 async function resetPassword(payload){
-    const {data} = await httpService.guestInstance.post('/password/reset', payload)
+    const {data} = await httpService.guestInstance.patch('/customers/auth/password', payload)
     return data
 }
 
