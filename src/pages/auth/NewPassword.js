@@ -1,22 +1,54 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import logo from '../../images/home/logo1.png'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import InputField from '../../components/@shared/InputField'
-
+import OtpInput from 'react-otp-input';
+import authService from '../../@services/authService'
+import { useMutation } from 'react-query'
+import { toast } from 'react-toastify'
+import { useNavigate, useLocation } from 'react-router-dom'
+import PreviousPage from '../../components/@shared/PreviousPage'
 
 
 
 function NewPassword() {
-    const submitMutation = ()=>{}
+    const [otp, setOtp] = useState('');
+
+    const location = useLocation()
+
+    const navigate = useNavigate()
+
+    const resetPasswordMutation = useMutation(authService.resetPassword, {
+        onSuccess: res => {
+            // console.log(res)
+            toast.success(res.message, {
+                theme: "colored",
+            })
+            navigate('/login')
+        },
+        onError: err => {
+            console.log(err)
+            toast.error(err.response.data.error, {
+                theme: "colored",
+            })
+        }
+    })
 
     const onSubmit = (values) => {
-        console.log(values)
+        values = {
+            ...values,
+            otp:otp,
+            email:location.state.email
+        }
+        // console.log(values)
+        resetPasswordMutation.mutate(values)
     }
 
   return (
-    <Box className='flex justify-center pt-[107px]'>
+    <Box className='flex justify-center pt-[107px] flex-col'>
+        <PreviousPage/>
         <div className='flex flex-col items-center'>
             <div className='mb-5'>
                 <img src={logo} alt='logo'/>
@@ -46,6 +78,16 @@ function NewPassword() {
                 >
                     {({ isSubmitting }) => (
                         <Form className='flex flex-col w-full'>
+                            <label htmlFor='otp' className='font-medium text-base text-label mb-[6px]'>Enter OTP</label>
+                            <OtpInput
+                                value={otp}
+                                onChange={setOtp}
+                                numInputs={6}
+                                renderInput={(props) => <input {...props} />}
+                                inputStyle='otpInput'
+                                className='w-full'
+                                containerStyle='otpContainer'
+                            />
                             <InputField
                                 name='password'
                                 type='password'
@@ -63,9 +105,9 @@ function NewPassword() {
                             />
                             <button type="submit" disabled={isSubmitting} className='w-full py-[11px] text-white text-[16px] mt-[13px]'>
                                 {
-                                    submitMutation.isLoading 
+                                    resetPasswordMutation.isLoading 
                                     ? "Please wait..." 
-                                    : "Save"
+                                    : "Submit"
                                 }
                             </button>
                         </Form>
@@ -86,6 +128,24 @@ const Box = styled.div`
         background: linear-gradient(128.03deg, #6199DB -0.78%, #4BCA69 90.56%);
         box-shadow: 0px 1px 2px rgba(105, 81, 255, 0.05);
         border-radius: 6px;
+    }
+
+    .otpContainer{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .otpInput{
+        min-width:45px;
+        height: 45px;
+        background: linear-gradient(107.13deg, rgba(71, 192, 190, 0.15) -13.42%, rgba(57, 123, 190, 0.15) 104.4%);
+        border-radius: 4.07143px;
+        font-weight: 700;
+        font-size: 26px;
+        color: #131417;
+        line-height: 32px;
     }
 `
 

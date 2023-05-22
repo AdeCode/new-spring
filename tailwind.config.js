@@ -12,6 +12,9 @@ module.exports = {
         'gray':'#6A707E',
         'lightDark':'#324054',
 
+      },
+      backgroundImage: {
+        'signinBg': "url('./images/dashboard/signin-image.png')",
       }
     },
   },
