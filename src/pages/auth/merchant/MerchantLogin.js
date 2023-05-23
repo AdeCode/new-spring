@@ -5,18 +5,18 @@ import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import * as Yup from 'yup'
 import styled from 'styled-components'
-import InputField from '../../components/@shared/InputField'
-import authService from '../../@services/authService'
-import { AuthContext } from '../../contexts/AuthContexts'
-import logo from '../../images/home/logo1.png'
+import { AuthContext } from '../../../contexts/AuthContexts'
+import InputField from '../../../components/@shared/InputField'
+import merchantService from '../../../@services/merchantService'
+import logo from '../../../images/home/logo1.png'
 
 
-function Login() {
+function MerchantLogin() {
     const navigate = useNavigate()
 
     const { dispatch } = useContext(AuthContext)
 
-    const loginMutation = useMutation(authService.login, {
+    const loginMutation = useMutation(merchantService.login, {
         onSuccess: res => {
             // console.log(res)
             dispatch({ type: 'LOGIN', payload: res.data })
@@ -81,8 +81,8 @@ function Login() {
                                         placeholder='*********'
                                         icon={true}
                                     />
-                                    <Link to='/forgot-password' className='text-end text-[#1BB6EF] font-normal text-sm mb-2'>Forgot password?</Link>
-                                    <Link to='/customer-signup' className='text-end text-[#1BB6EF] font-normal text-sm'>Create new account</Link>
+                                    <Link to='/business-forgot-password' className='text-end text-[#1BB6EF] font-normal text-sm mb-2'>Forgot password?</Link>
+                                    <Link to='/select-user-type' className='text-end text-[#1BB6EF] font-normal text-sm'>Create new account</Link>
                                     <button type="submit" disabled={!isValid} className='btn w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                         {
                                             loginMutation.isLoading ?
@@ -106,4 +106,4 @@ const Div = styled.div`
     }
 `
 
-export default Login
+export default MerchantLogin

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { Formik, Form } from 'formik'
@@ -10,17 +10,35 @@ import 'react-calendar/dist/Calendar.css';
 import 'react-clock/dist/Clock.css';
 import TextField from '../../../components/@shared/TextField'
 import InvoiceFooter from '../../../components/@shared/InvoiceFooter'
+import customerService from '../../../@services/customerService'
+import { useQuery } from 'react-query'
+import merchantService from '../../../@services/merchantService'
+import { useMutation } from 'react-query'
+import { toast } from 'react-toastify'
+
+
 
 
 function NewInvoice() {
     const navigate = useNavigate()
 
+    const phoneNumberRef = useRef('')
+
+    const [phoneNumber, setPhoneNumber] = useState('')
+
+    // const { data: customer, isLoading, error } = useQuery(['customer', { phoneNumber }], customerService.fetchCustomerByPhoneNumber)
+    // customer && console.log(customer)
+
     const [data, setData] = useState([
         { 
+            customer_phone:'',
+            customer_name:'',
+            invoice_items:[],
             item:'',
             quantity:'',
             price:'',
             cbm:'',
+            
         }
     ])
 
@@ -32,10 +50,6 @@ function NewInvoice() {
     // console.log(value)
 
     const newInvoiceMutation = () => { }
-
-    const onSubmit = () => {
-
-    }
 
     const handleClick = () => {
         console.log('button clicked')
@@ -57,6 +71,28 @@ function NewInvoice() {
         setData(deleteVal)
     }
 
+    const createInvoiceMutation = useMutation(merchantService.createInvoice, {
+        onSuccess: res => {
+            console.log(res)
+            //dispatch({ type: 'LOGIN', payload: res.data })
+            toast.success(res.message, {
+                theme: "colored",
+            })
+            navigate('/business-login')
+        },
+        onError: err => {
+            console.log(err)
+            toast.error(err.response.data.error, {
+                theme: "colored",
+            })
+        }
+    })
+
+    const onSubmit = (values) => {
+        console.log(values)
+        createInvoiceMutation.mutate(values)
+    }
+
     return (
         <Invoice className='px-[50px]'>
             <Link onClick={() => navigate(-1)} className='flex gap-2 items-center mb-6'>
@@ -70,15 +106,19 @@ function NewInvoice() {
                     <Formik
                         isValid
                         initialValues={{
-                            invoice: '',
-                            password: '',
+                            customer_email:'',
+                            customer_name:'',
+                            notes:'',
+                            customer_phone:'',
+                            due_date:value,
+                            invoice_items:[]
                         }}
                         validationSchema={
                             Yup.object({
-                                email: Yup.string()
-                                    .email("Invalid email address")
+                                customer_email: Yup.string().email("Invalid email address")
                                     .required("email field can not be empty"),
-                                password: Yup.string().required('password field can not be empty')
+                                customer_name:Yup.string().required("Please enter first name"),
+                                customer_phone:Yup.string().required("Please enter phone number"),
                             })
                         }
                         onSubmit={(values, { setSubmitting }) => {
@@ -89,20 +129,29 @@ function NewInvoice() {
                         {({ isSubmitting, values, isValid }) => (
                             <Form className='flex flex-col py-2'>
                                 <div className='flex w-full gap-2'>
-                                    <div className='grow'>
+                                    {/* <div className='grow'>
                                         <InputField
                                             name='invoice'
                                             type='text'
                                             label='Invoice number'
                                             placeholder='e.g. 09923EJ'
                                         />
-                                    </div>
+                                    </div> */}
                                     <div className='grow'>
                                         <InputField
-                                            name='customerPhone'
+                                            name='customer_phone'
                                             type='text'
                                             label='Customer Phone'
                                             placeholder='e.g. 08033889999'
+                                            disabled
+                                        />
+                                    </div>
+                                    <div className='grow'>
+                                        <InputField
+                                            name='customer_email'
+                                            type='email'
+                                            label='Customer Email'
+                                            placeholder='e.g. user@mail.com'
                                         />
                                     </div>
                                 </div>
@@ -110,18 +159,10 @@ function NewInvoice() {
                                 <div className='flex w-full gap-2'>
                                     <div className='grow'>
                                         <InputField
-                                            name='customerName'
+                                            name='customer_name'
                                             type='text'
                                             label='Customer Name'
                                             placeholder='e.g. Olawale James'
-                                        />
-                                    </div>
-                                    <div className='grow-0'>
-                                        <InputField
-                                            name='customerEmail'
-                                            type='email'
-                                            label='Customer Email'
-                                            placeholder='e.g. user@mail.com'
                                         />
                                     </div>
                                     <div className='grow-0'>
@@ -209,7 +250,7 @@ function NewInvoice() {
                                 <div className='flex justify-end'>
                                         <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                             {
-                                                newInvoiceMutation.isLoading ?
+                                                createInvoiceMutation.isLoading ?
                                                     "Loading..."
                                                     : "Create Invoice"
                                             }
