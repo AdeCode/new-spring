@@ -8,7 +8,7 @@ import TermsAndConditions from './pages/TermsAndConditions';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import ScrollToTop from './components/ScrollToTop'
 import Login from './pages/auth/Login';
-import BusinessSignup from './pages/auth/BusinessSignup';
+import BusinessSignup from './pages/auth/merchant/BusinessSignup';
 import ForgotPassword from './pages/auth/ForgotPassword';
 import NewPassword from './pages/auth/NewPassword';
 import ResetPasswordCode from './pages/auth/ResetPasswordCode';
@@ -26,13 +26,19 @@ import InvoiceTemplate from './components/@shared/InvoiceTemplate';
 import RecentCustomers from './pages/dashboard/RecentCustomers';
 import CustomerSignup from './pages/auth/CustomerSingup';
 import ProtectedRoute from './components/ProtectedRoute';
+import UserType from './pages/auth/UserType';
+import MerchantLogin from './pages/auth/merchant/MerchantLogin';
+import MerchantForgotPassword from './pages/auth/merchant/MerchantForgotPassword';
+import BusinessNewPassword from './pages/auth/merchant/BusinessNewPassword';
 
 function Routers (){
     return (
         <Router>
             <ScrollToTop>
                 <Routes>
-                    <Route path='/' element={<Login/>}></Route>
+                    <Route path='/' element={<MerchantLogin/>}></Route>
+                    <Route path='/select-user-type' element={<UserType/>}></Route>
+                    {/* <Route path='/' element={<Login/>}></Route> */}
                     <Route element={<Layout/>}>
                         <Route path='/home' element={<HomePage/>}></Route>
                         <Route path='/bus' element={<Business/>}></Route>
@@ -42,11 +48,13 @@ function Routers (){
                         <Route path='*' element={<NotFound/>}/>
                     </Route>
                     <Route path='/forgot-password' element={<ForgotPassword/>}></Route>
+                    <Route path='/business-forgot-password' element={<MerchantForgotPassword/>}></Route>
                     <Route path='/reset-password' element={<NewPassword/>}></Route>
+                    <Route path='/business-reset-password' element={<BusinessNewPassword/>}></Route>
                     <Route path='/reset-password-code' element={<ResetPasswordCode/>}></Route>
                     <Route path='/business-signup' element={<BusinessSignup/>}></Route>
                     <Route path='/customer-signup' element={<CustomerSignup/>}></Route>
-
+                    <Route path='/business-login' element={<MerchantLogin/>}></Route>
                     <Route path='/login' element={<Login/>}></Route>
                     <Route path='*' element={<NotFound/>}/>
                     <Route element={

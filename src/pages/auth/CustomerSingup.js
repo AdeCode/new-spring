@@ -37,8 +37,7 @@ function CustomerSignup() {
             <div className='bg-white w-[500px] h-auto shadow pt-12 rounded-md pb-7'>
                 <h2 className='text-center font-bold text-3xl lg:text-2xl'>Customer Signup</h2>
                 <p className='px-[80px] mb-4'>
-                    In few steps, you can start to create invoices, order a USD, EURO, GBP & NGN account, send and receive money from your customers
-                </p>
+                    In few steps, you can start to create invoices, order a USD, EURO, GBP &amp; NGN account, send and receive money from your customers globally.                </p>
                 <div className='flex justify-center'>
                     <Formik
                         isValid
