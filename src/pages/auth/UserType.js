@@ -14,7 +14,7 @@ function UserType() {
                 <div className='flex flex-col items-center'>
                     <h3 className='font-semibold text-[1.2rem] mb-3'>Register as Individual</h3>
                     <p className='mb-7'>Making &amp; Receiving Payments</p>
-                    <img src={individual} alt='individual' />
+                    <img src={individual} alt='individual' height='200px' width='260px' />
                     <ul className='my-3'>
                         <li className=''>Make payments to 1000+ Businesses</li>
                         <li className=''>Flexible payment options</li>

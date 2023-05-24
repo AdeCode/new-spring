@@ -34,9 +34,17 @@ function BusinessSignup() {
 
 
     const onSubmit = (values) => {
-        console.log(values)
+        const splitName = values.full_name.split(' ')
+        values = {
+            ...values,
+            first_name:splitName[0],
+            last_name:splitName[1],
+        }
+        //console.log(values)
         signUpMutation.mutate(values)
     }
+
+
     return (
         <Div className='flex flex-col items-center justify-center bg-white w-full pt-7 pb-7'>
             <div className='mb-5'>
@@ -50,11 +58,10 @@ function BusinessSignup() {
                     <Formik
                         isValid
                         initialValues={{
-                            first_name: '',
-                            last_name: '',
+                            full_name: '',
+                            // last_name: '',
                             business_name: '',
                             business_username: '',
-                            pin: '',
                             email: '',
                             password: '',
                             // confirmPassword: '',
@@ -63,19 +70,19 @@ function BusinessSignup() {
                             Yup.object({
                                 email: Yup.string()
                                     .email("Invalid email address")
-                                    .required("email field can not be empty"),
-                                first_name:Yup.string().required("pleas enter first name"),
-                                last_name:Yup.string().required("pleas enter last name"),
-                                business_name:Yup.string().required("pleas enter business name"),
-                                pin:Yup.string().required("Please enter pin"),
-                                business_username:Yup.string().required("pleas enter business user name"),
+                                    .required("Email field is required"),
+                                // first_name:Yup.string().required("pleas enter first name"),
+                                full_name:Yup.string().required("Name field is required").matches(/ /gi,'Please enter your full name'),
+                                business_name:Yup.string().required("Business name field is required"),
+                                // pin:Yup.string().required("Please enter pin"),
+                                business_username:Yup.string().required("Business user name field is required"),
                                 password: Yup.string().required('Password is required')
                                 .min(8, 'Password must be 8 characters long')
                                 .matches(/[0-9]/, 'Password requires a number')
                                 .matches(/[a-z]/, 'Password requires a lowercase letter')
                                 .matches(/[A-Z]/, 'Password requires an uppercase letter')
                                 .matches(/[^\w]/, 'Password requires a symbol'),
-                                confirmPassword: Yup.string().label('confirm password').required().oneOf([Yup.ref('password'), null], 'Passwords must match'),
+                                // confirmPassword: Yup.string().label('confirm password').required().oneOf([Yup.ref('password'), null], 'Passwords must match'),
                             })
                         }
                         onSubmit={(values, { setSubmitting }) => {
@@ -89,40 +96,40 @@ function BusinessSignup() {
                                 {/* <span class="material-symbols-outlined">toggle_on</span>
                                 <span class="material-symbols-outlined">visibility</span> */}
                                 <InputField
-                                    name='first_name'
+                                    name='full_name'
                                     type='text'
-                                    label='First Name'
-                                    placeholder='Enter your first name'
+                                    label='Full Name'
+                                    placeholder='e.g. Olusegun Kolawole'
                                 />
-                                <InputField
+                                {/* <InputField
                                     name='last_name'
                                     type='text'
                                     label='Last Name'
                                     placeholder='Enter your last name'
-                                />
+                                /> */}
                                 <InputField
                                     name='business_name'
                                     type='text'
                                     label='Business Name'
-                                    placeholder='Enter your business name'
+                                    placeholder='e.g. GIG Logisitics'
                                 />
                                 <InputField
                                     name='business_username'
                                     type='text'
-                                    label='Create your Business Username'
-                                    placeholder='Enter your business user name'
+                                    label='Business Username'
+                                    placeholder='e.g. @giglogistics'
                                 />
-                                <InputField
+                                {/* <InputField
                                     name='pin'
                                     type='text'
                                     label='Pin'
                                     placeholder='Enter your your pin'
-                                />
+                                /> */}
                                 <InputField
                                     name='email'
                                     type='email'
                                     label='Email Address'
-                                    placeholder='Enter your email address'
+                                    placeholder='e.g. giglog@gmail.com'
                                 />
                                 <InputField
                                     name='password'
@@ -131,13 +138,13 @@ function BusinessSignup() {
                                     placeholder='*********'
                                     icon={true}
                                 />
-                                <InputField
+                                {/* <InputField
                                     name='confirmPassword'
                                     type='password'
                                     label='Confirm Password'
                                     placeholder='*********'
                                     icon={true}
-                                />
+                                /> */}
                                 <Link to='/business-login' className='text-end text-[#1BB6EF] font-normal text-sm'>Have an account? Login</Link>
                                 <button type="submit" disabled={!isValid} className='btn w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                     {

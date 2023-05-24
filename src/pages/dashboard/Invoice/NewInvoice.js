@@ -26,49 +26,71 @@ function NewInvoice() {
 
     const [phoneNumber, setPhoneNumber] = useState('')
 
-    // const { data: customer, isLoading, error } = useQuery(['customer', { phoneNumber }], customerService.fetchCustomerByPhoneNumber)
-    // customer && console.log(customer)
+    const [currency, setCurrency] = useState('USD')
 
-    const [data, setData] = useState([
-        { 
-            customer_phone:'',
-            customer_name:'',
-            invoice_items:[],
+    const [subTotal, setSubTotal] = useState(0)
+
+    const { data: customer, isLoading, error } = useQuery(['customer', {phoneNumber} ], customerService.fetchCustomerByPhoneNumber, {enabled:phoneNumberRef.current.length > 10})
+    customer && console.log(customer.message)
+
+    // const [data, setInvoiceData] = useState([
+    //     { 
+    //         customer_phone:'',
+    //         customer_name:'',
+    //         invoice_items:[],
+    //         item:'',
+    //         quantity:'',
+    //         price:'',
+    //         cbm:'',
+    //     }
+    // ])
+
+    const [invoiceData, setInvoiceData] = useState([
+        {             
             item:'',
             quantity:'',
             price:'',
             cbm:'',
-            
+            total:0
         }
     ])
 
-    const calcTotal = (quantity,price) => {
-        return parseInt(quantity)*parseInt(data)
+    const handleCurrencyChange = (e) => {
+        setCurrency(e.target.value)
+        console.log(currency)
     }
+
+    const calculateSubTotal = (data) => {
+        const sum = data.reduce((accumulator, curr)=>{
+            return accumulator += (curr.price*curr.quantity)
+        },0)
+        return sum
+    }
+    //console.log(invoiceData)
+    //console.log(calculateSubTotal(invoiceData))
 
     const [value, onChange] = useState(new Date());
     // console.log(value)
 
-    const newInvoiceMutation = () => { }
-
     const handleClick = () => {
-        console.log('button clicked')
-        setData([...data,{item:'',quantity:'',price:'',cbm:''}])
+        // console.log('button clicked')
+        setInvoiceData([...invoiceData,{item:'',quantity:'',price:'',cbm:'',total:''}])
+        // console.log(invoiceData)
     }
 
-    const handleChange = (e,i) => {
+    const handleItemChange = (e,i) => {
         const {name, value} = e.target
-        const onChangeVal = [...data]
+        const onChangeVal = [...invoiceData]
         onChangeVal[i][name]=value
-        setData(onChangeVal)
+        setInvoiceData(onChangeVal)
         // const total = onChangeVal[i].name
         //console.log(parseInt(onChangeVal[i]['quantity'])*parseInt(onChangeVal[i]['price']))
     }
 
     const handleDelete = (index) => {
-        const deleteVal = [...data]
+        const deleteVal = [...invoiceData]
         deleteVal.splice(index,1)
-        setData(deleteVal)
+        setInvoiceData(deleteVal)
     }
 
     const createInvoiceMutation = useMutation(merchantService.createInvoice, {
@@ -78,7 +100,7 @@ function NewInvoice() {
             toast.success(res.message, {
                 theme: "colored",
             })
-            navigate('/business-login')
+            //navigate('/business-login')
         },
         onError: err => {
             console.log(err)
@@ -89,8 +111,24 @@ function NewInvoice() {
     })
 
     const onSubmit = (values) => {
+        values={
+            ...values,
+            invoice_items:invoiceData
+        }
         console.log(values)
         createInvoiceMutation.mutate(values)
+    }
+
+    
+    const handleInputChange=(e,handleChange)=>{
+        //console.log(e.currentTarget.value)
+        if(e.currentTarget.name === 'customer_phone' && e.currentTarget.value.length >10){
+            console.log('trigger find customer')
+            phoneNumberRef.current=e.currentTarget.value
+            setPhoneNumber(phoneNumberRef.current)
+        }
+        handleChange(e)
+        console.log(phoneNumber)
     }
 
     return (
@@ -99,8 +137,12 @@ function NewInvoice() {
                 <span className="material-symbols-outlined">keyboard_backspace</span><h2 className=''>Back</h2>
             </Link>
             <div className='box w-full flex flex-col'>
-                <div className='w-full border-b-2 border-cyan-900 pl-3 pt-2'>
+                <div className='w-full flex justify-between border-b-2 border-cyan-900 px-3 py-2'>
                     <h2 className=''>Create Invoice</h2>
+                    <select name='currency' onChange={handleCurrencyChange} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
+                        <option value='USD' defaultValue>USD</option>
+                        <option value='Naira' >Naira</option>
+                    </select>
                 </div>
                 <div className='px-3 w-full'>
                     <Formik
@@ -110,8 +152,21 @@ function NewInvoice() {
                             customer_name:'',
                             notes:'',
                             customer_phone:'',
-                            due_date:value,
-                            invoice_items:[]
+                            invoice_due_date:value,
+                            invoice_items:[
+                                {
+                                    item_name: "",
+                                    weight: '',
+                                    price: '',
+                                    cbm:'',
+                                    description: ""
+                                },
+                            ],
+                            // 'item.name':'',
+                            // 'item.weight':'',
+                            // 'item.price':'',
+                            // 'item.cbm':'',
+                            // 'item.description':'',
                         }}
                         validationSchema={
                             Yup.object({
@@ -121,12 +176,19 @@ function NewInvoice() {
                                 customer_phone:Yup.string().required("Please enter phone number"),
                             })
                         }
-                        onSubmit={(values, { setSubmitting }) => {
+                        onSubmit={(values, { setSubmitting, resetForm }) => {
                             setSubmitting(false)
                             onSubmit(values)
+                            resetForm({
+                                customer_email:'',
+                                customer_name:'',
+                                notes:'',
+                                customer_phone:'',
+                                invoice_items:[]
+                            })
                         }}
                     >
-                        {({ isSubmitting, values, isValid }) => (
+                        {({ isSubmitting,isValid, handleChange }) => (
                             <Form className='flex flex-col py-2'>
                                 <div className='flex w-full gap-2'>
                                     {/* <div className='grow'>
@@ -143,7 +205,8 @@ function NewInvoice() {
                                             type='text'
                                             label='Customer Phone'
                                             placeholder='e.g. 08033889999'
-                                            disabled
+                                            // disabled
+                                            onChange={(e)=>{handleInputChange(e,handleChange)}}
                                         />
                                     </div>
                                     <div className='grow'>
@@ -151,6 +214,7 @@ function NewInvoice() {
                                             name='customer_email'
                                             type='email'
                                             label='Customer Email'
+                                            onChange={(e)=>{handleInputChange(e,handleChange)}}
                                             placeholder='e.g. user@mail.com'
                                         />
                                     </div>
@@ -162,6 +226,7 @@ function NewInvoice() {
                                             name='customer_name'
                                             type='text'
                                             label='Customer Name'
+                                            onChange={(e)=>{handleInputChange(e,handleChange)}}
                                             placeholder='e.g. Olawale James'
                                         />
                                     </div>
@@ -177,32 +242,41 @@ function NewInvoice() {
                                 <div className='flex flex-col'>
                                     <h2 className=''>Order Items</h2>
                                     <p className=''>*You should enter at least 1 item</p>
-                                    <div className='flex flex-col'>
+                                    <div className='flex flex-col w-full'>
                                        
                                         <div className='flex flex-col gap-2 mb-4'>
                                             {
-                                                data.map((val, i) => {
+                                                invoiceData.map((val, i) => {
                                                     return (
                                                         <div className='flex w-full gap-2' key={i}>
+                                                            {/* <div className='flex grow'>
+                                                            <InputField
+                                                                name="['item.name']"
+                                                                type='text'
+                                                                label='Name'
+                                                                onChange={(e)=>{handleInputChange(e,handleChange)}}
+                                                                placeholder='e.g. Olawale James'
+                                                            />
+                                                            </div> */}
                                                             <div className='flex grow flex-col'>
                                                                 <label className='font-medium text-base text-label mb-[6px]'>Item</label>
-                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.item} onChange={(e)=>handleChange(e,i)} name='item'/>
+                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.item} onChange={(e)=>handleItemChange(e,i)} name='item'/>
                                                             </div>
                                                             <div className='flex grow-0 flex-col'>
                                                                 <label className='font-medium text-base text-label mb-[6px]'>Quantity</label>
-                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.quantity} onChange={(e)=>handleChange(e,i)} name='quantity'/>
+                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.quantity} onChange={(e)=>handleItemChange(e,i)} name='quantity'/>
                                                             </div>
                                                             <div className='flex grow-0 flex-col'>
                                                                 <label className='font-medium text-base text-label mb-[6px]'>CBM</label>
-                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.cbm} onChange={(e)=>handleChange(e,i)} name='cbm'/>
+                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.cbm} onChange={(e)=>handleItemChange(e,i)} name='cbm'/>
                                                             </div>
                                                             <div className='flex grow-0 flex-col'>
                                                                 <label className='font-medium text-base text-label mb-[6px]'>Price</label>
-                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.price} onChange={(e)=>handleChange(e,i)} name='price'/>
+                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.price} onChange={(e)=>handleItemChange(e,i)} name='price'/>
                                                             </div>
                                                             <div className='flex grow-0 flex-col'>
                                                                 <label className='font-medium text-base text-label mb-[6px]'>Total</label>
-                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={()=>calcTotal(val.quantity,val.price)} name='total'/>
+                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.price*val.quantity} onChange={(e)=>handleItemChange(e,i)} name='total'/>
                                                             </div>
                                                             {/* <span onClick={()=>handleDelete(i)} className='text-red-600 font-semibold text-xl cursor-pointer'>X</span> */}
                                                             <div className='flex items-end lg:pb-3'>
@@ -221,18 +295,18 @@ function NewInvoice() {
                                         </div>
                                     </div>
                                     <div className='flex justify-end'>
-                                        <div className='flex flex-col gap-3 p-3 w-[200px] h-auto bg-slate-400 text-black'>
+                                        <div className='flex flex-col gap-3 p-3 w-[300px] h-auto bg-slate-400 text-black'>
                                             <div className='flex gap-4'>
                                                 <h2 className=''>Sub total:</h2>
-                                                <span className=''>0 EGP</span>
+                                                <span className=''>{calculateSubTotal(invoiceData)} {currency}</span>
                                             </div>
                                             <div className='flex gap-4'>
-                                                <h2 className=''>Tax:</h2>
-                                                <span className=''>0 EGP</span>
+                                                <h2 className=''>Tax(5%):</h2>
+                                                <span className=''>{(calculateSubTotal(invoiceData)*5)/100} {currency}</span>
                                             </div>
                                             <div className='flex gap-4'>
                                                 <h2 className=''>Invoice Total:</h2>
-                                                <span className=''>0 EGP</span>
+                                                <span className=''>{((calculateSubTotal(invoiceData)*10)/100)+calculateSubTotal(invoiceData)} {currency}</span>
                                             </div>
                                         </div>
                                     </div>
