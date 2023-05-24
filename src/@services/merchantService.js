@@ -22,7 +22,7 @@ async function verifyEmail(payload){
 }
 
 async function createInvoice(payload){
-    const {data} = await httpService.guestInstance.post('/merchants/invoices/invoice', payload)
+    const {data} = await httpService.secureInstance.post('/merchants/invoices/invoice', payload)
     return data
 }
 

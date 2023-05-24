@@ -38,6 +38,13 @@ function MerchantLogin() {
         loginMutation.mutate(values)
     }
 
+    const handleInputChange=(e,handleChange)=>{
+        //console.log(e.currentTarget.value)
+        
+        handleChange(e)
+        // console.log(phoneNumberRef.current.length)
+    }
+
     return (
         <Div className='flex justify-center bg-white w-full'>
             <div className='w-full flex flex-col items-center justify-center items-center h-screen'>
@@ -66,13 +73,14 @@ function MerchantLogin() {
                                 onSubmit(values)
                             }}
                         >
-                            {({ isSubmitting, values, isValid }) => (
+                            {({ isSubmitting, values, isValid, handleChange }) => (
                                 <Form className='flex flex-col w-[70%]'>
                                     <InputField
                                         name='email'
                                         type='email'
                                         label='Email'
                                         placeholder='e.g. user@example.com'
+                                        onChange={(e)=>{handleInputChange(e,handleChange)}}
                                     />
                                     <InputField
                                         name='password'
@@ -80,6 +88,7 @@ function MerchantLogin() {
                                         label='Password'
                                         placeholder='*********'
                                         icon={true}
+                                        onChange={(e)=>{handleInputChange(e,handleChange)}}
                                     />
                                     <Link to='/business-forgot-password' className='text-end text-[#1BB6EF] font-normal text-sm mb-2'>Forgot password?</Link>
                                     <Link to='/select-user-type' className='text-end text-[#1BB6EF] font-normal text-sm'>Create new account</Link>

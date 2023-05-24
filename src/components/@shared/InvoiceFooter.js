@@ -11,7 +11,7 @@ function InvoiceFooter() {
         }else return str
     }
 
-    console.log(prefixAtUsername('@kokofoundation'))
+    // console.log(prefixAtUsername('@kokofoundation'))
   return (
     <div className='flex text-black mt-12 justify-between'>
         <div className='flex flex-col'>
