@@ -30,14 +30,12 @@ import UserType from './pages/auth/UserType';
 import MerchantLogin from './pages/auth/merchant/MerchantLogin';
 import MerchantForgotPassword from './pages/auth/merchant/MerchantForgotPassword';
 import BusinessNewPassword from './pages/auth/merchant/BusinessNewPassword';
-import TryForm from './components/@shared/TryForm';
 
 function Routers (){
     return (
         <Router>
             <ScrollToTop>
                 <Routes>
-                    <Route path='/try' element={<TryForm/>}></Route>
                     <Route path='/' element={<MerchantLogin/>}></Route>
                     <Route path='/select-user-type' element={<UserType/>}></Route>
                     {/* <Route path='/' element={<Login/>}></Route> */}
