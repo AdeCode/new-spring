@@ -15,6 +15,12 @@ function BusinessSignup() {
 
     const {dispatch} = useContext(AuthContext)
 
+    const handleInputChange=(e,handleChange)=>{
+        //console.log(e.currentTarget.value)
+       
+        handleChange(e)
+    }
+
     const signUpMutation = useMutation(merchantService.registerBusiness, {
         onSuccess: res => {
             console.log(res)
@@ -90,7 +96,7 @@ function BusinessSignup() {
                             onSubmit(values)
                         }}
                     >
-                        {({ isSubmitting, values, isValid }) => (
+                        {({ isSubmitting, values, isValid, handleChange }) => (
                             <Form className='flex flex-col w-[70%]'>
                                 {/* <span class="material-icons">&#xE87C;</span> */}
                                 {/* <span class="material-symbols-outlined">toggle_on</span>
@@ -100,6 +106,7 @@ function BusinessSignup() {
                                     type='text'
                                     label='Full Name'
                                     placeholder='e.g. Olusegun Kolawole'
+                                    onChange={(e)=>{handleInputChange(e,handleChange)}}
                                 />
                                 {/* <InputField
                                     name='last_name'
@@ -111,30 +118,35 @@ function BusinessSignup() {
                                     name='business_name'
                                     type='text'
                                     label='Business Name'
+                                    onChange={(e)=>{handleInputChange(e,handleChange)}}
                                     placeholder='e.g. GIG Logisitics'
                                 />
                                 <InputField
                                     name='business_username'
                                     type='text'
                                     label='Business Username'
+                                    onChange={(e)=>{handleInputChange(e,handleChange)}}
                                     placeholder='e.g. @giglogistics'
                                 />
                                 {/* <InputField
                                     name='pin'
                                     type='text'
                                     label='Pin'
+                                    onChange={(e)=>{handleInputChange(e,handleChange)}}
                                     placeholder='Enter your your pin'
                                 /> */}
                                 <InputField
                                     name='email'
                                     type='email'
                                     label='Email Address'
+                                    onChange={(e)=>{handleInputChange(e,handleChange)}}
                                     placeholder='e.g. giglog@gmail.com'
                                 />
                                 <InputField
                                     name='password'
                                     type='password'
                                     label='Password'
+                                    onChange={(e)=>{handleInputChange(e,handleChange)}}
                                     placeholder='*********'
                                     icon={true}
                                 />
