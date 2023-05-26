@@ -19,7 +19,7 @@ function TopBar() {
               {
                 state.isAuthenticated &&
                 <div className='flex items-center cursor-pointer'>
-                  <span className='bg-bg_dark p-3 text-black lg:rounded-[50%] font-medium text-sm'>{state.user.username || state.user.business_username}</span>
+                  <span className='bg-bg_dark p-3 text-black lg:rounded-[50%] font-medium text-sm'>{state.user.business_username}</span>
                   <span className="material-symbols-outlined" style={{color:'#1F4173', fontSize:'32px'}}>keyboard_arrow_down</span>
                 </div>
               }

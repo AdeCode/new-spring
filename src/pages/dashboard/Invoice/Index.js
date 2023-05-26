@@ -10,20 +10,11 @@ function InvoiceIndex() {
 
     const navigate = useNavigate()
 
-    const {data:invices, isLoading, error} = useQuery('invices', invoiceService.getAllInvoices)
+    const {data:invoices, isLoading, error} = useQuery('invoices', invoiceService.getAllInvoices)
 
-    invices && console.log(invices)
+    invoices && console.log(invoices)
 
-    // const newInvoiceMutation = () => { }
 
-    // const onSubmit = () => {
-
-    // }
-
-    const handleCurrencyChange = (e) => {
-        setCurrency(e.target.value)
-        console.log(currency)
-    }
   return (
     <Invoice className='px-[20px]'>
             <Link onClick={() => navigate(-1)} className='flex gap-2 items-center mb-6'>
@@ -34,7 +25,7 @@ function InvoiceIndex() {
                 <div className='w-full border-b-2 border-green-700 px-2 flex justify-between items-center py-2'>
                     <h2 className='text-base font-semibold lg:text-xl'>Invoices</h2>
                     <div className='flex gap-4'>
-                        <select name='currency' onChange={handleCurrencyChange} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
+                        <select name='currency' onChange={(e)=>setCurrency(e.target.value)} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
                             <option value='USD' defaultValue>USD</option>
                             <option value='Naira' >Naira</option>
                         </select>

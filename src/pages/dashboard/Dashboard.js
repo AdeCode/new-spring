@@ -14,11 +14,11 @@ import { AuthContext } from '../../contexts/AuthContexts'
 function Dashboard() {
 
     const {state} = useContext(AuthContext)
-    // console.log(state)
+    console.log(state)
 
     return (
         <DashboardSection>
-            <h2 className='font-normal text-lg text-gray'>Welcome {state.user.first_name},</h2>
+            <h2 className='font-normal text-lg text-gray'>Welcome {state.user.business_username},</h2>
             <AlertBox
                 message='Please complete your compliance requirements to access our services (Click the settings button to complete your KYC requirements)'
             />
