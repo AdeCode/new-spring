@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { Formik, Form } from 'formik'
@@ -22,6 +22,7 @@ import { toast } from 'react-toastify'
 function NewInvoice() {
     const navigate = useNavigate()
 
+    const myEmail = 'myemail@email.com'
     const phoneNumberRef = useRef('')
 
     const [phoneNumber, setPhoneNumber] = useState('')
@@ -30,8 +31,36 @@ function NewInvoice() {
 
     const [subTotal, setSubTotal] = useState(0)
 
+    const [receivedCustomer, setReceivedCustomer] = useState({})
+
     const { data: customer, isLoading, error } = useQuery(['customer', {phoneNumber} ], customerService.fetchCustomerByPhoneNumber, {enabled:phoneNumberRef.current.length > 10})
-    customer && console.log(customer.message)
+    //customer && console.log(customer.data)
+    // customer && setReceivedCustomer(customer.data)
+
+
+    const customerData = useMemo(()=>
+        customer, [customer]
+    )
+
+    useEffect(()=>{
+        setReceivedCustomer(customer)
+        console.log(receivedCustomer)
+    },[customer])
+
+   
+
+
+    // useEffect(()=>{
+    //     const handleInitialValue = () => {
+    //         if(customerData !== null){
+    //             return customerData.data.name
+    //         }else return ''
+    //     }
+    //     console.log('initial value '+handleInitialValue())
+    // },[customerData])
+
+    // customerData && console.log(customerData.data)
+
 
     // const [data, setInvoiceData] = useState([
     //     { 
@@ -47,7 +76,7 @@ function NewInvoice() {
 
     const [invoiceData, setInvoiceData] = useState([
         {             
-            item:'',
+            item_name:'',
             quantity:'',
             price:'',
             cbm:'',
@@ -74,7 +103,7 @@ function NewInvoice() {
 
     const handleClick = () => {
         // console.log('button clicked')
-        setInvoiceData([...invoiceData,{item:'',quantity:'',price:'',cbm:'',total:''}])
+        setInvoiceData([...invoiceData,{item_name:'',quantity:'',price:'',cbm:'',total:''}])
         // console.log(invoiceData)
     }
 
@@ -116,7 +145,7 @@ function NewInvoice() {
             invoice_items:invoiceData
         }
         console.log(values)
-        createInvoiceMutation.mutate(values)
+        //createInvoiceMutation.mutate(values)
     }
 
     
@@ -128,7 +157,7 @@ function NewInvoice() {
             setPhoneNumber(phoneNumberRef.current)
         }
         handleChange(e)
-        console.log(phoneNumber)
+        //console.log(phoneNumber)
     }
 
     return (
@@ -147,19 +176,22 @@ function NewInvoice() {
                 <div className='px-3 w-full'>
                     <Formik
                         isValid
+                        enableReinitialize={true}
                         initialValues={{
-                            customer_email:'',
-                            customer_name:'',
+                            // customer_email:  '',
+                            // customer_name: '',
+                            customer_email: (customerData && customerData.data.email) || '',
+                            customer_name:(customerData && customerData.data.name) || '',
                             notes:'',
                             customer_phone:'',
                             invoice_due_date:value,
                             invoice_items:[
                                 {
-                                    item_name: "",
+                                    item_name: '',
                                     weight: '',
                                     price: '',
                                     cbm:'',
-                                    description: ""
+                                    description: ''
                                 },
                             ],
                             // 'item.name':'',
@@ -179,6 +211,7 @@ function NewInvoice() {
                         onSubmit={(values, { setSubmitting, resetForm }) => {
                             setSubmitting(false)
                             onSubmit(values)
+                            //console.log(values)
                             resetForm({
                                 customer_email:'',
                                 customer_name:'',
@@ -188,7 +221,7 @@ function NewInvoice() {
                             })
                         }}
                     >
-                        {({ isSubmitting,isValid, handleChange }) => (
+                        {({ isSubmitting,isValid, handleChange, setFieldValue, values }) => (
                             <Form className='flex flex-col py-2'>
                                 <div className='flex w-full gap-2'>
                                     {/* <div className='grow'>
@@ -214,8 +247,13 @@ function NewInvoice() {
                                             name='customer_email'
                                             type='email'
                                             label='Customer Email'
-                                            onChange={(e)=>{handleInputChange(e,handleChange)}}
+                                            onChange={(e)=>{handleInputChange(e,handleChange); setFieldValue('customer_email',customerData.data?customerData.data.email:'')}}
                                             placeholder='e.g. user@mail.com'
+                                            disabled={customer && customer.data}
+
+                                            // defaultValue={myEmail}
+                                            value={values.customer_email}
+                                            // value={customerData && customerData.data.email}
                                         />
                                     </div>
                                 </div>
@@ -226,8 +264,10 @@ function NewInvoice() {
                                             name='customer_name'
                                             type='text'
                                             label='Customer Name'
+                                            disabled={customer && customer.data}
                                             onChange={(e)=>{handleInputChange(e,handleChange)}}
                                             placeholder='e.g. Olawale James'
+                                            value={values.customer_name}
                                         />
                                     </div>
                                     <div className='grow-0'>
@@ -260,7 +300,7 @@ function NewInvoice() {
                                                             </div> */}
                                                             <div className='flex grow flex-col'>
                                                                 <label className='font-medium text-base text-label mb-[6px]'>Item</label>
-                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.item} onChange={(e)=>handleItemChange(e,i)} name='item'/>
+                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.item} onChange={(e)=>handleItemChange(e,i)} name='item_name'/>
                                                             </div>
                                                             <div className='flex grow-0 flex-col'>
                                                                 <label className='font-medium text-base text-label mb-[6px]'>Quantity</label>
