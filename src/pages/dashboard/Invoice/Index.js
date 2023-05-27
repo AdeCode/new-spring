@@ -63,7 +63,13 @@ function InvoiceIndex() {
                     </div>
                 </div>
                 <div className='px-2 w-full shadow-md'>
-                   <InvoiceTable/>
+                    {
+                        isLoading ? 'Data loading...' 
+                        :
+                        <InvoiceTable
+                            data={invoices}
+                        />
+                    } 
                 </div>
             </div>
 

@@ -15,8 +15,9 @@ import Switch from '@mui/material/Switch';
 
 
 
-const InvoiceTable = () => {
+const InvoiceTable = ({data}) => {
     //should be memoized or stable
+    console.log('from table ',data)
     const [toggle, setToggle] = useState(false)
     const navigate = useNavigate()
 
@@ -27,66 +28,66 @@ const InvoiceTable = () => {
         }
       });
 
-    const [data, setData] = useState([
-        {
-            id:7,
-            status: 'paid',
-            invoiceNumber: '1752AF',
-            customer:'Spring Finance',
-            dateCreated: '2023/04/20',
-            amount:2345553,
-            dueDate:'2023/05/20',
-            checked:true
-        },
-        {
-            id:2,
-            status: 'unpaid',
-            invoiceNumber: '001KK',
-            customer:'Forte Oil',
-            dateCreated: '2023/04/20',
-            amount:29933000,
-            dueDate:'2023/05/20',
-            checked:false
-        },
-        {
-            id:3,
-            status: 'paid',
-            invoiceNumber: '00252AF',
-            customer:'Apex Constructors',
-            dateCreated: '2023/04/20',
-            amount:2345553,
-            dueDate:'2023/05/20',
-            checked:true
-        },
-        {
-            id:4,
-            status: 'unpaid',
-            invoiceNumber: '1752AF',
-            customer:'Spring Finance',
-            dateCreated: '2023/04/20',
-            amount:2345553,
-            dueDate:'2023/05/20',
-            checked:false
-        },
+    // const [data, setData] = useState([
+    //     {
+    //         id:7,
+    //         status: 'paid',
+    //         invoiceNumber: '1752AF',
+    //         customer:'Spring Finance',
+    //         dateCreated: '2023/04/20',
+    //         amount:2345553,
+    //         dueDate:'2023/05/20',
+    //         checked:true
+    //     },
+    //     {
+    //         id:2,
+    //         status: 'unpaid',
+    //         invoiceNumber: '001KK',
+    //         customer:'Forte Oil',
+    //         dateCreated: '2023/04/20',
+    //         amount:29933000,
+    //         dueDate:'2023/05/20',
+    //         checked:false
+    //     },
+    //     {
+    //         id:3,
+    //         status: 'paid',
+    //         invoiceNumber: '00252AF',
+    //         customer:'Apex Constructors',
+    //         dateCreated: '2023/04/20',
+    //         amount:2345553,
+    //         dueDate:'2023/05/20',
+    //         checked:true
+    //     },
+    //     {
+    //         id:4,
+    //         status: 'unpaid',
+    //         invoiceNumber: '1752AF',
+    //         customer:'Spring Finance',
+    //         dateCreated: '2023/04/20',
+    //         amount:2345553,
+    //         dueDate:'2023/05/20',
+    //         checked:false
+    //     },
         
-    ])
+    // ])
 
-    const handleToggleChange = (id) => {
-        //console.log(id)
-        const newData = data.map(invoice => {
-            if(invoice.id === id){
-                if(invoice.status === 'unpaid'){
-                    return {...invoice, status:'paid',checked:true }
-                }
-                if(invoice.status === 'paid'){
-                    return {...invoice, status:'paid',checked:true }
-                }
-            }
-            return invoice
-        })
-        console.log(newData)
-        setData(newData)
-    }
+    // const handleToggleChange = (id) => {
+    //     //console.log(id)
+    //     const newData = data.map(invoice => {
+    //         if(invoice.id === id){
+    //             if(invoice.status === 'unpaid'){
+    //                 return {...invoice, status:'paid',checked:true }
+    //             }
+    //             if(invoice.status === 'paid'){
+    //                 return {...invoice, status:'paid',checked:true }
+    //             }
+    //         }
+    //         return invoice
+    //     })
+    //     console.log(newData)
+    //     setData(newData)
+    // }
 
     const columns = useMemo(
         () => [
@@ -94,29 +95,28 @@ const InvoiceTable = () => {
                 accessorKey: 'status', //normal accessorKey
                 header: 'Status',
                 Cell: ({ renderedCellValue, row }) => {
-                    return <div className={`${row.original.status === 'paid' ? 'text-green-700' : 'text-yellow-600'} `}>
+                    return <div className={`${row.original.status === 'PAID' ? 'text-green-700' : 'text-yellow-600'} `}>
                             <h3 className=''>{renderedCellValue}</h3>
                         </div>
                 }, 
                 size:80,
             },
             {
-              accessorKey: 'invoiceNumber',
+              accessorKey: 'invoice_code',
               header: 'Invoice #',
               size:50,
             },
             {
-                accessorKey: 'customer',
+                accessorKey: 'name',
                 header: 'Customer',
-                size:100,
             },
             {
-                accessorKey: 'dateCreated',
+                accessorKey: 'invoice_date',
                 header: 'Created On',
                 size:50,
             },
             {
-                accessorKey: 'amount',
+                accessorKey: 'total_cost',
                 header: 'Amount',
                 Cell: ({ cell }) => {
                     return <div className="text-sm font-semibold">$ {cell.getValue()}</div>
@@ -124,7 +124,7 @@ const InvoiceTable = () => {
                 size:50,
             },
             {
-                accessorKey: 'dueDate',
+                accessorKey: 'due_date',
                 header: 'Due Date',
             },
             {
@@ -159,7 +159,9 @@ const InvoiceTable = () => {
                             control={
                             <Switch
                                 checked={row.original.checked}
-                                onChange={() => handleToggleChange(row.original.id)}
+                                onChange={() => {}
+                                    // handleToggleChange(row.original.id)
+                                }
                                 name="toggle"
                                 color="primary"
                                 sx={{
@@ -198,7 +200,7 @@ const InvoiceTable = () => {
     const csvExporter = new ExportToCsv(csvOptions);
 
     const handleExportData = () => {
-        csvExporter.generateCsv(data);
+        csvExporter.generateCsv(data.invoices);
     };
 
 
@@ -207,7 +209,7 @@ const InvoiceTable = () => {
             <MaterialReactTable
                 state={{ isLoading: false }}
                 columns={columns}
-                data={data ?? []}
+                data={data.invoices ?? []}
                 enableColumnActions={true}
                 enableRowNumbers
                 // enableRowActions
