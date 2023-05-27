@@ -37,15 +37,32 @@ function NewInvoice() {
     //customer && console.log(customer.data)
     // customer && setReceivedCustomer(customer.data)
 
+    const getName = (customer) => {
+        if (customer.data){
+            return customer.data.name
+        }else{
+            return ''
+        }
+    }
+
+    const getEmail = (customer) => {
+        if (customer.data){
+            return customer.data.email
+        }else{
+            return ''
+        }
+    }
+
+    //customer && getName(customer)
 
     const customerData = useMemo(()=>
         customer, [customer]
     )
 
-    useEffect(()=>{
-        setReceivedCustomer(customer)
-        console.log(receivedCustomer)
-    },[customer])
+    // useEffect(()=>{
+    //     setReceivedCustomer(customer)
+    //     console.log(receivedCustomer)
+    // },[customer])
 
    
 
@@ -129,7 +146,7 @@ function NewInvoice() {
             toast.success(res.message, {
                 theme: "colored",
             })
-            //navigate('/business-login')
+            navigate('/invoice')
         },
         onError: err => {
             console.log(err)
@@ -145,19 +162,19 @@ function NewInvoice() {
             invoice_items:invoiceData
         }
         console.log(values)
-        //createInvoiceMutation.mutate(values)
+        createInvoiceMutation.mutate(values)
     }
 
     
     const handleInputChange=(e,handleChange)=>{
         //console.log(e.currentTarget.value)
         if(e.currentTarget.name === 'customer_phone' && e.currentTarget.value.length >10){
-            console.log('trigger find customer')
+            // console.log('trigger find customer')
             phoneNumberRef.current=e.currentTarget.value
             setPhoneNumber(phoneNumberRef.current)
         }
         handleChange(e)
-        //console.log(phoneNumber)
+        // console.log(phoneNumber)
     }
 
     return (
@@ -178,10 +195,10 @@ function NewInvoice() {
                         isValid
                         enableReinitialize={true}
                         initialValues={{
-                            // customer_email:  '',
-                            // customer_name: '',
-                            customer_email: (customerData && customerData.data.email) || '',
-                            customer_name:(customerData && customerData.data.name) || '',
+                            customer_email:  customer && getEmail(customer),
+                            customer_name: customer && getName(customer),
+                            // customer_email: (customerData && customerData.data.email) || '',
+                            // customer_name:(customerData && customerData.data.name) || '',
                             notes:'',
                             customer_phone:'',
                             invoice_due_date:value,
@@ -223,15 +240,10 @@ function NewInvoice() {
                     >
                         {({ isSubmitting,isValid, handleChange, setFieldValue, values }) => (
                             <Form className='flex flex-col py-2'>
+                                {/* {
+                                    values.customer_phone > 10 ? setPhoneNumber(values.customer_phone) : null
+                                } */}
                                 <div className='flex w-full gap-2'>
-                                    {/* <div className='grow'>
-                                        <InputField
-                                            name='invoice'
-                                            type='text'
-                                            label='Invoice number'
-                                            placeholder='e.g. 09923EJ'
-                                        />
-                                    </div> */}
                                     <div className='grow'>
                                         <InputField
                                             name='customer_phone'
@@ -239,7 +251,8 @@ function NewInvoice() {
                                             label='Customer Phone'
                                             placeholder='e.g. 08033889999'
                                             // disabled
-                                            onChange={(e)=>{handleInputChange(e,handleChange)}}
+                                            onChange={(e)=>{e.preventDefault();handleInputChange(e,handleChange)}}
+                                            // value={values.customer_phone}
                                         />
                                     </div>
                                     <div className='grow'>
@@ -247,7 +260,7 @@ function NewInvoice() {
                                             name='customer_email'
                                             type='email'
                                             label='Customer Email'
-                                            onChange={(e)=>{handleInputChange(e,handleChange); setFieldValue('customer_email',customerData.data?customerData.data.email:'')}}
+                                            onChange={(e)=>{handleInputChange(e,handleChange);}}
                                             placeholder='e.g. user@mail.com'
                                             disabled={customer && customer.data}
 
