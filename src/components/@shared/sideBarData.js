@@ -138,7 +138,7 @@ export const SidebarData = [
 	subNav: [
 		{
 			title: "Payins",
-			path: "/dashboard/payins",
+			path: "/formik",
 			icon: <FiBriefcase />,
 			cName: "sub-nav",
 		},
