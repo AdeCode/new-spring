@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { Formik, Form } from 'formik'
+import { Formik, Form, useField, useFormikContext, FieldArray, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import InputField from '../../../components/@shared/InputField'
 import DateTimePicker from 'react-datetime-picker';
@@ -22,84 +22,11 @@ import { toast } from 'react-toastify'
 function NewInvoice() {
     const navigate = useNavigate()
 
-    const myEmail = 'myemail@email.com'
-    const phoneNumberRef = useRef('')
-
-    const [phoneNumber, setPhoneNumber] = useState('')
-
     const [currency, setCurrency] = useState('USD')
 
+    const [customerExists, setCustomerExists] = useState(false)
+
     const [subTotal, setSubTotal] = useState(0)
-
-    const [receivedCustomer, setReceivedCustomer] = useState({})
-
-    const { data: customer, isLoading, error } = useQuery(['customer', {phoneNumber} ], customerService.fetchCustomerByPhoneNumber, {enabled:phoneNumberRef.current.length > 10})
-    //customer && console.log(customer.data)
-    // customer && setReceivedCustomer(customer.data)
-
-    const getName = (customer) => {
-        if (customer.data){
-            return customer.data.name
-        }else{
-            return ''
-        }
-    }
-
-    const getEmail = (customer) => {
-        if (customer.data){
-            return customer.data.email
-        }else{
-            return ''
-        }
-    }
-
-    //customer && getName(customer)
-
-    const customerData = useMemo(()=>
-        customer, [customer]
-    )
-
-    // useEffect(()=>{
-    //     setReceivedCustomer(customer)
-    //     console.log(receivedCustomer)
-    // },[customer])
-
-   
-
-
-    // useEffect(()=>{
-    //     const handleInitialValue = () => {
-    //         if(customerData !== null){
-    //             return customerData.data.name
-    //         }else return ''
-    //     }
-    //     console.log('initial value '+handleInitialValue())
-    // },[customerData])
-
-    // customerData && console.log(customerData.data)
-
-
-    // const [data, setInvoiceData] = useState([
-    //     { 
-    //         customer_phone:'',
-    //         customer_name:'',
-    //         invoice_items:[],
-    //         item:'',
-    //         quantity:'',
-    //         price:'',
-    //         cbm:'',
-    //     }
-    // ])
-
-    const [invoiceData, setInvoiceData] = useState([
-        {             
-            item_name:'',
-            quantity:'',
-            price:'',
-            cbm:'',
-            total:0
-        }
-    ])
 
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value)
@@ -107,37 +34,15 @@ function NewInvoice() {
     }
 
     const calculateSubTotal = (data) => {
-        const sum = data.reduce((accumulator, curr)=>{
-            return accumulator += (curr.price*curr.quantity)
-        },0)
+        const sum = data.reduce((accumulator, curr) => {
+            return accumulator += curr.total
+        }, 0)
         return sum
     }
     //console.log(invoiceData)
     //console.log(calculateSubTotal(invoiceData))
 
     const [value, onChange] = useState(new Date());
-    // console.log(value)
-
-    const handleClick = () => {
-        // console.log('button clicked')
-        setInvoiceData([...invoiceData,{item_name:'',quantity:'',price:'',cbm:'',total:''}])
-        // console.log(invoiceData)
-    }
-
-    const handleItemChange = (e,i) => {
-        const {name, value} = e.target
-        const onChangeVal = [...invoiceData]
-        onChangeVal[i][name]=value
-        setInvoiceData(onChangeVal)
-        // const total = onChangeVal[i].name
-        //console.log(parseInt(onChangeVal[i]['quantity'])*parseInt(onChangeVal[i]['price']))
-    }
-
-    const handleDelete = (index) => {
-        const deleteVal = [...invoiceData]
-        deleteVal.splice(index,1)
-        setInvoiceData(deleteVal)
-    }
 
     const createInvoiceMutation = useMutation(merchantService.createInvoice, {
         onSuccess: res => {
@@ -157,25 +62,61 @@ function NewInvoice() {
     })
 
     const onSubmit = (values) => {
-        values={
-            ...values,
-            invoice_items:invoiceData
-        }
-        console.log(values)
+        //console.log(values)
         createInvoiceMutation.mutate(values)
     }
 
-    
-    const handleInputChange=(e,handleChange)=>{
-        //console.log(e.currentTarget.value)
-        if(e.currentTarget.name === 'customer_phone' && e.currentTarget.value.length >10){
-            // console.log('trigger find customer')
-            phoneNumberRef.current=e.currentTarget.value
-            setPhoneNumber(phoneNumberRef.current)
-        }
-        handleChange(e)
-        // console.log(phoneNumber)
+    const NameField = (props) => {
+        const {
+            values: { customer_phone, }, setFieldValue,
+        } = useFormikContext();
+
+        const [field, meta] = useField(props)
+
+        useEffect(() => {
+            let isCurrent = true;
+            if (customer_phone && customer_phone.length > 10) {
+                //make API call
+                const phoneNumber = customer_phone
+                customerService.fetchCustomerByPhoneNumber(phoneNumber)
+                    .then(res => {
+                        //console.log(res)
+                        if (!!isCurrent && res.data) {
+                            setFieldValue(props.name, res.data.name);
+                            setFieldValue('customer_email', res.data.email);
+                            setCustomerExists(true)
+                        }else{
+                            console.log('customer doesnt exists')
+                            // setFieldValue(props.name, '');
+                            // setFieldValue('customer_email', '');
+                            // setCustomerExists(false)
+                        }
+                    },
+                        (err) => {
+                            console.log('customer doesnt exists')
+                            setFieldValue(props.name, '');
+                            setFieldValue('customer_email', '');
+                            setCustomerExists(false)
+                            //console.log(err)
+                        }
+                    )
+            }
+
+            return () => {
+                isCurrent = false;
+            };
+        }, [props.name, customer_phone, setFieldValue])
+
+        return (
+            <div className='flex flex-col'>
+                <label htmlFor='name' className='font-medium text-base text-label mb-[6px]'>Customer Name</label>
+                <input {...props} {...field} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' />
+                {!!meta.touched && !!meta.error && <div className='text-red-500'>{meta.error}</div>}
+            </div>
+        );
     }
+
+    const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', total: 0 }
 
     return (
         <Invoice className='px-[50px]'>
@@ -193,36 +134,27 @@ function NewInvoice() {
                 <div className='px-3 w-full'>
                     <Formik
                         isValid
-                        enableReinitialize={true}
                         initialValues={{
-                            customer_email:  customer && getEmail(customer),
-                            customer_name: customer && getName(customer),
-                            // customer_email: (customerData && customerData.data.email) || '',
-                            // customer_name:(customerData && customerData.data.name) || '',
-                            notes:'',
-                            customer_phone:'',
-                            invoice_due_date:value,
-                            invoice_items:[
-                                {
-                                    item_name: '',
-                                    weight: '',
-                                    price: '',
-                                    cbm:'',
-                                    description: ''
-                                },
-                            ],
-                            // 'item.name':'',
-                            // 'item.weight':'',
-                            // 'item.price':'',
-                            // 'item.cbm':'',
-                            // 'item.description':'',
+                            customer_email: '',
+                            customer_name: '',
+                            notes: '',
+                            customer_phone: '',
+                            invoice_due_date: '',
+                            invoice_items: [Empty_invoice_items],
                         }}
                         validationSchema={
                             Yup.object({
                                 customer_email: Yup.string().email("Invalid email address")
                                     .required("email field can not be empty"),
-                                customer_name:Yup.string().required("Please enter first name"),
-                                customer_phone:Yup.string().required("Please enter phone number"),
+                                customer_name: Yup.string().required("Please enter customer name"),
+                                customer_phone: Yup.string().required("Please enter customer  phone number"),
+                                invoice_items: Yup.array(Yup.object({
+                                    item_name: Yup.string().required('Item name is required'),
+                                    quantity: Yup.number().required('Quantity is required').min(1,'minimum of one quantity required'),
+                                    price: Yup.number().required('Price is required').min(1,'must be greater than zero'),
+                                    cbm: Yup.number().required('CBM is required').min(1,'must be greater than zero'),
+                                    total: Yup.number().required('Price is required').min(1,'must be greater than zero'),
+                                })).min(1,'Enter at least 1 invoice item'),
                             })
                         }
                         onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -230,15 +162,15 @@ function NewInvoice() {
                             onSubmit(values)
                             //console.log(values)
                             resetForm({
-                                customer_email:'',
-                                customer_name:'',
-                                notes:'',
-                                customer_phone:'',
-                                invoice_items:[]
+                                customer_email: '',
+                                customer_name: '',
+                                notes: '',
+                                customer_phone: '',
+                                invoice_items: []
                             })
                         }}
                     >
-                        {({ isSubmitting,isValid, handleChange, setFieldValue, values }) => (
+                        {({ isSubmitting, isValid, handleChange, values, errors }) => (
                             <Form className='flex flex-col py-2'>
                                 {/* {
                                     values.customer_phone > 10 ? setPhoneNumber(values.customer_phone) : null
@@ -250,9 +182,7 @@ function NewInvoice() {
                                             type='text'
                                             label='Customer Phone'
                                             placeholder='e.g. 08033889999'
-                                            // disabled
-                                            onChange={(e)=>{e.preventDefault();handleInputChange(e,handleChange)}}
-                                            // value={values.customer_phone}
+                                        // disabled
                                         />
                                     </div>
                                     <div className='grow'>
@@ -260,106 +190,136 @@ function NewInvoice() {
                                             name='customer_email'
                                             type='email'
                                             label='Customer Email'
-                                            onChange={(e)=>{handleInputChange(e,handleChange);}}
                                             placeholder='e.g. user@mail.com'
-                                            disabled={customer && customer.data}
-
-                                            // defaultValue={myEmail}
-                                            value={values.customer_email}
-                                            // value={customerData && customerData.data.email}
+                                            disabled={customerExists}
                                         />
                                     </div>
                                 </div>
-                                
+
                                 <div className='flex w-full gap-2'>
                                     <div className='grow'>
-                                        <InputField
+                                        <NameField
                                             name='customer_name'
                                             type='text'
-                                            label='Customer Name'
-                                            disabled={customer && customer.data}
-                                            onChange={(e)=>{handleInputChange(e,handleChange)}}
                                             placeholder='e.g. Olawale James'
-                                            value={values.customer_name}
+                                            disabled={customerExists}
                                         />
                                     </div>
                                     <div className='grow-0'>
                                         <div className='flex flex-col'>
                                             <label htmlFor='date' className='font-medium text-base text-label mb-[6px]'>Due Date</label>
-                                            <DateTimePicker onChange={onChange} value={value} className=''/>
+                                            <DateTimePicker onChange={onChange} value={value} className='' />
                                         </div>
                                     </div>
-                                    
-                                    
+
+
                                 </div>
-                                <div className='flex flex-col'>
+                                <div className='flex flex-col mt-3'>
                                     <h2 className=''>Order Items</h2>
                                     <p className=''>*You should enter at least 1 item</p>
                                     <div className='flex flex-col w-full'>
-                                       
-                                        <div className='flex flex-col gap-2 mb-4'>
+                                        <FieldArray name='invoice_items'>
                                             {
-                                                invoiceData.map((val, i) => {
-                                                    return (
-                                                        <div className='flex w-full gap-2' key={i}>
-                                                            {/* <div className='flex grow'>
-                                                            <InputField
-                                                                name="['item.name']"
-                                                                type='text'
-                                                                label='Name'
-                                                                onChange={(e)=>{handleInputChange(e,handleChange)}}
-                                                                placeholder='e.g. Olawale James'
-                                                            />
-                                                            </div> */}
-                                                            <div className='flex grow flex-col'>
-                                                                <label className='font-medium text-base text-label mb-[6px]'>Item</label>
-                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.item} onChange={(e)=>handleItemChange(e,i)} name='item_name'/>
-                                                            </div>
-                                                            <div className='flex grow-0 flex-col'>
-                                                                <label className='font-medium text-base text-label mb-[6px]'>Quantity</label>
-                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.quantity} onChange={(e)=>handleItemChange(e,i)} name='quantity'/>
-                                                            </div>
-                                                            <div className='flex grow-0 flex-col'>
-                                                                <label className='font-medium text-base text-label mb-[6px]'>CBM</label>
-                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.cbm} onChange={(e)=>handleItemChange(e,i)} name='cbm'/>
-                                                            </div>
-                                                            <div className='flex grow-0 flex-col'>
-                                                                <label className='font-medium text-base text-label mb-[6px]'>Price</label>
-                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.price} onChange={(e)=>handleItemChange(e,i)} name='price'/>
-                                                            </div>
-                                                            <div className='flex grow-0 flex-col'>
-                                                                <label className='font-medium text-base text-label mb-[6px]'>Total</label>
-                                                                <input className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' type='text' value={val.price*val.quantity} onChange={(e)=>handleItemChange(e,i)} name='total'/>
-                                                            </div>
-                                                            {/* <span onClick={()=>handleDelete(i)} className='text-red-600 font-semibold text-xl cursor-pointer'>X</span> */}
-                                                            <div className='flex items-end lg:pb-3'>
-                                                                <span onClick={()=>handleDelete(i)} className="material-symbols-outlined cursor-pointer text-red-600">delete</span>
-                                                            </div>
+                                                ({ push, remove, }) => (
+                                                    <>
+                                                        {
+                                                            values.invoice_items.map((_, index) => (
+                                                                <div className='flex w-full gap-2' key={index}>
+                                                                    <div className='flex grow flex-col'>
+                                                                        <label className='font-medium text-base text-label mb-[6px]'>Item</label>
+                                                                        <Field
+                                                                            name={`invoice_items[${index}].item_name`}
+                                                                            type='text'
+                                                                            placeholder='item name'
+                                                                            className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
+                                                                        />
+                                                                        <ErrorMessage name={`invoice_items[${index}].item_name`} component="div" className='text-red-500' />
+                                                                    </div>
+                                                                    <div className='flex grow-0 flex-col'>
+                                                                        <label className='font-medium text-base text-label mb-[6px]'>Quantity (kg)</label>
+                                                                        <Field
+                                                                            name={`invoice_items.${index}.quantity`}
+                                                                            type='number'
+                                                                            placeholder='item quantity'
+                                                                            className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
+                                                                        />
+                                                                        <ErrorMessage name={`invoice_items[${index}].quantity`} component="div" className='text-red-500' />
+                                                                    </div>
+                                                                    <div className='flex grow-0 flex-col'>
+                                                                        <label className='font-medium text-base text-label mb-[6px]'>Price 
+                                                                            {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>} (unit)
+                                                                        </label>
+                                                                        <Field
+                                                                            name={`invoice_items.${index}.price`}
+                                                                            type='text'
+                                                                            placeholder='0.00'
+                                                                            className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
+                                                                        />
+                                                                        <ErrorMessage name={`invoice_items[${index}].price`} component="div" className='text-red-500' />
+                                                                    </div>
+                                                                    <div className='flex grow-0 flex-col'>
+                                                                        <label className='font-medium text-base text-label mb-[6px]'>CBM</label>
+                                                                        <Field
+                                                                            name={`invoice_items.${index}.cbm`}
+                                                                            type='number'
+                                                                            placeholder='e.g. 2'
+                                                                            className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
+                                                                        />
+                                                                        <ErrorMessage name={`invoice_items[${index}].cbm`} component="div" className='text-red-500' />
+                                                                    </div>
+                                                                    <div className='flex grow-0 flex-col'>
+                                                                        <label className='font-medium text-base text-label mb-[6px]'>Subtotal</label>
+                                                                        <Field
+                                                                            name={`invoice_items.${index}.total`}
+                                                                            type='number'
+                                                                            placeholder='Total'
+                                                                            className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
+                                                                        />
+                                                                        <ErrorMessage name={`invoice_items[${index}].total`} component="div" className='text-red-500' />
+                                                                    </div>
+                                                                    <div className='flex items-end lg:pb-3'>
+                                                                        <span onClick={() => remove(index)} disabled={isSubmitting} className="material-symbols-outlined cursor-pointer disabled:opacity-50 text-red-600">delete</span>
+                                                                    </div>
+                                                                </div>
+                                                            ))
+                                                        }
+                                                        <div className='my-3'>
+                                                            {typeof errors.invoice_items === 'string' ?
+                                                                (
+                                                                    <div className='text-red-500'>{errors.invoice_items}</div>
+                                                                ) : null
+                                                            }
+                                                            <button disabled={isSubmitting} onClick={() => push(Empty_invoice_items)} type='button' className='flex border border-green-700 text-green-700 items-center py-2 px-3 rounded-md'>
+                                                                <span className="material-symbols-outlined disabled:opacity-50 text-green-700">add</span>Add Item
+                                                            </button>
                                                         </div>
-                                                    )
-                                                })
+                                                    </>
+                                                )
                                             }
-                                            {/* <p>{JSON.stringify(data)}</p> */}
-                                        </div>
-                                        <div className='flex'>
-                                            <button onClick={handleClick} type='button' className='flex border border-green-700 text-green-700 items-center py-2 px-3 rounded-md'>
-                                                <span className="material-symbols-outlined text-green-700">add</span>Add Item
-                                            </button>
-                                        </div>
+                                        </FieldArray>
                                     </div>
                                     <div className='flex justify-end'>
-                                        <div className='flex flex-col gap-3 p-3 w-[300px] h-auto bg-slate-400 text-black'>
-                                            <div className='flex gap-4'>
+                                        <div className='flex flex-col gap-3 p-3 w-[300px] h-auto bg-white text-black'>
+                                            <div className='flex justify-between'>
                                                 <h2 className=''>Sub total:</h2>
-                                                <span className=''>{calculateSubTotal(invoiceData)} {currency}</span>
+                                                <span className='font-semibold gap-1 flex'>
+                                                    {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>} 
+                                                    {calculateSubTotal(values.invoice_items)}
+                                                </span>
                                             </div>
-                                            <div className='flex gap-4'>
-                                                <h2 className=''>Tax(5%):</h2>
-                                                <span className=''>{(calculateSubTotal(invoiceData)*5)/100} {currency}</span>
+                                            <div className='flex justify-between'>
+                                                <h2 className=''>Tax(7.5%):</h2>
+                                                <span className='font-semibold gap-1 flex'>
+                                                    {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>} 
+                                                    {(calculateSubTotal(values.invoice_items) * 7.5) / 100}
+                                                </span>
                                             </div>
-                                            <div className='flex gap-4'>
+                                            <div className='flex justify-between'>
                                                 <h2 className=''>Invoice Total:</h2>
-                                                <span className=''>{((calculateSubTotal(invoiceData)*10)/100)+calculateSubTotal(invoiceData)} {currency}</span>
+                                                <span className='font-semibold gap-1 flex'>
+                                                    {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>} 
+                                                    {((calculateSubTotal(values.invoice_items) * 10) / 100) + calculateSubTotal(values.invoice_items)}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -371,25 +331,25 @@ function NewInvoice() {
                                         component="textarea"
                                         rows='4'
                                     />
-                                    
+
                                     {/* <Field component="textarea" rows="4" value={""}></Field> */}
                                 </div>
                                 <div className='flex justify-end'>
-                                        <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
-                                            {
-                                                createInvoiceMutation.isLoading ?
-                                                    "Loading..."
-                                                    : "Create Invoice"
-                                            }
-                                        </button>
+                                    <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
+                                        {
+                                            createInvoiceMutation.isLoading ?
+                                                "Loading..."
+                                                : "Create Invoice"
+                                        }
+                                    </button>
                                 </div>
-                                
+
                             </Form>
                         )}
                     </Formik>
                 </div>
             </div>
-            <InvoiceFooter/>
+            <InvoiceFooter />
         </Invoice>
     )
 }

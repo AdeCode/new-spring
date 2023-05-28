@@ -30,7 +30,6 @@ import UserType from './pages/auth/UserType';
 import MerchantLogin from './pages/auth/merchant/MerchantLogin';
 import MerchantForgotPassword from './pages/auth/merchant/MerchantForgotPassword';
 import BusinessNewPassword from './pages/auth/merchant/BusinessNewPassword';
-// import FormiFor from './components/FormiFor';
 
 function Routers (){
     return (
@@ -38,7 +37,6 @@ function Routers (){
             <ScrollToTop>
                 <Routes>
                     <Route path='/' element={<MerchantLogin/>}></Route>
-                    {/* <Route path='/formik' element={<FormiFor/>}></Route> */}
                     <Route path='/select-user-type' element={<UserType/>}></Route>
                     {/* <Route path='/' element={<Login/>}></Route> */}
                     <Route element={<Layout/>}>
@@ -74,7 +72,7 @@ function Routers (){
                         <Route path='/invoice' element={<InvoiceIndex/>}></Route>                       
                         <Route path='/invoice/details' element={<InvoiceDetails/>}></Route>                       
                         <Route path='/invoice/template' element={<InvoiceTemplate/>}></Route>                       
-                        <Route path='/dashboard/customers' element={<RecentCustomers/>}></Route>                       
+                        <Route path='/dashboard/customers' element={<RecentCustomers/>}></Route>     
                     </Route>
                 </Routes>
             </ScrollToTop>

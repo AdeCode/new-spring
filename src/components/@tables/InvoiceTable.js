@@ -15,9 +15,10 @@ import Switch from '@mui/material/Switch';
 
 
 
-const InvoiceTable = ({data}) => {
+const InvoiceTable = ({data, currency}) => {
     //should be memoized or stable
-    console.log('from table ',data)
+    // console.log(currency)
+    // console.log('from table ',data)
     const [toggle, setToggle] = useState(false)
     const navigate = useNavigate()
 
@@ -28,66 +29,6 @@ const InvoiceTable = ({data}) => {
         }
       });
 
-    // const [data, setData] = useState([
-    //     {
-    //         id:7,
-    //         status: 'paid',
-    //         invoiceNumber: '1752AF',
-    //         customer:'Spring Finance',
-    //         dateCreated: '2023/04/20',
-    //         amount:2345553,
-    //         dueDate:'2023/05/20',
-    //         checked:true
-    //     },
-    //     {
-    //         id:2,
-    //         status: 'unpaid',
-    //         invoiceNumber: '001KK',
-    //         customer:'Forte Oil',
-    //         dateCreated: '2023/04/20',
-    //         amount:29933000,
-    //         dueDate:'2023/05/20',
-    //         checked:false
-    //     },
-    //     {
-    //         id:3,
-    //         status: 'paid',
-    //         invoiceNumber: '00252AF',
-    //         customer:'Apex Constructors',
-    //         dateCreated: '2023/04/20',
-    //         amount:2345553,
-    //         dueDate:'2023/05/20',
-    //         checked:true
-    //     },
-    //     {
-    //         id:4,
-    //         status: 'unpaid',
-    //         invoiceNumber: '1752AF',
-    //         customer:'Spring Finance',
-    //         dateCreated: '2023/04/20',
-    //         amount:2345553,
-    //         dueDate:'2023/05/20',
-    //         checked:false
-    //     },
-        
-    // ])
-
-    // const handleToggleChange = (id) => {
-    //     //console.log(id)
-    //     const newData = data.map(invoice => {
-    //         if(invoice.id === id){
-    //             if(invoice.status === 'unpaid'){
-    //                 return {...invoice, status:'paid',checked:true }
-    //             }
-    //             if(invoice.status === 'paid'){
-    //                 return {...invoice, status:'paid',checked:true }
-    //             }
-    //         }
-    //         return invoice
-    //     })
-    //     console.log(newData)
-    //     setData(newData)
-    // }
 
     const columns = useMemo(
         () => [
@@ -113,13 +54,15 @@ const InvoiceTable = ({data}) => {
             {
                 accessorKey: 'invoice_date',
                 header: 'Created On',
-                size:50,
             },
             {
                 accessorKey: 'total_cost',
                 header: 'Amount',
                 Cell: ({ cell }) => {
-                    return <div className="text-sm font-semibold">$ {cell.getValue()}</div>
+                    return <div className="text-sm font-semibold flex gap-1">
+                        {currency === 'USD' ? <span>&#65284;</span> : <span>&#8358;</span>}
+                        {cell.getValue()}
+                    </div>
                 },
                 size:50,
             },
