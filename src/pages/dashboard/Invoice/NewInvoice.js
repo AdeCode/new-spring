@@ -35,9 +35,19 @@ function NewInvoice() {
 
     const calculateSubTotal = (data) => {
         const sum = data.reduce((accumulator, curr) => {
-            return accumulator += curr.total
+            return accumulator += +curr.price
         }, 0)
         return sum
+    }
+
+    const calculateTax=(data)=>{
+        const total = calculateSubTotal(data)
+        const sendTotal = ((total * 7.5) / 100).toFixed(2)
+        return +sendTotal
+    }
+
+    const calculateInvoiceTotal = (data)=>{
+        return (calculateSubTotal(data)+calculateTax(data)).toFixed(2)
     }
     //console.log(invoiceData)
     //console.log(calculateSubTotal(invoiceData))
@@ -152,7 +162,7 @@ function NewInvoice() {
                                     item_name: Yup.string().required('Item name is required'),
                                     quantity: Yup.number().required('Quantity is required').min(1,'minimum of one quantity required'),
                                     price: Yup.number().required('Price is required').min(1,'must be greater than zero'),
-                                    cbm: Yup.number().required('CBM is required').min(1,'must be greater than zero'),
+                                    cbm: Yup.number().required('CBM is required'),
                                     total: Yup.number().required('Price is required').min(1,'must be greater than zero'),
                                 })).min(1,'Enter at least 1 invoice item'),
                             })
@@ -170,7 +180,7 @@ function NewInvoice() {
                             })
                         }}
                     >
-                        {({ isSubmitting, isValid, handleChange, values, errors }) => (
+                        {({ isSubmitting, isValid, handleChange, values, errors, setFieldValue }) => (
                             <Form className='flex flex-col py-2'>
                                 {/* {
                                     values.customer_phone > 10 ? setPhoneNumber(values.customer_phone) : null
@@ -274,6 +284,8 @@ function NewInvoice() {
                                                                             type='number'
                                                                             placeholder='Total'
                                                                             className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
+                                                                            value={values.invoice_items[index].price}
+                                                                            disabled
                                                                         />
                                                                         <ErrorMessage name={`invoice_items[${index}].total`} component="div" className='text-red-500' />
                                                                     </div>
@@ -311,14 +323,14 @@ function NewInvoice() {
                                                 <h2 className=''>Tax(7.5%):</h2>
                                                 <span className='font-semibold gap-1 flex'>
                                                     {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>} 
-                                                    {(calculateSubTotal(values.invoice_items) * 7.5) / 100}
+                                                    {calculateTax(values.invoice_items)}
                                                 </span>
                                             </div>
                                             <div className='flex justify-between'>
                                                 <h2 className=''>Invoice Total:</h2>
                                                 <span className='font-semibold gap-1 flex'>
                                                     {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>} 
-                                                    {((calculateSubTotal(values.invoice_items) * 10) / 100) + calculateSubTotal(values.invoice_items)}
+                                                    {calculateInvoiceTotal(values.invoice_items)}
                                                 </span>
                                             </div>
                                         </div>

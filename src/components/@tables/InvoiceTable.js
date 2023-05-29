@@ -11,11 +11,16 @@ import {Link, useNavigate} from 'react-router-dom'
 import IosShareIcon from '@mui/icons-material/IosShare';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
+import { useMutation } from 'react-query';
+import invoiceService from '../../@services/invoiceService';
+import { toast } from 'react-toastify';
 
 
 
 
 const InvoiceTable = ({data, currency}) => {
+    console.log(data)
+
     //should be memoized or stable
     // console.log(currency)
     // console.log('from table ',data)
@@ -28,6 +33,34 @@ const InvoiceTable = ({data, currency}) => {
           backgroundColor: 'green'
         }
       });
+    
+      const toggleInvoiceMutation = useMutation(invoiceService.toggleInvoiceStatus, {
+        onSuccess: res => {
+            console.log(res)
+            //dispatch({ type: 'LOGIN', payload: res.data })
+            toast.success(res.message, {
+                theme: "colored",
+            })
+            // navigate('/invoice')
+        },
+        onError: err => {
+            console.log(err)
+            toast.error(err.response.data.error, {
+                theme: "colored",
+            })
+        }
+    })
+
+    const onToggle = (values) => {
+        //console.log(values)
+        values={
+            ...values,
+            payload:{
+                "status" : "PAID"
+            }
+        }
+        toggleInvoiceMutation.mutate(values)
+    }
 
 
     const columns = useMemo(
@@ -102,7 +135,7 @@ const InvoiceTable = ({data, currency}) => {
                             control={
                             <Switch
                                 checked={row.original.checked}
-                                onChange={() => {}
+                                onChange={() => {onToggle({invoice_code:row.original.invoice_code});console.log(row.original.invoice_code)}
                                     // handleToggleChange(row.original.id)
                                 }
                                 name="toggle"
