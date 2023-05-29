@@ -43,12 +43,12 @@ const data = [
 ];
 
 
-const OrderItemsTable = () => {
+const OrderItemsTable = ({data}) => {
     //should be memoized or stable
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'items', //normal accessorKey
+                accessorKey: 'item_name', //normal accessorKey
                 header: 'Items',
                 size:50,
             },
@@ -74,7 +74,7 @@ const OrderItemsTable = () => {
                 size:50,
             },
             {
-                accessorKey: 'subTotal',
+                accessorKey: 'price',
                 header: 'Sub-Total',
                 Cell: ({ cell }) => {
                     return <div className="text-sm font-semibold">$ {cell.getValue()}</div>

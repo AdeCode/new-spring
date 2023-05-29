@@ -5,6 +5,12 @@ async function getAllInvoices(){
     return data
 }
 
+async function getInvoicesByCode({queryKey}){
+    const [_key, {invoiceCode}] = queryKey
+    const {data} = await httpService.secureInstance.get(`/merchants/invoices/invoice?invoice_code=${invoiceCode}`)
+    return data
+}
+
 async function toggleInvoiceStatus({invoice_code, payload}){
     console.log(payload)
     //const [_key, {invoice_code}] = queryKey
@@ -14,8 +20,8 @@ async function toggleInvoiceStatus({invoice_code, payload}){
 
 const invoiceService = {
     getAllInvoices,
-    toggleInvoiceStatus
-
+    toggleInvoiceStatus,
+    getInvoicesByCode
 }
 
 export default invoiceService

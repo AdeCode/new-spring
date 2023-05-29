@@ -4,9 +4,15 @@ import gig from '../../images/dashboard/gig.png'
 import InvoiceFooter from './InvoiceFooter'
 import CheckBox from './CheckBox'
 import TextField from './TextField'
+import { useLocation } from 'react-router-dom'
 
 function InvoiceTemplate() {
     const [agree, setAgree] = useState(false)
+
+    const location = useLocation()
+    const data = location.state.invoice.invoice
+    // console.log(data)
+
   return (
     <>
     <div className='border border-gray rounded-lg'>
@@ -26,20 +32,20 @@ function InvoiceTemplate() {
         <div className='p-4'>
             <div className='flex justify-between'>
                 <div className='flex gap-1'>
-                    <h3 className='text-neutral-700'>To: </h3><span className='text-black'>Frank Edoho</span>
+                    <h3 className='text-neutral-700'>To: </h3><span className='text-black'>{data?.name}</span>
                 </div>
                 <div className='w-[300px] border flex flex-col'>
                     <div className='flex border-b py-1 px-2'>
                         <h3 className=''>Due date</h3><span className=''></span>
                     </div>
                     <div className='flex border-b justify-between py-1 px-2'>
-                        <h3 className=''>Invoice date</h3><span className='font-medium'>20 Apr, 2023</span>
+                        <h3 className=''>Invoice date</h3><span className='font-medium'>{data?.invoice_date}</span>
                     </div>
                     <div className='flex border-b justify-between py-1 px-2'>
-                        <h3 className=''>Invoice #</h3><span className='font-medium'>0122JH0</span>
+                        <h3 className=''>Invoice #</h3><span className='font-medium'>{data?.invoice_code}</span>
                     </div>
                     <div className='flex border-b justify-between py-1 px-2'>
-                        <h3 className=''>Invoice Total</h3><span className='font-medium'>2778 USD</span>
+                        <h3 className=''>Invoice Total</h3><span className='font-medium'>{data?.total_cost}</span>
                     </div>
                 </div>
             </div>
@@ -57,13 +63,26 @@ function InvoiceTemplate() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className=''>
+                            {
+                                data.items.map(invoice => {
+                                    return (
+                                        <tr className='' key={invoice.item_name}>
+                                            <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.item_name}</td>
+                                            <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.quantity}</td>
+                                            <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.cbm}</td>
+                                            <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.price}</td>
+                                            <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.price}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                            {/* <tr className=''>
                                 <td className='m-0 text-center py-3 text-sm font-medium'>Iron rod</td>
                                 <td className='m-0 text-center py-3 text-sm font-medium'>500</td>
                                 <td className='m-0 text-center py-3 text-sm font-medium'>40</td>
                                 <td className='m-0 text-center py-3 text-sm font-medium'>478</td>
                                 <td className='m-0 text-center py-3 text-sm font-medium'>21099</td>
-                            </tr>
+                            </tr> */}
                         </tbody>
                     </table>
                 </div>
@@ -71,18 +90,18 @@ function InvoiceTemplate() {
                     <div className='w-[500px] flex gap-3'>
                         <h3 className='text-neutral-700'>Notes:</h3>
                         <textarea className='p-2 bg-inherit border opacity-70' id="note" name="note" rows="3" cols="70" readOnly>
-                            lorem ipsum dolor   sit amet, consectetur adip  non pro id  el  aspect  et non  proident.
+                        {data?.note}
                         </textarea>
                     </div>
                     <div className='border flex flex-col w-[300px]'>
                         <div className='flex justify-between py-2 px-2'>
-                            <h2 className=''>Subtotal:</h2><span className=''>28033 USD</span>
+                            <h2 className=''>Subtotal:</h2><span className=''>{data?.total_cost}</span>
                         </div>
                         <div className='flex justify-between py-2 px-2'>
                             <h2 className=''>Tax:(5%)</h2><span className=''>833 USD</span>
                         </div>
                         <div className='flex justify-between py-4 px-2 bg-slate-400 text-black'>
-                            <h2 className='font-semibold'>Invoice Total:</h2><span className='font-semibold'>29833 USD</span>
+                            <h2 className='font-semibold'>Invoice Total:</h2><span className='font-semibold'>{data?.total_cost}</span>
                         </div>
                     </div>
                 </div>

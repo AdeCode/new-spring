@@ -107,7 +107,7 @@ const InvoiceTable = ({data, currency}) => {
                 accessorKey: 'view',
                 header: 'View',
                 Cell: ({ cell, row }) => {
-                    return <Link to='/invoice/details' className='cursor-pointer text-green-800'>
+                    return <Link to={`/invoice/details/${row.original.invoice_code}`} className='cursor-pointer text-green-800'>
                             <span className="material-symbols-outlined" >visibility</span>
                         </Link>
                 }, 

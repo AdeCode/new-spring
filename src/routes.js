@@ -70,7 +70,7 @@ function Routers (){
                         <Route path='/settings/user-roles' element={<UserRoles/>}></Route>                       
                         <Route path='/invoice/generate' element={<NewInvoice/>}></Route>                       
                         <Route path='/invoice' element={<InvoiceIndex/>}></Route>                       
-                        <Route path='/invoice/details' element={<InvoiceDetails/>}></Route>                       
+                        <Route path='/invoice/details/:invoiceCode' element={<InvoiceDetails/>}></Route>                       
                         <Route path='/invoice/template' element={<InvoiceTemplate/>}></Route>                       
                         <Route path='/dashboard/customers' element={<RecentCustomers/>}></Route>     
                     </Route>
