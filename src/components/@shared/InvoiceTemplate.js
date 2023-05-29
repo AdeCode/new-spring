@@ -4,10 +4,12 @@ import gig from '../../images/dashboard/gig.png'
 import InvoiceFooter from './InvoiceFooter'
 import CheckBox from './CheckBox'
 import TextField from './TextField'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 function InvoiceTemplate() {
     const [agree, setAgree] = useState(false)
+
+    const navigate = useNavigate()
 
     const location = useLocation()
     const data = location.state.invoice.invoice
@@ -15,6 +17,9 @@ function InvoiceTemplate() {
 
   return (
     <>
+    {/* <Link onClick={() => navigate(-1)} className='flex gap-2 items-center mb-6'>
+        <span className="material-symbols-outlined">keyboard_backspace</span><h2 className=''>Back</h2>
+    </Link> */}
     <div className='border border-gray rounded-lg'>
         <div className="flex justify-between border-b border-gray p-4">
             <div className='flex flex-col gap-3'>
