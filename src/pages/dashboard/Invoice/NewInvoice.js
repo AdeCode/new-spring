@@ -72,7 +72,7 @@ function NewInvoice() {
     })
 
     const onSubmit = (values) => {
-        //console.log(values)
+        console.log(values)
         createInvoiceMutation.mutate(values)
     }
 
@@ -96,7 +96,7 @@ function NewInvoice() {
                             setFieldValue('customer_email', res.data.email);
                             setCustomerExists(true)
                         }else{
-                            console.log('customer doesnt exists')
+                            // console.log('customer doesnt exists')
                             // setFieldValue(props.name, '');
                             // setFieldValue('customer_email', '');
                             // setCustomerExists(false)
@@ -163,7 +163,7 @@ function NewInvoice() {
                                     quantity: Yup.number().required('Quantity is required').min(1,'minimum of one quantity required'),
                                     price: Yup.number().required('Price is required').min(1,'must be greater than zero'),
                                     cbm: Yup.number().required('CBM is required'),
-                                    total: Yup.number().required('Price is required').min(1,'must be greater than zero'),
+                                    total: Yup.number(),
                                 })).min(1,'Enter at least 1 invoice item'),
                             })
                         }
