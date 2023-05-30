@@ -5,15 +5,16 @@ import InputField from '../@shared/InputField'
 import { TextField } from '@mui/material'
 import { useMutation } from 'react-query'
 
-function PersonaliseProfile() {
+
+function BusinessProfile() {
     const updateProfileMutation = useMutation()
 
     const onSubmit = (values) => {
         console.log(values)
     }
-    return (
-        <div className='bg-white w-full px-4 py-4'>
-            <h2 className='font-semibold text-black'>Personalize your Profile</h2>
+  return (
+    <div className='bg-white w-full px-4 py-4'>
+            <h2 className='font-semibold text-black'>Personalize Merchant Account</h2>
             <Formik
                 isValid
                 initialValues={{
@@ -59,14 +60,14 @@ function PersonaliseProfile() {
                     <Form className='flex flex-col py-2'>
                         <div className='flex w-full gap-4 py-3'>
                             <div className='flex flex-col grow'>
-                                <h2 className='font font-medium'>Full Name</h2>
-                                <p className='text-gray font-normal'>You can customize your full name here</p>
+                                <h2 className='font font-medium'>Business Name</h2>
+                                <p className='text-gray font-normal'>Enter your business name here</p>
                             </div>
                             <div className='grow'>
                                 <InputField
                                     name='first_name'
                                     type='text'
-                                    label='First Name'
+                                    label='Business Name'
                                     placeholder='e.g. Adewale'
                                 />
                             </div>
@@ -118,7 +119,7 @@ function PersonaliseProfile() {
                 )}
             </Formik>
         </div>
-    )
+  )
 }
 
-export default PersonaliseProfile
+export default BusinessProfile
