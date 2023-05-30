@@ -17,13 +17,16 @@ function InvoiceIndex() {
     //invoices && console.log(invoices.invoices)
 
     const getNumberOfPaidInvoices = (data) => {
-        const count = data.filter(invoice => invoice.status === "PAID")
+        const count = data.filter(item => item.status === "PAID")
         return count.length
     }
 
     const getAllPaidInvoices = (data) => {
-        const paidInvoices = data.filter(invoice => invoice.status === "PAID")
-        return paidInvoices
+        if (data){
+            const paidInvoices = data.filter(invoice => invoice?.status === "PAID")
+            return paidInvoices
+        }
+       
     }
 
     const totalPaidInvoices = (data) => {
@@ -85,7 +88,7 @@ function InvoiceIndex() {
                         <div className='flex flex-col'>
                             <h2 className='font-semibold flex gap-1 text-3xl text-green-600'>
                                 {/* {currency === 'USD' ? <span>&#65284;</span> : <span>&#8358;</span>} */}
-                                {helperFunctions.formatCurrency(currency,totalPaidInvoices(invoices.invoices))}
+                                {invoices && helperFunctions.formatCurrency(currency,totalPaidInvoices(invoices?.invoices))}
                                 {/* {invoices && totalPaidInvoices(invoices.invoices)}  */}
                                 {/* ({currency}) */}
                             </h2>
