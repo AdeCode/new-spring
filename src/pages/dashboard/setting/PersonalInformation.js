@@ -5,6 +5,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import PersonaliseProfile from '../../../components/@settings/PersonaliseProfile';
+import BusinessProfile from '../../../components/@settings/BusinessProfile';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -48,33 +49,89 @@ function PersonalInformation() {
 
     return (
     <div>
-        <h2 className='mb-2'>Settings</h2>
+        <h2 className='mb-2 text-[#334D6E] text-base font-semibold'>Settings</h2>
         <div className=''>
             <Box sx={{ width: '100%' }}>
-            <Box sx={{ borderBottom: 1, borderColor: 'divider', border:'1px solid green' }}>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                <Tab label="Account Profile" {...a11yProps(0)} />
-                <Tab label="BUSINESS Profile" {...a11yProps(1)} />
-                <Tab label="KYC" {...a11yProps(2)} />
-                <Tab label="RESET CARD PIN" {...a11yProps(3)} />
-                <Tab label="RESET TRANSACTION PIN" {...a11yProps(4)} />
-                </Tabs>
-            </Box>
-            <TabPanel value={value} index={0}>
-                <PersonaliseProfile/>
-            </TabPanel>
-            <TabPanel value={value} index={1}>
-                Business Profile
-            </TabPanel>
-            <TabPanel value={value} index={2}>
-                KYC
-            </TabPanel>
-            <TabPanel value={value} index={3}>
-                Reset your card pin
-            </TabPanel>
-            <TabPanel value={value} index={4}>
-                Reset your transaction pin
-            </TabPanel>
+                <Box sx={{ borderBottom: 1, borderColor: 'divider', border:'1px solid green' }}>
+                    <Tabs value={value} 
+                        onChange={handleChange} 
+                        aria-label="basic tabs example"
+                        sx={{
+                            '&.MuiTab-selected': {
+                                background: "green",
+                            },
+                            '&.Mui-selected': {
+                                text:'green'
+                            },
+                        }}
+                    >
+                        <Tab 
+                            label="Account Profile" {...a11yProps(0)} 
+                            sx={{
+                                '&.Mui-selected': {
+                                    color: "green",
+                                    fontSize:'bold',
+                                    borderBottom:'2px solid green',
+                                },
+                            }}
+                        />
+                        <Tab 
+                            sx={{
+                                '&.Mui-selected': {
+                                    color: "green",
+                                    fontSize:'bold',
+                                    borderBottom:'2px solid green',
+                                },
+                            }}
+                            label="BUSINESS Profile" {...a11yProps(1)} 
+                        />
+                        <Tab 
+                            sx={{
+                                '&.Mui-selected': {
+                                    color: "green",
+                                    fontSize:'bold',
+                                    borderBottom:'2px solid green',
+                                },
+                            }}
+                            label="KYC" {...a11yProps(2)} 
+                        />
+                        <Tab 
+                            sx={{
+                                '&.Mui-selected': {
+                                    color: "green",
+                                    fontSize:'bold',
+                                    borderBottom:'2px solid green',
+                                },
+                            }}
+                            label="RESET CARD PIN" {...a11yProps(3)} 
+                        />
+                        <Tab 
+                            sx={{
+                                '&.Mui-selected': {
+                                    color: "green",
+                                    fontSize:'bold',
+                                    borderBottom:'2px solid green',
+                                },
+                            }}
+                            label="RESET TRANSACTION PIN" {...a11yProps(4)} 
+                        />
+                    </Tabs>
+                </Box>
+                <TabPanel value={value} index={0}>
+                    <PersonaliseProfile/>
+                </TabPanel>
+                <TabPanel value={value} index={1}>
+                    <BusinessProfile/>
+                </TabPanel>
+                <TabPanel value={value} index={2}>
+                    KYC
+                </TabPanel>
+                <TabPanel value={value} index={3}>
+                    Reset your card pin
+                </TabPanel>
+                <TabPanel value={value} index={4}>
+                    Reset your transaction pin
+                </TabPanel>
             </Box>
         </div>
     </div>
