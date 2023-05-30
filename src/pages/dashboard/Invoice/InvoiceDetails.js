@@ -13,7 +13,7 @@ function InvoiceDetails() {
     const {invoiceCode} = useParams()
 
     const {data:invoice, isLoading, error, isError} = useQuery(['invoice',{invoiceCode}], invoiceService.getInvoicesByCode)
-    // invoice && console.log(invoice)
+    invoice && console.log(invoice)
 
     const gotoPreview = () => {
         navigate('/invoice/template', {
@@ -66,11 +66,11 @@ function InvoiceDetails() {
                         </div>
                         <div className='flex gap-3'>
                             <h2 className='min-w-[250px] text-gray text-base'>Date Created</h2>
-                            <span className='font-medium text-base'>{invoice?.invoice?.invoice_date}</span>
+                            <span className='font-medium text-base'>{invoice?.invoice?.creation_date}</span>
                         </div>
                         <div className='flex gap-3'>
                             <h2 className='min-w-[250px] text-gray text-base'>Due date</h2>
-                            <span className='font-medium text-base'>...</span>
+                            <span className='font-medium text-base'>{invoice?.invoice?.due_date}</span>
                         </div>
                         
                     </div>
@@ -84,7 +84,7 @@ function InvoiceDetails() {
                                     <h2 className='text-gray'>Subtotal:</h2><span>{invoice?.invoice?.total_cost}</span>
                                 </div>
                                 <div className='flex justify-between px-2'>
-                                    <h2 className='text-gray'>Tax(7.5%):</h2><span>600 USD</span>
+                                    <h2 className='text-gray'>Tax(7.5%):</h2><span>{invoice?.invoice?.total_cost*invoice?.invoice?.tax}</span>
                                 </div>
                                 <div className='flex justify-between bg-gray py-1 px-2'>
                                     <h2 className='text-black'>Subtotal:</h2><span>{invoice?.invoice?.total_cost}</span>

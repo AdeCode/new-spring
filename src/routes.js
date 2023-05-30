@@ -30,6 +30,7 @@ import UserType from './pages/auth/UserType';
 import MerchantLogin from './pages/auth/merchant/MerchantLogin';
 import MerchantForgotPassword from './pages/auth/merchant/MerchantForgotPassword';
 import BusinessNewPassword from './pages/auth/merchant/BusinessNewPassword';
+import PersonalInformation from './pages/dashboard/setting/PersonalInformation';
 
 function Routers (){
     return (
@@ -73,6 +74,7 @@ function Routers (){
                         <Route path='/invoice/details/:invoiceCode' element={<InvoiceDetails/>}></Route>                       
                         <Route path='/invoice/template' element={<InvoiceTemplate/>}></Route>                       
                         <Route path='/dashboard/customers' element={<RecentCustomers/>}></Route>     
+                        <Route path='/settings/personal-information' element={<PersonalInformation/>}></Route>     
                     </Route>
                 </Routes>
             </ScrollToTop>

@@ -74,9 +74,9 @@ function CustomerSignup() {
                     >
                         {({ isSubmitting, values, isValid }) => (
                             <Form className='flex flex-col w-[70%]'>
-                                {/* <span class="material-icons">&#xE87C;</span> */}
-                                {/* <span class="material-symbols-outlined">toggle_on</span>
-                                <span class="material-symbols-outlined">visibility</span> */}
+                                {/* <span className="material-icons">&#xE87C;</span> */}
+                                {/* <span className="material-symbols-outlined">toggle_on</span>
+                                <span className="material-symbols-outlined">visibility</span> */}
                                 <InputField
                                     name='first_name'
                                     type='text'

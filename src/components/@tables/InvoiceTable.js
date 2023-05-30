@@ -7,7 +7,7 @@ import {
     ListItemIcon,
     MenuItem,
 } from '@mui/material';
-import {Link, useNavigate} from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import IosShareIcon from '@mui/icons-material/IosShare';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
@@ -18,7 +18,7 @@ import { toast } from 'react-toastify';
 
 
 
-const InvoiceTable = ({data, currency}) => {
+const InvoiceTable = ({ data, currency }) => {
     console.log(data)
 
     //should be memoized or stable
@@ -29,12 +29,12 @@ const InvoiceTable = ({data, currency}) => {
 
     const ToggleButton = styled(Switch)({
         "&.Mui-selected, &.Mui-selected:hover": {
-          color: "white",
-          backgroundColor: 'green'
+            color: "white",
+            backgroundColor: 'green'
         }
-      });
-    
-      const toggleInvoiceMutation = useMutation(invoiceService.toggleInvoiceStatus, {
+    });
+
+    const toggleInvoiceMutation = useMutation(invoiceService.toggleInvoiceStatus, {
         onSuccess: res => {
             console.log(res)
             //dispatch({ type: 'LOGIN', payload: res.data })
@@ -53,10 +53,10 @@ const InvoiceTable = ({data, currency}) => {
 
     const onToggle = (values) => {
         //console.log(values)
-        values={
+        values = {
             ...values,
-            payload:{
-                "status" : "PAID"
+            payload: {
+                "status": "PAID"
             }
         }
         toggleInvoiceMutation.mutate(values)
@@ -70,15 +70,15 @@ const InvoiceTable = ({data, currency}) => {
                 header: 'Status',
                 Cell: ({ renderedCellValue, row }) => {
                     return <div className={`${row.original.status === 'PAID' ? 'text-green-700' : 'text-yellow-600'} `}>
-                            <h3 className=''>{renderedCellValue}</h3>
-                        </div>
-                }, 
-                size:80,
+                        <h3 className=''>{renderedCellValue}</h3>
+                    </div>
+                },
+                size: 80,
             },
             {
-              accessorKey: 'invoice_code',
-              header: 'Invoice #',
-              size:50,
+                accessorKey: 'invoice_code',
+                header: 'Invoice #',
+                size: 50,
             },
             {
                 accessorKey: 'name',
@@ -97,7 +97,7 @@ const InvoiceTable = ({data, currency}) => {
                         {cell.getValue()}
                     </div>
                 },
-                size:50,
+                size: 50,
             },
             {
                 accessorKey: 'due_date',
@@ -108,56 +108,56 @@ const InvoiceTable = ({data, currency}) => {
                 header: 'View',
                 Cell: ({ cell, row }) => {
                     return <Link to={`/invoice/details/${row.original.invoice_code}`} className='cursor-pointer text-green-800'>
-                            <span className="material-symbols-outlined" >visibility</span>
-                        </Link>
-                }, 
-                size:50,
+                        <span className="material-symbols-outlined" >visibility</span>
+                    </Link>
+                },
+                size: 50,
             },
             {
                 accessorKey: 'action',
                 header: 'Action',
                 Cell: ({ cell, row }) => {
                     return <div>
-                         <FormControlLabel
+                        <FormControlLabel
                             sx={{
-                            display: 'block',
-                            color:'green',
-                            '&.Mui-checked': {
-                                color: "green",
-                                //backgroundClip:"green",
-                            },
-                            '&.MuiSwitch-thumb-checked': {
-                                color: "#404042",
-                                backgroundColor:"#404042",
-                            },
+                                display: 'block',
+                                color: 'green',
+                                '&.Mui-checked': {
+                                    color: "green",
+                                    //backgroundClip:"green",
+                                },
+                                '&.MuiSwitch-thumb-checked': {
+                                    color: "#404042",
+                                    backgroundColor: "#404042",
+                                },
 
                             }}
                             control={
-                            <Switch
-                                checked={row.original.checked}
-                                onChange={() => {onToggle({invoice_code:row.original.invoice_code});console.log(row.original.invoice_code)}
-                                    // handleToggleChange(row.original.id)
-                                }
-                                name="toggle"
-                                color="primary"
-                                sx={{
-                                    color:'#404042',
-                                    '&.Mui-checked': {
-                                        color: "#404042",
-                                        backgroundColor:"#404042",
-                                    },
-                                    '&.MuiSwitch-thumb-checked': {
-                                        color: "#404042",
-                                        backgroundColor:"#404042",
-                                    },
-                                }}
-                            />
+                                <Switch
+                                    checked={row.original.checked}
+                                    onChange={() => { onToggle({ invoice_code: row.original.invoice_code }); console.log(row.original.invoice_code) }
+                                        // handleToggleChange(row.original.id)
+                                    }
+                                    name="toggle"
+                                    color="primary"
+                                    sx={{
+                                        color: '#404042',
+                                        '&.Mui-checked': {
+                                            color: "#404042",
+                                            backgroundColor: "#404042",
+                                        },
+                                        '&.MuiSwitch-thumb-checked': {
+                                            color: "#404042",
+                                            backgroundColor: "#404042",
+                                        },
+                                    }}
+                                />
                             }
-                            // label="Approve"
+                        // label="Approve"
                         />
                     </div>
-                }, 
-                size:50,
+                },
+                size: 50,
             },
         ],
         [],
@@ -182,6 +182,14 @@ const InvoiceTable = ({data, currency}) => {
 
     return (
         <Section>
+            <Box sx={{ display: 'flex', paddingTop: '20px', alignItems: 'center', gap: '10px', paddingLeft: '12px',marginBottom:'10px' }}>
+                <div className=''>
+                    <p className='text-[#6A707E] text-xl'>Invoices</p>
+                </div>
+                <span className='bg-[#EFF0F2] py-1 px-3 cursor-pointer text-[13px] flex items-center gap-2' onClick={handleExportData}>
+                    <IosShareIcon sx={{ fontSize: 14 }} /> Export
+                </span>
+            </Box>
             <MaterialReactTable
                 state={{ isLoading: false }}
                 columns={columns}
@@ -197,28 +205,14 @@ const InvoiceTable = ({data, currency}) => {
                         border: 'none',
                     },
                 }}
+                enableTopToolbar={false}
                 renderTopToolbarCustomActions={() => (
-                    <Box sx={{display:'flex',paddingTop: '20px', alignItems:'center', gap:'10px',paddingLeft: '12px' }}>
+                    <Box sx={{ display: 'flex', paddingTop: '20px', alignItems: 'center', gap: '10px', paddingLeft: '12px' }}>
                         <div className=''>
                             <p className='text-[#6A707E] text-xl'>Invoices</p>
-                                {/* <FormControlLabel
-                                    sx={{
-                                    display: 'block',
-                                    }}
-                                    control={
-                                    <ToggleButton
-                                        checked={toggle}
-                                        onChange={() => {setToggle(true)}}
-                                        name="toggle"
-                                        color="primary"
-                                    />
-                                    }
-                                    label="Approve"
-                                /> */}
                         </div>
-                        
                         <span className='bg-[#EFF0F2] py-1 px-3 cursor-pointer text-[13px] flex items-center gap-2' onClick={handleExportData}>
-                            <IosShareIcon sx={{ fontSize: 14 }}/> Export
+                            <IosShareIcon sx={{ fontSize: 14 }} /> Export
                         </span>
                     </Box>
 
@@ -247,7 +241,7 @@ const InvoiceTable = ({data, currency}) => {
                     sx: {
                         color: '#171F4C',
                         fontSize: '14px',
-                        fontWeight:'600'
+                        fontWeight: '600'
                     },
                 }}
 
@@ -261,45 +255,46 @@ const InvoiceTable = ({data, currency}) => {
                     },
                 }}
 
-                // renderRowActionMenuItems={({ closeMenu, row }) => [
-                    
-                //     row.original.status === 'pending' ?
-                //         <MenuItem
-                //             key={1}
-                //             onClick={() => {
-                //                 console.log(row.original.id)
-                //                 //approvePaymentMutation.mutate({order_ref:row.original.order_ref})
-                //                 closeMenu();
-                //             }}
-                //             sx={{ m: 0,color:'green' }}
-                //         >
-                //             <ListItemIcon>
-                //             <span className="material-symbols-outlined text-green-700">task_alt</span>
-                //             </ListItemIcon>
-                //             Approve
-                //         </MenuItem>
-                //     :
-                //     null
-                //     ,
-                //     <MenuItem
-                //       key={0}
-                //       onClick={() => {
-                //         // View profile logic...
-                //         console.log(row.original.id)
-                //         //navigate(`/dashboard/payment/${row.original.reference}`)
-                //         navigate('/invoice/details')
-                //         closeMenu();
-                //       }}
-                //       sx={{ m: 0 }}
-                //     >
-                //       <ListItemIcon>
-                //         <span className="material-symbols-outlined">info</span>
-                //       </ListItemIcon>
-                //       View Details
-                //     </MenuItem>,
-                    
-                //   ]}
-           
+
+            // renderRowActionMenuItems={({ closeMenu, row }) => [
+
+            //     row.original.status === 'pending' ?
+            //         <MenuItem
+            //             key={1}
+            //             onClick={() => {
+            //                 console.log(row.original.id)
+            //                 //approvePaymentMutation.mutate({order_ref:row.original.order_ref})
+            //                 closeMenu();
+            //             }}
+            //             sx={{ m: 0,color:'green' }}
+            //         >
+            //             <ListItemIcon>
+            //             <span className="material-symbols-outlined text-green-700">task_alt</span>
+            //             </ListItemIcon>
+            //             Approve
+            //         </MenuItem>
+            //     :
+            //     null
+            //     ,
+            //     <MenuItem
+            //       key={0}
+            //       onClick={() => {
+            //         // View profile logic...
+            //         console.log(row.original.id)
+            //         //navigate(`/dashboard/payment/${row.original.reference}`)
+            //         navigate('/invoice/details')
+            //         closeMenu();
+            //       }}
+            //       sx={{ m: 0 }}
+            //     >
+            //       <ListItemIcon>
+            //         <span className="material-symbols-outlined">info</span>
+            //       </ListItemIcon>
+            //       View Details
+            //     </MenuItem>,
+
+            //   ]}
+
             />
         </Section>
 

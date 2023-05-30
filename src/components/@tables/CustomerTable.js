@@ -94,7 +94,7 @@ const CustomerTable = ({data}) => {
                       style={{ borderRadius: '50%'}}
                     />
                     :
-                    <span class="material-symbols-outlined">account_circle</span>
+                    <span className="material-symbols-outlined">account_circle</span>
                   }
                   
                 <h2 className='text-start'>{row.original.name}</h2>
@@ -139,7 +139,7 @@ const CustomerTable = ({data}) => {
         header: 'View Invoice',
         Cell: ({cell, row}) => {
             return <Link to='/invoice/template' className="flex items-center bg-[#55BA6A] rounded-[5px] py-[6px] px-2 text-white w-fit">
-                    {/* <span class="material-symbols-outlined">visibility</span> */}
+                    {/* <span className="material-symbols-outlined">visibility</span> */}
                     View Invoice
                   </Link>
         },
@@ -189,6 +189,7 @@ const CustomerTable = ({data}) => {
                     border: 'none',
                     },
                 }}
+                enableTopToolbar={false}
                 renderTopToolbarCustomActions={() => (
                     <Box sx={{display:'flex', justifyContent:'space-between', width:'100%'}}>
                         <Typography color="#334D6E" variant="h2" sx={{fontSize:'16px', paddingLeft:'12px',paddingTop:'20px'}}>
@@ -253,14 +254,6 @@ const CustomerTable = ({data}) => {
                       paddingLeft:'10px'
                     },
                   })}
-                // renderDetailPanel={({ row }) => (
-                //     <div>
-                //       <span>First Name: {row.original.name.firstName}</span>
-                //       <span>Last Name: {row.original.name.lastName}</span>
-                //       <span>Address: {row.original.address}</span>
-                //     </div>
-                //   )}
-                
             />
         </Section>
         
