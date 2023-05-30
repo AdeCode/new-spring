@@ -63,6 +63,9 @@ const OrderItemsTable = ({data}) => {
             {
               accessorKey: 'cbm',
               header: 'CBM',
+              Cell: ({ cell }) => {
+                return <div className="text-sm font-semibold">2</div>
+            },
               size:50,
             },
             {
