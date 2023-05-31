@@ -37,7 +37,7 @@ function InvoiceTemplate() {
 
     const location = useLocation()
     const data = location.state.invoice.invoice
-    // console.log(data)
+    console.log(data)
 
     const styles = {
         container:{
@@ -134,10 +134,10 @@ function InvoiceTemplate() {
                     </div>
                     <div className='border flex flex-col w-[300px]'>
                         <div className='flex justify-between py-2 px-2'>
-                            <h2 className=''>Subtotal:</h2><span className=''>{helperFunctions.formatCurrency(data?.currency,data?.total_cost)}</span>
+                            <h2 className=''>Subtotal:</h2><span className=''>{helperFunctions.formatCurrency(data?.currency,data?.sub_total)}</span>
                         </div>
                         <div className='flex justify-between py-2 px-2'>
-                            <h2 className=''>Tax:(7.5%)</h2><span className=''>{helperFunctions.formatCurrency(data?.currency,(data?.total_cost * data?.tax))}</span>
+                            <h2 className=''>Tax:(7.5%)</h2><span className=''>{helperFunctions.formatCurrency(data?.currency,(data?.sub_total * data?.tax))}</span>
                         </div>
                         <div className='flex justify-between py-4 px-2 bg-slate-400 text-black'>
                             <h2 className='font-semibold'>Invoice Total:</h2><span className='font-semibold'>{helperFunctions.formatCurrency(data?.currency,data?.total_cost)}</span>
@@ -158,12 +158,12 @@ function InvoiceTemplate() {
                 </div>
                 <div className='flex justify-between mt-4'>
                     <div className='flex gap-2'>
-                        <img src={mastercard} alt='mastercard-logo' width='80px' height='80px'/>
-                        <img src={visa} alt='visa-logo' width='80px' height='80px'/>
+                        <img src={mastercard} alt='mastercard-logo' width='50px' height='50px'/>
+                        <img src={visa} alt='visa-logo' width='50px' height='50px'/>
                     </div>
                     <div className='flex items-center gap-2'>
                         <h3 className='w-fit text-gray text-base font-medium'>Secured by</h3>
-                        <img src={logo} alt='visa-logo'/>
+                        <img src={logo} alt='visa-logo' width='60px' height='50px'/>
                     </div>
                 </div>
             </div>

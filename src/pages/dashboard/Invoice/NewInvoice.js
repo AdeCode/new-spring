@@ -52,7 +52,7 @@ function NewInvoice() {
     //console.log(invoiceData)
     //console.log(calculateSubTotal(invoiceData))
 
-    const [value, onChange] = useState(new Date());
+    const [invoice_due_date, onChange] = useState(new Date());
 
     const createInvoiceMutation = useMutation(merchantService.createInvoice, {
         onSuccess: res => {
@@ -75,6 +75,7 @@ function NewInvoice() {
         values={
             ...values,
             currency,
+            invoice_due_date
         }
         //console.log(values)
         createInvoiceMutation.mutate(values)
@@ -222,7 +223,7 @@ function NewInvoice() {
                                     <div className='grow-0'>
                                         <div className='flex flex-col'>
                                             <label htmlFor='date' className='font-medium text-base text-label mb-[6px]'>Due Date</label>
-                                            <DateTimePicker onChange={onChange} value={value} className='' />
+                                            <DateTimePicker onChange={onChange} value={invoice_due_date} className='' />
                                         </div>
                                     </div>
 

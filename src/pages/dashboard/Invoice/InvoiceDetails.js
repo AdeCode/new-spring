@@ -81,10 +81,10 @@ function InvoiceDetails() {
                     <div className='justify-end flex'>
                             <div className='flex w-[200px] flex-col gap-3 border border-y-cyan-950'>
                                 <div className='flex justify-between px-2'>
-                                    <h2 className='text-gray'>Subtotal:</h2><span>{invoice?.invoice?.total_cost}</span>
+                                    <h2 className='text-gray'>Subtotal:</h2><span>{invoice?.invoice?.sub_total}</span>
                                 </div>
                                 <div className='flex justify-between px-2'>
-                                    <h2 className='text-gray'>Tax(7.5%):</h2><span>{invoice?.invoice?.total_cost*invoice?.invoice?.tax}</span>
+                                    <h2 className='text-gray'>Tax(7.5%):</h2><span>{invoice?.invoice?.sub_total*invoice?.invoice?.tax}</span>
                                 </div>
                                 <div className='flex justify-between bg-gray py-1 px-2'>
                                     <h2 className='text-black'>Subtotal:</h2><span>{invoice?.invoice?.total_cost}</span>

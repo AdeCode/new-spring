@@ -77,10 +77,10 @@ const OrderItemsTable = ({data}) => {
                 size:50,
             },
             {
-                accessorKey: 'price',
+                accessorKey: 'sub_total',
                 header: 'Sub-Total',
-                Cell: ({ cell }) => {
-                    return <div className="text-sm font-semibold">$ {cell.getValue()}</div>
+                Cell: ({ cell,row }) => {
+                    return <div className="text-sm font-semibold">$ {row.original.price}</div>
                 },
                 size:50,
             },
@@ -107,8 +107,17 @@ const OrderItemsTable = ({data}) => {
 
     return (
         <Section>
-            {/* <div className='title bg-white w-full text-[#334D6E] text-base pl-[18px] pt-5'>Recent Customers</div> */}
-            {/* <div className='' onClick={handleExportData}>Export</div> */}
+            <Box sx={{display:'flex',paddingTop: '20px', alignItems:'center', gap:'10px',paddingLeft: '12px' }}>
+                        <div className=''>
+                            <p className='text-[#6A707E] text-lg'>Invoice Items</p>
+                        </div>
+                        
+                        <span className='bg-[#EFF0F2] py-1 px-3 cursor-pointer text-[13px] flex items-center gap-2' onClick={handleExportData}>
+                            <IosShareIcon sx={{ fontSize: 14 }}/> Export
+                        </span>
+                    </Box>
+            {/* <div className='title bg-white w-full text-[#334D6E] text-base pl-[18px] pt-5'>Invoice Items</div>
+            <div className='' onClick={handleExportData}>Export</div> */}
             <MaterialReactTable
                 state={{ isLoading: false }}
                 columns={columns}
@@ -123,6 +132,7 @@ const OrderItemsTable = ({data}) => {
                         border: 'none',
                     },
                 }}
+                enableTopToolbar={false}
                 renderTopToolbarCustomActions={() => (
                     <Box sx={{display:'flex',paddingTop: '20px', alignItems:'center', gap:'10px',paddingLeft: '12px' }}>
                         <div className=''>
