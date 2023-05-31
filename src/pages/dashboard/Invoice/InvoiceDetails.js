@@ -6,6 +6,7 @@ import InvoiceTable from '../../../components/@tables/InvoiceTable'
 import OrderItemsTable from '../../../components/@tables/OrderItemsTable'
 import { useQuery } from 'react-query'
 import invoiceService from '../../../@services/invoiceService'
+import helperFunctions from '../../../@helpers/helperFunctions'
 
 function InvoiceDetails() {
     const navigate = useNavigate()
@@ -77,17 +78,18 @@ function InvoiceDetails() {
                     <div className='w-full shadow-md flex flex-col py-2 gap-3'>
                     <OrderItemsTable
                         data={invoice?.invoice?.items}
+                        currency={invoice?.invoice?.currency}
                     />
                     <div className='justify-end flex'>
                             <div className='flex w-[200px] flex-col gap-3 border border-y-cyan-950'>
                                 <div className='flex justify-between px-2'>
-                                    <h2 className='text-gray'>Subtotal:</h2><span>{invoice?.invoice?.sub_total}</span>
+                                    <h2 className='text-gray'>Subtotal:</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.sub_total)}</span>
                                 </div>
                                 <div className='flex justify-between px-2'>
-                                    <h2 className='text-gray'>Tax(7.5%):</h2><span>{invoice?.invoice?.sub_total*invoice?.invoice?.tax}</span>
+                                    <h2 className='text-gray'>Tax(7.5%):</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.sub_total*invoice?.invoice?.tax)}</span>
                                 </div>
                                 <div className='flex justify-between bg-gray py-1 px-2'>
-                                    <h2 className='text-black'>Subtotal:</h2><span>{invoice?.invoice?.total_cost}</span>
+                                    <h2 className='text-black'>Subtotal:</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.total_cost)}</span>
                                 </div>
                             </div>
                     </div>

@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import {Link} from 'react-router-dom'
 import IosShareIcon from '@mui/icons-material/IosShare';
+import helperFunctions from '../../@helpers/helperFunctions';
 
 
 //nested data is ok, see accessorKeys in ColumnDef below
@@ -43,7 +44,8 @@ const data = [
 ];
 
 
-const OrderItemsTable = ({data}) => {
+const OrderItemsTable = ({data,currency}) => {
+    console.log(data)
     //should be memoized or stable
     const columns = useMemo(
         () => [
@@ -72,7 +74,7 @@ const OrderItemsTable = ({data}) => {
                 accessorKey: 'price',
                 header: 'Price',
                 Cell: ({ cell }) => {
-                    return <div className="text-sm font-semibold">$ {cell.getValue()}</div>
+                    return <div className="text-sm font-semibold">{helperFunctions.formatCurrency(currency,cell.getValue())}</div>
                 },
                 size:50,
             },
@@ -80,7 +82,7 @@ const OrderItemsTable = ({data}) => {
                 accessorKey: 'sub_total',
                 header: 'Sub-Total',
                 Cell: ({ cell,row }) => {
-                    return <div className="text-sm font-semibold">$ {row.original.price}</div>
+                    return <div className="text-sm font-semibold">{helperFunctions.formatCurrency(currency,row.original.price)}</div>
                 },
                 size:50,
             },
