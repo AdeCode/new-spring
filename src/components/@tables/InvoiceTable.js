@@ -11,7 +11,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import IosShareIcon from '@mui/icons-material/IosShare';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { useMutation } from 'react-query';
+import { useMutation, useQueryClient } from 'react-query';
 import invoiceService from '../../@services/invoiceService';
 import { toast } from 'react-toastify';
 import helperFunctions from '../../@helpers/helperFunctions';
@@ -19,6 +19,9 @@ import helperFunctions from '../../@helpers/helperFunctions';
 
 
 const InvoiceTable = ({ data, currency }) => {
+
+    const queryClient = useQueryClient()
+
     console.log(data)
 
     //should be memoized or stable
@@ -41,7 +44,7 @@ const InvoiceTable = ({ data, currency }) => {
             toast.success(res.message, {
                 theme: "colored",
             })
-            // navigate('/invoice')
+            queryClient.invalidateQueries('invoices')
         },
         onError: err => {
             console.log(err)
@@ -134,11 +137,12 @@ const InvoiceTable = ({ data, currency }) => {
                             }}
                             control={
                                 <Switch
-                                    checked={row.original.checked}
+                                    checked={row.original.status==='PAID'}
                                     onChange={() => { onToggle({ invoice_code: row.original.invoice_code }); console.log(row.original.invoice_code) }
                                         // handleToggleChange(row.original.id)
                                     }
                                     name="toggle"
+                                    disabled={row.original.status==='PAID'}
                                     color="primary"
                                     sx={{
                                         color: '#404042',
