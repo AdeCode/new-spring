@@ -13,7 +13,7 @@ function InvoiceIndex() {
 
     const { data: invoices, isLoading, error } = useQuery('invoices', invoiceService.getAllInvoices)
 
-    invoices && console.log(invoices)
+    // invoices && console.log(invoices)
     //invoices && console.log(invoices.invoices)
 
     const getNumberOfPaidInvoices = (data) => {
@@ -38,12 +38,9 @@ function InvoiceIndex() {
 
     // invoices && console.log(totalPaidInvoices(invoices.invoices))
 
-    const getNumberOfUnpaidInvoices = (data) => {
-        if (data) {
-            const count = data.filter(invoice => invoice.status === "UNPAID")
-            return count.length
-        }
-
+    const getNumberOfUnpaidInvoices = (data) => {    
+        const count = data.filter(invoice => invoice.status === "UNPAID")
+        return count.length
     }
 
 

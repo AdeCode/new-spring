@@ -28,10 +28,10 @@ function InvoiceFooter() {
                 {/* <h3 className=''>Account Name: GIG LOGISTICS INTL EXP LTD</h3>
                 <h3 className=''>Account Number: 006862976</h3>
                 <h3 className=''>Beneficiary Bank: STERLING BANK</h3> */}
-                <di className='flex flex-col bg-green-600 rounded-[10px] py-3 items-center px-2'>
+                <div className='flex flex-col bg-green-600 rounded-[10px] py-3 items-center px-2'>
                     <h2 className='text-white text-base font-normal'>Create a Business NGN Account</h2>
                     <p className='font-bold text-base text-white'>Coming soon!</p>
-                </di>
+                </div>
             </div>
         </div>
         <div className='flex flex-col lg:w-[300px]'>
@@ -40,10 +40,10 @@ function InvoiceFooter() {
                 {/* <h3 className=''>Account Name: GIG LOGISTICS INTL EXP LTD</h3>
                 <h3 className=''>Account Number: 006862976</h3>
                 <h3 className=''>Beneficiary Bank: STERLING BANK</h3> */}
-                <di className='flex flex-col bg-green-600 rounded-[10px] py-3 items-center px-2'>
+                <div className='flex flex-col bg-green-600 rounded-[10px] py-3 items-center px-2'>
                     <h2 className='text-white text-base font-normal text-center'>Create a Business USD, GBP &amp; EURO Bank Account</h2>
                     <p className='font-bold text-base text-white'>Coming soon!</p>
-                </di>
+                </div>
             </div>
         </div>
     </div>
