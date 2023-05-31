@@ -30,7 +30,7 @@ function NewInvoice() {
 
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value)
-        console.log(currency)
+        // console.log(currency)
     }
 
     const calculateSubTotal = (data) => {
@@ -72,7 +72,11 @@ function NewInvoice() {
     })
 
     const onSubmit = (values) => {
-        console.log(values)
+        values={
+            ...values,
+            currency,
+        }
+        //console.log(values)
         createInvoiceMutation.mutate(values)
     }
 
@@ -99,7 +103,7 @@ function NewInvoice() {
                             // console.log('customer doesnt exists')
                             // setFieldValue(props.name, '');
                             // setFieldValue('customer_email', '');
-                            // setCustomerExists(false)
+                            setCustomerExists(false)
                         }
                     },
                         (err) => {

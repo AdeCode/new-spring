@@ -14,7 +14,7 @@ import Switch from '@mui/material/Switch';
 import { useMutation } from 'react-query';
 import invoiceService from '../../@services/invoiceService';
 import { toast } from 'react-toastify';
-
+import helperFunctions from '../../@helpers/helperFunctions';
 
 
 
@@ -91,10 +91,10 @@ const InvoiceTable = ({ data, currency }) => {
             {
                 accessorKey: 'total_cost',
                 header: 'Amount',
-                Cell: ({ cell }) => {
+                Cell: ({ cell,row }) => {
                     return <div className="text-sm font-semibold flex gap-1">
-                        {currency === 'USD' ? <span>&#65284;</span> : <span>&#8358;</span>}
-                        {cell.getValue()}
+                        {/* {currency === 'USD' ? <span>&#65284;</span> : <span>&#8358;</span>} */}
+                        {helperFunctions.formatCurrency(row.original.currency,cell.getValue())}
                     </div>
                 },
                 size: 50,

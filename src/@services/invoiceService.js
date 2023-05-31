@@ -14,7 +14,7 @@ async function getInvoicesByCode({queryKey}){
 async function toggleInvoiceStatus({invoice_code, payload}){
     console.log(payload)
     //const [_key, {invoice_code}] = queryKey
-    const {data} = await httpService.secureInstance.put(`/merchants/invoices/invoice/${invoice_code}`,payload)
+    const {data} = await httpService.secureInstance.patch(`/merchants/invoices/invoice/${invoice_code}`,payload)
     return data
 }
 
