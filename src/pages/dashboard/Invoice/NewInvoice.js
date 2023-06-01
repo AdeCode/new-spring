@@ -152,7 +152,7 @@ function NewInvoice() {
                         initialValues={{
                             customer_email: '',
                             customer_name: '',
-                            notes: '',
+                            note: '',
                             customer_phone: '',
                             invoice_due_date: '',
                             invoice_items: [Empty_invoice_items],
@@ -179,7 +179,7 @@ function NewInvoice() {
                             resetForm({
                                 customer_email: '',
                                 customer_name: '',
-                                notes: '',
+                                note: '',
                                 customer_phone: '',
                                 invoice_items: []
                             })
@@ -341,10 +341,10 @@ function NewInvoice() {
                                         </div>
                                     </div>
                                     <TextField
-                                        name='notes'
+                                        name='note'
                                         type='text'
                                         label='Notes (optional)'
-                                        placeholder='Enter notes'
+                                        placeholder='Enter note'
                                         component="textarea"
                                         rows='4'
                                     />

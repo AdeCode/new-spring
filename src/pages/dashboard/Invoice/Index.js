@@ -13,7 +13,7 @@ function InvoiceIndex() {
 
     const { data: invoices, isLoading, error } = useQuery('invoices', invoiceService.getAllInvoices)
 
-    // invoices && console.log(invoices)
+    invoices && console.log(invoices)
     //invoices && console.log(invoices.invoices)
 
     const getNumberOfPaidInvoices = (data) => {
