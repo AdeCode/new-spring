@@ -101,46 +101,18 @@ const CustomerTable = ({data}) => {
             </div>
         },
       },
-    //   {
-    //     accessorKey: 'name', //normal accessorKey
-    //     header: 'Name',
-    //   },
-      {
-        accessorKey: 'email', //normal accessorKey
-        header: 'Email address',
-      },
       {
         accessorKey: 'phone', //normal accessorKey
         header: 'Phone',
         size:50,
       },
       {
-        accessorKey: 'created_on', //normal accessorKey
-        header: 'Created on',
-        size:50,
-      },
-      {
-        accessorKey: 'invoice_number', //normal accessorKey
-        header: 'Invoice #',
-        size:50,
-      },
-      {
-        accessorKey: 'amount', //normal accessorKey
-        header: 'Amount',
-        size:50,
-      },
-      {
-        accessorKey: 'due_date', //normal accessorKey
-        header: 'Due date',
-        size:50,
-      },
-      {
         accessorKey: 'view_invoice', 
         header: 'View Invoice',
         Cell: ({cell, row}) => {
-            return <Link to='/invoice/template' className="flex items-center bg-[#55BA6A] rounded-[5px] py-[6px] px-2 text-white w-fit">
+            return <Link to={`/dashboard/customers/${row.original.id}`} className="flex items-center bg-[#55BA6A] rounded-[5px] py-[6px] px-2 text-white w-fit">
                     {/* <span className="material-symbols-outlined">visibility</span> */}
-                    View Invoice
+                    View Invoices
                   </Link>
         },
         size:50,
