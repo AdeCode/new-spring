@@ -16,10 +16,17 @@ async function fetchAllCustomers(){
     return data
 }
 
+async function fetchCustomerInvoices({queryKey}){
+    const [_key, {customerId}] = queryKey
+    const {data} = await httpService.secureInstance.get(`/merchants/customers/invoices?customer_id=${customerId}`)
+    return data
+}
+
 const customerService = {
     fetchCustomerByPhoneNumber,
     fetchMerchantCustomers,
-    fetchAllCustomers
+    fetchAllCustomers,
+    fetchCustomerInvoices
 }
 
 export default customerService

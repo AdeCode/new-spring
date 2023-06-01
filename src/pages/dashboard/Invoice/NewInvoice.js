@@ -143,7 +143,7 @@ function NewInvoice() {
                     <h2 className=''>Create Invoice</h2>
                     <select name='currency' onChange={handleCurrencyChange} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
                         <option value='USD' defaultValue>USD</option>
-                        <option value='Naira' >Naira</option>
+                        <option value='NGN' >Naira</option>
                     </select>
                 </div>
                 <div className='px-3 w-full'>

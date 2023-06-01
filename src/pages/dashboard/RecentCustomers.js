@@ -22,7 +22,7 @@ function RecentCustomers() {
     <div className='flex flex-col gap-10'>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
         <Typography color="#334D6E" variant="h2" sx={{ fontSize: '16px', paddingLeft: '12px', paddingTop: '20px' }}>
-          Recent Customers
+          Customers List
         </Typography>
         {/* <Typography variant="h5" sx={{ fontSize: '16px' }}>
           Select Invoice Currency
