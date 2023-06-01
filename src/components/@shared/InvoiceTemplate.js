@@ -128,8 +128,8 @@ function InvoiceTemplate() {
                 <div className='flex w-full justify-between'>
                     <div className='w-[500px] flex gap-3'>
                         <h3 className='text-neutral-700'>Notes:</h3>
-                        <textarea className='p-2 bg-inherit border opacity-70' id="note" name="note" rows="3" cols="70" readOnly>
-                        {data?.note}
+                        <textarea className='p-2 bg-inherit border opacity-70' defaultValue={data?.note || ''} id="note" name="note" rows="3" cols="70" readOnly>
+                        {/* {data?.note} */}
                         </textarea>
                     </div>
                     <div className='border flex flex-col w-[300px]'>
