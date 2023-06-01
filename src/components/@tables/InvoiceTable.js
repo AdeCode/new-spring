@@ -88,7 +88,7 @@ const InvoiceTable = ({ data, currency }) => {
                 header: 'Customer',
             },
             {
-                accessorKey: 'invoice_date',
+                accessorKey: 'creation_date',
                 header: 'Created On',
             },
             {
