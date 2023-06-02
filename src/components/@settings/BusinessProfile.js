@@ -217,6 +217,17 @@ function BusinessProfile() {
                                 />
                             </div>
                         </div>
+                        <div className='flex w-full gap-4 py-3'>
+                            <div className='w-[360px]'>
+                                <InputField
+                                    name='tin'
+                                    type='text'
+                                    label='TIN'
+                                    placeholder='e.g. 096453627181'
+                                />
+                            </div>
+                            
+                        </div>
 
                         <div className='flex justify-end'>
                             <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>

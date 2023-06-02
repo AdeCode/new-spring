@@ -153,7 +153,7 @@ function CustomerInvoiceTable({data}) {
         accessorKey: 'view_invoice', 
         header: 'View Invoice',
         Cell: ({cell, row}) => {
-            return <Link to={`/invoice/details/${row.original.invoice_code}`} className="flex items-center bg-[#55BA6A] rounded-[5px] py-[6px] px-2 text-white w-fit">
+            return <Link to={`/dashboard/customers/invoice/${row.original.invoice_code}`} className="flex items-center bg-[#55BA6A] rounded-[5px] py-[6px] px-2 text-white w-fit">
                     Preview
                   </Link>
         },

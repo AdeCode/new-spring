@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import customerService from '../../../@services/customerService';
 import CustomerInvoiceTable from '../../../components/@tables/CustomerInvoiceTable';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import invoiceService from '../../../@services/invoiceService';
 
 function CustomerInvoiceList() {
@@ -14,6 +14,8 @@ function CustomerInvoiceList() {
     const [status, setStatus] = useState('')
 
     const { customerId } = useParams()
+
+    const navigate = useNavigate()
 
     const handleCurrencyChange = (e) => {
         setCurrency(e.currentTarget.value)
@@ -30,7 +32,7 @@ function CustomerInvoiceList() {
 
 
     // const { data: invoices, isLoading, error } = useQuery(['customer_invoices', { customerId }], customerService.fetchCustomerInvoices, {enabled:returnAll(status,currency)})
-    const { data: invoices, isLoading, error } = useQuery(['customer_invoices', { customerId, status, currency }], invoiceService.filterInvoice, { enabled: returnAll(status, currency) })
+    const { data: invoices, isLoading, error } = useQuery(['customer_invoices', { customerId, status, currency }], invoiceService.filterInvoice)
 
     invoices && console.log(invoices)
 
@@ -40,6 +42,9 @@ function CustomerInvoiceList() {
 
     return (
         <>
+            <Link onClick={() => navigate(-1)} className='flex gap-2 items-center mb-6'>
+                <span className="material-symbols-outlined">keyboard_backspace</span><h2 className=''>Back</h2>
+            </Link>
             <div className='w-full border-b-2 border-cyan-900 px-2 flex justify-between items-center py-2'>
                 <h2 className='text-base font-semibold lg:text-xl'>Customer Invoices Details</h2>
                 <div className='flex gap-3'>
@@ -62,9 +67,7 @@ function CustomerInvoiceList() {
                 </div>
             </div>
             {
-                // (isLoading || statusLoading || currencyLoading) ? 'Data loading...'
                 isLoading ? 'Data loading...'
-
                     :
                     <div className='flex flex-col'>
                         <div className="">

@@ -83,7 +83,7 @@ const CustomerTable = ({data}) => {
         accessorKey: 'name', //normal accessorKey
         header: 'Full Name',
         Cell: ({cell, row}) => {
-          return <div className="text-[#273240] font-semibold flex gap-2 items-center w-[200px]">
+          return <div className="text-[#273240] font-semibold flex gap-2 items-center">
                   {
                     row.original.avatar ? 
                     <img
@@ -100,6 +100,8 @@ const CustomerTable = ({data}) => {
                 <h2 className='text-start'>{row.original.name}</h2>
             </div>
         },
+        size:50,
+
       },
       {
         accessorKey: 'phone', //normal accessorKey
@@ -108,7 +110,7 @@ const CustomerTable = ({data}) => {
       },
       {
         accessorKey: 'view_invoice', 
-        header: 'View Invoice',
+        header: 'Action',
         Cell: ({cell, row}) => {
             return <Link to={`/dashboard/customers/${row.original.id}`} className="flex items-center bg-[#55BA6A] rounded-[5px] py-[6px] px-2 text-white w-fit">
                     {/* <span className="material-symbols-outlined">visibility</span> */}

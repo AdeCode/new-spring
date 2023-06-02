@@ -8,21 +8,12 @@ import helperFunctions from '../../../@helpers/helperFunctions'
 
 function InvoiceIndex() {
     const [currency, setCurrency] = useState('USD')
+    
     const [status, setStatus] = useState('')
 
     const navigate = useNavigate()
 
-    const returnAll = (status, currency) => {
-        if (status === '' || currency === '') {
-            return true
-        } else {
-            return false
-        }
-    }
-
     const { data: invoices, isLoading, error } = useQuery(['invoices',{ status, currency }], invoiceService.getAllInvoices)
-
-    // invoices && console.log(invoices)
     //invoices && console.log(invoices.invoices)
 
     const getNumberOfPaidInvoices = (data) => {
@@ -102,21 +93,21 @@ function InvoiceIndex() {
                                 <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
                                     <span className='flex justify-end font-semibold'>0%</span>
                                     <div className='flex flex-col'>
-                                        <h2 className='font-semibold text-3xl text-green-600'>{invoices && invoices?.invoices.length}</h2>
+                                        <h2 className='font-semibold text-3xl text-green-600'>{invoices && invoices?.analysis?.total_invoice}</h2>
                                         <h3 className='text-base text-gray'>Total Invoices</h3>
                                     </div>
                                 </div>
                                 <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
                                     <span className='flex justify-end font-semibold'>0%</span>
                                     <div className='flex flex-col'>
-                                        <h2 className='font-semibold text-3xl text-green-600'>{invoices && getNumberOfUnpaidInvoices(invoices?.invoices)}</h2>
+                                        <h2 className='font-semibold text-3xl text-green-600'>{invoices && invoices?.analysis?.outstanding_invoices}</h2>
                                         <h3 className='text-base text-gray'>Outstanding Invoices</h3>
                                     </div>
                                 </div>
                                 <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
                                     <span className='flex justify-end font-semibold'>0%</span>
                                     <div className='flex flex-col'>
-                                        <h2 className='font-semibold text-3xl text-green-600'>2</h2>
+                                        <h2 className='font-semibold text-3xl text-green-600'>{invoices && invoices?.analysis?.overdue_invoices}</h2>
                                         <h3 className='text-base text-gray'>Overdue Invoices</h3>
                                     </div>
                                 </div>
@@ -124,10 +115,8 @@ function InvoiceIndex() {
                                     <span className='flex justify-end'>0%</span>
                                     <div className='flex flex-col'>
                                         <h2 className='font-semibold flex gap-1 text-3xl text-green-600'>
-                                            {/* {currency === 'USD' ? <span>&#65284;</span> : <span>&#8358;</span>} */}
-                                            {invoices && helperFunctions.formatCurrency(currency, totalPaidInvoices(invoices?.invoices))}
+                                            {invoices && helperFunctions.formatCurrency(currency, invoices?.analysis?.total_paid_invoices)}
                                             {/* {invoices && totalPaidInvoices(invoices.invoices)}  */}
-                                            {/* ({currency}) */}
                                         </h2>
                                         <h3 className='text-base text-gray'>Paid Invoices</h3>
                                     </div>
