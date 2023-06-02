@@ -8,10 +8,19 @@ import helperFunctions from '../../../@helpers/helperFunctions'
 
 function InvoiceIndex() {
     const [currency, setCurrency] = useState('USD')
+    const [status, setStatus] = useState('')
 
     const navigate = useNavigate()
 
-    const { data: invoices, isLoading, error } = useQuery('invoices', invoiceService.getAllInvoices)
+    const returnAll = (status, currency) => {
+        if (status === '' || currency === '') {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    const { data: invoices, isLoading, error } = useQuery(['invoices',{ status, currency }], invoiceService.getAllInvoices)
 
     // invoices && console.log(invoices)
     //invoices && console.log(invoices.invoices)
@@ -43,6 +52,10 @@ function InvoiceIndex() {
         return count.length
     }
 
+    const handleStatusChange = (e) => {
+        setStatus(e.currentTarget.value)
+    }
+
 
     return (
         <Invoice className='px-[20px]'>
@@ -54,13 +67,32 @@ function InvoiceIndex() {
 
                 <div className='w-full border-b-2 border-green-700 px-2 flex justify-between items-center py-2'>
                     <h2 className='text-base font-semibold lg:text-xl'>Invoices</h2>
-                    <div className='flex gap-4'>
+                    {/* <div className='flex gap-4'>
                         <select name='currency' onChange={(e) => setCurrency(e.target.value)} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
                             <option value='USD' defaultValue>USD</option>
                             <option value='Naira' >Naira</option>
                         </select>
                         <Link to='/invoice/generate' className='flex rounded-md items-center py-2 px-3 bg-green-700 hover:bg-green-600 text-white'><span className="material-symbols-outlined">add</span>Create Invoice</Link>
+                    </div> */}
+                    <div className='flex gap-3'>
+                    <div className='flex items-center gap-2'>
+                        <h2 className='font-semibold text-lg'>Status:</h2>
+                        <select name='status' onChange={(e) => handleStatusChange(e)} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
+                            <option value=''>All</option>
+                            <option value='PAID'>PAID</option>
+                            <option value='UNPAID'>UNPAID</option>
+                        </select>
                     </div>
+                    <div className='flex items-center gap-2'>
+                        <h2 className='font-semibold text-lg'>Currency:</h2>
+                        <select name='status' onChange={(e) => setCurrency(e.currentTarget.value)} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
+                            <option value=''>All</option>
+                            <option value='USD'>USD</option>
+                            <option value='NGN'>NAIRA</option>
+                        </select>
+                    </div>
+                    <Link to='/invoice/generate' className='flex rounded-md items-center py-2 px-3 bg-green-700 hover:bg-green-600 text-white'><span className="material-symbols-outlined">add</span>Create Invoice</Link>
+                </div>
                 </div>
                 {
                     isLoading ? 'Data loading...'

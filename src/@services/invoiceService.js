@@ -1,7 +1,8 @@
 import httpService from "./httpService";
 
-async function getAllInvoices(){
-    const {data} = await httpService.secureInstance.get('/merchants/invoices/invoice')
+async function getAllInvoices({queryKey}){
+    const [_key, {currency,status}] = queryKey
+    const {data} = await httpService.secureInstance.get(`/merchants/invoices/invoice?currency=${currency}&status=${status}`)
     return data
 }
 
