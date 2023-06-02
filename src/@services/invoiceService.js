@@ -23,6 +23,12 @@ async function filterInvoiceByCurrency({queryKey}){
     return data
 }
 
+async function filterInvoice({queryKey}){
+    const [_key, {currency,customerId,status}] = queryKey
+    const {data} = await httpService.secureInstance.get(`/merchants/customers/invoices?customer_id=${customerId}&currency=${currency}&status=${status}`)
+    return data
+}
+
 async function toggleInvoiceStatus({invoice_code, payload}){
     console.log(payload)
     //const [_key, {invoice_code}] = queryKey
@@ -35,7 +41,8 @@ const invoiceService = {
     toggleInvoiceStatus,
     getInvoicesByCode,
     filterInvoiceByStatus,
-    filterInvoiceByCurrency
+    filterInvoiceByCurrency,
+    filterInvoice
 }
 
 export default invoiceService
