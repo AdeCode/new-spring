@@ -10,63 +10,29 @@ import { useParams } from 'react-router-dom';
 import invoiceService from '../../../@services/invoiceService';
 
 function CustomerInvoiceList() {
-    const [currency, setCurrency] = useState(null)
-    const [status, setStatus] = useState(null)
-    const statusRef = useRef(null)
-    // const enableQueryRef = useRef(false)
+    const [currency, setCurrency] = useState('')
+    const [status, setStatus] = useState('')
 
     const { customerId } = useParams()
 
     const handleCurrencyChange = (e) => {
         setCurrency(e.currentTarget.value)
-        console.log(currency)
     }
     
-    const checkCurrency = (currency) => {
-        if(currency === null){
-            return false
-        }else{
-            return true
-        }
-    }
-
-    const checkStatus = (status) => {
-        if(status === null){
-            return false
-        }else{
-            return true
-        }
-    }
-
+   
     const returnAll = (status,currency) => {
-        if(status === null || currency === null){
+        if(status === '' || currency === ''){
             return true
         }else{
             return false
         }
     }
 
-    const { data: invoiceCurrency, isLoading:currencyLoading, error:currencyError } = useQuery(
-        ['customer_invoices_by_currency', 
-        { customerId, currency, status }], 
-        invoiceService.filterInvoiceByCurrency,
-        {enabled:checkCurrency(currency)}
-        )
-        invoiceCurrency && console.log(invoiceCurrency)
-
-    const { data: invoiceStatus, isLoading:statusLoading, error:statusError } = useQuery(
-        ['customer_invoices_by_status', 
-        { customerId, status, statusRef }], 
-        invoiceService.filterInvoiceByStatus,
-        // {enabled:true}
-        {enabled:checkStatus(status)}
-        )
-
-    invoiceStatus && console.log('from filter ',invoiceStatus)
     
-    const { data: invoices, isLoading, error } = useQuery(['customer_invoices', { customerId }], customerService.fetchCustomerInvoices, {enabled:returnAll(status,currency)})
+    // const { data: invoices, isLoading, error } = useQuery(['customer_invoices', { customerId }], customerService.fetchCustomerInvoices, {enabled:returnAll(status,currency)})
+    const { data: invoices, isLoading, error } = useQuery(['customer_invoices', { customerId, status, currency }], invoiceService.filterInvoice, {enabled:returnAll(status,currency)})
 
-    // invoices && console.log(invoices)
+    invoices && console.log(invoices)
 
     const handleStatusChange = (e) => {
         setStatus(e.currentTarget.value)
@@ -75,7 +41,8 @@ function CustomerInvoiceList() {
     return (
         <>
             {
-            (isLoading || statusLoading || currencyLoading) ? 'Data loading...'
+            // (isLoading || statusLoading || currencyLoading) ? 'Data loading...'
+            isLoading ? 'Data loading...'
             
             :
             <div className='flex flex-col'>
@@ -87,7 +54,7 @@ function CustomerInvoiceList() {
                                 <div className='flex items-center gap-2'>
                                     <h2 className='font-semibold text-lg'>Status:</h2>
                                     <select name='status' onChange={(e)=>handleStatusChange(e)} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
-                                        <option value='' defaultValue>All</option>
+                                        <option value=''>All</option>
                                         <option value='PAID'>PAID</option>
                                         <option value='UNPAID'>UNPAID</option>
                                     </select>
@@ -95,7 +62,7 @@ function CustomerInvoiceList() {
                                 <div className='flex items-center gap-2'>
                                     <h2 className='font-semibold text-lg'>Currency:</h2>
                                     <select name='status' onChange={(e)=>handleCurrencyChange(e)} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
-                                        <option value='' defaultValue>All</option>
+                                        <option value=''>All</option>
                                         <option value='USD'>USD</option>
                                         <option value='NGN'>NAIRA</option>
                                     </select>
@@ -119,7 +86,7 @@ function CustomerInvoiceList() {
                     </div>
                 </div>
                 <CustomerInvoiceTable
-                    data={(status === null && invoices) ? invoices?.invoices : (currency !== null && invoiceCurrency) ? invoiceCurrency?.invoices  : invoiceStatus?.invoices}
+                    data={invoices && invoices?.invoices}
                     //data={invoices?.invoices}
                     currency={currency}
                 />
