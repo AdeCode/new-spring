@@ -33,6 +33,7 @@ import BusinessNewPassword from './pages/auth/merchant/BusinessNewPassword';
 import PersonalInformation from './pages/dashboard/setting/PersonalInformation';
 import CustomerInvoiceList from './pages/dashboard/customer/CustomerInvoiceList';
 import InvoicePreview from './pages/dashboard/customer/InvoicePreview';
+import FormComponent from './pages/dashboard/FormStep'
 
 function Routers (){
     return (
@@ -79,6 +80,7 @@ function Routers (){
                         <Route path='/dashboard/customers/:customerId' element={<CustomerInvoiceList/>}></Route>     
                         <Route path='/dashboard/customers/invoice/:invoiceCode' element={<InvoicePreview/>}></Route>     
                         <Route path='/settings/personal-information' element={<PersonalInformation/>}></Route>     
+                        <Route path='/dashboard/payouts' element={<FormComponent/>}></Route>     
                     </Route>
                 </Routes>
             </ScrollToTop>
