@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import PersonaliseProfile from '../../../components/@settings/PersonaliseProfile';
 import BusinessProfile from '../../../components/@settings/BusinessProfile';
+import AccountBusiness from './AccountBusiness';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -130,7 +131,8 @@ function PersonalInformation() {
                     Reset your card pin
                 </TabPanel>
                 <TabPanel value={value} index={4}>
-                    Reset your transaction pin
+                    {/* Reset your transaction pin */}
+                    <AccountBusiness/>
                 </TabPanel>
             </Box>
         </div>

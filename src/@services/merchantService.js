@@ -10,6 +10,11 @@ async function adminLogin(payload){
     return data
 }
 
+async function updateProfile(payload){
+    const {data} = await httpService.secureInstance.post('/merchants/profile', payload)
+    return data
+}
+
 
 async function registerBusiness(payload){
     const {data} = await httpService.guestInstance.put('/merchants/auth', payload)
@@ -46,6 +51,7 @@ const merchantService = {
     createInvoice,
     resetPassword,
     adminLogin,
+    updateProfile
 }
 
 export default merchantService
