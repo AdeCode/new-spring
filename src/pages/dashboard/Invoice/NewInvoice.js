@@ -15,6 +15,7 @@ import { useQuery } from 'react-query'
 import merchantService from '../../../@services/merchantService'
 import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
+import helperFunctions from '../../../@helpers/helperFunctions'
 
 
 
@@ -37,6 +38,8 @@ function NewInvoice() {
         const sum = data.reduce((accumulator, curr) => {
             return accumulator += +curr.price
         }, 0)
+        //console.log(sum.toFixed(2))
+        sum.toFixed(2)
         return sum
     }
 
@@ -143,7 +146,7 @@ function NewInvoice() {
                     <h2 className=''>Create Invoice</h2>
                     <select name='currency' onChange={handleCurrencyChange} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
                         <option value='USD' defaultValue>USD</option>
-                        <option value='NGN' >Naira</option>
+                        <option value='NGN' >NGN</option>
                     </select>
                 </div>
                 <div className='px-3 w-full'>
@@ -320,22 +323,20 @@ function NewInvoice() {
                                             <div className='flex justify-between'>
                                                 <h2 className=''>Sub total:</h2>
                                                 <span className='font-semibold gap-1 flex'>
-                                                    {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>} 
-                                                    {calculateSubTotal(values.invoice_items)}
+                                                    {helperFunctions.formatCurrency(currency,calculateSubTotal(values.invoice_items))}
                                                 </span>
                                             </div>
                                             <div className='flex justify-between'>
                                                 <h2 className=''>Tax(7.5%):</h2>
                                                 <span className='font-semibold gap-1 flex'>
-                                                    {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>} 
-                                                    {calculateTax(values.invoice_items)}
+                                                    {helperFunctions.formatCurrency(currency,calculateTax(values.invoice_items))}
                                                 </span>
                                             </div>
                                             <div className='flex justify-between'>
                                                 <h2 className=''>Invoice Total:</h2>
                                                 <span className='font-semibold gap-1 flex'>
-                                                    {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>} 
-                                                    {calculateInvoiceTotal(values.invoice_items)}
+                                                    {/* {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>}  */}
+                                                    {helperFunctions.formatCurrency(currency,calculateInvoiceTotal(values.invoice_items))}
                                                 </span>
                                             </div>
                                         </div>

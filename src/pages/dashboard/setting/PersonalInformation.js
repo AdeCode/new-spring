@@ -7,6 +7,9 @@ import Box from '@mui/material/Box';
 import PersonaliseProfile from '../../../components/@settings/PersonaliseProfile';
 import BusinessProfile from '../../../components/@settings/BusinessProfile';
 import AccountBusiness from './AccountBusiness';
+import Uploader from '../../../components/@shared/Uploader'
+import BankInfo from '../../../components/@settings/BankInfo';
+import Kyc from '../../../components/@settings/Kyc';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -94,7 +97,7 @@ function PersonalInformation() {
                                     borderBottom:'2px solid green',
                                 },
                             }}
-                            label="KYC" {...a11yProps(2)} 
+                            label="BANK INFO" {...a11yProps(2)} 
                         />
                         <Tab 
                             sx={{
@@ -104,7 +107,7 @@ function PersonalInformation() {
                                     borderBottom:'2px solid green',
                                 },
                             }}
-                            label="RESET CARD PIN" {...a11yProps(3)} 
+                            label="KYC" {...a11yProps(3)} 
                         />
                         <Tab 
                             sx={{
@@ -114,7 +117,17 @@ function PersonalInformation() {
                                     borderBottom:'2px solid green',
                                 },
                             }}
-                            label="RESET TRANSACTION PIN" {...a11yProps(4)} 
+                            label="RESET CARD PIN" {...a11yProps(4)} 
+                        />
+                        <Tab 
+                            sx={{
+                                '&.Mui-selected': {
+                                    color: "green",
+                                    fontSize:'bold',
+                                    borderBottom:'2px solid green',
+                                },
+                            }}
+                            label="RESET TRANSACTION PIN" {...a11yProps(5)} 
                         />
                     </Tabs>
                 </Box>
@@ -125,12 +138,16 @@ function PersonalInformation() {
                     <BusinessProfile/>
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    KYC
+                    <BankInfo/>
                 </TabPanel>
                 <TabPanel value={value} index={3}>
-                    Reset your card pin
+                    <Kyc/>
                 </TabPanel>
                 <TabPanel value={value} index={4}>
+                    {/* Reset your card pin */}
+                    <Uploader/>
+                </TabPanel>
+                <TabPanel value={value} index={5}>
                     {/* Reset your transaction pin */}
                     <AccountBusiness/>
                 </TabPanel>

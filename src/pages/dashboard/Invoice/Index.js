@@ -79,7 +79,7 @@ function InvoiceIndex() {
                         <select name='status' onChange={(e) => setCurrency(e.currentTarget.value)} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
                             <option value=''>All</option>
                             <option value='USD'>USD</option>
-                            <option value='NGN'>NAIRA</option>
+                            <option value='NGN'>NGN</option>
                         </select>
                     </div>
                     <Link to='/invoice/generate' className='flex rounded-md items-center py-2 px-3 bg-green-700 hover:bg-green-600 text-white'><span className="material-symbols-outlined">add</span>Create Invoice</Link>

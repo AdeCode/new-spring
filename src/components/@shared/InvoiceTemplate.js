@@ -66,6 +66,9 @@ function InvoiceTemplate() {
             <div className='flex flex-col gap-3'>
                 <h2 className='font-semibold text-2xl text-neutral-700'>GIG LOGISTICS INT'L EXPRESS</h2>
                 <p className='text-base'>No 6, Gbagada, Lagos.</p>
+                <h3 className='text-base'>{data?.name}</h3>
+                <h3 className='text-base'>{data?.email}</h3>
+                <h3 className='text-base'>{data?.phone}</h3>
             </div>
         </div>
         <div className='p-4'>
