@@ -18,7 +18,7 @@ function MerchantLogin() {
 
     const loginMutation = useMutation(merchantService.login, {
         onSuccess: res => {
-            // console.log(res)
+            console.log(res)
             dispatch({ type: 'LOGIN', payload: res.data })
             toast.success(res.message, {
                 theme: "colored",
