@@ -11,7 +11,7 @@ import 'react-clock/dist/Clock.css';
 import TextField from '../../../components/@shared/TextField'
 import InvoiceFooter from '../../../components/@shared/InvoiceFooter'
 import customerService from '../../../@services/customerService'
-import { useQuery } from 'react-query'
+import { QueryClient, useQuery } from 'react-query'
 import merchantService from '../../../@services/merchantService'
 import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
@@ -65,6 +65,7 @@ function NewInvoice() {
                 theme: "colored",
             })
             navigate('/invoice')
+            // QueryClient.invalidateQueries('invoices')
         },
         onError: err => {
             console.log(err)

@@ -165,9 +165,12 @@ function InvoiceTemplate() {
                             </div>
                         </div>
                     </div>
+                    <div className=''>
+                        <InvoiceFooter />
+                    </div>
                 </div>
             </div>
-            <InvoiceFooter />
+            {/* <InvoiceFooter /> */}
         </>
 
     )
