@@ -12,10 +12,20 @@ import helperFunctions from '../../@helpers/helperFunctions'
 import jsPDF from 'jspdf';
 import ReactToPrint from 'react-to-print'
 import { AuthContext } from '../../contexts/AuthContexts'
+import { useQuery } from 'react-query'
+import merchantService from '../../@services/merchantService'
 
 function InvoiceTemplate() {
     const {state} = useContext(AuthContext)
-    console.log('local state ',state.profile)
+    //console.log('local state ',state.profile)
+    // let data = state
+
+
+    const { data: profile, isLoading, error } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
+    profile && console.log(profile)
+    // if(!state.profile){
+    //     data = profile.data
+    // }
 
     const invoiceTemplateRef = useRef(null)
 
@@ -48,13 +58,15 @@ function InvoiceTemplate() {
                     <div className='flex flex-col gap-3'>
                         <h2 className='font-bold text-2xl text-green-700'>INVOICE</h2>
                         <div className='w-[100px] h-[100px]'>
-                            <img src={state?.profile?.business_logo} alt={state?.profile?.business_name} />
+                            <img src={profile?.data?.business_logo} alt={profile?.data?.business_name} />
                         </div>
                         {/* <p className='text-base'>Business Logo here</p> */}
                     </div>
                     <div className='flex flex-col gap-3'>
-                        <h2 className='font-semibold text-2xl text-neutral-700'>{state?.profile?.business_name}</h2>
-                        <p className='text-base'>{state?.profile?.office_address_number+ ' ' +((state?.profile?.official_address === null) ? '' : state?.profile?.official_address)}</p>
+                        <h2 className='font-semibold text-2xl text-neutral-700'>{profile?.data?.business_name}</h2>
+                        <p className='text-base'>
+                            {profile?.data?.office_address_number+ ' ' +((profile?.data?.official_address === null) ? '' : profile?.data?.official_address)}
+                        </p>
                     </div>
                 </div>
                 <div className='p-4'>
