@@ -206,7 +206,7 @@ export const SidebarData = [
 			cName: "sub-nav",
 		},
 		{
-			title: "Personal Information",
+			title: "Profile Information",
 			path: "/settings/personal-information",
 			icon: <AiOutlineApi />,
 			cName: "sub-nav",
