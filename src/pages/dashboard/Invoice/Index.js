@@ -7,7 +7,7 @@ import { useQuery } from 'react-query'
 import helperFunctions from '../../../@helpers/helperFunctions'
 
 function InvoiceIndex() {
-    const [currency, setCurrency] = useState('USD')
+    const [currency, setCurrency] = useState('')
     
     const [status, setStatus] = useState('')
 

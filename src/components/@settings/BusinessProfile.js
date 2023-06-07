@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Formik, Form, useField, useFormikContext, FieldArray, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import InputField from '../@shared/InputField'
@@ -11,9 +11,40 @@ import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import helperFunctions from '../../@helpers/helperFunctions'
+import { AuthContext } from '../../contexts/AuthContexts'
 
 function BusinessProfile() {
     const updateProfileMutation = useMutation()
+
+    const { state: user } = useContext(AuthContext)
+    user?.profile && console.log(user.profile)
+    let initialState={}
+
+    if (!!user?.profile) {
+        initialState = {
+            ...user.profile
+        }
+    } else {
+        initialState = {
+            business_name: '',
+            website_url: '',
+            email_address: '',
+            company_rc_number: '',
+            country: '',
+            State: '',
+            official_address: '',
+            description: '',
+            tin_number: '',
+            cac_document: '',
+            utility_bill: '',
+            business_owner_username: '',
+            business_category: '',
+            zip_code: '',
+            office_address_number: '',
+            business_logo: '',
+        }
+    }
+
 
     const [businessLogo, setBusinessLogo] = useState('')
 
@@ -36,7 +67,6 @@ function BusinessProfile() {
                 console.log(error)
             }
         }
-        //helperFunctions.getCountries()
     )
     //countries && console.log(countries)
 
@@ -166,7 +196,7 @@ function BusinessProfile() {
         )
     }
 
-    
+
     const NewField = (props) => {
         const { setFieldValue } = useFormikContext();
 
@@ -232,24 +262,27 @@ function BusinessProfile() {
             <h2 className='font-semibold text-black'>Personalize Merchant Account</h2>
             <Formik
                 isValid
-                initialValues={{
-                    business_name: '',
-                    website_url: '',
-                    email_address: '',
-                    company_rc_number: '',
-                    country: '',
-                    State: '',
-                    official_address: '',
-                    description: '',
-                    tin_number: '',
-                    cac_document: '',
-                    utility_bill: '',
-                    business_owner_username: '',
-                    business_category: '',
-                    zip_code: '',
-                    office_address_number: '',
-                    business_logo: '',
-                }}
+                initialValues={
+                    initialState
+                //     {
+                //     business_name: '',
+                //     website_url: '',
+                //     email_address: '',
+                //     company_rc_number: '',
+                //     country: '',
+                //     State: '',
+                //     official_address: '',
+                //     description: '',
+                //     tin_number: '10299303',
+                //     cac_document: '',
+                //     utility_bill: '',
+                //     business_owner_username: '',
+                //     business_category: '',
+                //     zip_code: '',
+                //     office_address_number: '',
+                //     business_logo: '',
+                // }
+            }
                 validationSchema={
                     Yup.object({
                         email_address: Yup.string().email("Invalid email address")
@@ -393,12 +426,12 @@ function BusinessProfile() {
                                         onChange={(e) => handleBusinessLogo(e, setFieldValue,)}
                                     />
                                     <h2 className='font-normal text-[#40525E] text-sm opacity-70'>Upload your Business Logo</h2>
-                                    <ErrorMessage name='business_logo' component="div" className='text-red-500'/>
+                                    <ErrorMessage name='business_logo' component="div" className='text-red-500' />
                                 </div>
 
-                               
 
-                               
+
+
 
                                 {/* <FileUploader
                                     type="file"
@@ -495,7 +528,7 @@ function BusinessProfile() {
                                                 className='form-control'
                                                 onChange={(e) => handleCacDoc(e, setFieldValue,)}
                                             />
-                                            <ErrorMessage name='cac_document' component="div" className='text-red-500'/>
+                                            <ErrorMessage name='cac_document' component="div" className='text-red-500' />
                                         </div>
                                     </div>
                                 </div>
@@ -546,7 +579,7 @@ function BusinessProfile() {
                                                 className='form-control'
                                                 onChange={(e) => handleIcon(e, setFieldValue,)}
                                             />
-                                            <ErrorMessage name='utility_bill' component="div" className='text-red-500'/>
+                                            <ErrorMessage name='utility_bill' component="div" className='text-red-500' />
                                         </div>
                                     </div>
                                     {/* <div className='flex flex-col items-center grow w-[150px]'>

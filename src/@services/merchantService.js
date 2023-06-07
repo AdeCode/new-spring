@@ -63,6 +63,11 @@ async function getBusinessCategories(){
     return data
 }
 
+async function getMerchantProfile(){
+    const {data} = await httpService.secureInstance.get('/merchants/profile')
+    return data
+}
+
 const merchantService = {
     login,
     registerBusiness,
@@ -75,7 +80,8 @@ const merchantService = {
     getBusinessCategories,
     saveAccountDetails,
     saveKycIdentity,
-    saveKycOccupation
+    saveKycOccupation,
+    getMerchantProfile
 }
 
 export default merchantService

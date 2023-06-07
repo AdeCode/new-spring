@@ -1,13 +1,35 @@
 import { Form, Formik } from 'formik'
-import React from 'react'
-import { useMutation } from 'react-query'
+import React, { useContext } from 'react'
+import { useMutation, useQuery } from 'react-query'
 import * as Yup from 'yup'
 import InputField from '../@shared/InputField'
 import { toast } from 'react-toastify'
 import merchantService from '../../@services/merchantService'
+import { AuthContext } from '../../contexts/AuthContexts'
 
 
 function BankInfo() {
+    const { state } = useContext(AuthContext)
+    const { data: profile, isLoading, error } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
+
+    //console.log(profile.data)
+
+    let initialState = {}
+
+    if (!!profile?.data) {
+        initialState = {
+            account_number: profile?.data?.account_number,
+            bank_name: profile?.data?.bank_name,
+            account_name: profile?.data?.account_name,
+        }
+    } else {
+        initialState = {
+            account_number: '',
+            bank_name: '',
+            account_name: '',
+        }
+    }
+
 
     const saveAccountDetailsMutation = useMutation(merchantService.saveAccountDetails, {
         onSuccess: res => {
@@ -35,11 +57,14 @@ function BankInfo() {
             <hr className='text-[#40525E] opacity-50' />
             <Formik
                 isValid
-                initialValues={{
-                    account_number: '',
-                    bank_name: '',
-                    account_name: '',
-                }}
+                initialValues={
+                    initialState
+                //     {
+                //     account_number: '',
+                //     bank_name: '',
+                //     account_name: '',
+                // }
+                }
                 validationSchema={
                     Yup.object({
                         account_number: Yup.number().required("Please enter account number"),
@@ -83,12 +108,12 @@ function BankInfo() {
                                             placeholder='e.g. Zenith'
                                         />
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div className='flex w-full gap-4 py-3'>
                                 <div className='flex flex-col min-w-[350px]'>
-                                    
+
                                 </div>
                                 <div className='grow flex gap-4'>
                                     <div className='grow'>
@@ -98,7 +123,7 @@ function BankInfo() {
                                             label='Enter your Account Name'
                                             placeholder='e.g. Moshood Abiola'
                                         />
-                                    </div> 
+                                    </div>
                                 </div>
                             </div>
                             <div className='flex justify-end'>
