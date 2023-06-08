@@ -6,65 +6,70 @@ import { TextField } from '@mui/material'
 import { useMutation, useQuery } from 'react-query'
 import merchantService from '../../@services/merchantService'
 import { AuthContext } from '../../contexts/AuthContexts'
+import { toast } from 'react-toastify'
 
-function PersonaliseProfile() {
-    const updateProfileMutation = useMutation()
-    const { state } = useContext(AuthContext)
-    console.log(state.user)
-    // const user = state?.user
 
-    let initialState={}
+function PersonaliseProfile({ data }) {
+    //const { data: profile, isLoading, error } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
+    //profile && console.log('from profile ', profile)
 
-    if (!!state?.user) {
+    let initialState = {}
+
+    if (!!data) {
         initialState = {
-            ...state.user
+            first_name: data?.first_name,
+            last_name: data?.last_name,
+            email: data?.email,
+            phone: data?.phone,
+            bvn: data?.bvn
         }
     } else {
         initialState = {
             first_name: '',
             last_name: '',
             email: '',
-            customer_name: '',
-            notes: '',
-            phone_number: '',
-            invoice_due_date: '',
-            invoice_items: '',
+            phone: '',
+            bvn: ''
         }
     }
 
-    const { data: profile, isLoading, error } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
-    //profile && console.log(profile)
-
+    const saveAccountProfileMutation = useMutation(merchantService.saveAccountProfile, {
+        onSuccess: res => {
+            console.log(res)
+            toast.success(res.message, {
+                theme: "colored",
+            })
+        },
+        onError: err => {
+            console.log(err)
+            toast.error(err.response.data.error, {
+                theme: "colored",
+            })
+        }
+    })
 
     const onSubmit = (values) => {
-        console.log(values)
+        //console.log('submitting ',values)
+        saveAccountProfileMutation.mutate(values)
     }
+
     return (
         <div className='bg-white w-full px-4 py-4'>
             <h2 className='font-semibold text-black'>Personalize your Profile</h2>
             <hr className='text-[#40525E] opacity-50' />
+
             <Formik
                 isValid
                 initialValues={
                     initialState
-                //     {
-                //     first_name: '',
-                //     last_name: '',
-                //     email: '',
-                //     customer_name: '',
-                //     notes: '',
-                //     phone_number: '',
-                //     invoice_due_date: '',
-                //     invoice_items: '',
-                // }
-            }
+                }
                 validationSchema={
                     Yup.object({
                         email: Yup.string().email("Invalid email address")
                             .required("email field can not be empty"),
                         first_name: Yup.string().required("Please enter customer name"),
                         last_name: Yup.string().required("Please enter customer name"),
-                        phone_number: Yup.string().required("Please enter customer  phone number"),
+                        phone: Yup.string().required("Please enter customer  phone number"),
                         invoice_items: Yup.array(Yup.object({
                             item_name: Yup.string().required('Item name is required'),
                             quantity: Yup.number().required('Quantity is required').min(1, 'minimum of one quantity required'),
@@ -77,12 +82,12 @@ function PersonaliseProfile() {
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(false)
                     onSubmit(values)
-                    //console.log(values)
+                    console.log('all values ', values)
                     resetForm({
                         email: '',
                         customer_name: '',
                         notes: '',
-                        phone_number: '',
+                        phone: '',
                         invoice_items: []
                     })
                 }}
@@ -130,7 +135,7 @@ function PersonaliseProfile() {
                                     </div>
                                     <div className='grow'>
                                         <InputField
-                                            name='phone_number'
+                                            name='phone'
                                             type='text'
                                             label='Phone Number'
                                             placeholder='e.g. 08033889999'
@@ -149,7 +154,7 @@ function PersonaliseProfile() {
                                 </div>
                             </div>
 
-                            <h2 className='font-semibold text-black'>Password Update</h2>
+                            {/* <h2 className='font-semibold text-black'>Password Update</h2>
                             <hr className='text-[#40525E] opacity-50' />
                             <div className='flex w-full gap-4 py-3'>
                                 <div className='flex flex-col w-[350px]'>
@@ -174,11 +179,11 @@ function PersonaliseProfile() {
                                         icon={true}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className='flex justify-end'>
                                 <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                     {
-                                        updateProfileMutation.isLoading ?
+                                        saveAccountProfileMutation.isLoading ?
                                             "Loading..."
                                             : "Save Changes"
                                     }
@@ -188,6 +193,8 @@ function PersonaliseProfile() {
                     </Form>
                 )}
             </Formik>
+
+
         </div>
     )
 }
