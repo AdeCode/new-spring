@@ -50,13 +50,13 @@ export const SidebarData = [
 		{
 			title: "Invoices",
 			path: "/invoice",
-			icon: <FiBriefcase />,
+			icon: <span class="material-symbols-outlined">list_alt</span>,
 			cName: "sub-nav",
 		},
 		{
-			title: "Generate New Invoice",
+			title: "Create Invoice",
 			path: "/invoice/generate",
-			icon: <FiBriefcase />,
+			icon: <span class="material-symbols-outlined">create_new_folder</span>,
 			cName: "sub-nav",
 		},
 	],
@@ -123,7 +123,7 @@ export const SidebarData = [
 		{
 			title: "Recent Customers",
 			path: "/dashboard/customers",
-			icon: <FiCreditCard />,
+			icon: <span class="material-symbols-outlined">group</span>,
 			cName: "sub-nav",
 		},
 		
@@ -202,13 +202,13 @@ export const SidebarData = [
 		{
 			title: "Manage Users",
 			path: "/settings/manage-users",
-			icon: <FiBriefcase />,
+			icon: <span class="material-symbols-outlined">manage_accounts</span>,
 			cName: "sub-nav",
 		},
 		{
 			title: "Profile Information",
 			path: "/settings/personal-information",
-			icon: <AiOutlineApi />,
+			icon: <span class="material-symbols-outlined">info</span>,
 			cName: "sub-nav",
 		},
 	],

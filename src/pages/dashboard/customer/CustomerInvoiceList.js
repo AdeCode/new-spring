@@ -22,17 +22,8 @@ function CustomerInvoiceList() {
     }
 
 
-    const returnAll = (status, currency) => {
-        if (status === '' || currency === '') {
-            return true
-        } else {
-            return false
-        }
-    }
-
-
     // const { data: invoices, isLoading, error } = useQuery(['customer_invoices', { customerId }], customerService.fetchCustomerInvoices, {enabled:returnAll(status,currency)})
-    const { data: invoices, isLoading, error } = useQuery(['customer_invoices', { customerId, status, currency }], invoiceService.filterInvoice)
+    const { data: invoices, isLoading, error } = useQuery(['customerInvoices', { customerId, status, currency }], invoiceService.filterInvoice)
 
     invoices && console.log(invoices)
 

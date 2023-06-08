@@ -1,12 +1,40 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Formik, Form, useField, useFormikContext, FieldArray, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import InputField from '../@shared/InputField'
 import { TextField } from '@mui/material'
-import { useMutation } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
+import merchantService from '../../@services/merchantService'
+import { AuthContext } from '../../contexts/AuthContexts'
 
 function PersonaliseProfile() {
     const updateProfileMutation = useMutation()
+    const { state } = useContext(AuthContext)
+    console.log(state.user)
+    // const user = state?.user
+
+    let initialState={}
+
+    if (!!state?.user) {
+        initialState = {
+            ...state.user
+        }
+    } else {
+        initialState = {
+            first_name: '',
+            last_name: '',
+            email: '',
+            customer_name: '',
+            notes: '',
+            phone_number: '',
+            invoice_due_date: '',
+            invoice_items: '',
+        }
+    }
+
+    const { data: profile, isLoading, error } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
+    //profile && console.log(profile)
+
 
     const onSubmit = (values) => {
         console.log(values)
@@ -17,23 +45,26 @@ function PersonaliseProfile() {
             <hr className='text-[#40525E] opacity-50' />
             <Formik
                 isValid
-                initialValues={{
-                    first_name: '',
-                    last_name: '',
-                    customer_email: '',
-                    customer_name: '',
-                    notes: '',
-                    customer_phone: '',
-                    invoice_due_date: '',
-                    invoice_items: '',
-                }}
+                initialValues={
+                    initialState
+                //     {
+                //     first_name: '',
+                //     last_name: '',
+                //     email: '',
+                //     customer_name: '',
+                //     notes: '',
+                //     phone_number: '',
+                //     invoice_due_date: '',
+                //     invoice_items: '',
+                // }
+            }
                 validationSchema={
                     Yup.object({
-                        customer_email: Yup.string().email("Invalid email address")
+                        email: Yup.string().email("Invalid email address")
                             .required("email field can not be empty"),
                         first_name: Yup.string().required("Please enter customer name"),
                         last_name: Yup.string().required("Please enter customer name"),
-                        customer_phone: Yup.string().required("Please enter customer  phone number"),
+                        phone_number: Yup.string().required("Please enter customer  phone number"),
                         invoice_items: Yup.array(Yup.object({
                             item_name: Yup.string().required('Item name is required'),
                             quantity: Yup.number().required('Quantity is required').min(1, 'minimum of one quantity required'),
@@ -48,10 +79,10 @@ function PersonaliseProfile() {
                     onSubmit(values)
                     //console.log(values)
                     resetForm({
-                        customer_email: '',
+                        email: '',
                         customer_name: '',
                         notes: '',
-                        customer_phone: '',
+                        phone_number: '',
                         invoice_items: []
                     })
                 }}
@@ -91,7 +122,7 @@ function PersonaliseProfile() {
                                 <div className='flex grow gap-4'>
                                     <div className='grow'>
                                         <InputField
-                                            name='customer_email'
+                                            name='email'
                                             type='email'
                                             label='Email Address'
                                             placeholder='e.g. user@mail.com'
@@ -99,7 +130,7 @@ function PersonaliseProfile() {
                                     </div>
                                     <div className='grow'>
                                         <InputField
-                                            name='customer_phone'
+                                            name='phone_number'
                                             type='text'
                                             label='Phone Number'
                                             placeholder='e.g. 08033889999'

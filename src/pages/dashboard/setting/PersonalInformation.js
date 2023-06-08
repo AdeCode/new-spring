@@ -109,7 +109,7 @@ function PersonalInformation() {
                             }}
                             label="KYC" {...a11yProps(3)} 
                         />
-                        <Tab 
+                        {/* <Tab 
                             sx={{
                                 '&.Mui-selected': {
                                     color: "green",
@@ -128,7 +128,7 @@ function PersonalInformation() {
                                 },
                             }}
                             label="RESET TRANSACTION PIN" {...a11yProps(5)} 
-                        />
+                        /> */}
                     </Tabs>
                 </Box>
                 <TabPanel value={value} index={0}>
@@ -143,14 +143,12 @@ function PersonalInformation() {
                 <TabPanel value={value} index={3}>
                     <Kyc/>
                 </TabPanel>
-                <TabPanel value={value} index={4}>
-                    {/* Reset your card pin */}
+                {/* <TabPanel value={value} index={4}>
                     <Uploader/>
                 </TabPanel>
                 <TabPanel value={value} index={5}>
-                    {/* Reset your transaction pin */}
                     <AccountBusiness/>
-                </TabPanel>
+                </TabPanel> */}
             </Box>
         </div>
     </div>

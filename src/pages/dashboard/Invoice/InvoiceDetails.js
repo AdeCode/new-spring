@@ -42,10 +42,10 @@ function InvoiceDetails() {
                     </div>
                     <div className='flex justify-between mb-3 px-4 py-2 shadow-md hover:shadow-lg'>
                         <div className='flex flex-col'>
-                            <div className='flex gap-3'>
+                            {/* <div className='flex gap-3'>
                                 <h2 className='min-w-[250px] text-base text-gray'>Invoice Shareable Link</h2>
                                 <span className=''>https://merchant.sultan.invoice.com</span>
-                            </div>
+                            </div> */}
                             <div className='flex gap-3'>
                                 <h2 className='min-w-[250px] text-gray text-base'>Invoice ID</h2>
                                 <span className='font-medium text-base'>{invoice?.invoice?.invoice_code}</span>
@@ -84,7 +84,11 @@ function InvoiceDetails() {
                         data={invoice?.invoice?.items}
                         currency={invoice?.invoice?.currency}
                     />
-                    <div className='justify-end flex'>
+                    <div className='justify-between flex'>
+                            <div className='flex items-end gap-1'>
+                                <h2 className='min-w-[150px] text-base text-gray'>Invoice Shareable Link</h2>
+                                <span className=''>https://merchant.sultan.invoice.com</span>
+                            </div>
                             <div className='flex w-[200px] flex-col gap-3 border border-y-cyan-950'>
                                 <div className='flex justify-between px-2'>
                                     <h2 className='text-gray'>Subtotal:</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.sub_total)}</span>
@@ -92,8 +96,8 @@ function InvoiceDetails() {
                                 <div className='flex justify-between px-2'>
                                     <h2 className='text-gray'>Tax(7.5%):</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.sub_total*invoice?.invoice?.tax)}</span>
                                 </div>
-                                <div className='flex justify-between bg-gray py-1 px-2'>
-                                    <h2 className='text-black'>Subtotal:</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.total_cost)}</span>
+                                <div className='flex justify-between py-1 px-2 font-bold'>
+                                    <h2 className='text-black'>Grand total:</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.total_cost)}</span>
                                 </div>
                             </div>
                     </div>

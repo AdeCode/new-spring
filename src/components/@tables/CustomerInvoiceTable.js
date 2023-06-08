@@ -87,7 +87,8 @@ function CustomerInvoiceTable({data}) {
         toast.success(res.message, {
             theme: "colored",
         })
-        QueryClient.invalidateQueries('customer_invoices')
+        QueryClient.invalidateQueries('customerInvoices')
+
     },
     onError: err => {
         console.log(err)
@@ -98,13 +99,13 @@ function CustomerInvoiceTable({data}) {
 })
 
   const onToggle = (values) => {
-    //console.log(values)
-    values = {
-        ...values,
-        payload: {
-            "status": "PAID"
-        }
-    }
+    console.log(values)
+    // values = {
+    //     ...values,
+    //     payload: {
+    //         "status": "PAID"
+    //     }
+    // }
     toggleInvoiceMutation.mutate(values)
 }
 
@@ -181,11 +182,19 @@ function CustomerInvoiceTable({data}) {
                     control={
                         <Switch
                             checked={row.original.status==='PAID'}
-                            onChange={() => { onToggle({ invoice_code: row.original.invoice_code }); console.log(row.original.invoice_code) }
+                            onChange={() => { 
+                              const payloadStatus = (row.original.status==='PAID') ? "UNPAID" : "PAID"
+                              onToggle(
+                                { 
+                                  invoice_code: row.original.invoice_code,
+                                  payload: {status: payloadStatus}
+                                }); 
+                              console.log(row.original.invoice_code) 
+                            }
                                 // handleToggleChange(row.original.id)
                             }
                             name="toggle"
-                            disabled={row.original.status==='PAID'}
+                            // disabled={row.original.status==='PAID'}
                             color="primary"
                             sx={{
                                 color: '#404042',

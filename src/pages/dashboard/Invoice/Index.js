@@ -111,16 +111,15 @@ function InvoiceIndex() {
                                         <h3 className='text-base text-gray'>Overdue Invoices</h3>
                                     </div>
                                 </div>
-                                <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
+                                {/* <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
                                     <span className='flex justify-end'>0%</span>
                                     <div className='flex flex-col'>
                                         <h2 className='font-semibold flex gap-1 text-3xl text-green-600'>
                                             {invoices && helperFunctions.formatCurrency(currency, invoices?.analysis?.total_paid_invoices)}
-                                            {/* {invoices && totalPaidInvoices(invoices.invoices)}  */}
                                         </h2>
                                         <h3 className='text-base text-gray'>Paid Invoices</h3>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                             <div className='px-2 w-full shadow-md'>
 
