@@ -21,8 +21,8 @@ function CheckBox({checked, onChange}) {
                                 />
                             </svg>
                             <h2 className='text-gray'>
-                                You agree to Spring <a href='sprinfinance.com.terms'>terms and conditions.</a> Accordingly you will be prompted to
-                                enter your card information to be charged. 
+                                You agree to Spring <a href='sprinfinance.com.terms'>terms and conditions.</a> 
+                                {/* Accordingly you will be prompted to enter your card information to be charged.  */}
                             </h2>
                         </Label>
   )

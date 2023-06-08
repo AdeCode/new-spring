@@ -52,7 +52,7 @@ function InvoiceTemplate() {
     }
 
     return (
-        <>
+        <Div>
             <div style={styles.container} className='border border-gray rounded-lg' ref={invoiceTemplateRef}>
                 <div style={styles.top} className="flex justify-between border-b border-gray p-4">
                     <div className='flex flex-col gap-3'>
@@ -145,7 +145,7 @@ function InvoiceTemplate() {
                                     <h2 className=''>Tax:(7.5%)</h2><span className=''>{helperFunctions.formatCurrency(data?.currency, (data?.sub_total * data?.tax))}</span>
                                 </div>
                                 <div className='flex justify-between py-4 px-2 bg-slate-400 text-black'>
-                                    <h2 className='font-semibold'>Invoice Total:</h2><span className='font-semibold'>{helperFunctions.formatCurrency(data?.currency, data?.total_cost)}</span>
+                                    <h2 className='font-semibold'>Grand Total:</h2><span className='font-semibold'>{helperFunctions.formatCurrency(data?.currency, data?.total_cost)}</span>
                                 </div>
                             </div>
                         </div>
@@ -183,10 +183,17 @@ function InvoiceTemplate() {
                 </div>
             </div>
             {/* <InvoiceFooter /> */}
-        </>
+        </Div>
 
     )
 }
+
+const Div = styled.div`
+    @media print{
+        padding: 5px 20px;
+    }
+`
+
 
 const Button = styled.button`
     @media print{

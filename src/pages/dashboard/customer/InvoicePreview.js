@@ -12,6 +12,8 @@ import InvoiceFooter from '../../../components/@shared/InvoiceFooter'
 import CheckBox from '../../../components/@shared/CheckBox'
 import { useQuery } from 'react-query'
 import invoiceService from '../../../@services/invoiceService'
+import ReactToPrint from 'react-to-print'
+
 
 
 function InvoicePreview() {
@@ -83,8 +85,12 @@ function InvoicePreview() {
             </div>
             <div className='p-4'>
                 <div className='flex justify-between'>
-                    <div className='flex gap-1'>
-                        <h3 className='text-neutral-700'>To: </h3><span className='text-black'>{invoice?.invoice?.name}</span>
+                    <div className='flex flex-col gap-1'>
+                        <div className='flex gap-2'>
+                            <h3 className='text-neutral-700'>To: </h3><span className='text-black'>{invoice?.invoice?.name}</span>
+                        </div>
+                        <h3 className='text-base'>{invoice?.invoice?.email}</h3>
+                        <h3 className='text-base'>{invoice?.invoice?.phone}</h3>
                     </div>
                     <div className='w-[300px] border flex flex-col'>
                         <div className='flex border-b justify-between py-1 px-2'>
@@ -97,7 +103,7 @@ function InvoicePreview() {
                             <h3 className=''>Invoice #</h3><span className='font-medium'>{invoice?.invoice?.invoice_code}</span>
                         </div>
                         <div className='flex border-b justify-between py-1 px-2'>
-                            <h3 className=''>Invoice Total</h3><span className='font-medium'>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.total_cost)}</span>
+                            <h3 className=''>Grand Total</h3><span className='font-medium'>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.total_cost)}</span>
                         </div>
                     </div>
                 </div>
@@ -145,7 +151,7 @@ function InvoicePreview() {
                                 <h2 className=''>Tax:(7.5%)</h2><span className=''>{helperFunctions.formatCurrency(invoice?.invoice?.currency,(invoice?.invoice?.sub_total * invoice?.invoice?.tax))}</span>
                             </div>
                             <div className='flex justify-between py-4 px-2 bg-slate-400 text-black'>
-                                <h2 className='font-semibold'>Invoice Total:</h2><span className='font-semibold'>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.total_cost)}</span>
+                                <h2 className='font-semibold'>Grand Total:</h2><span className='font-semibold'>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.total_cost)}</span>
                             </div>
                         </div>
                     </div>
@@ -161,7 +167,12 @@ function InvoicePreview() {
                         }
                         
                         <div className='w-full flex justify-end gap-4 mt-3'>
-                            <button type="submit" onClick={handleGeneratePdf} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] disabled:opacity-60 disabled:cursor-not-allowed w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>Download</button>
+                            <ReactToPrint
+                                trigger={() => (
+                                    <Button type="submit" className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] disabled:opacity-60 disabled:cursor-not-allowed w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>Download</Button>
+                                )}
+                                content={() => invoiceTemplateRef.current}
+                            />
                             {
                                 invoice?.invoice?.status === 'UNPAID' ?
                                 <button type="submit" disabled={!agree} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] disabled:opacity-60 disabled:cursor-not-allowed w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>Pay Now</button>
@@ -181,13 +192,22 @@ function InvoicePreview() {
                         </div>
                     </div>
                 </div>
+                <div className=''>
+                    <InvoiceFooter />
+                </div>
             </div>
         </div>
     }
     
-        <InvoiceFooter/>
+        {/* <InvoiceFooter/> */}
     </>
   )
 }
+
+const Button = styled.button`
+    @media print{
+        display:none;
+    }
+`
 
 export default InvoicePreview
