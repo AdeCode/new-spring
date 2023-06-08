@@ -13,16 +13,32 @@ import axios from 'axios'
 import helperFunctions from '../../@helpers/helperFunctions'
 import { AuthContext } from '../../contexts/AuthContexts'
 
-function BusinessProfile() {
-    const updateProfileMutation = useMutation()
+function BusinessProfile({data}) {
+    // const { data: profile, isLoading: profileLoading } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
+    // profile && console.log('from profile ', profile)
 
-    const { state: user } = useContext(AuthContext)
-    user?.profile && console.log(user.profile)
+    // const { state: user } = useContext(AuthContext)
+    // user?.profile && console.log(user.profile)
     let initialState={}
 
-    if (!!user?.profile) {
+    if (!!data) {
         initialState = {
-            ...user.profile
+            business_name: data?.business_name,
+            website_url: data?.website_url,
+            email_address: data?.email_address,
+            company_rc_number: data?.company_rc_number,
+            country: data?.country,
+            State: data?.State,
+            official_address: data?.official_address,
+            description: data?.description,
+            tin_number: data?.tin_number,
+            cac_document: data?.cac_document,
+            utility_bill: data?.utility_bill,
+            business_owner_username: data?.business_owner_username,
+            business_category: data?.business_category,
+            zip_code: data?.zip_code,
+            office_address_number: data?.office_address_number,
+            business_logo: data?.business_logo,
         }
     } else {
         initialState = {
@@ -260,7 +276,8 @@ function BusinessProfile() {
     return (
         <div className='bg-white w-full px-4 py-4 overflow-scroll'>
             <h2 className='font-semibold text-black'>Personalize Merchant Account</h2>
-            <Formik
+            
+                <Formik
                 isValid
                 initialValues={
                     initialState
@@ -619,6 +636,8 @@ function BusinessProfile() {
                     </Form>
                 )}
             </Formik>
+            
+            
         </div>
     )
 }

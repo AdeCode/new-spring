@@ -50,13 +50,13 @@ export const SidebarData = [
 		{
 			title: "Invoices",
 			path: "/invoice",
-			icon: <span class="material-symbols-outlined">list_alt</span>,
+			icon: <span className="material-symbols-outlined">list_alt</span>,
 			cName: "sub-nav",
 		},
 		{
 			title: "Create Invoice",
 			path: "/invoice/generate",
-			icon: <span class="material-symbols-outlined">create_new_folder</span>,
+			icon: <span className="material-symbols-outlined">create_new_folder</span>,
 			cName: "sub-nav",
 		},
 	],
@@ -123,7 +123,7 @@ export const SidebarData = [
 		{
 			title: "Recent Customers",
 			path: "/dashboard/customers",
-			icon: <span class="material-symbols-outlined">group</span>,
+			icon: <span className="material-symbols-outlined">group</span>,
 			cName: "sub-nav",
 		},
 		
@@ -202,13 +202,13 @@ export const SidebarData = [
 		{
 			title: "Manage Users",
 			path: "/settings/manage-users",
-			icon: <span class="material-symbols-outlined">manage_accounts</span>,
+			icon: <span className="material-symbols-outlined">manage_accounts</span>,
 			cName: "sub-nav",
 		},
 		{
 			title: "Profile Information",
 			path: "/settings/personal-information",
-			icon: <span class="material-symbols-outlined">info</span>,
+			icon: <span className="material-symbols-outlined">info</span>,
 			cName: "sub-nav",
 		},
 	],
