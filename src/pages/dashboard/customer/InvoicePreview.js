@@ -13,13 +13,14 @@ import CheckBox from '../../../components/@shared/CheckBox'
 import { useQuery } from 'react-query'
 import invoiceService from '../../../@services/invoiceService'
 import ReactToPrint from 'react-to-print'
+import merchantService from '../../../@services/merchantService'
 
 
 
 function InvoicePreview() {
     const invoiceTemplateRef = useRef(null)
 
-    const [agree, setAgree] = useState(false)
+    const [agree, setAgree] = useState(true)
 
     const {invoiceCode} = useParams()
 
@@ -45,6 +46,8 @@ function InvoicePreview() {
 		});
     }
 
+    const { data: profile, isLoading: profileLoading } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
+    profile && console.log(profile)
     // const location = useLocation()
     // const data = location.state.invoice.invoice
     // console.log(data)
@@ -74,14 +77,24 @@ function InvoicePreview() {
             <div style={styles.top} className="flex justify-between border-b border-gray p-4">
                 <div className='flex flex-col gap-3'>
                     <h2 className='font-bold text-2xl text-green-700'>INVOICE</h2>
-                    <div className='w-[100px] h-[100px]'>
-                        <img src={gig} alt='company'/>
+                    <div className='max-w-[100px] max-h-[100px]'>
+                        <img src={profile?.data?.business_logo} alt={profile?.data?.business_name} />
                     </div>
                 </div>
-                <div className='flex flex-col gap-3'>
-                    <h2 className='font-semibold text-2xl text-neutral-700'>GIG LOGISTICS INT'L EXPRESS</h2>
-                    <p className='text-base'>No 6, Gbagada, Lagos.</p>
-                </div>
+                {
+                    (!profile?.data) ? 
+                    <h3>
+                        <Link to='/settings/personal-information' className='text-semibold text-yellow-700'>Update your profile </Link> 
+                        to unlock all invoice features
+                    </h3> :
+                    <div className='flex flex-col gap-3'>
+                        <h2 className='font-semibold text-2xl text-neutral-700'>{profile?.data?.business_name}</h2>
+                        <p className='text-base'>
+                            {profile?.data?.office_address_number+ ' ' +((profile?.data?.official_address === null) ? '' : profile?.data?.official_address)}
+                        </p>
+                    </div>
+                }
+                
             </div>
             <div className='p-4'>
                 <div className='flex justify-between'>
@@ -108,7 +121,14 @@ function InvoicePreview() {
                     </div>
                 </div>
                 <div className='flex flex-col'>
-                    <h2 className='text-green-700 font-semibold'>Invoice details</h2>
+                    <div className='flex justify-between mt-2'>
+                        <h2 className='text-green-700 font-semibold'>Invoice details</h2>
+                        <span className='flex gap-2'>Invoice Status: 
+                            <h2 className={`${invoice?.invoice?.status === 'PAID' ? 'text-green-700' : 'text-red-700'} font-semibold`}>
+                                {invoice?.invoice?.status}
+                            </h2>
+                        </span>
+                    </div>
                     <div className='py-6'>
                         <table className='w-full border-b'>
                             <thead className='bg-green-700 text-white h-[50px] rounded-md'>

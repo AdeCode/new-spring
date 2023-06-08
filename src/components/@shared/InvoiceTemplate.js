@@ -29,7 +29,7 @@ function InvoiceTemplate() {
 
     const invoiceTemplateRef = useRef(null)
 
-    const [agree, setAgree] = useState(false)
+    const [agree, setAgree] = useState(true)
 
     const navigate = useNavigate()
 
@@ -57,17 +57,26 @@ function InvoiceTemplate() {
                 <div style={styles.top} className="flex justify-between border-b border-gray p-4">
                     <div className='flex flex-col gap-3'>
                         <h2 className='font-bold text-2xl text-green-700'>INVOICE</h2>
-                        <div className='w-[100px] h-[100px]'>
-                            <img src={profile?.data?.business_logo} alt={profile?.data?.business_name} />
+                        <div className='max-w-[100px] max-h-[100px]'>
+                            <img src={profile?.data?.business_logo} alt={profile?.data?.business_name}/>
                         </div>
                         {/* <p className='text-base'>Business Logo here</p> */}
                     </div>
-                    <div className='flex flex-col gap-3'>
-                        <h2 className='font-semibold text-2xl text-neutral-700'>{profile?.data?.business_name}</h2>
-                        <p className='text-base'>
-                            {profile?.data?.office_address_number+ ' ' +((profile?.data?.official_address === null) ? '' : profile?.data?.official_address)}
-                        </p>
-                    </div>
+                    
+                        {
+                            (!profile?.data) ? 
+                            <h3>
+                                <Link to='/settings/personal-information' className='text-semibold text-yellow-700'>Update your profile </Link> 
+                                to unlock all invoice features
+                            </h3> :
+                            <div className='flex flex-col gap-3'>
+                                <h2 className='font-semibold text-2xl text-neutral-700'>{profile?.data?.business_name}</h2>
+                                <p className='text-base'>
+                                    {profile?.data?.office_address_number+ ' ' +((profile?.data?.official_address === null) ? '' : profile?.data?.official_address)}
+                                </p>
+                            </div>
+                        }
+                    
                 </div>
                 <div className='p-4'>
                     <div className='flex justify-between'>
@@ -94,7 +103,14 @@ function InvoiceTemplate() {
                         </div>
                     </div>
                     <div className='flex flex-col'>
+                    <div className='flex justify-between mt-2'>
                         <h2 className='text-green-700 font-semibold'>Invoice details</h2>
+                        <span className='flex gap-2'>Invoice Status: 
+                            <h2 className={`${data?.status === 'PAID' ? 'text-green-700' : 'text-red-700'} font-semibold`}>
+                                {data?.status}
+                            </h2>
+                        </span>
+                    </div>
                         <div className='py-6'>
                             <table className='w-full border-b'>
                                 <thead className='bg-green-700 text-white h-[50px] rounded-md'>
@@ -120,13 +136,6 @@ function InvoiceTemplate() {
                                             )
                                         })
                                     }
-                                    {/* <tr className=''>
-                                <td className='m-0 text-center py-3 text-sm font-medium'>Iron rod</td>
-                                <td className='m-0 text-center py-3 text-sm font-medium'>500</td>
-                                <td className='m-0 text-center py-3 text-sm font-medium'>40</td>
-                                <td className='m-0 text-center py-3 text-sm font-medium'>478</td>
-                                <td className='m-0 text-center py-3 text-sm font-medium'>21099</td>
-                            </tr> */}
                                 </tbody>
                             </table>
                         </div>

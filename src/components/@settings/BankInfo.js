@@ -8,19 +8,21 @@ import merchantService from '../../@services/merchantService'
 import { AuthContext } from '../../contexts/AuthContexts'
 
 
-function BankInfo() {
+function BankInfo({data}) {
     const { state } = useContext(AuthContext)
-    const { data: profile, isLoading, error } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
+    //const { data: profile, isLoading, error } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
 
     //console.log(profile.data)
 
+    // console.log(data)
+
     let initialState = {}
 
-    if (!!profile?.data) {
+    if (!!data) {
         initialState = {
-            account_number: profile?.data?.account_number,
-            bank_name: profile?.data?.bank_name,
-            account_name: profile?.data?.account_name,
+            account_number: data?.bank_account_number,
+            bank_name: data?.bank_name,
+            account_name: data?.bank_account_name,
         }
     } else {
         initialState = {
@@ -59,11 +61,6 @@ function BankInfo() {
                 isValid
                 initialValues={
                     initialState
-                //     {
-                //     account_number: '',
-                //     bank_name: '',
-                //     account_name: '',
-                // }
                 }
                 validationSchema={
                     Yup.object({

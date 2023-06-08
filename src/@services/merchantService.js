@@ -58,6 +58,11 @@ async function saveKycOccupation(payload){
     return data
 }
 
+async function saveAccountProfile(payload){
+    const {data} = await httpService.secureInstance.post('/merchants/profile/account-profile',payload)
+    return data
+}
+
 async function getBusinessCategories(){
     const {data} = await httpService.secureInstance.get('/merchants/business/category')
     return data
@@ -81,7 +86,8 @@ const merchantService = {
     saveAccountDetails,
     saveKycIdentity,
     saveKycOccupation,
-    getMerchantProfile
+    getMerchantProfile,
+    saveAccountProfile
 }
 
 export default merchantService

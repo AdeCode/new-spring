@@ -10,6 +10,8 @@ import AccountBusiness from './AccountBusiness';
 import Uploader from '../../../components/@shared/Uploader'
 import BankInfo from '../../../components/@settings/BankInfo';
 import Kyc from '../../../components/@settings/Kyc';
+import { useQuery } from 'react-query';
+import merchantService from '../../../@services/merchantService';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -50,6 +52,9 @@ function PersonalInformation() {
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
+
+    const { data: profile, isLoading: profileLoading } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
+    profile && console.log('from profile ', profile)
 
     return (
     <div>
@@ -132,16 +137,24 @@ function PersonalInformation() {
                     </Tabs>
                 </Box>
                 <TabPanel value={value} index={0}>
-                    <PersonaliseProfile/>
+                    <PersonaliseProfile
+                        data={profile?.data}
+                    />
                 </TabPanel>
                 <TabPanel value={value} index={1}>
-                    <BusinessProfile/>
+                    <BusinessProfile
+                        data={profile?.data}
+                    />
                 </TabPanel>
                 <TabPanel value={value} index={2}>
-                    <BankInfo/>
+                    <BankInfo
+                        data={profile?.data}
+                    />
                 </TabPanel>
                 <TabPanel value={value} index={3}>
-                    <Kyc/>
+                    <Kyc
+                        data={profile?.data}
+                    />
                 </TabPanel>
                 {/* <TabPanel value={value} index={4}>
                     <Uploader/>
