@@ -7,7 +7,7 @@ import { useQuery } from 'react-query'
 import helperFunctions from '../../../@helpers/helperFunctions'
 
 function InvoiceIndex() {
-    const [currency, setCurrency] = useState('USD')
+    const [currency, setCurrency] = useState('')
     
     const [status, setStatus] = useState('')
 
@@ -79,7 +79,7 @@ function InvoiceIndex() {
                         <select name='status' onChange={(e) => setCurrency(e.currentTarget.value)} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
                             <option value=''>All</option>
                             <option value='USD'>USD</option>
-                            <option value='NGN'>NAIRA</option>
+                            <option value='NGN'>NGN</option>
                         </select>
                     </div>
                     <Link to='/invoice/generate' className='flex rounded-md items-center py-2 px-3 bg-green-700 hover:bg-green-600 text-white'><span className="material-symbols-outlined">add</span>Create Invoice</Link>
@@ -111,16 +111,15 @@ function InvoiceIndex() {
                                         <h3 className='text-base text-gray'>Overdue Invoices</h3>
                                     </div>
                                 </div>
-                                <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
+                                {/* <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
                                     <span className='flex justify-end'>0%</span>
                                     <div className='flex flex-col'>
                                         <h2 className='font-semibold flex gap-1 text-3xl text-green-600'>
                                             {invoices && helperFunctions.formatCurrency(currency, invoices?.analysis?.total_paid_invoices)}
-                                            {/* {invoices && totalPaidInvoices(invoices.invoices)}  */}
                                         </h2>
                                         <h3 className='text-base text-gray'>Paid Invoices</h3>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                             <div className='px-2 w-full shadow-md'>
 

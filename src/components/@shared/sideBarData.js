@@ -16,30 +16,30 @@ import { MdKeyboardArrowUp } from "react-icons/md";
 
 
 export const SidebarData = [
-{
-	title: "Transaction",
-	path: "/about-us",
-	iconClosed: <MdKeyboardArrowDown />,
-	iconOpened: <MdKeyboardArrowUp />,
+// {
+// 	title: "Transaction",
+// 	path: "/about-us",
+// 	iconClosed: <MdKeyboardArrowDown />,
+// 	iconOpened: <MdKeyboardArrowUp />,
 
-	subNav: [
-		{
-			title: "Users",
-			path: "",
-			icon: <FiUsers />,
-		},
-		{
-			title: "Waitlist",
-			path: "/dashboard/waitlist",
-			icon: <FiFileText />,
-		},
-		{
-			title: "Customers",
-			path: "/dashboard/customers",
-			icon: <FiUser />,
-		},
-	],
-},
+// 	subNav: [
+// 		{
+// 			title: "Users",
+// 			path: "",
+// 			icon: <FiUsers />,
+// 		},
+// 		{
+// 			title: "Waitlist",
+// 			path: "/dashboard/waitlist",
+// 			icon: <FiFileText />,
+// 		},
+// 		{
+// 			title: "Customers",
+// 			path: "/dashboard/customers",
+// 			icon: <FiUser />,
+// 		},
+// 	],
+// },
 {
 	title: "Invoices",
 	path: "",
@@ -50,68 +50,68 @@ export const SidebarData = [
 		{
 			title: "Invoices",
 			path: "/invoice",
-			icon: <FiBriefcase />,
+			icon: <span class="material-symbols-outlined">list_alt</span>,
 			cName: "sub-nav",
 		},
 		{
-			title: "Generate New Invoice",
+			title: "Create Invoice",
 			path: "/invoice/generate",
-			icon: <FiBriefcase />,
+			icon: <span class="material-symbols-outlined">create_new_folder</span>,
 			cName: "sub-nav",
 		},
 	],
 },
-{
-	title: "SpringPay",
-	path: "",
-	iconClosed: <MdKeyboardArrowDown />,
-	iconOpened: <MdKeyboardArrowUp />,
+// {
+// 	title: "SpringPay",
+// 	path: "",
+// 	iconClosed: <MdKeyboardArrowDown />,
+// 	iconOpened: <MdKeyboardArrowUp />,
 
-	subNav: [
-		{
-			title: "SpringPay",
-			path: "/springpay",
-			icon: <FiBriefcase />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Generate New Invoice",
-			path: "/invoice/generate",
-			icon: <FiBriefcase />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Add/Receive NGN",
-			path: "",
-			icon: <IoSchoolOutline />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Send NGN",
-			path: "",
-			icon: <IoSchoolOutline />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Add NGN to FX Wallets",
-			path: "",
-			icon: <IoSchoolOutline />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Global Payout",
-			path: "",
-			icon: <IoSchoolOutline />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Receive USD, GBP & EUR",
-			path: "",
-			icon: <IoSchoolOutline />,
-			cName: "sub-nav",
-		},
-	],
-},
+// 	subNav: [
+// 		{
+// 			title: "SpringPay",
+// 			path: "/springpay",
+// 			icon: <FiBriefcase />,
+// 			cName: "sub-nav",
+// 		},
+// 		{
+// 			title: "Generate New Invoice",
+// 			path: "/invoice/generate",
+// 			icon: <FiBriefcase />,
+// 			cName: "sub-nav",
+// 		},
+// 		{
+// 			title: "Add/Receive NGN",
+// 			path: "",
+// 			icon: <IoSchoolOutline />,
+// 			cName: "sub-nav",
+// 		},
+// 		{
+// 			title: "Send NGN",
+// 			path: "",
+// 			icon: <IoSchoolOutline />,
+// 			cName: "sub-nav",
+// 		},
+// 		{
+// 			title: "Add NGN to FX Wallets",
+// 			path: "",
+// 			icon: <IoSchoolOutline />,
+// 			cName: "sub-nav",
+// 		},
+// 		{
+// 			title: "Global Payout",
+// 			path: "",
+// 			icon: <IoSchoolOutline />,
+// 			cName: "sub-nav",
+// 		},
+// 		{
+// 			title: "Receive USD, GBP & EUR",
+// 			path: "",
+// 			icon: <IoSchoolOutline />,
+// 			cName: "sub-nav",
+// 		},
+// 	],
+// },
 
 {
 	title: "Customers",
@@ -123,75 +123,75 @@ export const SidebarData = [
 		{
 			title: "Recent Customers",
 			path: "/dashboard/customers",
-			icon: <FiCreditCard />,
+			icon: <span class="material-symbols-outlined">group</span>,
 			cName: "sub-nav",
 		},
 		
 	],
 },
-{
-	title: "Wallets/Cards",
-	path: "",
-	iconClosed: <MdKeyboardArrowDown />,
-	iconOpened: <MdKeyboardArrowUp />,
+// {
+// 	title: "Wallets/Cards",
+// 	path: "",
+// 	iconClosed: <MdKeyboardArrowDown />,
+// 	iconOpened: <MdKeyboardArrowUp />,
 
-	subNav: [
-		{
-			title: "Payins",
-			path: "/formik",
-			icon: <FiBriefcase />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Payouts",
-			path: "/dashboard/payouts",
-			icon: <IoSchoolOutline />,
-			cName: "sub-nav",
-		},
-	],
-},
-{
-	title: "Communication",
-	path: "",
-	iconClosed: <MdKeyboardArrowDown />,
-	iconOpened: <MdKeyboardArrowUp />,
+// 	subNav: [
+// 		{
+// 			title: "Payins",
+// 			path: "/formik",
+// 			icon: <FiBriefcase />,
+// 			cName: "sub-nav",
+// 		},
+// 		{
+// 			title: "Payouts",
+// 			path: "/dashboard/payouts",
+// 			icon: <IoSchoolOutline />,
+// 			cName: "sub-nav",
+// 		},
+// 	],
+// },
+// {
+// 	title: "Communication",
+// 	path: "",
+// 	iconClosed: <MdKeyboardArrowDown />,
+// 	iconOpened: <MdKeyboardArrowUp />,
 
-	subNav: [
-		{
-			title: "Countries",
-			path: "",
-			icon: <BiWorld />,
-			cName: "sub-nav",
-		},
-		{
-			title: "Institutions",
-			path: "",
-			icon: <IoSchoolOutline />,
-			cName: "sub-nav",
-		},
-	],
-},
-{
-	title: "Reports",
-	path: "",
-	iconClosed: <MdKeyboardArrowDown />,
-	iconOpened: <MdKeyboardArrowUp />,
+// 	subNav: [
+// 		{
+// 			title: "Countries",
+// 			path: "",
+// 			icon: <BiWorld />,
+// 			cName: "sub-nav",
+// 		},
+// 		{
+// 			title: "Institutions",
+// 			path: "",
+// 			icon: <IoSchoolOutline />,
+// 			cName: "sub-nav",
+// 		},
+// 	],
+// },
+// {
+// 	title: "Reports",
+// 	path: "",
+// 	iconClosed: <MdKeyboardArrowDown />,
+// 	iconOpened: <MdKeyboardArrowUp />,
 
-	subNav: [
-		{
-			title: "Businesses",
-			path: "",
-			icon: <FiBriefcase />,
-			cName: "sub-nav",
-		},
-		{
-			title: "API requests",
-			path: "",
-			icon: <AiOutlineApi />,
-			cName: "sub-nav",
-		},
-	],
-},
+// 	subNav: [
+// 		{
+// 			title: "Businesses",
+// 			path: "",
+// 			icon: <FiBriefcase />,
+// 			cName: "sub-nav",
+// 		},
+// 		{
+// 			title: "API requests",
+// 			path: "",
+// 			icon: <AiOutlineApi />,
+// 			cName: "sub-nav",
+// 		},
+// 	],
+// },
 {
 	title: "Settings",
 	path: "",
@@ -202,37 +202,37 @@ export const SidebarData = [
 		{
 			title: "Manage Users",
 			path: "/settings/manage-users",
-			icon: <FiBriefcase />,
+			icon: <span class="material-symbols-outlined">manage_accounts</span>,
 			cName: "sub-nav",
 		},
 		{
-			title: "Personal Information",
+			title: "Profile Information",
 			path: "/settings/personal-information",
-			icon: <AiOutlineApi />,
+			icon: <span class="material-symbols-outlined">info</span>,
 			cName: "sub-nav",
 		},
 	],
 },
-{
-	title: "Support",
-	path: "",
-	iconClosed: <MdKeyboardArrowDown />,
-	iconOpened: <MdKeyboardArrowUp />,
+// {
+// 	title: "Support",
+// 	path: "",
+// 	iconClosed: <MdKeyboardArrowDown />,
+// 	iconOpened: <MdKeyboardArrowUp />,
 
-	subNav: [
-		{
-			title: "Businesses",
-			path: "",
-			icon: <FiBriefcase />,
-			cName: "sub-nav",
-		},
-		{
-			title: "API requests",
-			path: "",
-			icon: <AiOutlineApi />,
-			cName: "sub-nav",
-		},
-	],
-},
+// 	subNav: [
+// 		{
+// 			title: "Businesses",
+// 			path: "",
+// 			icon: <FiBriefcase />,
+// 			cName: "sub-nav",
+// 		},
+// 		{
+// 			title: "API requests",
+// 			path: "",
+// 			icon: <AiOutlineApi />,
+// 			cName: "sub-nav",
+// 		},
+// 	],
+// },
 
 ];

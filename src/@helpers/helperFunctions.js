@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 function formatCurrency(currency, price){
     switch(currency){
         case 'NGN':
@@ -15,7 +17,8 @@ function formatCurrency(currency, price){
         case 'USD':
             return (new Intl.NumberFormat('en-NG', {
                 style: 'currency',
-                currency: 'USD'
+                currency: 'USD',
+                currencyDisplay: 'narrowSymbol',
               })).format(price)
         default:
             return price
@@ -32,7 +35,8 @@ function nairaFormat(price){
 function dollarFormat(price){
     return (new Intl.NumberFormat('en-NG', {
         style: 'currency',
-        currency: 'USD'
+        currency: 'USD',
+        currencyDisplay: 'narrowSymbol',
       })).format(price)
 }
 
@@ -62,6 +66,17 @@ function filterCard(data){
     return filtered
 }
 
+
+const getCountries = async() => {
+    try{
+        const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
+        //console.log(res.data.data);
+        return res.data.data
+    }catch(error){
+        console.log(error)
+    }
+}
+
 const helperFunctions = {
     nairaFormat,
     dollarFormat,
@@ -69,7 +84,8 @@ const helperFunctions = {
     poundFormat,
     filterCard,
     filterWallet,
-    formatCurrency
+    formatCurrency,
+    getCountries
 }
 
 

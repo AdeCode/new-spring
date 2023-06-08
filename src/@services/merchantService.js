@@ -43,6 +43,31 @@ async function logout(){
     return data
 }
 
+async function saveAccountDetails(payload){
+    const {data} = await httpService.secureInstance.post('/merchants/business/account',payload)
+    return data
+}
+
+async function saveKycIdentity(payload){
+    const {data} = await httpService.secureInstance.post('/merchants/profile/kyc',payload)
+    return data
+}
+
+async function saveKycOccupation(payload){
+    const {data} = await httpService.secureInstance.post('/merchants/profile/kyc/occupation',payload)
+    return data
+}
+
+async function getBusinessCategories(){
+    const {data} = await httpService.secureInstance.get('/merchants/business/category')
+    return data
+}
+
+async function getMerchantProfile(){
+    const {data} = await httpService.secureInstance.get('/merchants/profile')
+    return data
+}
+
 const merchantService = {
     login,
     registerBusiness,
@@ -51,7 +76,12 @@ const merchantService = {
     createInvoice,
     resetPassword,
     adminLogin,
-    updateProfile
+    updateProfile,
+    getBusinessCategories,
+    saveAccountDetails,
+    saveKycIdentity,
+    saveKycOccupation,
+    getMerchantProfile
 }
 
 export default merchantService

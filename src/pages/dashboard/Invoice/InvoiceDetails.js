@@ -40,47 +40,55 @@ function InvoiceDetails() {
                             <span className="material-symbols-outlined">visibility</span>Preview Invoice
                         </div>
                     </div>
-                    <div className='flex flex-col gap-2 mb-3 px-2 py-2 shadow-md hover:shadow-lg'>
-                        <div className='flex gap-3'>
-                            <h2 className='min-w-[250px] text-base text-gray'>Invoice Shareable Link</h2>
-                            <span className=''>https://merchant.sultan.invoice.com</span>
+                    <div className='flex justify-between mb-3 px-4 py-2 shadow-md hover:shadow-lg'>
+                        <div className='flex flex-col'>
+                            {/* <div className='flex gap-3'>
+                                <h2 className='min-w-[250px] text-base text-gray'>Invoice Shareable Link</h2>
+                                <span className=''>https://merchant.sultan.invoice.com</span>
+                            </div> */}
+                            <div className='flex gap-3'>
+                                <h2 className='min-w-[250px] text-gray text-base'>Invoice ID</h2>
+                                <span className='font-medium text-base'>{invoice?.invoice?.invoice_code}</span>
+                            </div>
+                            <div className='flex gap-3'>
+                                <h2 className='min-w-[250px] text-gray text-base'>Status</h2>
+                                <span className={`font-medium text-base ${invoice?.invoice?.status === 'PAID' ? 'text-green-700' : 'text-red-700'}`}>{invoice?.invoice?.status}</span>
+                            </div>
+                            <div className='flex gap-3'>
+                                <h2 className='min-w-[250px] text-gray text-base'>Date Created</h2>
+                                <span className='font-medium text-base'>{invoice?.invoice?.creation_date}</span>
+                            </div>
+                            <div className='flex gap-3'>
+                                <h2 className='min-w-[250px] text-gray text-base'>Due date</h2>
+                                <span className='font-medium text-base'>{invoice?.invoice?.due_date}</span>
+                            </div>
+                            
                         </div>
-                        <div className='flex gap-3'>
-                            <h2 className='min-w-[250px] text-gray text-base'>Invoice ID</h2>
-                            <span className='font-medium text-base'>{invoice?.invoice?.invoice_code}</span>
+                        <div className='flex flex-col'>
+                            <div className='flex gap-3'>
+                                <h2 className='min-w-[250px] text-gray text-base'>Customer Name</h2>
+                                <span className='font-medium text-base'>{invoice?.invoice?.name}</span>
+                            </div>
+                            <div className='flex gap-3'>
+                                <h2 className='min-w-[250px] text-gray text-base'>Customer Phone number</h2>
+                                <span className='font-medium text-base'>{invoice?.invoice?.phone}</span>
+                            </div>
+                            <div className='flex gap-3'>
+                                <h2 className='min-w-[250px] text-gray text-base'>Customer Email</h2>
+                                <span className='font-medium text-base'>{invoice?.invoice?.email}</span>
+                            </div>
                         </div>
-                        <div className='flex gap-3'>
-                            <h2 className='min-w-[250px] text-gray text-base'>Customer Name</h2>
-                            <span className='font-medium text-base'>{invoice?.invoice?.name}</span>
-                        </div>
-                        <div className='flex gap-3'>
-                            <h2 className='min-w-[250px] text-gray text-base'>Customer Phone number</h2>
-                            <span className='font-medium text-base'>{invoice?.invoice?.phone}</span>
-                        </div>
-                        <div className='flex gap-3'>
-                            <h2 className='min-w-[250px] text-gray text-base'>Customer Email</h2>
-                            <span className='font-medium text-base'>{invoice?.invoice?.email}</span>
-                        </div>
-                        <div className='flex gap-3'>
-                            <h2 className='min-w-[250px] text-gray text-base'>Status</h2>
-                            <span className='font-medium text-base'>{invoice?.invoice?.status}</span>
-                        </div>
-                        <div className='flex gap-3'>
-                            <h2 className='min-w-[250px] text-gray text-base'>Date Created</h2>
-                            <span className='font-medium text-base'>{invoice?.invoice?.creation_date}</span>
-                        </div>
-                        <div className='flex gap-3'>
-                            <h2 className='min-w-[250px] text-gray text-base'>Due date</h2>
-                            <span className='font-medium text-base'>{invoice?.invoice?.due_date}</span>
-                        </div>
-                        
                     </div>
                     <div className='w-full shadow-md flex flex-col py-2 gap-3'>
                     <OrderItemsTable
                         data={invoice?.invoice?.items}
                         currency={invoice?.invoice?.currency}
                     />
-                    <div className='justify-end flex'>
+                    <div className='justify-between flex'>
+                            <div className='flex items-end gap-1'>
+                                <h2 className='min-w-[150px] text-base text-gray'>Invoice Shareable Link</h2>
+                                <span className=''>https://merchant.sultan.invoice.com</span>
+                            </div>
                             <div className='flex w-[200px] flex-col gap-3 border border-y-cyan-950'>
                                 <div className='flex justify-between px-2'>
                                     <h2 className='text-gray'>Subtotal:</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.sub_total)}</span>
@@ -88,8 +96,8 @@ function InvoiceDetails() {
                                 <div className='flex justify-between px-2'>
                                     <h2 className='text-gray'>Tax(7.5%):</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.sub_total*invoice?.invoice?.tax)}</span>
                                 </div>
-                                <div className='flex justify-between bg-gray py-1 px-2'>
-                                    <h2 className='text-black'>Subtotal:</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.total_cost)}</span>
+                                <div className='flex justify-between py-1 px-2 font-bold'>
+                                    <h2 className='text-black'>Grand total:</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.total_cost)}</span>
                                 </div>
                             </div>
                     </div>

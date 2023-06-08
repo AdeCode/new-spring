@@ -56,12 +56,12 @@ const InvoiceTable = ({ data, currency }) => {
 
     const onToggle = (values) => {
         //console.log(values)
-        values = {
-            ...values,
-            payload: {
-                "status": "PAID"
-            }
-        }
+        // values = {
+        //     ...values,
+        //     payload: {
+        //         "status": "PAID"
+        //     }
+        // }
         toggleInvoiceMutation.mutate(values)
     }
 
@@ -138,11 +138,19 @@ const InvoiceTable = ({ data, currency }) => {
                             control={
                                 <Switch
                                     checked={row.original.status==='PAID'}
-                                    onChange={() => { onToggle({ invoice_code: row.original.invoice_code }); console.log(row.original.invoice_code) }
-                                        // handleToggleChange(row.original.id)
+                                    onChange={() => { 
+                                        const payloadStatus = (row.original.status==='PAID') ? "UNPAID" : "PAID"
+                                        onToggle(
+                                            { 
+                                                invoice_code: row.original.invoice_code,
+                                                payload: {status: payloadStatus}
+                                            }
+                                        ); 
+                                        console.log(row.original.invoice_code) 
+                                    }
                                     }
                                     name="toggle"
-                                    disabled={row.original.status==='PAID'}
+                                    // disabled={row.original.status==='PAID'}
                                     color="primary"
                                     sx={{
                                         color: '#404042',
