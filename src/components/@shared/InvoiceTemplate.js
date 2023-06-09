@@ -17,15 +17,9 @@ import merchantService from '../../@services/merchantService'
 
 function InvoiceTemplate() {
     const {state} = useContext(AuthContext)
-    //console.log('local state ',state.profile)
-    // let data = state
-
 
     const { data: profile, isLoading, error } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
-    profile && console.log(profile)
-    // if(!state.profile){
-    //     data = profile.data
-    // }
+    //profile && console.log(profile)
 
     const invoiceTemplateRef = useRef(null)
 
@@ -36,7 +30,7 @@ function InvoiceTemplate() {
     const location = useLocation()
     
     const data = location.state.invoice.invoice
-    console.log(data)
+    //console.log(data)
 
     const styles = {
         container: {
@@ -58,21 +52,31 @@ function InvoiceTemplate() {
                     <div className='flex flex-col gap-3'>
                         <h2 className='font-bold text-2xl text-green-700'>INVOICE</h2>
                         <div className='max-w-[100px] max-h-[100px]'>
-                            <img src={profile?.data?.business_logo} alt={profile?.data?.business_name}/>
+                            <img src={profile?.data?.profile?.business_logo} alt={profile?.data?.profile?.business_name}/>
                         </div>
                         {/* <p className='text-base'>Business Logo here</p> */}
                     </div>
                     
                         {
-                            (!profile?.data) ? 
+                            (!profile?.data?.profile) ? 
                             <h3>
                                 <Link to='/settings/personal-information' className='text-semibold text-yellow-700'>Update your profile </Link> 
                                 to unlock all invoice features
                             </h3> :
                             <div className='flex flex-col gap-3'>
-                                <h2 className='font-semibold text-2xl text-neutral-700'>{profile?.data?.business_name}</h2>
+                                <h2 className='font-semibold text-2xl text-neutral-700 text-end'>{profile?.data?.profile?.business_name}</h2>
                                 <p className='text-base'>
-                                    {profile?.data?.office_address_number+ ' ' +((profile?.data?.official_address === null) ? '' : profile?.data?.official_address)}
+                                    {
+                                        (profile?.data?.profile?.official_address === null) ? 
+                                        <h3>
+                                            <Link to='/settings/personal-information' className='text-semibold text-yellow-700'>Update your profile </Link> 
+                                            to unlock all invoice features
+                                        </h3> 
+                                        :
+                                        profile?.data?.profile?.office_address_number+ ' ' +((profile?.data?.profile?.official_address === null) ? '' : profile?.data?.profile?.official_address)
+
+
+                                    }
                                 </p>
                             </div>
                         }

@@ -10,7 +10,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Switch from '@mui/material/Switch';
-import { QueryClient, useMutation } from 'react-query';
+import { QueryClient, useMutation, useQueryClient } from 'react-query';
 import invoiceService from '../../@services/invoiceService';
 import { toast } from 'react-toastify';
 
@@ -77,6 +77,7 @@ const data = [
 function CustomerInvoiceTable({data}) {
   // console.log('customer invoice',data)
     const [currency, setCurrency] = useState('USD')
+    const queryClient = useQueryClient()
 
   const navigate = useNavigate()
 
@@ -87,7 +88,7 @@ function CustomerInvoiceTable({data}) {
         toast.success(res.message, {
             theme: "colored",
         })
-        QueryClient.invalidateQueries('customerInvoices')
+        queryClient.invalidateQueries('customerInvoices')
 
     },
     onError: err => {
@@ -99,13 +100,8 @@ function CustomerInvoiceTable({data}) {
 })
 
   const onToggle = (values) => {
-    console.log(values)
-    // values = {
-    //     ...values,
-    //     payload: {
-    //         "status": "PAID"
-    //     }
-    // }
+    //console.log(values)
+   
     toggleInvoiceMutation.mutate(values)
 }
 
