@@ -3,7 +3,7 @@ import { Formik, Form, useField, useFormikContext, FieldArray, Field, ErrorMessa
 import * as Yup from 'yup'
 import InputField from '../@shared/InputField'
 import { TextField } from '@mui/material'
-import { useMutation, useQuery } from 'react-query'
+import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query'
 import merchantService from '../../@services/merchantService'
 import { AuthContext } from '../../contexts/AuthContexts'
 import { toast } from 'react-toastify'
@@ -12,16 +12,18 @@ import { toast } from 'react-toastify'
 function PersonaliseProfile({ data }) {
     //const { data: profile, isLoading, error } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
     //profile && console.log('from profile ', profile)
+    const queryClient = useQueryClient()
+    const merchantData = data?.merchant_account_profile
 
     let initialState = {}
 
-    if (!!data) {
+    if (!!merchantData) {
         initialState = {
-            first_name: data?.first_name,
-            last_name: data?.last_name,
-            email: data?.email,
-            phone: data?.phone,
-            bvn: data?.bvn
+            first_name: merchantData?.first_name,
+            last_name: merchantData?.last_name,
+            email: merchantData?.email,
+            phone: merchantData?.phone,
+            bvn: merchantData?.bvn
         }
     } else {
         initialState = {
@@ -35,10 +37,12 @@ function PersonaliseProfile({ data }) {
 
     const saveAccountProfileMutation = useMutation(merchantService.saveAccountProfile, {
         onSuccess: res => {
-            console.log(res)
+            //console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
+            queryClient.invalidateQueries('merchat_profile')
+
         },
         onError: err => {
             console.log(err)
@@ -82,7 +86,7 @@ function PersonaliseProfile({ data }) {
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(false)
                     onSubmit(values)
-                    console.log('all values ', values)
+                    //console.log('all values ', values)
                     resetForm({
                         email: '',
                         customer_name: '',

@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Formik, Form, useField, useFormikContext, FieldArray, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import InputField from '../@shared/InputField'
-import { useMutation, useQuery } from 'react-query'
+import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query'
 import TextField from '../@shared/TextField'
 import SelectField from '../@shared/SelectField'
 import avatar from '../../images/business/avatar.png'
@@ -14,31 +14,29 @@ import helperFunctions from '../../@helpers/helperFunctions'
 import { AuthContext } from '../../contexts/AuthContexts'
 
 function BusinessProfile({data}) {
-    // const { data: profile, isLoading: profileLoading } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
-    // profile && console.log('from profile ', profile)
+    //console.log('data details: ',data)
+    const queryClient = useQueryClient()
 
-    // const { state: user } = useContext(AuthContext)
-    // user?.profile && console.log(user.profile)
     let initialState={}
 
-    if (!!data) {
+    if (!!data.profile) {
         initialState = {
-            business_name: data?.business_name,
-            website_url: data?.website_url,
-            email_address: data?.email_address,
-            company_rc_number: data?.company_rc_number,
-            country: data?.country,
-            State: data?.State,
-            official_address: data?.official_address,
-            description: data?.description,
-            tin_number: data?.tin_number,
-            cac_document: data?.cac_document,
-            utility_bill: data?.utility_bill,
-            business_owner_username: data?.business_owner_username,
-            business_category: data?.business_category,
-            zip_code: data?.zip_code,
-            office_address_number: data?.office_address_number,
-            business_logo: data?.business_logo,
+            business_name: data?.profile?.business_name,
+            website_url: data?.profile?.website_url,
+            email_address: data?.profile?.email_address,
+            company_rc_number: data?.profile?.company_rc_number,
+            country: data?.profile?.country,
+            State: data?.profile?.State,
+            official_address: data?.profile?.official_address,
+            description: data?.profile?.description,
+            tin_number: data?.profile?.tin_number,
+            cac_document: data?.profile?.cac_document,
+            utility_bill: data?.profile?.utility_bill,
+            business_owner_username: data?.profile?.business_owner_username,
+            business_category: data?.profile?.business_category,
+            zip_code: data?.profile?.zip_code,
+            office_address_number: data?.profile?.office_address_number,
+            business_logo: data?.profile?.business_logo,
         }
     } else {
         initialState = {
@@ -105,10 +103,11 @@ function BusinessProfile({data}) {
 
     const updateMerchantProfileMutation = useMutation(merchantService.updateProfile, {
         onSuccess: res => {
-            console.log(res)
+            //console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
+            queryClient.invalidateQueries('merchat_profile')
         },
         onError: err => {
             console.log(err)
@@ -126,7 +125,7 @@ function BusinessProfile({data}) {
     const handleCountryChange = (e, handleChange) => {
         //console.log(e.currentTarget.value)
         setSelectedCountry(e.currentTarget.value)
-        console.log(selectedCountry)
+        //console.log(selectedCountry)
         handleChange(e)
     }
 
@@ -158,7 +157,6 @@ function BusinessProfile({data}) {
     };
 
     const handleBusinessLogo = async (e, setFieldValue) => {
-        console.log('inside handle icon')
         const file = e.target.files[0];
         //check the size of image 
         if (file?.size / 1024 / 1024 < 2) {
@@ -171,7 +169,6 @@ function BusinessProfile({data}) {
     };
 
     const handleCacDoc = async (e, setFieldValue) => {
-        console.log('inside handle icon')
         const file = e.target.files[0];
         //check the size of image 
         if (file?.size / 1024 / 1024 < 2) {
@@ -248,7 +245,7 @@ function BusinessProfile({data}) {
 
         const onFileChange = async (e, setFieldValue) => {
             let file = e.target.files[0];
-            console.log('selected file ', file)
+            //console.log('selected file ', file)
 
             if (file?.size / 1024 / 1024 < 2) {
                 const base64 = await convertToBase64(file);
@@ -321,8 +318,6 @@ function BusinessProfile({data}) {
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(false)
                     onSubmit(values)
-                    console.log(values)
-
                 }}
             >
                 {({ isSubmitting, isValid, handleChange, handleBlur, values, errors, setFieldValue }) => (
@@ -486,7 +481,7 @@ function BusinessProfile({data}) {
                                         <TextField
                                             name='official_address'
                                             type='text'
-                                            label='Official Address'
+                                            label='Office Address'
                                             placeholder='Enter your official address'
                                             component="textarea"
                                             rows='4'

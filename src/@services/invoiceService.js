@@ -31,8 +31,6 @@ async function filterInvoice({queryKey}){
 }
 
 async function toggleInvoiceStatus({invoice_code, payload}){
-    console.log(payload)
-    //const [_key, {invoice_code}] = queryKey
     const {data} = await httpService.secureInstance.patch(`/merchants/invoices/invoice?invoice_code=${invoice_code}`,payload)
     return data
 }

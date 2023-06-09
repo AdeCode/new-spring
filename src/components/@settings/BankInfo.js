@@ -1,6 +1,6 @@
 import { Form, Formik } from 'formik'
 import React, { useContext } from 'react'
-import { useMutation, useQuery } from 'react-query'
+import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query'
 import * as Yup from 'yup'
 import InputField from '../@shared/InputField'
 import { toast } from 'react-toastify'
@@ -9,20 +9,15 @@ import { AuthContext } from '../../contexts/AuthContexts'
 
 
 function BankInfo({data}) {
-    const { state } = useContext(AuthContext)
-    //const { data: profile, isLoading, error } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
-
-    //console.log(profile.data)
-
-    // console.log(data)
-
+    //console.log(data?.bank_account_detail)
+    const queryClient = useQueryClient()
     let initialState = {}
 
-    if (!!data) {
+    if (!!data?.bank_account_detail) {
         initialState = {
-            account_number: data?.bank_account_number,
-            bank_name: data?.bank_name,
-            account_name: data?.bank_account_name,
+            account_number: data?.bank_account_detail?.bank_account_number,
+            bank_name: data?.bank_account_detail?.bank_name,
+            account_name: data?.bank_account_detail?.bank_account_name,
         }
     } else {
         initialState = {
@@ -35,10 +30,12 @@ function BankInfo({data}) {
 
     const saveAccountDetailsMutation = useMutation(merchantService.saveAccountDetails, {
         onSuccess: res => {
-            console.log(res)
+            //console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
+
+            queryClient.invalidateQueries('merchat_profile')
         },
         onError: err => {
             console.log(err)
@@ -49,7 +46,7 @@ function BankInfo({data}) {
     })
 
     const onSubmit = (values) => {
-        console.log(values)
+        //console.log(values)
         saveAccountDetailsMutation.mutate(values)
     }
 

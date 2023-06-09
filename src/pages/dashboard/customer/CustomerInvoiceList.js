@@ -25,7 +25,7 @@ function CustomerInvoiceList() {
     // const { data: invoices, isLoading, error } = useQuery(['customer_invoices', { customerId }], customerService.fetchCustomerInvoices, {enabled:returnAll(status,currency)})
     const { data: invoices, isLoading, error } = useQuery(['customerInvoices', { customerId, status, currency }], invoiceService.filterInvoice)
 
-    invoices && console.log(invoices)
+    //invoices && console.log(invoices)
 
     const handleStatusChange = (e) => {
         setStatus(e.currentTarget.value)
