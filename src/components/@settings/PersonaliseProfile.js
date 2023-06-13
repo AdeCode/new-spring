@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Formik, Form, useField, useFormikContext, FieldArray, Field, ErrorMessage } from 'formik'
+import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import InputField from '../@shared/InputField'
 import { TextField } from '@mui/material'
@@ -10,7 +10,7 @@ import { toast } from 'react-toastify'
 
 
 function PersonaliseProfile({ data }) {
-    //const { data: profile, isLoading, error } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
+    //const { data: profile, isLoading, error } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
     //profile && console.log('from profile ', profile)
     const queryClient = useQueryClient()
     const merchantData = data?.merchant_account_profile
@@ -41,7 +41,7 @@ function PersonaliseProfile({ data }) {
             toast.success(res.message, {
                 theme: "colored",
             })
-            queryClient.invalidateQueries('merchat_profile')
+            queryClient.invalidateQueries('merchant_profile')
 
         },
         onError: err => {
@@ -109,7 +109,7 @@ function PersonaliseProfile({ data }) {
                                         <InputField
                                             name='first_name'
                                             type='text'
-                                            label='First Name'
+                                            label='First Name*'
                                             placeholder='e.g. Adewale'
                                         />
                                     </div>
@@ -117,7 +117,7 @@ function PersonaliseProfile({ data }) {
                                         <InputField
                                             name='last_name'
                                             type='text'
-                                            label='Last Name'
+                                            label='Last Name*'
                                             placeholder='e.g. Komolafe'
                                         />
                                     </div>
@@ -133,7 +133,7 @@ function PersonaliseProfile({ data }) {
                                         <InputField
                                             name='email'
                                             type='email'
-                                            label='Email Address'
+                                            label='Email Address*'
                                             placeholder='e.g. user@mail.com'
                                         />
                                     </div>
@@ -141,7 +141,7 @@ function PersonaliseProfile({ data }) {
                                         <InputField
                                             name='phone'
                                             type='text'
-                                            label='Phone Number'
+                                            label='Phone Number*'
                                             placeholder='e.g. 08033889999'
                                         />
                                     </div>
@@ -152,9 +152,10 @@ function PersonaliseProfile({ data }) {
                                     <InputField
                                         name='bvn'
                                         type='text'
-                                        label='BVN'
-                                        placeholder='e.g. 0022133889999'
+                                        label='BVN*'
+                                        placeholder='************'
                                     />
+                                    <p className=''>Your BVN will not be displayed after submission</p>
                                 </div>
                             </div>
 

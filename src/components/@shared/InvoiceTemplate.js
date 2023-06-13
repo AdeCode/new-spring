@@ -18,7 +18,7 @@ import merchantService from '../../@services/merchantService'
 function InvoiceTemplate() {
     const {state} = useContext(AuthContext)
 
-    const { data: profile, isLoading, error } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
+    const { data: profile, isLoading, error } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
     //profile && console.log(profile)
 
     const invoiceTemplateRef = useRef(null)
