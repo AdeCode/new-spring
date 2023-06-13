@@ -34,6 +34,7 @@ import PersonalInformation from './pages/dashboard/setting/PersonalInformation';
 import CustomerInvoiceList from './pages/dashboard/customer/CustomerInvoiceList';
 import InvoicePreview from './pages/dashboard/customer/InvoicePreview';
 import FormComponent from './pages/dashboard/FormStep'
+import SearchVendors from './pages/SearchVendors';
 
 function Routers (){
     return (
@@ -49,6 +50,7 @@ function Routers (){
                         <Route path='/about' element={<About/>}></Route>
                         <Route path='/terms-and-condition' element={<TermsAndConditions/>}></Route>
                         <Route path='/privacy-policy' element={<PrivacyPolicy/>}></Route>
+                        <Route path='/search-vendors' element={<SearchVendors/>}></Route>
                         <Route path='*' element={<NotFound/>}/>
                     </Route>
                     <Route path='/forgot-password' element={<ForgotPassword/>}></Route>

@@ -63,13 +63,28 @@ async function saveAccountProfile(payload){
     return data
 }
 
+async function confirmBankDetails(payload){
+    const {data} = await httpService.secureInstance.post('/merchants/bank/look-up',payload)
+    return data
+}
+
 async function getBusinessCategories(){
     const {data} = await httpService.secureInstance.get('/merchants/business/category')
     return data
 }
 
+async function getVendors(){
+    const {data} = await httpService.guestInstance.get('/merchants/business/list')
+    return data
+}
+
 async function getMerchantProfile(){
     const {data} = await httpService.secureInstance.get('/merchants/profile')
+    return data
+}
+
+async function getBankList(){
+    const {data} = await httpService.guestInstance.get('/merchants/bank/list')
     return data
 }
 
@@ -87,7 +102,10 @@ const merchantService = {
     saveKycIdentity,
     saveKycOccupation,
     getMerchantProfile,
-    saveAccountProfile
+    saveAccountProfile,
+    getBankList,
+    confirmBankDetails,
+    getVendors
 }
 
 export default merchantService

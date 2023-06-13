@@ -68,14 +68,21 @@ function filterCard(data){
 
 
 const getCountries = async() => {
+    let data = null
+    let loading = false
     try{
+        loading = true
         const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
-        //console.log(res.data.data);
+        data = res.data.data
+        loading = false
         return res.data.data
     }catch(error){
         console.log(error)
     }
+
+    //return {data, loading}
 }
+
 
 const helperFunctions = {
     nairaFormat,
