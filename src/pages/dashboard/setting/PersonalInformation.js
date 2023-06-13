@@ -53,7 +53,7 @@ function PersonalInformation() {
         setValue(newValue);
     };
 
-    const { data: profile, isLoading: profileLoading } = useQuery(['merchat_profile'], merchantService.getMerchantProfile)
+    const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
     profile && console.log('from profile ', profile)
 
     return (

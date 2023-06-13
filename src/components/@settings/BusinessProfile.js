@@ -14,7 +14,7 @@ import helperFunctions from '../../@helpers/helperFunctions'
 import { AuthContext } from '../../contexts/AuthContexts'
 
 function BusinessProfile({data}) {
-    //console.log('data details: ',data)
+    console.log('data details: ',data)
     const queryClient = useQueryClient()
 
     let initialState={}
@@ -82,7 +82,7 @@ function BusinessProfile({data}) {
             }
         }
     )
-    //countries && console.log(countries)
+    countries && console.log(countries)
 
     const { data: state, isLoading: statesLoading, error: statesError } = useQuery(['states', { selectedCountry }],
         async () => {
@@ -107,7 +107,7 @@ function BusinessProfile({data}) {
             toast.success(res.message, {
                 theme: "colored",
             })
-            queryClient.invalidateQueries('merchat_profile')
+            queryClient.invalidateQueries('merchant_profile')
         },
         onError: err => {
             console.log(err)
@@ -333,7 +333,7 @@ function BusinessProfile({data}) {
                                         <InputField
                                             name='business_name'
                                             type='text'
-                                            label='Business Name'
+                                            label='Business Name*'
                                             placeholder='e.g. Gig Logistics'
                                         />
                                     </div>
@@ -357,7 +357,7 @@ function BusinessProfile({data}) {
                                         <InputField
                                             name='email_address'
                                             type='email'
-                                            label='Email Address'
+                                            label='Email Address*'
                                             placeholder='e.g. user@mail.com'
                                         />
                                     </div>
@@ -365,7 +365,7 @@ function BusinessProfile({data}) {
                                         <InputField
                                             name='company_rc_number'
                                             type='text'
-                                            label='Company RC Number'
+                                            label='Company RC Number*'
                                             placeholder='e.g. NC00223'
                                         />
                                     </div>
@@ -380,7 +380,7 @@ function BusinessProfile({data}) {
                                     <div className=''>
                                         <SelectField
                                             name='country'
-                                            label='Country'
+                                            label='Country*'
                                             value={values.country}
                                             onChange={(e) => { handleCountryChange(e, handleChange) }}
                                             onBlur={handleBlur}
@@ -408,14 +408,21 @@ function BusinessProfile({data}) {
                                             type='text'
                                         >
                                             {
-                                                statesLoading ? <option value="">Loading...</option>
-                                                    :
+                                                
+                                                statesLoading ? <option value="">Loading...</option> :
                                                     <>
-                                                        <option value="">Select State</option>
+                                                        {/* <option value="">Select State</option> */}
                                                         {
                                                             state?.states.map(state => {
+                                                                // console.log(state.name.includes(values.State))
                                                                 return (
-                                                                    <option value={state.name} key={state.name}>{state.name}</option>
+                                                                    <option 
+                                                                        value={state.name} 
+                                                                        key={state.name}
+                                                                        // selected={state.name.includes(values.State)}
+                                                                    >
+                                                                            {state.name}
+                                                                    </option>
                                                                 )
                                                             })
                                                         }
@@ -428,8 +435,13 @@ function BusinessProfile({data}) {
 
                             <div className='flex w-full gap-2 py-3'>
                                 <div className='flex flex-col items-center grow w-[150px]'>
-                                    <div className='mb-3'>
-                                        <img src={avatar} alt='avatar' />
+                                    <div className='mb-3 max-w-[100px] max-h-[100px]'>
+                                        {
+                                            values.business_logo ?
+                                            <img src={data?.profile?.business_logo} alt={data?.profile?.business_name} />
+                                            :
+                                            <img src={avatar} alt='avatar' />
+                                        }
                                     </div>
                                     <input
                                         name='business_logo'
@@ -485,16 +497,18 @@ function BusinessProfile({data}) {
                                             placeholder='Enter your official address'
                                             component="textarea"
                                             rows='4'
+                                            defaultValue={values.official_address}
                                         />
                                     </div>
                                     <div className='grow'>
                                         <TextField
                                             name='description'
                                             type='text'
-                                            label='Description'
+                                            label='Business Description'
                                             placeholder=''
                                             component="textarea"
                                             rows='4'
+                                            defaultValue={values.description}
                                         />
                                     </div>
                                 </div>
@@ -533,6 +547,16 @@ function BusinessProfile({data}) {
                                 <div className='flex w-[300px] justify-center items-center'>
                                     <div className='w-full flex flex-col items-center'>
                                         <div className='form-control flex flex-col mb-4 relative border-none lg:border'>
+                                            <div className='flex justify-center'>
+                                                <div className='mb-3 max-w-[100px] max-h-[100px]'>
+                                                    {
+                                                        values.cac_document ?
+                                                        <img src={data?.profile?.cac_document} alt={data?.profile?.business_name} />
+                                                        :
+                                                        <span class="material-symbols-outlined">image</span>
+                                                    }
+                                                </div>
+                                            </div>
                                             <label htmlFor={'cac_document'} className='font-medium text-base text-label mb-[6px]'>Upload your CAC document</label>
                                             <input
                                                 name='cac_document'
@@ -583,7 +607,17 @@ function BusinessProfile({data}) {
 
                                 <div className='grow'>
                                     <div className='w-full flex flex-col items-center'>
-                                        <div className='form-control flex flex-col mb-4 relative border-none lg:border'>
+                                        <div className='form-control flex flex-col items-center mb-4 relative border-none lg:border'>
+                                            <div className='flex justify-center'>
+                                                <div className='mb-3 max-w-[100px] max-h-[100px]'>
+                                                    {
+                                                        values.utility_bill ?
+                                                        <img src={data?.profile?.utility_bill} alt={data?.profile?.business_name} />
+                                                        :
+                                                        <span class="material-symbols-outlined">image</span>
+                                                    }
+                                                </div>
+                                            </div>
                                             <label htmlFor={'cac_document'} className='font-medium text-base text-label mb-[6px]'>Upload your Utility bill</label>
                                             <input
                                                 name='utility_bill'

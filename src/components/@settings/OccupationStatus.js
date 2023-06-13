@@ -120,8 +120,8 @@ function OccupationStatus() {
                                             <option value="">Select status</option>
                                             <option value="employed">Employed</option>
                                             <option value="unemployed">Unemployed</option>
-                                            <option value="self_employed">Self Employed</option>
-                                            <option value="student">Student</option>
+                                            {/* <option value="self_employed">Self Employed</option>
+                                            <option value="student">Student</option> */}
                                         </SelectField>
                                     </div>
                                     <div className='grow'>

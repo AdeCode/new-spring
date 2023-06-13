@@ -16,6 +16,7 @@ import merchantService from '../../../@services/merchantService'
 import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import helperFunctions from '../../../@helpers/helperFunctions'
+import AlertBox from '../../../components/AlertBox'
 
 
 
@@ -27,12 +28,28 @@ function NewInvoice() {
 
     const [customerExists, setCustomerExists] = useState(false)
 
-    const [subTotal, setSubTotal] = useState(0)
+    const [enable, setEnable] = useState(false)
 
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value)
         // console.log(currency)
     }
+
+    const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
+    //profile && console.log('from create inoice ', profile)
+
+    // if(!profile?.data?.bank_account_detail || !profile?.data?.merchant_account_profile || !profile?.data?.profile){
+    //     setEnable(true)
+    // }
+
+    const pageStatus = () => {
+        if(!profile?.data?.bank_account_detail || !profile?.data?.merchant_account_profile || !profile?.data?.profile){
+            return true
+        }else{
+            return false
+        }
+    }
+    console.log(pageStatus())
 
     const calculateSubTotal = (data) => {
         const sum = data.reduce((accumulator, curr) => {
@@ -105,9 +122,6 @@ function NewInvoice() {
                             setFieldValue('customer_email', res.data.email);
                             setCustomerExists(true)
                         }else{
-                            // console.log('customer doesnt exists')
-                            // setFieldValue(props.name, '');
-                            // setFieldValue('customer_email', '');
                             setCustomerExists(false)
                         }
                     },
@@ -136,13 +150,21 @@ function NewInvoice() {
     }
 
     const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', total: 0 }
-
     return (
         <Invoice className='px-[50px]'>
-            <Link onClick={() => navigate(-1)} className='flex gap-2 items-center mb-6'>
-                <span className="material-symbols-outlined">keyboard_backspace</span><h2 className=''>Back</h2>
-            </Link>
-            <div className='box w-full flex flex-col'>
+            <div className='flex justify-between'>
+                <Link onClick={() => navigate(-1)} className='flex gap-2 items-center mb-6'>
+                    <span className="material-symbols-outlined">keyboard_backspace</span><h2 className=''>Back</h2>
+                </Link>
+                {
+                    (!profile?.data?.bank_account_detail || !profile?.data?.merchant_account_profile || !profile?.data?.profile) &&
+                    <AlertBox
+                        message={<Link to='/settings/personal-information'>clck here to complete your compliance requirements to access invoice creation</Link>}
+                    />
+                }
+                
+            </div>
+            <div className='box w-full flex flex-col' disabled={pageStatus()}>
                 <div className='w-full flex justify-between border-b-2 border-cyan-900 px-3 py-2'>
                     <h2 className=''>Create Invoice</h2>
                     <select name='currency' onChange={handleCurrencyChange} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
@@ -398,6 +420,11 @@ const Invoice = styled.div`
     input:focus{
         outline: none !important;
         border: 1px solid #1BB6EF;
+    }
+    div[disabled]{
+        pointer-events: none;
+        opacity: 0.5;
+        cursor: not-allowed;
     }
 `
 
