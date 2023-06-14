@@ -405,8 +405,8 @@ function BusinessProfile({data}) {
                                         <SelectField
                                             name='State'
                                             label='State'
-                                            type='text'
                                             value={values.State}
+                                            type='text'
                                         >
                                             {
                                                 
@@ -431,6 +431,7 @@ function BusinessProfile({data}) {
                                     </div>
                                 </div>
                             </div>
+
                             <div className='flex w-full gap-2 py-3'>
                                 <div className='flex flex-col items-center grow w-[150px]'>
                                     <div className='mb-3 max-w-[100px] max-h-[100px]'>
