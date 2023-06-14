@@ -141,7 +141,7 @@ function OccupationStatus() {
                                 <div className='flex w-full gap-4 py-3'>
                                     <Div className='grow flex flex-col items-center gap-4 border h-fit py-5 rounded-lg'>
                                         <div className='form-control flex flex-col mb-4 relative border-none lg:border'>
-                                            <label htmlFor='document' className='font-medium text-base text-label mb-[6px]'>Upload a Bank statement (showing address)</label>
+                                            <label htmlFor='document' className='font-medium text-base text-label mb-[6px]'>Upload a Bank statement (showing office/home address only)</label>
                                             <input
                                                 name='document'
                                                 type='file'

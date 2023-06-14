@@ -97,6 +97,9 @@ function Navbar() {
                             <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold text-lg lg:m-0'>
                                 <NavLink to='/bus' style={style}>SpringPay</NavLink>
                             </li>
+                            <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold text-lg lg:m-0'>
+                                <NavLink to='/search-vendors' style={style}>Business Search</NavLink>
+                            </li>
                             {/* <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
                                 <span className='menu flex items-center gap-[3px] lg:gap-[6px] cursor-pointer font-semibold text-lg lg:m-0 pb-[24.6px] lg:p-0 leading-[20px]'>
                                     SpringPay
