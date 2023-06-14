@@ -1,4 +1,4 @@
-import { Form, Formik, useField, useFormikContext } from 'formik'
+import { ErrorMessage, Form, Formik, useField, useFormikContext } from 'formik'
 import React, { useContext, useEffect, useState } from 'react'
 import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query'
 import * as Yup from 'yup'
@@ -13,6 +13,8 @@ import styled from 'styled-components'
 function BankInfo({data}) {
     //console.log(data?.bank_account_detail)
     const queryClient = useQueryClient()
+
+    const [businessLogo, setBusinessLogo] = useState('')
 
     const { data: banks, isLoading: bankLoading } = useQuery(['banks'], merchantService.getBankList)
     // banks && console.log('from banks ', banks.data)
@@ -37,7 +39,7 @@ function BankInfo({data}) {
     const BankNameField = (props) => {
         // const [loading,setLoading] = useState(false)
         const {
-            values: { account_number, bank_name, account_name}} = useFormikContext();
+            values: { account_number, bank_name, account_name},setFieldValue} = useFormikContext();
 
         const [field, meta] = useField(props)
        
@@ -52,8 +54,8 @@ function BankInfo({data}) {
                     .then(res => {
                         //console.log(res)
                         if (res.data) {
-                            console.log(res.data)
-                            // setFieldValue('customer_email', res.data.email);
+                            //console.log(res.data)
+                            setFieldValue('account_name', res.data.accountName);
                         }else{
                             // setCustomerExists(false)
                         }
@@ -68,7 +70,7 @@ function BankInfo({data}) {
             return () => {
                 isCurrent = false;
             };
-        }, [props.name, account_number, bank_name])
+        }, [props.name, account_number, bank_name,setFieldValue])
 
         return (
             <Div className='flex flex-col'>
@@ -87,6 +89,46 @@ function BankInfo({data}) {
         );
     }
 
+    const convertToBase64 = (file) => {
+        return new Promise((resolve, reject) => {
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(file);
+            fileReader.onload = () => {
+                setBusinessLogo(fileReader.result)
+                resolve(fileReader.result);
+                // console.log('outside ', businessLogo)
+            };
+            fileReader.onerror = (error) => {
+                reject(error);
+            };
+        });
+    };
+
+    const handleCacDoc = async (e, setFieldValue) => {
+        const file = e.target.files[0];
+        //check the size of image 
+        if (file?.size / 1024 / 1024 < 2) {
+            const base64 = await convertToBase64(file);
+            setFieldValue('cac_document', base64);
+        }
+        else {
+            toast.error('Image size must be of 2MB or less');
+        };
+    };
+
+    const handleIcon = async (e, setFieldValue) => {
+        const file = e.target.files[0];
+        //check the size of image 
+        if (file?.size / 1024 / 1024 < 2) {
+            const base64 = await convertToBase64(file);
+            setFieldValue('utility_bill', base64);
+        }
+        else {
+            toast.error('Image size must be of 2MB or less');
+        };
+    };
+
+
     let initialState = {}
 
     if (!!data?.bank_account_detail) {
@@ -94,12 +136,20 @@ function BankInfo({data}) {
             account_number: data?.bank_account_detail?.bank_account_number,
             bank_name: data?.bank_account_detail?.bank_name,
             account_name: data?.bank_account_detail?.bank_account_name,
+            tin_number: data?.profile?.tin_number,
+            cac_document: data?.profile?.cac_document,
+            utility_bill: data?.profile?.utility_bill,
+            company_rc_number: data?.profile?.company_rc_number,
         }
     } else {
         initialState = {
             account_number: '',
             bank_name: '',
             account_name: '',
+            tin_number: '',
+            cac_document: '',
+            utility_bill: '',
+            company_rc_number: '',
         }
     }
 
@@ -210,6 +260,74 @@ function BankInfo({data}) {
                                             label='Enter your Account Name'
                                             placeholder='e.g. Moshood Abiola'
                                         />
+                                    </div>
+                                    <div className='grow'>
+                                        <InputField
+                                            name='company_rc_number'
+                                            type='text'
+                                            label='Company RC Number*'
+                                            placeholder='e.g. NC00223'
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='flex w-full gap-4 py-3'>
+                                <div className='flex flex-col min-w-[350px]'>
+                                <div className='w-full flex flex-col items-center'>
+                                        <div className='form-control flex flex-col mb-4 relative border-none lg:border'>
+                                            <div className='flex justify-center'>
+                                                <div className='mb-3 max-w-[100px] max-h-[100px]'>
+                                                    {
+                                                        values.cac_document ?
+                                                        <img src={data?.profile?.cac_document} alt={data?.profile?.business_name} />
+                                                        :
+                                                        <span class="material-symbols-outlined">image</span>
+                                                    }
+                                                </div>
+                                            </div>
+                                            <label htmlFor={'cac_document'} className='font-medium text-base text-label mb-[6px]'>Upload your CAC document</label>
+                                            <input
+                                                name='cac_document'
+                                                type='file'
+                                                className='form-control'
+                                                onChange={(e) => handleCacDoc(e, setFieldValue,)}
+                                            />
+                                            <ErrorMessage name='cac_document' component="div" className='text-red-500' />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className='grow flex gap-4'>
+                                    <div className='grow'>
+                                        <InputField
+                                            name='tin_number'
+                                            type='text'
+                                            label='Enter TIN Number'
+                                            placeholder='e.g. 096453627181'
+                                        />
+                                    </div>
+                                    <div className='grow'>
+                                        <div className='w-full flex flex-col items-center'>
+                                            <div className='form-control flex flex-col items-center mb-4 relative border-none lg:border'>
+                                                <div className='flex justify-center'>
+                                                    <div className='mb-3 max-w-[100px] max-h-[100px]'>
+                                                        {
+                                                            values.utility_bill ?
+                                                            <img src={data?.profile?.utility_bill} alt={data?.profile?.business_name} />
+                                                            :
+                                                            <span class="material-symbols-outlined">image</span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                                <label htmlFor={'cac_document'} className='font-medium text-base text-label mb-[6px]'>Upload your Utility bill</label>
+                                                <input
+                                                    name='utility_bill'
+                                                    type='file'
+                                                    className='form-control'
+                                                    onChange={(e) => handleIcon(e, setFieldValue,)}
+                                                />
+                                                <ErrorMessage name='utility_bill' component="div" className='text-red-500' />
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

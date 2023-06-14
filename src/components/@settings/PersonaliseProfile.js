@@ -71,16 +71,10 @@ function PersonaliseProfile({ data }) {
                     Yup.object({
                         email: Yup.string().email("Invalid email address")
                             .required("email field can not be empty"),
-                        first_name: Yup.string().required("Please enter customer name"),
-                        last_name: Yup.string().required("Please enter customer name"),
-                        phone: Yup.string().required("Please enter customer  phone number"),
-                        invoice_items: Yup.array(Yup.object({
-                            item_name: Yup.string().required('Item name is required'),
-                            quantity: Yup.number().required('Quantity is required').min(1, 'minimum of one quantity required'),
-                            price: Yup.number().required('Price is required').min(1, 'must be greater than zero'),
-                            cbm: Yup.number().required('CBM is required'),
-                            total: Yup.number(),
-                        })).min(1, 'Enter at least 1 invoice item'),
+                        first_name: Yup.string().required("Please enter first name"),
+                        last_name: Yup.string().required("Please enter last name"),
+                        phone: Yup.string().required("Please enter customer phone number"),
+                        bvn: Yup.string().required("BVN is required"),
                     })
                 }
                 onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -92,7 +86,6 @@ function PersonaliseProfile({ data }) {
                         customer_name: '',
                         notes: '',
                         phone: '',
-                        invoice_items: []
                     })
                 }}
             >
