@@ -26,7 +26,7 @@ function BusinessProfile({data}) {
             email_address: data?.profile?.email_address,
             company_rc_number: data?.profile?.company_rc_number,
             country: data?.profile?.country,
-            State: data?.profile?.State,
+            State: data?.profile?.State+' State',
             official_address: data?.profile?.official_address,
             description: data?.profile?.description,
             tin_number: data?.profile?.tin_number,
@@ -405,13 +405,13 @@ function BusinessProfile({data}) {
                                         <SelectField
                                             name='State'
                                             label='State'
+                                            value={values.State}
                                             type='text'
                                         >
                                             {
                                                 
                                                 statesLoading ? <option value="">Loading...</option> :
                                                     <>
-                                                        {/* <option value="">Select State</option> */}
                                                         {
                                                             state?.states.map(state => {
                                                                 // console.log(state.name.includes(values.State))
@@ -419,7 +419,6 @@ function BusinessProfile({data}) {
                                                                     <option 
                                                                         value={state.name} 
                                                                         key={state.name}
-                                                                        // selected={state.name.includes(values.State)}
                                                                     >
                                                                             {state.name}
                                                                     </option>

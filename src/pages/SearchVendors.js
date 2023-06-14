@@ -2,17 +2,21 @@ import React, { useState } from 'react'
 import InputField from '../components/@shared/InputField'
 import port from '../images/business/port.jpeg'
 import port1 from '../images/business/port1.jpeg'
+import containers from '../images/business/containers.jpeg'
 import VendorCard from '../components/@shared/VendorCard'
 import { useQuery } from 'react-query'
 import merchantService from '../@services/merchantService'
 import axios from 'axios'
 import helperFunctions from '../@helpers/helperFunctions'
 import styled from 'styled-components'
+import { ThreeDots } from 'react-loader-spinner'
 
 function SearchVendors() {
     const [selectedCountry, setSelectedCountry] = useState('')
 
-    const { data: vendors, isLoading } = useQuery(['banks'], merchantService.getVendors)
+    const [businessName, setBusinessName] = useState('')
+
+    const { data: vendors, isLoading } = useQuery(['vendors',{businessName}], merchantService.getVendors)
 
     vendors && console.log('from vendors ', vendors.data)
 
@@ -23,7 +27,8 @@ function SearchVendors() {
     }
 
     const handleSearch = (e) => {
-        console.log(e.currentTarget.value)
+        setBusinessName(e.currentTarget.value)
+        //console.log(e.currentTarget.value)
     }
 
     const { data: businessCategory, isLoading: businessCategoryLoading, error: businessCategoryError } = useQuery(['business_categories'], merchantService.getBusinessCategories)
@@ -59,10 +64,10 @@ function SearchVendors() {
 
     return (
         <Container className='w-full'>
-            <div className='px-[200px] w-full flex flex-col items-center py-[100px]'>
-                <h2 className='text-[#263238] text-5xl mb-14'>Spring Businesses. Worldwide. All in one place.</h2>
+            <div className='px-[200px] w-full flex flex-col items-center py-[50px]'>
+                {/* <h2 className='text-[#263238] text-5xl mb-14'>Spring Businesses. Worldwide. All in one place.</h2> */}
                 <div className='w-full'>
-                    <div className='flex gap-5 mb-10 w-full justify-between'>
+                    {/* <div className='flex gap-5 mb-10 w-full justify-between'>
                         <select name='country' className='w-[350px] py-2' onChange={(e) => handleCountryChange(e)}>
                             {
                                 countriesLoading ? <option value="">Loading...</option>
@@ -115,55 +120,57 @@ function SearchVendors() {
                                     </>
                             }
                         </select>
-                    </div>
+                    </div>*/}
                     <div className='flex w-full'>
-                        <input type='text' className='flew grow px-4' name='search' onChange={handleSearch} placeholder='search vendors' />
+                        <input type='text' className='flew grow px-4' name='search' onChange={handleSearch} placeholder='Enter vendors names' />
                         <span className='w-[50px] bg-green-800 flex text-white py-3 justify-center items-center'>
                             <span class="material-symbols-outlined">search</span>
                         </span>
-                    </div>
+                    </div> 
 
-                    <h3 className='text-center text-xl font-semibold my-4'>Vendors</h3>
-                    <div className='flex flex-wrap gap-6 justify-between'>
-                        <VendorCard
-                            name='Gig Logistics'
-                            description='We are providing premier multimodal logistics and supply chain consulting throughout Nigera.'
-                            image={port1}
-                            address='22, Adeola Odeku, Victoria Island Lagos, Nigera.'
-                        />
+                    {/* <h3 className='text-center text-xl font-semibold mb-4'>FREIGHT/CARGO COMPANIES</h3> */}
+                    <h2 className='text-[#263238] text-4xl py-8 text-center'>FREIGHT/CARGO COMPANIES</h2>
+                        {/* 
                         <VendorCard
                             name='Gig Logistics'
                             description='We are providing premier multimodal logistics and supply chain consulting throughout Nigera.'
                             image={port}
                             address='22, Adeola Odeku, Victoria Island Lagos, Nigera.'
-                        />
-                        <VendorCard
-                            name='Gig Logistics'
-                            description='We are providing premier multimodal logistics and supply chain consulting throughout Nigera.'
-                            image={port}
-                            address='22, Adeola Odeku, Victoria Island Lagos, Nigera.'
-                        />
-                        <VendorCard
-                            name='Gig Logistics'
-                            description='We are providing premier multimodal logistics and supply chain consulting throughout Nigera.'
-                            image={port}
-                            address='22, Adeola Odeku, Victoria Island Lagos, Nigera.'
-                        />
+                        /> */}
                         {
-                            vendors?.data?.business.map(vendor => {
-                                return (
-                                    <VendorCard
-                                        name={vendor.business_name}
-                                        description={vendor.description}
-                                        image={vendor.business_logo}
-                                        address={vendor.office_address_number + ' ' + vendor.official_address}
-                                        imageAlt={vendor.business_name}
-                                        key={vendor.id}
-                                    />
-                                )
-                            })
+                            isLoading ? 
+                            <div className='flex w-full justify-center'>
+                                <ThreeDots 
+                                    height="80" 
+                                    width="80" 
+                                    radius="9"
+                                    color="#4fa94d" 
+                                    ariaLabel="three-dots-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClassName=""
+                                    visible={true}
+                                />
+                            </div>
+                            
+                            :
+                            <div className='flex flex-wrap gap-4'>
+                                {
+                                    vendors?.data?.business.map(vendor => {
+                                        return (
+                                            <VendorCard
+                                                name={vendor.business_name}
+                                                description={vendor.description}
+                                                image={vendor.business_logo}
+                                                address={vendor.office_address_number + ' ' + vendor.official_address}
+                                                imageAlt={vendor.business_name}
+                                                key={vendor.id}
+                                            />
+                                        )
+                                    })
+                                }
+                            </div>
+                            
                         }
-                    </div>
                 </div>
             </div>
 
