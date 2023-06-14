@@ -73,8 +73,9 @@ async function getBusinessCategories(){
     return data
 }
 
-async function getVendors(){
-    const {data} = await httpService.guestInstance.get('/merchants/business/list')
+async function getVendors({queryKey}){
+    const [_key, {businessName}] = queryKey
+    const {data} = await httpService.guestInstance.get(`/merchants/business/list?business_name=${businessName}`)
     return data
 }
 

@@ -26,7 +26,7 @@ function BusinessProfile({data}) {
             email_address: data?.profile?.email_address,
             company_rc_number: data?.profile?.company_rc_number,
             country: data?.profile?.country,
-            State: data?.profile?.State,
+            State: data?.profile?.State+' State',
             official_address: data?.profile?.official_address,
             description: data?.profile?.description,
             tin_number: data?.profile?.tin_number,
@@ -406,12 +406,12 @@ function BusinessProfile({data}) {
                                             name='State'
                                             label='State'
                                             type='text'
+                                            value={values.State}
                                         >
                                             {
                                                 
                                                 statesLoading ? <option value="">Loading...</option> :
                                                     <>
-                                                        {/* <option value="">Select State</option> */}
                                                         {
                                                             state?.states.map(state => {
                                                                 // console.log(state.name.includes(values.State))
@@ -419,7 +419,6 @@ function BusinessProfile({data}) {
                                                                     <option 
                                                                         value={state.name} 
                                                                         key={state.name}
-                                                                        // selected={state.name.includes(values.State)}
                                                                     >
                                                                             {state.name}
                                                                     </option>
@@ -432,7 +431,6 @@ function BusinessProfile({data}) {
                                     </div>
                                 </div>
                             </div>
-
                             <div className='flex w-full gap-2 py-3'>
                                 <div className='flex flex-col items-center grow w-[150px]'>
                                     <div className='mb-3 max-w-[100px] max-h-[100px]'>
