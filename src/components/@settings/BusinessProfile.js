@@ -14,7 +14,7 @@ import helperFunctions from '../../@helpers/helperFunctions'
 import { AuthContext } from '../../contexts/AuthContexts'
 
 function BusinessProfile({data}) {
-    console.log('data details: ',data)
+    //console.log('data details: ',data)
     const queryClient = useQueryClient()
 
     let initialState={}
@@ -24,14 +24,14 @@ function BusinessProfile({data}) {
             business_name: data?.profile?.business_name,
             website_url: data?.profile?.website_url,
             email_address: data?.profile?.email_address,
-            company_rc_number: data?.profile?.company_rc_number,
+            city: data?.profile?.city,
             country: data?.profile?.country,
             State: data?.profile?.State+' State',
             official_address: data?.profile?.official_address,
             description: data?.profile?.description,
-            tin_number: data?.profile?.tin_number,
-            cac_document: data?.profile?.cac_document,
-            utility_bill: data?.profile?.utility_bill,
+            // tin_number: data?.profile?.tin_number,
+            // cac_document: data?.profile?.cac_document,
+            // utility_bill: data?.profile?.utility_bill,
             business_owner_username: data?.profile?.business_owner_username,
             business_category: data?.profile?.business_category,
             zip_code: data?.profile?.zip_code,
@@ -43,14 +43,14 @@ function BusinessProfile({data}) {
             business_name: '',
             website_url: '',
             email_address: '',
-            company_rc_number: '',
+            city: '',
             country: '',
             State: '',
             official_address: '',
             description: '',
-            tin_number: '',
-            cac_document: '',
-            utility_bill: '',
+            // tin_number: '',
+            // cac_document: '',
+            // utility_bill: '',
             business_owner_username: '',
             business_category: '',
             zip_code: '',
@@ -82,7 +82,7 @@ function BusinessProfile({data}) {
             }
         }
     )
-    countries && console.log(countries)
+    //countries && console.log(countries)
 
     const { data: state, isLoading: statesLoading, error: statesError } = useQuery(['states', { selectedCountry }],
         async () => {
@@ -144,18 +144,6 @@ function BusinessProfile({data}) {
         });
     };
 
-    const handleIcon = async (e, setFieldValue) => {
-        const file = e.target.files[0];
-        //check the size of image 
-        if (file?.size / 1024 / 1024 < 2) {
-            const base64 = await convertToBase64(file);
-            setFieldValue('utility_bill', base64);
-        }
-        else {
-            toast.error('Image size must be of 2MB or less');
-        };
-    };
-
     const handleBusinessLogo = async (e, setFieldValue) => {
         const file = e.target.files[0];
         //check the size of image 
@@ -168,23 +156,10 @@ function BusinessProfile({data}) {
         };
     };
 
-    const handleCacDoc = async (e, setFieldValue) => {
-        const file = e.target.files[0];
-        //check the size of image 
-        if (file?.size / 1024 / 1024 < 2) {
-            const base64 = await convertToBase64(file);
-            setFieldValue('cac_document', base64);
-        }
-        else {
-            toast.error('Image size must be of 2MB or less');
-        };
-    };
-
     const FileUploader = (props) => {
         const { setFieldValue, handleChange } = useFormikContext();
 
         const handleIcon = async (e, setFieldValue) => {
-            console.log('inside handle icon')
             const file = e.target.files[0];
             //check the size of image 
             if (file?.size / 1024 / 1024 < 2) {
@@ -302,16 +277,17 @@ function BusinessProfile({data}) {
                         email_address: Yup.string().email("Invalid email address")
                             .required("email field can not be empty"),
                         business_name: Yup.string().required("Please enter business name"),
-                        company_rc_number: Yup.string().required("Please enter compnay RC number"),
+                        // company_rc_number: Yup.string().required("Please enter compnay RC number"),
                         description: Yup.string().required("Enter your business description"),
                         official_address: Yup.string().required("Enter your official address"),
-                        tin_number: Yup.string().required("Please enter TIN number"),
+                        // tin_number: Yup.string().required("Please enter TIN number"),
                         country: Yup.string().required("Please select a country"),
                         State: Yup.string().required("Please select your business category"),
                         business_category: Yup.string().required("Please select your state"),
                         business_logo: Yup.string().required("Please select your business logo"),
-                        utility_bill: Yup.string().required("Please select your utility bill"),
-                        cac_document: Yup.string().required("Please select your CAC document"),
+                        business_owner_username: Yup.string().required("Please enter business owner username"),
+                        // utility_bill: Yup.string().required("Please select your utility bill"),
+                        // cac_document: Yup.string().required("Please select your CAC document"),
 
                     })
                 }
@@ -349,8 +325,8 @@ function BusinessProfile({data}) {
                             </div>
                             <div className='flex w-full gap-4 py-3'>
                                 <div className='flex flex-col w-[350px]'>
-                                    <h2 className='font font-medium'>Email &amp; RC Number</h2>
-                                    <p className='text-gray font-normal'>Edit Email &amp; RC Number</p>
+                                    <h2 className='font font-medium'>Email</h2>
+                                    <p className='text-gray font-normal'>Edit Email</p>
                                 </div>
                                 <div className='grow flex gap-4'>
                                     <div className='grow'>
@@ -363,10 +339,10 @@ function BusinessProfile({data}) {
                                     </div>
                                     <div className='grow'>
                                         <InputField
-                                            name='company_rc_number'
+                                            name='city'
                                             type='text'
-                                            label='Company RC Number*'
-                                            placeholder='e.g. NC00223'
+                                            label='City'
+                                            placeholder='e.g. Lagos'
                                         />
                                     </div>
                                 </div>
@@ -391,9 +367,9 @@ function BusinessProfile({data}) {
                                                     <>
                                                         <option value="">Select Country</option>
                                                         {
-                                                            countries?.map(country => {
+                                                            countries?.map((country,index) => {
                                                                 return (
-                                                                    <option value={country.name} key={country.iso3}>{country.name}</option>
+                                                                    <option value={country.name} key={index}>{country.name}</option>
                                                                 )
                                                             })
                                                         }
@@ -413,14 +389,14 @@ function BusinessProfile({data}) {
                                                 statesLoading ? <option value="">Loading...</option> :
                                                     <>
                                                         {
-                                                            state?.states.map(state => {
+                                                            state?.states.map((state,index) => {
                                                                 // console.log(state.name.includes(values.State))
                                                                 return (
                                                                     <option 
                                                                         value={state.name} 
-                                                                        key={state.name}
+                                                                        key={index}
                                                                     >
-                                                                            {state.name}
+                                                                        {state.name}
                                                                     </option>
                                                                 )
                                                             })
@@ -492,7 +468,7 @@ function BusinessProfile({data}) {
                                         <TextField
                                             name='official_address'
                                             type='text'
-                                            label='Office Address'
+                                            label='Office Address*'
                                             placeholder='Enter your official address'
                                             component="textarea"
                                             rows='4'
@@ -503,7 +479,7 @@ function BusinessProfile({data}) {
                                         <TextField
                                             name='description'
                                             type='text'
-                                            label='Business Description'
+                                            label='Business Description*'
                                             placeholder=''
                                             component="textarea"
                                             rows='4'
@@ -517,14 +493,14 @@ function BusinessProfile({data}) {
                                     <InputField
                                         name='business_owner_username'
                                         type='text'
-                                        label='Business Owner Username'
+                                        label='Business Owner Username*'
                                         placeholder='e.g. @user'
                                     />
                                 </div>
                                 <div className='grow'>
                                     <SelectField
                                         name='business_category'
-                                        label='Business Category'
+                                        label='Business Category*'
                                         type='text'
                                     >
                                         {
@@ -543,7 +519,15 @@ function BusinessProfile({data}) {
                                         }
                                     </SelectField>
                                 </div>
-                                <div className='flex w-[300px] justify-center items-center'>
+                                <div className='grow'>
+                                    <InputField
+                                        name='office_address_number'
+                                        type='text'
+                                        label='Office Address Number*'
+                                        placeholder='e.g. 002'
+                                    />
+                                </div>
+                                {/* <div className='flex w-[300px] justify-center items-center'>
                                     <div className='w-full flex flex-col items-center'>
                                         <div className='form-control flex flex-col mb-4 relative border-none lg:border'>
                                             <div className='flex justify-center'>
@@ -566,18 +550,10 @@ function BusinessProfile({data}) {
                                             <ErrorMessage name='cac_document' component="div" className='text-red-500' />
                                         </div>
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                             <div className='flex w-full gap-4 py-3'>
-                                <div className='grow'>
-                                    <InputField
-                                        name='city'
-                                        type='text'
-                                        label='City'
-                                        placeholder='e.g. Lagos'
-                                    />
-                                </div>
-                                <div className='grow'>
+                                <div className='w-[350px]'>
                                     <InputField
                                         name='zip_code'
                                         type='text'
@@ -585,26 +561,9 @@ function BusinessProfile({data}) {
                                         placeholder='e.g. 000111'
                                     />
                                 </div>
-                                <div className='grow'>
-                                    <InputField
-                                        name='office_address_number'
-                                        type='text'
-                                        label='Office Address Number'
-                                        placeholder='e.g. 002'
-                                    />
-                                </div>
                             </div>
                             <div className='flex w-full gap-4 py-3'>
-                                <div className='grow'>
-                                    <InputField
-                                        name='tin_number'
-                                        type='text'
-                                        label='Enter TIN Number'
-                                        placeholder='e.g. 096453627181'
-                                    />
-                                </div>
-
-                                <div className='grow'>
+                                {/* <div className='grow'>
                                     <div className='w-full flex flex-col items-center'>
                                         <div className='form-control flex flex-col items-center mb-4 relative border-none lg:border'>
                                             <div className='flex justify-center'>
@@ -627,26 +586,6 @@ function BusinessProfile({data}) {
                                             <ErrorMessage name='utility_bill' component="div" className='text-red-500' />
                                         </div>
                                     </div>
-                                    {/* <div className='flex flex-col items-center grow w-[150px]'>
-                                        <div className='mb-3'>
-                                            <img src={avatar} alt='avatar' />
-                                        </div>
-                                        <input
-                                            name='utility_bill'
-                                            type='file'
-                                            className='form-control'
-                                            onChange={(e) => handleIcon(e, setFieldValue,)}
-                                        />
-                                        <h2 className='font-normal text-[#40525E] text-sm opacity-70'>Upload your Utility bill</h2>
-                                    </div> */}
-                                </div>
-                                {/* <div>
-                                    <input
-                                        name='cac_document'
-                                        type='file'
-                                        className='form-control'
-                                        onChange={(e) => handleIcon(e, setFieldValue)}
-                                    />
                                 </div> */}
 
                             </div>
