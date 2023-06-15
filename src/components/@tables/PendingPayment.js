@@ -36,13 +36,13 @@ const data = [
 ];
 
 
-const PendingPayment = () => {
+const PendingPayment = ({data}) => {
     //should be memoized or stable
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'transactionRef', //normal accessorKey
-                header: 'Transaction Ref',
+                accessorKey: 'invoice_code', //normal accessorKey
+                header: 'Invoice Code',
                 Cell: ({ cell }) => {
                     return <div className="text-[#171F4C] text-sm font-semibold">{cell.getValue()}</div>
                 },
@@ -53,31 +53,30 @@ const PendingPayment = () => {
                 header: 'Status',
                 enableClickToCopy: false,
                 Cell: ({ cell, row }) => {
-                    return <div className="text-[#34A853] text-sm font-semibold" onClick={()=>console.log(row.original.transactionAmount)}>{cell.getValue()}</div>
+                    return <div className={`${row.original.status === 'UNPAID' ? 'text-yellow-600' : 'text-[#34A853]'} text-sm font-semibold`}>{cell.getValue()}</div>
                 },
                 size:50,
             },
             {
-              accessorKey: 'transactionDate',
-              header: 'Transaction Date',
+              accessorKey: 'creation_date',
+              header: 'Date Created',
               size:50,
             },
             {
-                accessorKey: 'customer',
+                accessorKey: 'name',
                 header: 'Customer',
             },
             {
-                accessorKey: 'method',
-                header: 'Method',
+                accessorKey: 'total_cost',
+                header: 'Grand Total',
+                Cell: ({ cell,row }) => {
+                    return <div className="text-sm font-semibold">{helperFunctions.formatCurrency(row.original.currency,(row.original.total_cost).toFixed(2))}</div>
+                },
                 size:50,
             },
             {
-                accessorKey: 'transactionAmount',
-                header: 'Transaction Amount',
-                Cell: ({ cell,row }) => {
-                    return <div className="text-sm font-semibold">{helperFunctions.dollarFormat(row.original.transactionAmount)}</div>
-                },
-                size:50,
+                accessorKey: 'email',
+                header: 'Customer Email',
             },
            
         ],
