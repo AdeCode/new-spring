@@ -8,7 +8,7 @@ function VendorCard({ name, description, image, address, imageAlt, phone }) {
             <div className='max-h-[100px] min-h-[100px] flex justify-between'>
                 <img className='w-[80px] h-[80px] rounded-[50%] object-contain' src={image} alt={imageAlt} />
                 <div className='flex flex-col'>
-                    <h3 className='font-semibold text-xl text-right mb-2'>{name}</h3>
+                    <h3 className='font-semibold lg:text-xl text-base text-right mb-2'>{name}</h3>
                     <p className='text-gray text-xs w-[170px] text-right'>{description}</p>
                 </div>
             </div>
