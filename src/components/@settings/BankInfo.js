@@ -254,12 +254,13 @@ function BankInfo({data}) {
                                 </div>
                                 <div className='grow flex gap-4'>
                                     <div className='grow'>
-                                        <InputField
+                                        {/* <InputField
                                             name='account_name'
                                             type='text'
                                             label='Enter your Account Name'
                                             placeholder='e.g. Moshood Abiola'
-                                        />
+                                        /> */}
+                                        <h2>Account Name: {values?.account_name}</h2>
                                     </div>
                                     <div className='grow'>
                                         <InputField

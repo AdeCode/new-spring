@@ -159,7 +159,7 @@ function NewInvoice() {
                 {
                     (!profile?.data?.bank_account_detail || !profile?.data?.merchant_account_profile || !profile?.data?.profile) &&
                     <AlertBox
-                        message={<Link to='/settings/personal-information'>clck here to complete your compliance requirements to access invoice creation</Link>}
+                        message={<Link to='/settings/personal-information'>Click here to complete your compliance requirements to access invoice creation</Link>}
                     />
                 }
                 
