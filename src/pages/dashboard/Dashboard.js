@@ -179,9 +179,26 @@ function Dashboard() {
             </div> */}
             <div className='flex justify-between mb-6'>
                 <div className='max-w-[850px]'>
-                    <PendingPayment 
-                        data={unpaidInvoices.invoices}
-                    />
+                    {
+                        unpaidLoading ?
+                        <div className='flex w-full justify-center'>
+                            <ThreeDots
+                                height="80"
+                                width="80"
+                                radius="9"
+                                color="#4fa94d"
+                                ariaLabel="three-dots-loading"
+                                wrapperStyle={{}}
+                                wrapperClassName=""
+                                visible={true}
+                            />
+                        </div>
+                        :
+                        <PendingPayment 
+                            data={unpaidInvoices?.invoices}
+                        />
+                    }
+                    
                 </div>
                 <div className='bg-white p-2 w-[300px]'>
                     <DoughnutChart />
