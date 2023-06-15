@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import InputField from '../components/@shared/InputField'
 import port from '../images/business/port.jpeg'
 import port1 from '../images/business/port1.jpeg'
+import avatar from '../images/business/avatar.png'
 import containers from '../images/business/containers.jpeg'
 import VendorCard from '../components/@shared/VendorCard'
 import { useQuery } from 'react-query'
@@ -63,7 +64,7 @@ function SearchVendors() {
     state && console.log('states ', state.states)
 
     return (
-        <Container className='w-full'>
+        <Container className='w-full min-h-screen'>
             <div className='px-[200px] w-full flex flex-col items-center py-[50px]'>
                 {/* <h2 className='text-[#263238] text-5xl mb-14'>Spring Businesses. Worldwide. All in one place.</h2> */}
                 <div className='w-full'>
@@ -154,6 +155,26 @@ function SearchVendors() {
                             
                             :
                             <div className='flex flex-wrap gap-4'>
+                                {/* <div className='card px-5 py-3 bg-white max-w-[350px] min-w-[350px] rounded-xl flex flex-col justify-between mb-3 max-h-[220px]'>
+                                    <div className='max-h-[100px] min-h-[100px] flex justify-between'>
+                                        <img className='w-[80px] h-[80px] rounded-[50%] object-cover' src={avatar} alt='vendor'/>
+                                        <div className='flex flex-col'>
+                                            <h3 className='font-semibold text-xl text-right mb-2'>Fortnight Inc</h3>
+                                            <p className='text-gray text-xs w-[170px] text-right'>Entertainment, music and video productions, and promotions.</p>
+                                        </div>
+                                    </div>
+                                    <hr className='text-gray'/>
+                                    <div className='flex flex-col gap-2 bg-white h-auto'>
+                                        <span className='flex gap-2'>
+                                            <span class="material-symbols-outlined text-green-800">call</span>
+                                            <h3 className='text-base'>08190221232</h3>
+                                        </span>
+                                        <span className='flex gap-2'>
+                                            <span class="material-symbols-outlined text-green-800">home_pin</span>
+                                            <h3 className='text-base'>Lagos, Nigeria.</h3>
+                                        </span>
+                                    </div>
+                                </div> */}
                                 {
                                     vendors?.data?.business.map(vendor => {
                                         return (
@@ -164,6 +185,7 @@ function SearchVendors() {
                                                 address={vendor.office_address_number + ' ' + vendor.official_address}
                                                 imageAlt={vendor.business_name}
                                                 key={vendor.id}
+                                                phone={vendor?.phone}
                                             />
                                         )
                                     })
@@ -186,5 +208,9 @@ const Container = styled.div`
     outline: none !important;
     border: 1px solid #1BB6EF;
   }
+  .card{
+        box-shadow: 10px 50px 50px rgba(0, 0, 0, 0.06);
+        border-radius: 6px;
+    }
 `
 export default SearchVendors
