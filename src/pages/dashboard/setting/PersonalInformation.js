@@ -54,7 +54,7 @@ function PersonalInformation() {
     };
 
     const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-    //profile && console.log('from profile ', profile)
+    profile && console.log('from profile ', profile)
 
     return (
         <div>

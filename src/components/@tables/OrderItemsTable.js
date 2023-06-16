@@ -45,7 +45,7 @@ const data = [
 
 
 const OrderItemsTable = ({data,currency}) => {
-    console.log(data)
+    //console.log(data)
     //should be memoized or stable
     const columns = useMemo(
         () => [
@@ -66,7 +66,7 @@ const OrderItemsTable = ({data,currency}) => {
               accessorKey: 'cbm',
               header: 'CBM',
               Cell: ({ cell }) => {
-                return <div className="text-sm font-semibold">2</div>
+                return <div className="text-sm font-semibold">{cell.getValue()}</div>
             },
               size:50,
             },

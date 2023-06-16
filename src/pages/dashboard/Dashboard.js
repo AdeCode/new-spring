@@ -68,7 +68,7 @@ function Dashboard() {
                     <div className='card w-[250px] h-[150px] flex flex-col justify-between py-4 px-2'>
                         <div className='flex justify-between'>
                             <h3 className='text-base text-amber-600'>Outstanding Invoices</h3>
-                            <h2 className='text-green-700 font-medium'>{(invoices?.analysis?.outstanding_percentage).toFixed(2)} %</h2>
+                            <h2 className='text-green-700 font-medium'>{(invoices?.analysis?.outstanding_percentage)?.toFixed(2)} %</h2>
                         </div>
                         <div className=''>
                             <h2 className='text-green-700 text-3xl font-medium'>{invoices?.analysis?.outstanding_invoices}</h2>
@@ -77,7 +77,7 @@ function Dashboard() {
                     <div className='card w-[250px] h-[150px] flex flex-col justify-between py-4 px-2'>
                         <div className='flex justify-between'>
                             <h3 className='text-base text-amber-600'>Overdue Invoices</h3>
-                            <h2 className='text-green-700 font-medium'>{(invoices?.analysis?.overdue_percentage).toFixed(2)} %</h2>
+                            <h2 className='text-green-700 font-medium'>{(invoices?.analysis?.overdue_percentage)?.toFixed(2)} %</h2>
                         </div>
                         <div className=''>
                             <h2 className='text-green-700 text-3xl font-medium'>{invoices?.analysis?.overdue_invoices}</h2>
