@@ -83,7 +83,7 @@ function Dashboard() {
                             <h2 className='text-green-700 text-3xl font-medium'>{invoices?.analysis?.overdue_invoices}</h2>
                         </div>
                     </div>
-                    <div className='card w-[250px] h-[150px] flex flex-col justify-between py-4 px-2'>
+                    {/* <div className='card w-[250px] h-[150px] flex flex-col justify-between py-4 px-2'>
                         <div className='flex justify-between'>
                             <h3 className='text-base text-amber-600'>Paid Invoices</h3>
                             <h2 className='text-green-700 font-medium'>{(invoices?.analysis?.percentage_paid).toFixed(2)} %</h2>
@@ -91,7 +91,7 @@ function Dashboard() {
                         <div className=''>
                             <h2 className='text-green-700 text-3xl font-medium'>{invoices?.analysis?.total_paid_invoices}</h2>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             }
             
@@ -178,7 +178,7 @@ function Dashboard() {
                 </div>
             </div> */}
             <div className='flex justify-between mb-6'>
-                <div className='max-w-[850px]'>
+                <div className='w-full'>
                     {
                         unpaidLoading ?
                         <div className='flex w-full justify-center'>
@@ -200,9 +200,9 @@ function Dashboard() {
                     }
                     
                 </div>
-                <div className='bg-white p-2 w-[300px]'>
+                {/* <div className='bg-white p-2 w-[300px]'>
                     <DoughnutChart />
-                </div>
+                </div> */}
             </div>
             {/* <CustomerTransaction /> */}
         </DashboardSection>

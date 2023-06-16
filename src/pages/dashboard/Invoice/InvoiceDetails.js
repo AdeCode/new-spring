@@ -86,8 +86,8 @@ function InvoiceDetails() {
                     />
                     <div className='justify-between flex'>
                             <div className='flex items-end gap-1'>
-                                <h2 className='min-w-[150px] text-base text-gray'>Invoice Shareable Link</h2>
-                                <span className=''>https://merchant.sultan.invoice.com</span>
+                                <h2 className='min-w-[150px] text-base text-gray'>Invoice Shareable Link: </h2>
+                                <span className=''>Coming soon!</span>
                             </div>
                             <div className='flex w-[200px] flex-col gap-3 border border-y-cyan-950'>
                                 <div className='flex justify-between px-2'>

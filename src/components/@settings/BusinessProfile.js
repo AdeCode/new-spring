@@ -277,18 +277,13 @@ function BusinessProfile({data}) {
                         email_address: Yup.string().email("Invalid email address")
                             .required("email field can not be empty"),
                         business_name: Yup.string().required("Please enter business name"),
-                        // company_rc_number: Yup.string().required("Please enter compnay RC number"),
-                        description: Yup.string().required("Enter your business description"),
-                        official_address: Yup.string().required("Enter your official address"),
-                        // tin_number: Yup.string().required("Please enter TIN number"),
-                        country: Yup.string().required("Please select a country"),
-                        State: Yup.string().required("Please select your business category"),
-                        business_category: Yup.string().required("Please select your state"),
-                        business_logo: Yup.string().required("Please select your business logo"),
-                        business_owner_username: Yup.string().required("Please enter business owner username"),
-                        // utility_bill: Yup.string().required("Please select your utility bill"),
-                        // cac_document: Yup.string().required("Please select your CAC document"),
-
+                        // description: Yup.string().required("Enter your business description"),
+                        // official_address: Yup.string().required("Enter your official address"),
+                        // country: Yup.string().required("Please select a country"),
+                        // State: Yup.string(),
+                        // business_category: Yup.string().required("Please select your state"),
+                        // business_logo: Yup.string().required("Please select your business logo"),
+                        // business_owner_username: Yup.string().required("Please enter business owner username"),
                     })
                 }
                 onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -369,7 +364,7 @@ function BusinessProfile({data}) {
                                                         {
                                                             countries?.map((country,index) => {
                                                                 return (
-                                                                    <option value={country.name} key={index}>{country.name}</option>
+                                                                    <option value={country.name} key={country.ise3}>{country.name}</option>
                                                                 )
                                                             })
                                                         }
@@ -394,7 +389,7 @@ function BusinessProfile({data}) {
                                                                 return (
                                                                     <option 
                                                                         value={state.name} 
-                                                                        key={index}
+                                                                        key={state.name}
                                                                     >
                                                                         {state.name}
                                                                     </option>
