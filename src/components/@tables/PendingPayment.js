@@ -92,6 +92,7 @@ const PendingPayment = ({data}) => {
                 data={data ?? []}
                 enableColumnActions={true}
                 enableRowNumbers
+                enableTopToolbar={false}
                 rowNumberMode="original"
                 muiTablePaperProps={{
                     elevation: 0,
@@ -145,26 +146,6 @@ const PendingPayment = ({data}) => {
                         opacity: '0.5',
                     },
                 }}
-
-                // muiTableBodyRowProps={({ row }) => ({
-                //     onClick: (event) => {
-                //         console.log('clicked ' + row.original.status)
-                //     },
-                //     sx: {
-                //         cursor: 'pointer', //you might want to change the cursor too when adding an onClick
-                //         border: 'none',
-                //         color: '#273240',
-                //         paddingLeft: '10px'
-                //     },
-                // })}
-            // renderDetailPanel={({ row }) => (
-            //     <div>
-            //       <span>First Name: {row.original.name.firstName}</span>
-            //       <span>Last Name: {row.original.name.lastName}</span>
-            //       <span>Address: {row.original.address}</span>
-            //     </div>
-            //   )}
-
             />
         </Section>
 

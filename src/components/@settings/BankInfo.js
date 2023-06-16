@@ -253,23 +253,34 @@ function BankInfo({data}) {
                                     
                                 </div>
                                 <div className='grow flex gap-4'>
-                                    <div className='grow'>
+                                    <div className='grow flex'>
                                         {/* <InputField
                                             name='account_name'
                                             type='text'
                                             label='Enter your Account Name'
                                             placeholder='e.g. Moshood Abiola'
                                         /> */}
-                                        <h2>Account Name: {values?.account_name}</h2>
+                                        <h2 className='font-medium mr-1'>Account Name: </h2><span className='font-normal'>{ values?.account_name}</span>
                                     </div>
-                                    <div className='grow'>
-                                        <InputField
-                                            name='company_rc_number'
-                                            type='text'
-                                            label='Company RC Number*'
-                                            placeholder='e.g. NC00223'
-                                        />
-                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div className='flex w-full gap-4 py-3'>
+                                <div className='grow'>
+                                    <InputField
+                                        name='company_rc_number'
+                                        type='text'
+                                        label='Company RC Number*'
+                                        placeholder='e.g. NC00223'
+                                    />
+                                </div>
+                                <div className='grow'>
+                                    <InputField
+                                        name='tin_number'
+                                        type='text'
+                                        label='Enter TIN Number'
+                                        placeholder='e.g. 096453627181'
+                                    />
                                 </div>
                             </div>
                             <div className='flex w-full gap-4 py-3'>
@@ -298,14 +309,6 @@ function BankInfo({data}) {
                                     </div>
                                 </div>
                                 <div className='grow flex gap-4'>
-                                    <div className='grow'>
-                                        <InputField
-                                            name='tin_number'
-                                            type='text'
-                                            label='Enter TIN Number'
-                                            placeholder='e.g. 096453627181'
-                                        />
-                                    </div>
                                     <div className='grow'>
                                         <div className='w-full flex flex-col items-center'>
                                             <div className='form-control flex flex-col items-center mb-4 relative border-none lg:border'>
