@@ -78,9 +78,15 @@ function BankInfo({data}) {
                 <select {...props} {...field} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'>
                     {
                         bankLoading ? <option value=''>Loading...</option> :
-                        banks?.data?.map(bank => {
-                            return <option value={bank.bankCode} key={bank.bankCode}>{bank.bankName}</option>
-                        })
+                        <>
+                            <option value=''>Select your bank</option>
+                            {
+                                banks?.data?.map(bank => {
+                                    return <option value={bank.bankCode} key={bank.bankCode}>{bank.bankName}</option>
+                                })
+                            }
+                            
+                        </>
                     }
                 </select>
                 {/* <input {...props} {...field} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' /> */}
