@@ -99,7 +99,7 @@ function NewInvoice() {
             invoice_due_date
         }
         console.log(values)
-        //createInvoiceMutation.mutate(values)
+        createInvoiceMutation.mutate(values)
     }
 
     const NameField = (props) => {
