@@ -86,6 +86,11 @@ const PendingPayment = ({data}) => {
  
     return (
         <Section>
+            <Box sx={{display:'flex',padding: '20px 0px', alignItems:'center', gap:'10px',paddingLeft: '12px' }}>
+                <div className=''>
+                    <p className='text-[#6A707E] text-xl'>Your Pending Payment</p>
+                </div>
+            </Box>
             <MaterialReactTable
                 state={{ isLoading: false }}
                 columns={columns}
