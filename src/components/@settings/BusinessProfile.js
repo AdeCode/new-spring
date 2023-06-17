@@ -26,7 +26,8 @@ function BusinessProfile({data}) {
             email_address: data?.profile?.email_address,
             city: data?.profile?.city,
             country: data?.profile?.country,
-            State: data?.profile?.State+' State',
+            State: 'Lagos State',
+            // State: data?.profile?.State+' State',
             official_address: data?.profile?.official_address,
             description: data?.profile?.description,
             // tin_number: data?.profile?.tin_number,
@@ -71,7 +72,7 @@ function BusinessProfile({data}) {
     const { data: businessCategory, isLoading: businessCategoryLoading, error: businessCategoryError } = useQuery(['business_categories'], merchantService.getBusinessCategories)
     // businessCategory && console.log(businessCategory.data)
 
-    const { data: countries, isLoading: countrieLoading, error } = useQuery(['countries'],
+    const { data: countries, isLoading: countriesLoading, error } = useQuery(['countries'],
         async () => {
             try {
                 const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
@@ -357,7 +358,7 @@ function BusinessProfile({data}) {
                                             onBlur={handleBlur}
                                         >
                                             {
-                                                countrieLoading ? <option value="">Loading...</option>
+                                                countriesLoading ? <option value="">Loading...</option>
                                                     :
                                                     <>
                                                         <option value="">Select Country</option>

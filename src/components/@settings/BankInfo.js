@@ -134,7 +134,6 @@ function BankInfo({data}) {
         };
     };
 
-
     let initialState = {}
 
     if (!!data?.bank_account_detail) {
@@ -177,9 +176,32 @@ function BankInfo({data}) {
         }
     })
 
+    const updateAccountDetailsMutation = useMutation(merchantService.updateAccountDetails, {
+        onSuccess: res => {
+            //console.log(res)
+            toast.success(res.message, {
+                theme: "colored",
+            })
+
+            queryClient.invalidateQueries('merchant_profile')
+        },
+        onError: err => {
+            console.log(err)
+            toast.error(err.response.data.error, {
+                theme: "colored",
+            })
+        }
+    })
+
     const onSubmit = (values) => {
         //console.log(values)
-        saveAccountDetailsMutation.mutate(values)
+        if(!!data?.bank_account_detail){
+            //patch
+            updateAccountDetailsMutation.mutate(values)
+        }else{
+            //post
+            saveAccountDetailsMutation.mutate(values)
+        }
     }
 
     return (
