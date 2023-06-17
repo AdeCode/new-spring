@@ -14,7 +14,7 @@ function InvoiceIndex() {
     const navigate = useNavigate()
 
     const { data: invoices, isLoading, error } = useQuery(['invoices',{ status, currency }], invoiceService.getAllInvoices)
-    //invoices && console.log(invoices.invoices)
+    //invoices && console.log(invoices)
 
     const getNumberOfPaidInvoices = (data) => {
         const count = data.filter(item => item.status === "PAID")
@@ -98,14 +98,14 @@ function InvoiceIndex() {
                                     </div>
                                 </div>
                                 <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
-                                    <span className='flex justify-end font-semibold'>0%</span>
+                                    <span className='flex justify-end font-semibold'>{invoices?.analysis?.outstanding_percentage.toFixed(2)}%</span>
                                     <div className='flex flex-col'>
                                         <h2 className='font-semibold text-3xl text-green-600'>{invoices && invoices?.analysis?.outstanding_invoices}</h2>
                                         <h3 className='text-base text-gray'>Outstanding Invoices</h3>
                                     </div>
                                 </div>
                                 <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
-                                    <span className='flex justify-end font-semibold'>0%</span>
+                                    <span className='flex justify-end font-semibold'>{invoices?.analysis?.overdue_percentage.toFixed(2)}%</span>
                                     <div className='flex flex-col'>
                                         <h2 className='font-semibold text-3xl text-green-600'>{invoices && invoices?.analysis?.overdue_invoices}</h2>
                                         <h3 className='text-base text-gray'>Overdue Invoices</h3>
