@@ -79,7 +79,7 @@ function BankInfo({data}) {
                     {
                         bankLoading ? <option value=''>Loading...</option> :
                         <>
-                            <option value=''>Select your bank</option>
+                            {/* <option value=''>Select your bank</option> */}
                             {
                                 banks?.data?.map(bank => {
                                     return <option value={bank.bankCode} key={bank.bankCode}>{bank.bankName}</option>
