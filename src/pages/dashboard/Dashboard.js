@@ -28,10 +28,10 @@ function Dashboard() {
     //unpaidInvoices && console.log('unpaid', unpaidInvoices.invoices)
 
     const { data: profile } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-
+    console.log(profile)
     return (
         <DashboardSection>
-            <h2 className='font-normal text-lg text-gray'>Welcome {state?.user?.business_name},</h2>
+            <h2 className='font-normal text-lg text-gray'>Welcome {profile?.data?.profile?.business_name},</h2>
             {
                 (!profile?.data?.bank_account_detail || !profile?.data?.merchant_account_profile || !profile?.data?.profile) &&
                 <AlertBox
