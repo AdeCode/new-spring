@@ -5,7 +5,7 @@ import { AuthContext } from '../../contexts/AuthContexts'
 function TopBar() {
   const {state} = useContext(AuthContext)
 
-  // console.log(state)
+  console.log(state)
 
   return (
     <Div className='bg-white flex justify-between w-full h-[86px] py-3 pl-[51px] pr-12'>
@@ -19,7 +19,7 @@ function TopBar() {
               {
                 state.isAuthenticated &&
                 <div className='flex items-center cursor-pointer'>
-                  <span className='bg-bg_dark p-3 text-black lg:rounded-[50%] font-medium text-sm'>{state.user.business_name}</span>
+                  <span className='bg-bg_dark p-3 text-black lg:rounded-[50%] font-medium text-sm'>{state?.profile?.business_name}</span>
                   <span className="material-symbols-outlined" style={{color:'#1F4173', fontSize:'32px'}}>keyboard_arrow_down</span>
                 </div>
               }

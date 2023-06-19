@@ -21,11 +21,11 @@ function InvoiceFooter() {
     <Section className='flex text-black mt-12 justify-between'>
         <div className='flex flex-col'>
             <h2 className='font-bold text-base'>Business Name</h2>
-            <h3 className='font-normal'>{state && state.user.business_name}</h3>
+            <h3 className='font-normal'>{profile && profile?.data?.profile?.business_name}</h3>
         </div>
         <div className='flex flex-col'>
             <h2 className='font-bold text-base'>Business Tag Name</h2>
-            <h3 className='font-normal'>{state && prefixAtUsername(state.user.business_username)}</h3>
+            <h3 className='font-normal'>{profile && prefixAtUsername(profile?.data?.profile?.business_owner_username)}</h3>
         </div>
         <div className='flex flex-col lg:w-[280px]'>
             <h2 className='font-bold text-base'>Business NGN Bank Account</h2>
