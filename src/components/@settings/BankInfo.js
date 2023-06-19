@@ -8,16 +8,18 @@ import merchantService from '../../@services/merchantService'
 import { AuthContext } from '../../contexts/AuthContexts'
 import SelectField from '../@shared/SelectField'
 import styled from 'styled-components'
+import { TroubleshootOutlined } from '@mui/icons-material'
 
 
 function BankInfo({data}) {
     //console.log(data?.bank_account_detail)
     const queryClient = useQueryClient()
+    const [selectedCode, setSelectedCode] = useState('')
 
     const [businessLogo, setBusinessLogo] = useState('')
 
     const { data: banks, isLoading: bankLoading, error } = useQuery(['banks'], merchantService.getBankList)
-    banks && console.log('from banks ', banks)
+    // banks && console.log('from banks ', banks)
     error && toast.error(error.message, {
         theme: "colored",
     })
@@ -39,32 +41,43 @@ function BankInfo({data}) {
         }
     })
 
+    const extractSelectedBankDetails = async(banks, selectedBank) => {
+        try{
+            if(!!banks){
+                const selectedDetails = await banks?.data.banks.filter(bank => bank.bankName === selectedBank)
+                return selectedDetails
+            }
+        }catch(err){
+            console.log(err)
+        }
+        
+    }
+    
+    let nameLoading = false
+
     const BankNameField = (props) => {
         let {
             values: { account_number, bank_name, account_name},setFieldValue} = useFormikContext();
 
-        const [field, meta] = useField(props)       
-        useEffect(() => {
-            console.log(bank_name)
-            let selectedBankDetails = null
+        const [field, meta] = useField(props)    
 
-            if(!!banks){
-                selectedBankDetails = banks?.data.banks.filter(bank => bank.bankName === bank_name)
-            }
-            //console.log(selectedBankDetails[0]?.bankCode)
+        useEffect(() => {
+            extractSelectedBankDetails(banks, bank_name)
+                .then(res => setSelectedCode(res[0].bankCode))
            
             let isCurrent = true;
             if ((account_number.length > 9) && bank_name) {
                 //make API call
+                nameLoading = true
                 merchantService.confirmBankDetails({
                         accountNumber: account_number,
-                        bankCode: selectedBankDetails[0]?.bankCode
+                        bankCode: selectedCode
                     })
                     .then(res => {
-                        //console.log(res)
                         if (res.data) {
                             //console.log(res.data)
                             setFieldValue('account_name', res.data.accountName);
+                            nameLoading = false
                         }else{
                             // setCustomerExists(false)
                         }
@@ -174,7 +187,6 @@ function BankInfo({data}) {
             toast.success(res.message, {
                 theme: "colored",
             })
-
             queryClient.invalidateQueries('merchant_profile')
         },
         onError: err => {
@@ -191,7 +203,6 @@ function BankInfo({data}) {
             toast.success(res.message, {
                 theme: "colored",
             })
-
             queryClient.invalidateQueries('merchant_profile')
         },
         onError: err => {
@@ -298,7 +309,8 @@ function BankInfo({data}) {
                                             label='Enter your Account Name'
                                             placeholder='e.g. Moshood Abiola'
                                         /> */}
-                                        <h2 className='font-medium mr-1'>Account Name: </h2><span className='font-normal'>{ values?.account_name}</span>
+                                        <h2 className='font-medium mr-1'>Account Name: </h2>
+                                        <span className='font-normal'>{nameLoading ? 'Loading...' : values?.account_name}</span>
                                     </div>
                                     
                                 </div>
@@ -376,7 +388,7 @@ function BankInfo({data}) {
                             <div className='flex justify-end'>
                                 <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                     {
-                                        saveAccountDetailsMutation.isLoading ?
+                                        (saveAccountDetailsMutation.isLoading || updateAccountDetailsMutation.isLoading) ?
                                             "Loading..."
                                             : "Save"
                                     }

@@ -14,7 +14,7 @@ import helperFunctions from '../../@helpers/helperFunctions'
 import { AuthContext } from '../../contexts/AuthContexts'
 
 function BusinessProfile({data}) {
-    console.log('data details: ',data)
+    // console.log('data details: ',data)
     const queryClient = useQueryClient()
 
     let initialState={}
@@ -27,7 +27,7 @@ function BusinessProfile({data}) {
             city: data?.profile?.city,
             country: data?.profile?.country,
             // State: 'Lagos State',
-            State: data?.profile?.State+' State',
+            State: data.profile.State ? data.profile.State : '',
             official_address: data?.profile?.official_address,
             description: data?.profile?.description,
             // tin_number: data?.profile?.tin_number,
@@ -59,11 +59,10 @@ function BusinessProfile({data}) {
             business_logo: '',
         }
     }
-    console.log(data?.profile?.State)
 
     const [businessLogo, setBusinessLogo] = useState('')
 
-    const [selectedCountry, setSelectedCountry] = useState('')
+    const [selectedCountry, setSelectedCountry] = useState(data?.profile?.country ? data?.profile?.country : '')
 
     //console.log(states)
 
@@ -278,13 +277,13 @@ function BusinessProfile({data}) {
                         email_address: Yup.string().email("Invalid email address")
                             .required("email field can not be empty"),
                         business_name: Yup.string().required("Please enter business name"),
-                        // description: Yup.string().required("Enter your business description"),
-                        // official_address: Yup.string().required("Enter your official address"),
-                        // country: Yup.string().required("Please select a country"),
-                        // State: Yup.string(),
-                        // business_category: Yup.string().required("Please select your state"),
-                        // business_logo: Yup.string().required("Please select your business logo"),
-                        // business_owner_username: Yup.string().required("Please enter business owner username"),
+                        description: Yup.string().required("Enter your business description"),
+                        official_address: Yup.string().required("Enter your official address"),
+                        country: Yup.string().required("Please select a country"),
+                        State: Yup.string(),
+                        business_category: Yup.string().required("Please select your state"),
+                        business_logo: Yup.string().required("Please select your business logo"),
+                        business_owner_username: Yup.string().required("Please enter business owner username"),
                     })
                 }
                 onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -381,13 +380,8 @@ function BusinessProfile({data}) {
                                             type='text'
                                         >
                                             {
-                                                
                                                 statesLoading ? <option value="">Loading...</option> :
                                                     <>
-                                                        {
-                                                            data?.profile?.State &&
-                                                            <option value={data?.profile?.State} defaultValue>{data?.profile?.State}</option>
-                                                        }
                                                         {
                                                             state?.states.map((state,index) => {
                                                                 // console.log(state.name.includes(values.State))
