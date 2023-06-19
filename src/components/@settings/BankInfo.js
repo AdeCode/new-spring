@@ -48,11 +48,11 @@ function BankInfo({data}) {
                 return selectedDetails
             }
         }catch(err){
-            console.log(err)
+            //console.log(err)
         }
         
     }
-    
+
     let nameLoading = false
 
     const BankNameField = (props) => {
@@ -63,7 +63,7 @@ function BankInfo({data}) {
 
         useEffect(() => {
             extractSelectedBankDetails(banks, bank_name)
-                .then(res => setSelectedCode(res[0].bankCode))
+                .then(res => setSelectedCode(res[0]?.bankCode))
            
             let isCurrent = true;
             if ((account_number.length > 9) && bank_name) {
