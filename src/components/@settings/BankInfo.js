@@ -16,8 +16,11 @@ function BankInfo({data}) {
 
     const [businessLogo, setBusinessLogo] = useState('')
 
-    const { data: banks, isLoading: bankLoading } = useQuery(['banks'], merchantService.getBankList)
-    // banks && console.log('from banks ', banks.data)
+    const { data: banks, isLoading: bankLoading, error } = useQuery(['banks'], merchantService.getBankList)
+    banks && console.log('from banks ', banks)
+    error && toast.error(error.message, {
+        theme: "colored",
+    })
 
     const lookUpBankDetailsMutation = useMutation(merchantService.saveAccountDetails, {
         onSuccess: res => {
@@ -37,19 +40,25 @@ function BankInfo({data}) {
     })
 
     const BankNameField = (props) => {
-        // const [loading,setLoading] = useState(false)
-        const {
+        let {
             values: { account_number, bank_name, account_name},setFieldValue} = useFormikContext();
 
-        const [field, meta] = useField(props)
-       
+        const [field, meta] = useField(props)       
         useEffect(() => {
+            console.log(bank_name)
+            let selectedBankDetails = null
+
+            if(!!banks){
+                selectedBankDetails = banks?.data.banks.filter(bank => bank.bankName === bank_name)
+            }
+            //console.log(selectedBankDetails[0]?.bankCode)
+           
             let isCurrent = true;
-            if ((account_number > 9) && bank_name) {
+            if ((account_number.length > 9) && bank_name) {
                 //make API call
                 merchantService.confirmBankDetails({
                         accountNumber: account_number,
-                        bankCode: bank_name
+                        bankCode: selectedBankDetails[0]?.bankCode
                     })
                     .then(res => {
                         //console.log(res)
@@ -75,14 +84,14 @@ function BankInfo({data}) {
         return (
             <Div className='flex flex-col'>
                 <label htmlFor={props.name} className='font-medium text-base text-label mb-[6px]'> Select your Bank* </label>
-                <select {...props} {...field} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'>
+                <select {...props} {...field} name={props.name} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'>
                     {
                         bankLoading ? <option value=''>Loading...</option> :
                         <>
                             {/* <option value=''>Select your bank</option> */}
                             {
-                                banks?.data?.map(bank => {
-                                    return <option value={bank.bankCode} key={bank.bankCode}>{bank.bankName}</option>
+                                banks.data.banks.map(({bankCode, bankName}) => {
+                                    return <option value={bankName} key={bankCode}>{bankName}</option>
                                 })
                             }
                             
@@ -244,6 +253,7 @@ function BankInfo({data}) {
                                         <BankNameField
                                             name='bank_name'
                                             text='text'
+                                            // onChange={()=>handleBankChange(values.bank_name)}
                                         />
                                         {/* <SelectField
                                             name='bank_name'

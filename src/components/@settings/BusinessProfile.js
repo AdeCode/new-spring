@@ -14,7 +14,7 @@ import helperFunctions from '../../@helpers/helperFunctions'
 import { AuthContext } from '../../contexts/AuthContexts'
 
 function BusinessProfile({data}) {
-    //console.log('data details: ',data)
+    console.log('data details: ',data)
     const queryClient = useQueryClient()
 
     let initialState={}
@@ -26,8 +26,8 @@ function BusinessProfile({data}) {
             email_address: data?.profile?.email_address,
             city: data?.profile?.city,
             country: data?.profile?.country,
-            State: 'Lagos State',
-            // State: data?.profile?.State+' State',
+            // State: 'Lagos State',
+            State: data?.profile?.State+' State',
             official_address: data?.profile?.official_address,
             description: data?.profile?.description,
             // tin_number: data?.profile?.tin_number,
@@ -59,7 +59,7 @@ function BusinessProfile({data}) {
             business_logo: '',
         }
     }
-
+    console.log(data?.profile?.State)
 
     const [businessLogo, setBusinessLogo] = useState('')
 
@@ -384,6 +384,10 @@ function BusinessProfile({data}) {
                                                 
                                                 statesLoading ? <option value="">Loading...</option> :
                                                     <>
+                                                        {
+                                                            data?.profile?.State &&
+                                                            <option value={data?.profile?.State} defaultValue>{data?.profile?.State}</option>
+                                                        }
                                                         {
                                                             state?.states.map((state,index) => {
                                                                 // console.log(state.name.includes(values.State))
