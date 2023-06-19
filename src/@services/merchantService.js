@@ -11,7 +11,7 @@ async function adminLogin(payload){
 }
 
 async function updateProfile(payload){
-    const {data} = await httpService.secureInstance.post('/merchants/profile', payload)
+    const {data} = await httpService.secureInstance.patch('/merchants/profile', payload)
     return data
 }
 
@@ -45,6 +45,11 @@ async function logout(){
 
 async function saveAccountDetails(payload){
     const {data} = await httpService.secureInstance.post('/merchants/business/account',payload)
+    return data
+}
+
+async function updateAccountDetails(payload){
+    const {data} = await httpService.secureInstance.patch('/merchants/business/account',payload)
     return data
 }
 
@@ -106,7 +111,8 @@ const merchantService = {
     saveAccountProfile,
     getBankList,
     confirmBankDetails,
-    getVendors
+    getVendors,
+    updateAccountDetails
 }
 
 export default merchantService

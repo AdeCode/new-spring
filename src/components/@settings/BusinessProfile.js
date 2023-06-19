@@ -14,7 +14,7 @@ import helperFunctions from '../../@helpers/helperFunctions'
 import { AuthContext } from '../../contexts/AuthContexts'
 
 function BusinessProfile({data}) {
-    //console.log('data details: ',data)
+    // console.log('data details: ',data)
     const queryClient = useQueryClient()
 
     let initialState={}
@@ -26,7 +26,8 @@ function BusinessProfile({data}) {
             email_address: data?.profile?.email_address,
             city: data?.profile?.city,
             country: data?.profile?.country,
-            State: data?.profile?.State+' State',
+            // State: 'Lagos State',
+            State: data.profile.State ? data.profile.State : '',
             official_address: data?.profile?.official_address,
             description: data?.profile?.description,
             // tin_number: data?.profile?.tin_number,
@@ -59,10 +60,9 @@ function BusinessProfile({data}) {
         }
     }
 
-
     const [businessLogo, setBusinessLogo] = useState('')
 
-    const [selectedCountry, setSelectedCountry] = useState('')
+    const [selectedCountry, setSelectedCountry] = useState(data?.profile?.country ? data?.profile?.country : '')
 
     //console.log(states)
 
@@ -71,7 +71,7 @@ function BusinessProfile({data}) {
     const { data: businessCategory, isLoading: businessCategoryLoading, error: businessCategoryError } = useQuery(['business_categories'], merchantService.getBusinessCategories)
     // businessCategory && console.log(businessCategory.data)
 
-    const { data: countries, isLoading: countrieLoading, error } = useQuery(['countries'],
+    const { data: countries, isLoading: countriesLoading, error } = useQuery(['countries'],
         async () => {
             try {
                 const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
@@ -277,18 +277,13 @@ function BusinessProfile({data}) {
                         email_address: Yup.string().email("Invalid email address")
                             .required("email field can not be empty"),
                         business_name: Yup.string().required("Please enter business name"),
-                        // company_rc_number: Yup.string().required("Please enter compnay RC number"),
                         description: Yup.string().required("Enter your business description"),
                         official_address: Yup.string().required("Enter your official address"),
-                        // tin_number: Yup.string().required("Please enter TIN number"),
                         country: Yup.string().required("Please select a country"),
-                        State: Yup.string().required("Please select your business category"),
+                        State: Yup.string(),
                         business_category: Yup.string().required("Please select your state"),
                         business_logo: Yup.string().required("Please select your business logo"),
                         business_owner_username: Yup.string().required("Please enter business owner username"),
-                        // utility_bill: Yup.string().required("Please select your utility bill"),
-                        // cac_document: Yup.string().required("Please select your CAC document"),
-
                     })
                 }
                 onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -362,14 +357,14 @@ function BusinessProfile({data}) {
                                             onBlur={handleBlur}
                                         >
                                             {
-                                                countrieLoading ? <option value="">Loading...</option>
+                                                countriesLoading ? <option value="">Loading...</option>
                                                     :
                                                     <>
                                                         <option value="">Select Country</option>
                                                         {
                                                             countries?.map((country,index) => {
                                                                 return (
-                                                                    <option value={country.name} key={index}>{country.name}</option>
+                                                                    <option value={country.name} key={country.ise3}>{country.name}</option>
                                                                 )
                                                             })
                                                         }
@@ -385,7 +380,6 @@ function BusinessProfile({data}) {
                                             type='text'
                                         >
                                             {
-                                                
                                                 statesLoading ? <option value="">Loading...</option> :
                                                     <>
                                                         {
@@ -394,7 +388,7 @@ function BusinessProfile({data}) {
                                                                 return (
                                                                     <option 
                                                                         value={state.name} 
-                                                                        key={index}
+                                                                        key={state.name}
                                                                     >
                                                                         {state.name}
                                                                     </option>

@@ -23,7 +23,7 @@ function MerchantLogin() {
             toast.success(res.message, {
                 theme: "colored",
             })
-            navigate('/invoice')
+            navigate('/dashboard')
         },
         onError: err => {
             console.log(err)

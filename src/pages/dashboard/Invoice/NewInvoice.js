@@ -49,7 +49,7 @@ function NewInvoice() {
             return false
         }
     }
-    console.log(pageStatus())
+    // console.log(pageStatus())
 
     const calculateSubTotal = (data) => {
         const sum = data.reduce((accumulator, curr) => {
@@ -98,7 +98,7 @@ function NewInvoice() {
             currency,
             invoice_due_date
         }
-        //console.log(values)
+        console.log(values)
         createInvoiceMutation.mutate(values)
     }
 
@@ -149,7 +149,7 @@ function NewInvoice() {
         );
     }
 
-    const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', total: 0 }
+    const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', total: '' }
     return (
         <Invoice className='px-[50px]'>
             <div className='flex justify-between'>
@@ -201,7 +201,7 @@ function NewInvoice() {
                         onSubmit={(values, { setSubmitting, resetForm }) => {
                             setSubmitting(false)
                             onSubmit(values)
-                            //console.log(values)
+                            console.log('form fields ',values)
                             resetForm({
                                 customer_email: '',
                                 customer_name: '',
@@ -312,10 +312,11 @@ function NewInvoice() {
                                                                         <label className='font-medium text-base text-label mb-[6px]'>Subtotal</label>
                                                                         <Field
                                                                             name={`invoice_items.${index}.total`}
-                                                                            type='number'
+                                                                            type='text'
                                                                             placeholder='Total'
                                                                             className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
                                                                             value={values.invoice_items[index].price}
+                                                                            // onChange={()=>{setFieldValue(`invoice_items.${index}.total`,values.invoice_items[index].price);handleChange()}}
                                                                             disabled
                                                                         />
                                                                         <ErrorMessage name={`invoice_items[${index}].total`} component="div" className='text-red-500' />

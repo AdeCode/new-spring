@@ -205,7 +205,7 @@ const InvoiceTable = ({ data, currency }) => {
             <MaterialReactTable
                 state={{ isLoading: false }}
                 columns={columns}
-                data={data.invoices ?? []}
+                data={data?.invoices || []}
                 enableColumnActions={true}
                 enableRowNumbers
                 // enableRowActions

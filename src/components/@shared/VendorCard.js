@@ -2,14 +2,14 @@ import { style } from '@mui/system'
 import React from 'react'
 import styled from 'styled-components'
 
-function VendorCard({ name, description, image, address, imageAlt, phone }) {
+function VendorCard({ name, category, image, address, imageAlt, phone }) {
     return (
         <Card className='card px-5 py-3 bg-white max-w-[350px] min-w-[350px] rounded-xl flex flex-col justify-between mb-3 max-h-[220px]'>
             <div className='max-h-[100px] min-h-[100px] flex justify-between'>
                 <img className='w-[80px] h-[80px] rounded-[50%] object-contain' src={image} alt={imageAlt} />
                 <div className='flex flex-col'>
-                    <h3 className='font-semibold text-xl text-right mb-2'>{name}</h3>
-                    <p className='text-gray text-xs w-[170px] text-right'>{description}</p>
+                    <h3 className='font-semibold lg:text-lg text-base text-right mb-2'>{name}</h3>
+                    <p className='text-gray text-xs w-[170px] text-right'>{category}</p>
                 </div>
             </div>
             <hr className='text-gray my-1' />

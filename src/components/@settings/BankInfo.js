@@ -8,16 +8,21 @@ import merchantService from '../../@services/merchantService'
 import { AuthContext } from '../../contexts/AuthContexts'
 import SelectField from '../@shared/SelectField'
 import styled from 'styled-components'
+import { TroubleshootOutlined } from '@mui/icons-material'
 
 
 function BankInfo({data}) {
     //console.log(data?.bank_account_detail)
     const queryClient = useQueryClient()
+    const [selectedCode, setSelectedCode] = useState('')
 
     const [businessLogo, setBusinessLogo] = useState('')
 
-    const { data: banks, isLoading: bankLoading } = useQuery(['banks'], merchantService.getBankList)
-    // banks && console.log('from banks ', banks.data)
+    const { data: banks, isLoading: bankLoading, error } = useQuery(['banks'], merchantService.getBankList)
+    // banks && console.log('from banks ', banks)
+    error && toast.error(error.message, {
+        theme: "colored",
+    })
 
     const lookUpBankDetailsMutation = useMutation(merchantService.saveAccountDetails, {
         onSuccess: res => {
@@ -36,26 +41,43 @@ function BankInfo({data}) {
         }
     })
 
+    const extractSelectedBankDetails = async(banks, selectedBank) => {
+        try{
+            if(!!banks){
+                const selectedDetails = await banks?.data.banks.filter(bank => bank.bankName === selectedBank)
+                return selectedDetails
+            }
+        }catch(err){
+            //console.log(err)
+        }
+        
+    }
+
+    let nameLoading = false
+
     const BankNameField = (props) => {
-        // const [loading,setLoading] = useState(false)
-        const {
+        let {
             values: { account_number, bank_name, account_name},setFieldValue} = useFormikContext();
 
-        const [field, meta] = useField(props)
-       
+        const [field, meta] = useField(props)    
+
         useEffect(() => {
+            extractSelectedBankDetails(banks, bank_name)
+                .then(res => setSelectedCode(res[0]?.bankCode))
+           
             let isCurrent = true;
-            if ((account_number > 9) && bank_name) {
+            if ((account_number.length > 9) && bank_name) {
                 //make API call
+                nameLoading = true
                 merchantService.confirmBankDetails({
                         accountNumber: account_number,
-                        bankCode: bank_name
+                        bankCode: selectedCode
                     })
                     .then(res => {
-                        //console.log(res)
                         if (res.data) {
                             //console.log(res.data)
                             setFieldValue('account_name', res.data.accountName);
+                            nameLoading = false
                         }else{
                             // setCustomerExists(false)
                         }
@@ -75,12 +97,18 @@ function BankInfo({data}) {
         return (
             <Div className='flex flex-col'>
                 <label htmlFor={props.name} className='font-medium text-base text-label mb-[6px]'> Select your Bank* </label>
-                <select {...props} {...field} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'>
+                <select {...props} {...field} name={props.name} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'>
                     {
                         bankLoading ? <option value=''>Loading...</option> :
-                        banks?.data?.map(bank => {
-                            return <option value={bank.bankCode} key={bank.bankCode}>{bank.bankName}</option>
-                        })
+                        <>
+                            {/* <option value=''>Select your bank</option> */}
+                            {
+                                banks.data.banks.map(({bankCode, bankName}) => {
+                                    return <option value={bankName} key={bankCode}>{bankName}</option>
+                                })
+                            }
+                            
+                        </>
                     }
                 </select>
                 {/* <input {...props} {...field} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' /> */}
@@ -128,7 +156,6 @@ function BankInfo({data}) {
         };
     };
 
-
     let initialState = {}
 
     if (!!data?.bank_account_detail) {
@@ -160,7 +187,22 @@ function BankInfo({data}) {
             toast.success(res.message, {
                 theme: "colored",
             })
+            queryClient.invalidateQueries('merchant_profile')
+        },
+        onError: err => {
+            console.log(err)
+            toast.error(err.response.data.error, {
+                theme: "colored",
+            })
+        }
+    })
 
+    const updateAccountDetailsMutation = useMutation(merchantService.updateAccountDetails, {
+        onSuccess: res => {
+            //console.log(res)
+            toast.success(res.message, {
+                theme: "colored",
+            })
             queryClient.invalidateQueries('merchant_profile')
         },
         onError: err => {
@@ -173,7 +215,13 @@ function BankInfo({data}) {
 
     const onSubmit = (values) => {
         //console.log(values)
-        saveAccountDetailsMutation.mutate(values)
+        if(!!data?.bank_account_detail){
+            //patch
+            updateAccountDetailsMutation.mutate(values)
+        }else{
+            //post
+            saveAccountDetailsMutation.mutate(values)
+        }
     }
 
     return (
@@ -216,6 +264,7 @@ function BankInfo({data}) {
                                         <BankNameField
                                             name='bank_name'
                                             text='text'
+                                            // onChange={()=>handleBankChange(values.bank_name)}
                                         />
                                         {/* <SelectField
                                             name='bank_name'
@@ -253,23 +302,35 @@ function BankInfo({data}) {
                                     
                                 </div>
                                 <div className='grow flex gap-4'>
-                                    <div className='grow'>
+                                    <div className='grow flex'>
                                         {/* <InputField
                                             name='account_name'
                                             type='text'
                                             label='Enter your Account Name'
                                             placeholder='e.g. Moshood Abiola'
                                         /> */}
-                                        <h2>Account Name: {values?.account_name}</h2>
+                                        <h2 className='font-medium mr-1'>Account Name: </h2>
+                                        <span className='font-normal'>{nameLoading ? 'Loading...' : values?.account_name}</span>
                                     </div>
-                                    <div className='grow'>
-                                        <InputField
-                                            name='company_rc_number'
-                                            type='text'
-                                            label='Company RC Number*'
-                                            placeholder='e.g. NC00223'
-                                        />
-                                    </div>
+                                    
+                                </div>
+                            </div>
+                            <div className='flex w-full gap-4 py-3'>
+                                <div className='grow'>
+                                    <InputField
+                                        name='company_rc_number'
+                                        type='text'
+                                        label='Company RC Number*'
+                                        placeholder='e.g. NC00223'
+                                    />
+                                </div>
+                                <div className='grow'>
+                                    <InputField
+                                        name='tin_number'
+                                        type='text'
+                                        label='Enter TIN Number'
+                                        placeholder='e.g. 096453627181'
+                                    />
                                 </div>
                             </div>
                             <div className='flex w-full gap-4 py-3'>
@@ -299,14 +360,6 @@ function BankInfo({data}) {
                                 </div>
                                 <div className='grow flex gap-4'>
                                     <div className='grow'>
-                                        <InputField
-                                            name='tin_number'
-                                            type='text'
-                                            label='Enter TIN Number'
-                                            placeholder='e.g. 096453627181'
-                                        />
-                                    </div>
-                                    <div className='grow'>
                                         <div className='w-full flex flex-col items-center'>
                                             <div className='form-control flex flex-col items-center mb-4 relative border-none lg:border'>
                                                 <div className='flex justify-center'>
@@ -335,7 +388,7 @@ function BankInfo({data}) {
                             <div className='flex justify-end'>
                                 <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                     {
-                                        saveAccountDetailsMutation.isLoading ?
+                                        (saveAccountDetailsMutation.isLoading || updateAccountDetailsMutation.isLoading) ?
                                             "Loading..."
                                             : "Save"
                                     }

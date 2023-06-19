@@ -19,7 +19,7 @@ function InvoiceTemplate() {
     const {state} = useContext(AuthContext)
 
     const { data: profile, isLoading, error } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-    //profile && console.log(profile)
+    // profile && console.log(profile)
 
     const invoiceTemplateRef = useRef(null)
 
@@ -52,9 +52,8 @@ function InvoiceTemplate() {
                     <div className='flex flex-col gap-3'>
                         <h2 className='font-bold text-2xl text-green-700'>INVOICE</h2>
                         <div className='max-w-[100px] max-h-[100px]'>
-                            <img src={profile?.data?.profile?.business_logo} alt={profile?.data?.profile?.business_name}/>
+                            <img className='object-contain h-[100px]' src={profile?.data?.profile?.business_logo} alt={profile?.data?.profile?.business_name}/>
                         </div>
-                        {/* <p className='text-base'>Business Logo here</p> */}
                     </div>
                     
                         {
@@ -78,6 +77,7 @@ function InvoiceTemplate() {
 
                                     }
                                 </p>
+                                <h3 className='text-right'>{profile?.data?.merchant_account_profile?.phone}</h3>
                             </div>
                         }
                     
@@ -133,7 +133,7 @@ function InvoiceTemplate() {
                                                 <tr className='' key={invoice.item_name}>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.item_name}</td>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.quantity}</td>
-                                                    <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.cbm || 2}</td>
+                                                    <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.cbm}</td>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.price}</td>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.price}</td>
                                                 </tr>

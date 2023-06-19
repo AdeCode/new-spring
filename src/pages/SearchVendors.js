@@ -19,7 +19,7 @@ function SearchVendors() {
 
     const { data: vendors, isLoading } = useQuery(['vendors',{businessName}], merchantService.getVendors)
 
-    vendors && console.log('from vendors ', vendors.data)
+    //vendors && console.log('from vendors ', vendors.data)
 
     const handleCountryChange = (e) => {
         console.log(e.currentTarget.value)
@@ -61,11 +61,11 @@ function SearchVendors() {
         },
         { enabled: !!selectedCountry }
     )
-    state && console.log('states ', state.states)
+    //state && console.log('states ', state.states)
 
     return (
-        <Container className='w-full min-h-screen'>
-            <div className='px-[200px] w-full flex flex-col items-center py-[50px]'>
+        <Container className='w-screen min-h-screen'>
+            <div className='lg:px-[200px] px-3 w-full flex flex-col items-center lg:py-[50px]'>
                 {/* <h2 className='text-[#263238] text-5xl mb-14'>Spring Businesses. Worldwide. All in one place.</h2> */}
                 <div className='w-full'>
                     {/* <div className='flex gap-5 mb-10 w-full justify-between'>
@@ -130,7 +130,7 @@ function SearchVendors() {
                     </div> 
 
                     {/* <h3 className='text-center text-xl font-semibold mb-4'>FREIGHT/CARGO COMPANIES</h3> */}
-                    <h2 className='text-[#263238] text-4xl py-8 text-center'>FREIGHT/CARGO COMPANIES</h2>
+                    <h2 className='text-[#263238] font-semibold lg:text-2xl text-xl py-8 text-center'>FREIGHT/CARGO COMPANIES</h2>
                         {/* 
                         <VendorCard
                             name='Gig Logistics'
@@ -154,7 +154,7 @@ function SearchVendors() {
                             </div>
                             
                             :
-                            <div className='flex flex-wrap gap-4'>
+                            <div className='flex flex-wrap justify-center gap-4'>
                                 {/* <div className='card px-5 py-3 bg-white max-w-[350px] min-w-[350px] rounded-xl flex flex-col justify-between mb-3 max-h-[220px]'>
                                     <div className='max-h-[100px] min-h-[100px] flex justify-between'>
                                         <img className='w-[80px] h-[80px] rounded-[50%] object-cover' src={avatar} alt='vendor'/>
@@ -180,7 +180,7 @@ function SearchVendors() {
                                         return (
                                             <VendorCard
                                                 name={vendor.business_name}
-                                                description={vendor.description}
+                                                category={vendor.business_category}
                                                 image={vendor.business_logo}
                                                 address={vendor.office_address_number + ' ' + vendor.official_address}
                                                 imageAlt={vendor.business_name}
