@@ -133,7 +133,7 @@ function InvoiceTemplate() {
                                                 <tr className='' key={invoice.item_name}>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.item_name}</td>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.quantity}</td>
-                                                    <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.cbm || 2}</td>
+                                                    <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.cbm}</td>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.price}</td>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.price}</td>
                                                 </tr>
