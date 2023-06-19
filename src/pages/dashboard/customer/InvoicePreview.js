@@ -102,7 +102,7 @@ function InvoicePreview() {
 
                                             }
                                         </p>
-                                        <h3 className=''>{profile?.data?.merchant_account_profile?.phone}</h3>
+                                        <h3 className='text-right'>{profile?.data?.merchant_account_profile?.phone}</h3>
                                     </div>
                             }
 

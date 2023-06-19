@@ -8,7 +8,7 @@ function TopBar() {
   const {state} = useContext(AuthContext)
 
   const { data: profile, isLoading, error } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-  profile && console.log(profile.data)
+  //profile && console.log(profile.data)
   return (
     <Div className='bg-white flex justify-between w-full h-[86px] py-3 pl-[51px] pr-12'>
         <div className='flex items-center lg:py-[4px] bg-app_bar gap-3 px-2 lg:w-[526px] rounded-[5px]'>
