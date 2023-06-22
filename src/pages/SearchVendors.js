@@ -11,15 +11,27 @@ import axios from 'axios'
 import helperFunctions from '../@helpers/helperFunctions'
 import styled from 'styled-components'
 import { ThreeDots } from 'react-loader-spinner'
+import Modal from '@mui/material/Modal';
+import VendorSearchResult from './auth/merchant/VendorSearchResult'
 
 function SearchVendors() {
     const [selectedCountry, setSelectedCountry] = useState('')
+
+    const [selectedVendorHash, setSelectedVendorHash] = useState(null)
+
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = (hash) => {
+        setSelectedVendorHash(hash)
+        console.log(hash)
+        setOpen(true)
+    };
+    const handleClose = () => setOpen(false);
 
     const [businessName, setBusinessName] = useState('')
 
     const { data: vendors, isLoading } = useQuery(['vendors',{businessName}], merchantService.getVendors)
 
-    //vendors && console.log('from vendors ', vendors.data)
+    vendors && console.log('from vendors ', vendors.data)
 
     const handleCountryChange = (e) => {
         console.log(e.currentTarget.value)
@@ -65,6 +77,19 @@ function SearchVendors() {
 
     return (
         <Container className='w-screen min-h-screen'>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#ffffff' }}
+            >
+                <VendorSearchResult
+                    handleClose={handleClose}
+                    hash={selectedVendorHash}
+                />
+                {/* <h2 className=''>Search Result Modal</h2> */}
+            </Modal>
             <div className='lg:px-[200px] px-3 w-full flex flex-col items-center lg:py-[50px]'>
                 {/* <h2 className='text-[#263238] text-5xl mb-14'>Spring Businesses. Worldwide. All in one place.</h2> */}
                 <div className='w-full'>
@@ -186,6 +211,7 @@ function SearchVendors() {
                                                 imageAlt={vendor.business_name}
                                                 key={vendor.id}
                                                 phone={vendor?.phone}
+                                                handleClick={()=>handleOpen(vendor.merchant_profile_hash)}
                                             />
                                         )
                                     })
