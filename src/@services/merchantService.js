@@ -84,6 +84,12 @@ async function getVendors({queryKey}){
     return data
 }
 
+async function getVendor({queryKey}){
+    const [_key, {hash}] = queryKey
+    const {data} = await httpService.guestInstance.get(`/merchants/business/list?merchant_hash=${hash}`)
+    return data
+}
+
 async function getMerchantProfile(){
     const {data} = await httpService.secureInstance.get('/merchants/profile')
     return data
@@ -112,7 +118,8 @@ const merchantService = {
     getBankList,
     confirmBankDetails,
     getVendors,
-    updateAccountDetails
+    updateAccountDetails,
+    getVendor
 }
 
 export default merchantService
