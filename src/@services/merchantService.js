@@ -100,6 +100,38 @@ async function getBankList(){
     return data
 }
 
+async function addMerchantService(payload){
+    const {data} = await httpService.secureInstance.post('/merchants/web/services',payload)
+    return data
+}
+
+async function addMerchantDeliveryRegion(payload){
+    const {data} = await httpService.secureInstance.post('/merchants/web/services',payload)
+    return data
+}
+
+async function deleteMerchantService(payload){
+    const {data} = await httpService.secureInstance.post(`/merchants/web/services?id=2`)
+    return data
+}
+
+async function getMerchantService({queryKey}){
+    const [_key, {selectedMerchantId}] = queryKey
+    const {data} = await httpService.guestInstance.get(`/merchants/web/services?merchant_id=${selectedMerchantId}`)
+    return data
+}
+
+async function getWebInformation({queryKey}){
+    const [_key, {type,merchantId}] = queryKey
+    const {data} = await httpService.secureInstance.get(`/merchants/web/services?merchant_id=${merchantId}&type=${type}`)
+    return data
+}
+
+async function deleteWebInformation(itemId){
+    const {data} = await httpService.secureInstance.delete(`/merchants/web/services?id=${itemId}`)
+    return data
+}
+
 const merchantService = {
     login,
     registerBusiness,
@@ -119,7 +151,13 @@ const merchantService = {
     confirmBankDetails,
     getVendors,
     updateAccountDetails,
-    getVendor
+    getVendor,
+    addMerchantService,
+    deleteMerchantService,
+    getMerchantService,
+    addMerchantDeliveryRegion,
+    getWebInformation,
+    deleteWebInformation
 }
 
 export default merchantService
