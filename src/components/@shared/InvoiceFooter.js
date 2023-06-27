@@ -6,9 +6,8 @@ import {AuthContext} from '../../contexts/AuthContexts'
 
 function InvoiceFooter() {
     const {state} = useContext(AuthContext)
-    //console.log(state);
     const { data: profile, isLoading, error } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-    profile && console.log(profile.data)
+    // profile && console.log(profile.data)
 
     const prefixAtUsername = (str) => {
         if(str.charAt(0) !== '@'){

@@ -13,16 +13,17 @@ import styled from 'styled-components'
 import { ThreeDots } from 'react-loader-spinner'
 import Modal from '@mui/material/Modal';
 import VendorSearchResult from './auth/merchant/VendorSearchResult'
+import ServicesInput from '../components/@shared/ServicesInput'
 
 function SearchVendors() {
     const [selectedCountry, setSelectedCountry] = useState('')
+    const [selectedMerchantId, setSelectedMerchantId] = useState(null)
 
     const [selectedVendorHash, setSelectedVendorHash] = useState(null)
 
     const [open, setOpen] = React.useState(false);
     const handleOpen = (hash) => {
         setSelectedVendorHash(hash)
-        console.log(hash)
         setOpen(true)
     };
     const handleClose = () => setOpen(false);
@@ -31,7 +32,7 @@ function SearchVendors() {
 
     const { data: vendors, isLoading } = useQuery(['vendors',{businessName}], merchantService.getVendors)
 
-    vendors && console.log('from vendors ', vendors.data)
+    //vendors && console.log('from vendors ', vendors.data)
 
     const handleCountryChange = (e) => {
         console.log(e.currentTarget.value)
@@ -42,6 +43,14 @@ function SearchVendors() {
     const handleSearch = (e) => {
         setBusinessName(e.currentTarget.value)
         //console.log(e.currentTarget.value)
+    }
+
+    const { data: merchantInfo, isLoading: merchantInfoLoading } = useQuery(['merchantInfo',{selectedMerchantId}], merchantService.getMerchantService, {enabled:!!selectedMerchantId})
+
+    //merchantInfo && console.log('from merchantInfo ', merchantInfo)
+
+    const handleClick = (id) => {
+        setSelectedMerchantId(id)
     }
 
     const { data: businessCategory, isLoading: businessCategoryLoading, error: businessCategoryError } = useQuery(['business_categories'], merchantService.getBusinessCategories)
@@ -87,6 +96,7 @@ function SearchVendors() {
                 <VendorSearchResult
                     handleClose={handleClose}
                     hash={selectedVendorHash}
+                    merchantData={merchantInfo?.items}
                 />
                 {/* <h2 className=''>Search Result Modal</h2> */}
             </Modal>
@@ -211,7 +221,8 @@ function SearchVendors() {
                                                 imageAlt={vendor.business_name}
                                                 key={vendor.id}
                                                 phone={vendor?.phone}
-                                                handleClick={()=>handleOpen(vendor.merchant_profile_hash)}
+                                                handleClick={()=>{handleOpen(vendor.merchant_profile_hash);handleClick(vendor?.merchant_id)}}
+                                                merchantData={merchantInfo?.items}
                                             />
                                         )
                                     })

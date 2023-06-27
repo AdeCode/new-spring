@@ -5,10 +5,14 @@ import merchantService from '../../../@services/merchantService'
 import { ThreeDots } from 'react-loader-spinner'
 
 
-function VendorSearchResult({handleClose, hash}) {
+function VendorSearchResult({handleClose, hash, merchantData}) {
   const { data: vendor, isLoading } = useQuery(['vendor',{hash}], merchantService.getVendor)
-
-    vendor && console.log('vendor ', vendor.data)
+  let services, regions, contrabands = []
+  if(!!merchantData){
+    services = merchantData.filter(data => data.item_type === 'service');
+    regions = merchantData.filter(data => data.item_type === 'region');
+    contrabands = merchantData.filter(data => data.item_type === 'contraband');
+  }  
   return (
     <Vendor className='lg:w-[900px] bg-green-100 flex flex-col py-6 px-5 rounded-xl'>
       {
@@ -52,36 +56,49 @@ function VendorSearchResult({handleClose, hash}) {
           <div className='flex justify-between'>
             <div className='w-[250px] bg-white py-3 px-3 border border-cyan-950 flex flex-col rounded-lg h-[260px]'>
               <h2 className='text-darkGray font-semibold text-center mb-5 underline'>LIST OF REGIONS WE SHIP TO</h2>
-              <ol className='list-decimal flex flex-col gap-2 pl-3'>
-                <li>Europe (All countries)</li>
-                <li>America (All states)</li>
-                <li>Canada (All states)</li>
-                <li>Asia (Chin, India etc)</li>
-                <li>Africa (All countries)</li>
-                <li>United Kingdom</li>
-              </ol>
+              {
+                regions ? 
+                <ol className='list-decimal flex flex-col gap-2 pl-3'>
+                  {
+                    regions.map(region => (
+                      <li>{region.item_name}</li>
+                    ))
+                  }
+                </ol>
+                :
+                null
+              }
             </div>
             <div className='w-[250px] bg-white py-3 px-3 border border-cyan-950 flex flex-col rounded-lg h-[260px]'>
               <h2 className='text-darkGray font-semibold text-center mb-5 underline'>CONTRABAND ITEM LIST</h2>
-              <ol className='list-decimal flex flex-col gap-2 pl-3'>
-                <li>Ponmo</li>
-                <li>Milk</li>
-                <li>Medicament</li>
-                <li>Cream</li>
-                <li>Herbs Sticks</li>
-                <li>Meat Products</li>
-              </ol>
+              {
+                contrabands ? 
+                <ol className='list-decimal flex flex-col gap-2 pl-3'>
+                  {
+                    contrabands.map(contraband => (
+                      <li>{contraband.item_name}</li>
+                    ))
+                  }
+                </ol>
+                :
+                null
+              }
             </div>
             <div className='w-[250px] bg-white py-3 px-3 border border-cyan-950 flex flex-col rounded-lg h-[260px]'>
               <h2 className='text-darkGray font-semibold text-center mb-5 underline'>OUR SERVICES</h2>
-              <ol className='list-decimal flex flex-col gap-2 pl-3'>
-                <li>Expressway Delivery</li>
-                <li>Air Freight</li>
-                <li>Sea Cargo</li>
-                <li>Pickup Services</li>
-                <li>Packaging</li>
-                <li>Import &amp; Export</li>
-              </ol>
+              {
+                services ? 
+                <ol className='list-decimal flex flex-col gap-2 pl-3'>
+                  {
+                    services.map(service => (
+                      <li>{service.item_name}</li>
+                    ))
+                  }
+                </ol>
+                :
+                null
+              }
+              
             </div>
           </div>
         </>

@@ -17,6 +17,8 @@ import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import helperFunctions from '../../../@helpers/helperFunctions'
 import AlertBox from '../../../components/AlertBox'
+import axios from 'axios'
+import SelectField from '../../../components/@shared/SelectField'
 
 
 
@@ -28,8 +30,6 @@ function NewInvoice() {
 
     const [customerExists, setCustomerExists] = useState(false)
 
-    const [enable, setEnable] = useState(false)
-
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value)
         // console.log(currency)
@@ -37,10 +37,6 @@ function NewInvoice() {
 
     const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
     //profile && console.log('from create inoice ', profile)
-
-    // if(!profile?.data?.bank_account_detail || !profile?.data?.merchant_account_profile || !profile?.data?.profile){
-    //     setEnable(true)
-    // }
 
     const pageStatus = () => {
         if(!profile?.data?.bank_account_detail || !profile?.data?.merchant_account_profile || !profile?.data?.profile){
@@ -98,7 +94,7 @@ function NewInvoice() {
             currency,
             invoice_due_date
         }
-        console.log(values)
+        //console.log(values)
         createInvoiceMutation.mutate(values)
     }
 
@@ -149,6 +145,18 @@ function NewInvoice() {
         );
     }
 
+    const { data: countries, isLoading: countriesLoading, error } = useQuery(['countries'],
+        async () => {
+            try {
+                const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
+                return res.data.data
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    )
+    //countries && console.log(countries)
+
     const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', total: '' }
     return (
         <Invoice className='px-[50px]'>
@@ -182,6 +190,7 @@ function NewInvoice() {
                             customer_phone: '',
                             invoice_due_date: '',
                             invoice_items: [Empty_invoice_items],
+                            country: ''
                         }}
                         validationSchema={
                             Yup.object({
@@ -211,7 +220,7 @@ function NewInvoice() {
                             })
                         }}
                     >
-                        {({ isSubmitting, isValid, handleChange, values, errors, setFieldValue }) => (
+                        {({ isSubmitting, isValid, handleChange, handleBlur, values, errors, setFieldValue }) => (
                             <Form className='flex flex-col py-2'>
                                 {/* {
                                     values.customer_phone > 10 ? setPhoneNumber(values.customer_phone) : null
@@ -234,6 +243,29 @@ function NewInvoice() {
                                             placeholder='e.g. user@mail.com'
                                             disabled={customerExists}
                                         />
+                                    </div>
+                                    <div className=''>
+                                        <SelectField
+                                            name='country'
+                                            label="Customer's Country*"
+                                            value={values.country}
+                                            onBlur={handleBlur}
+                                        >
+                                            {
+                                                countriesLoading ? <option value="">Loading...</option>
+                                                    :
+                                                    <>
+                                                        <option value="">Select Country</option>
+                                                        {
+                                                            countries?.map((country,index) => {
+                                                                return (
+                                                                    <option value={country.name} key={country.ise3}>{country.name}</option>
+                                                                )
+                                                            })
+                                                        }
+                                                    </>
+                                            }
+                                        </SelectField>
                                     </div>
                                 </div>
 
