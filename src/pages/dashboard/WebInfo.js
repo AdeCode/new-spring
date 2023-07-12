@@ -9,6 +9,7 @@ import Contraband from './setting/WebInformation/Contraband';
 import Services from './setting/WebInformation/Services';
 import { useQuery } from 'react-query';
 import merchantService from '../../@services/merchantService';
+import VatSettings from './setting/WebInformation/VatSettings';
 
 
 function TabPanel(props) {
@@ -52,7 +53,7 @@ function WebInfo() {
     };
 
     const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-    profile && console.log('from profile ', profile)
+    // profile && console.log('from profile ', profile)
 
     return (
         <div>
@@ -104,6 +105,16 @@ function WebInfo() {
                                         }}
                                         label="Our Services" {...a11yProps(2)}
                                     />
+                                    <Tab
+                                        sx={{
+                                            '&.Mui-selected': {
+                                                color: "green",
+                                                fontSize: 'bold',
+                                                borderBottom: '2px solid green',
+                                            },
+                                        }}
+                                        label="VAT Settings" {...a11yProps(3)}
+                                    />
                                 </Tabs>
                             </Box>
                             <>
@@ -121,6 +132,9 @@ function WebInfo() {
                                     <Services 
                                         merchantId={profile?.data?.profile?.merchant_id}
                                     />
+                                </TabPanel>
+                                <TabPanel value={value} index={3}>
+                                    <VatSettings/>
                                 </TabPanel>
                             </>
                         </Box>

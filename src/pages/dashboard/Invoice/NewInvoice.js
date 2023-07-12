@@ -19,14 +19,12 @@ import helperFunctions from '../../../@helpers/helperFunctions'
 import AlertBox from '../../../components/AlertBox'
 import axios from 'axios'
 import SelectField from '../../../components/@shared/SelectField'
-
-
-
+import QuantityUnitField from '../../../components/@shared/QuantityUnitField'
 
 function NewInvoice() {
     const navigate = useNavigate()
 
-    const [currency, setCurrency] = useState('USD')
+    const [currency, setCurrency] = useState('NGN')
 
     const [customerExists, setCustomerExists] = useState(false)
 
@@ -94,8 +92,8 @@ function NewInvoice() {
             currency,
             invoice_due_date
         }
-        //console.log(values)
-        createInvoiceMutation.mutate(values)
+        console.log(values)
+        //createInvoiceMutation.mutate(values)
     }
 
     const NameField = (props) => {
@@ -157,7 +155,7 @@ function NewInvoice() {
     )
     //countries && console.log(countries)
 
-    const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', total: '' }
+    const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', unit: 'kg', total: '' }
     return (
         <Invoice className='px-[50px]'>
             <div className='flex justify-between'>
@@ -176,8 +174,8 @@ function NewInvoice() {
                 <div className='w-full flex justify-between border-b-2 border-cyan-900 px-3 py-2'>
                     <h2 className=''>Create Invoice</h2>
                     <select name='currency' onChange={handleCurrencyChange} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
-                        <option value='USD' defaultValue>USD</option>
                         <option value='NGN' >NGN</option>
+                        <option value='USD' defaultValue>USD</option>
                     </select>
                 </div>
                 <div className='px-3 w-full'>
@@ -190,7 +188,10 @@ function NewInvoice() {
                             customer_phone: '',
                             invoice_due_date: '',
                             invoice_items: [Empty_invoice_items],
-                            country: ''
+                            country: '',
+                            sender_name: '',
+                            sender_phone: '',
+                            sender_address: '',
                         }}
                         validationSchema={
                             Yup.object({
@@ -222,9 +223,6 @@ function NewInvoice() {
                     >
                         {({ isSubmitting, isValid, handleChange, handleBlur, values, errors, setFieldValue }) => (
                             <Form className='flex flex-col py-2'>
-                                {/* {
-                                    values.customer_phone > 10 ? setPhoneNumber(values.customer_phone) : null
-                                } */}
                                 <div className='flex w-full gap-2'>
                                     <div className='grow'>
                                         <InputField
@@ -268,7 +266,6 @@ function NewInvoice() {
                                         </SelectField>
                                     </div>
                                 </div>
-
                                 <div className='flex w-full gap-2'>
                                     <div className='grow'>
                                         <NameField
@@ -278,14 +275,38 @@ function NewInvoice() {
                                             disabled={customerExists}
                                         />
                                     </div>
-                                    <div className='grow-0'>
+                                    <div className='grow'>
                                         <div className='flex flex-col'>
                                             <label htmlFor='date' className='font-medium text-base text-label mb-[6px]'>Due Date</label>
                                             <DateTimePicker onChange={onChange} value={invoice_due_date} className='' />
                                         </div>
                                     </div>
-
-
+                                </div>
+                                <div className='flex w-full gap-2 pt-3'>
+                                    <div className='grow-0'>
+                                        <InputField
+                                            name='sender_name'
+                                            type='text'
+                                            label="Sender's Name"
+                                            placeholder='e.g. Adegoke James'
+                                        />
+                                    </div>
+                                    <div className='grow-0'>
+                                        <InputField
+                                            name='sender_phone'
+                                            type='text'
+                                            label="Sender's Phone"
+                                            placeholder='e.g. 08022889900'
+                                        />
+                                    </div>
+                                    <div className='grow'>
+                                        <InputField
+                                            name='sender_address'
+                                            type='text'
+                                            label="Sender's Address"
+                                            placeholder='e.g. 2, Kumapayi Street, Ikeja, Lagos'
+                                        />
+                                    </div>
                                 </div>
                                 <div className='flex flex-col mt-3'>
                                     <h2 className=''>Order Items</h2>
@@ -308,7 +329,43 @@ function NewInvoice() {
                                                                         />
                                                                         <ErrorMessage name={`invoice_items[${index}].item_name`} component="div" className='text-red-500' />
                                                                     </div>
-                                                                    <div className='flex grow-0 flex-col'>
+                                                                    <div className='flex grow-0'>
+                                                                        <QuantityUnitField
+                                                                            name={`invoice_items.${index}.quantity`}
+                                                                            type='number'
+                                                                            label="Quantity*"
+                                                                            value={`invoice_items.${index}.unit`}
+                                                                            // value={values.unit}
+                                                                            onBlur={handleBlur}
+                                                                            unit={`invoice_items.${index}.unit`}
+                                                                        >
+                                                                            <option value="kg">kg</option>
+                                                                            <option value="carton">carton</option>
+                                                                            <option value="litres">litres</option>
+                                                                        </QuantityUnitField>
+                                                                        {/* <div className='flex flex-col'>
+                                                                            <label className='font-medium text-base text-label mb-[6px]'>Quantity (kg)</label>
+                                                                            <Field
+                                                                                name={`invoice_items.${index}.quantity`}
+                                                                                type='number'
+                                                                                placeholder='item quantity'
+                                                                                className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
+                                                                            />
+                                                                            <ErrorMessage name={`invoice_items[${index}].quantity`} component="div" className='text-red-500' />
+                                                                        </div>
+                                                                        <SelectField
+                                                                            name='unit'
+                                                                            label="Unit*"
+                                                                            value={values.unit}
+                                                                            onBlur={handleBlur}
+                                                                        >
+                                                                            <option value="kg">kg</option>
+                                                                            <option value="carton">carton</option>
+                                                                            <option value="litres">litres</option>
+                                                                        </SelectField> */}
+
+
+                                                                        {/* 
                                                                         <label className='font-medium text-base text-label mb-[6px]'>Quantity (kg)</label>
                                                                         <Field
                                                                             name={`invoice_items.${index}.quantity`}
@@ -316,7 +373,7 @@ function NewInvoice() {
                                                                             placeholder='item quantity'
                                                                             className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
                                                                         />
-                                                                        <ErrorMessage name={`invoice_items[${index}].quantity`} component="div" className='text-red-500' />
+                                                                        <ErrorMessage name={`invoice_items[${index}].quantity`} component="div" className='text-red-500' /> */}
                                                                     </div>
                                                                     <div className='flex grow-0 flex-col'>
                                                                         <label className='font-medium text-base text-label mb-[6px]'>Price 
@@ -353,7 +410,7 @@ function NewInvoice() {
                                                                         />
                                                                         <ErrorMessage name={`invoice_items[${index}].total`} component="div" className='text-red-500' />
                                                                     </div>
-                                                                    <div className='flex items-end lg:pb-3'>
+                                                                    <div className='flex items-center lg:pb-3'>
                                                                         <span onClick={() => remove(index)} disabled={isSubmitting} className="material-symbols-outlined cursor-pointer disabled:opacity-50 text-red-600">delete</span>
                                                                     </div>
                                                                 </div>
