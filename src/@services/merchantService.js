@@ -122,13 +122,32 @@ async function getMerchantService({queryKey}){
 }
 
 async function getWebInformation({queryKey}){
-    const [_key, {type,merchantId}] = queryKey
+    console.log(queryKey)
+    const [key,{type,merchantId}] = queryKey
     const {data} = await httpService.secureInstance.get(`/merchants/web/services?merchant_id=${merchantId}&type=${type}`)
     return data
 }
 
 async function deleteWebInformation(itemId){
     const {data} = await httpService.secureInstance.delete(`/merchants/web/services?id=${itemId}`)
+    return data
+}
+
+async function addVat(payload){
+    const {data} = await httpService.secureInstance.post('/merchants/invoices/vat', payload)
+    return data
+}
+
+async function updateVat(payload){
+    const {vat_id} = payload
+    const {data} = await httpService.secureInstance.patch(`/merchants/invoices/vat?vat_id=${vat_id}`, payload)
+    return data
+}
+
+async function getVat({queryKey}){
+    // console.log('from service ',queryKey)
+    const [key,{customerCountry}] = queryKey
+    const {data} = await httpService.secureInstance.get(`/merchants/invoices/vat?country=${customerCountry}`)
     return data
 }
 
@@ -157,7 +176,10 @@ const merchantService = {
     getMerchantService,
     addMerchantDeliveryRegion,
     getWebInformation,
-    deleteWebInformation
+    deleteWebInformation,
+    addVat,
+    getVat,
+    updateVat
 }
 
 export default merchantService

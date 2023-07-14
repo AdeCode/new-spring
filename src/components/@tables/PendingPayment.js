@@ -67,6 +67,10 @@ const PendingPayment = ({data}) => {
                 header: 'Customer',
             },
             {
+                accessorKey: 'country',
+                header: 'Country',
+            },
+            {
                 accessorKey: 'total_cost',
                 header: 'Grand Total',
                 Cell: ({ cell,row }) => {

@@ -22,7 +22,7 @@ function Index() {
             <div className='flex flex-col w-[80%] h-full pb-5'>
                 <TopBar />
 
-                <div className='main min-h-full mt-4 ml-4 mr-2'>
+                <div className='main min-h-screen mt-4 ml-4 mr-2'>
                     <Outlet />
                 </div>
             </div>

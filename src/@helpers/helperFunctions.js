@@ -83,6 +83,42 @@ const getCountries = async() => {
     //return {data, loading}
 }
 
+// const 
+
+export const getTaxRate = (rate) => {
+    if(!!rate){
+        return rate
+    }else{
+        return 0
+    }
+}
+
+export const pageStatus = (accountDetails, accountProfile, dataProfile) => {
+    if(!accountDetails || !accountProfile || !dataProfile){
+        return true
+    }else{
+        return false
+    }
+}
+
+export const calculateSubTotal = (data) => {
+    const sum = data.reduce((accumulator, curr) => {
+        return accumulator += +curr.price
+    }, 0)
+    sum.toFixed(2)
+    return sum
+}
+
+export const calculateTax=(data, taxRate)=>{
+    const total = calculateSubTotal(data)
+    const sendTotal = ((total * taxRate) / 100).toFixed(2)
+    return +sendTotal
+}
+
+export const calculateInvoiceTotal = (data,taxRate)=>{
+    return (calculateSubTotal(data)+calculateTax(data,taxRate)).toFixed(2)
+}
+
 
 const helperFunctions = {
     nairaFormat,
@@ -92,7 +128,8 @@ const helperFunctions = {
     filterCard,
     filterWallet,
     formatCurrency,
-    getCountries
+    getCountries,
+    getTaxRate
 }
 
 

@@ -34,7 +34,7 @@ function InvoiceDetails() {
                 :
                 <div className='box w-full flex flex-col py-3 px-3'>
                     <div className='w-full border-b-2 border-cyan-900 px-2 flex justify-between items-center py-2'>
-                        <h2 className='text-base font-semibold lg:text-xl'>Invoices Details</h2>
+                        <h2 className='text-base font-semibold lg:text-xl'>Invoice Details</h2>
                         <div onClick={gotoPreview}
                             className='flex cursor-pointer rounded-md items-center py-2 px-3 bg-green-700 hover:bg-green-600 text-white'>
                             <span className="material-symbols-outlined">visibility</span>Preview Invoice
@@ -76,6 +76,10 @@ function InvoiceDetails() {
                             <div className='flex gap-3'>
                                 <h2 className='min-w-[250px] text-gray text-base'>Customer Email</h2>
                                 <span className='font-medium text-base'>{invoice?.invoice?.email}</span>
+                            </div>
+                            <div className='flex gap-3'>
+                                <h2 className='min-w-[250px] text-gray text-base'>Customer Country</h2>
+                                <span className='font-medium text-base'>{invoice?.invoice?.country}</span>
                             </div>
                         </div>
                     </div>
