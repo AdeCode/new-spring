@@ -24,7 +24,8 @@ function VatSettings() {
         setChecked(e.target.checked)
     }
 
-    const { data: vats, isLoading: vatLoading } = useQuery(['vats'], merchantService.getVat)
+    const { data: vats, isLoading: vatLoading } = useQuery(['vats',{customerCountry:''}], merchantService.getVat)
+    console.log(vats?.data)
 
     const manageVATMutation = useMutation(merchantService.addVat, {
         onSuccess: res => {

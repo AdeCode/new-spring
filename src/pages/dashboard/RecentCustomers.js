@@ -19,7 +19,8 @@ function RecentCustomers() {
     console.log(currency)
   }
 
-  const { data: customers, isLoading, error } = useQuery('invoices', customerService.fetchMerchantCustomers)
+  const { data: customers, isLoading, error } = useQuery(['invoices',{selectedCountry:''}], customerService.fetchMerchantCustomers)
+  // const { data: customers, isLoading, error } = useQuery('invoices', customerService.fetchMerchantCustomers)
   //customers && console.log(customers)
 
   const handleCountryChange = (e) => {

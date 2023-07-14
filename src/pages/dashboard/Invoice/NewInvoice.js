@@ -20,51 +20,22 @@ import AlertBox from '../../../components/AlertBox'
 import axios from 'axios'
 import SelectField from '../../../components/@shared/SelectField'
 import QuantityUnitField from '../../../components/@shared/QuantityUnitField'
+import { getTaxRate, pageStatus, calculateSubTotal, calculateTax, calculateInvoiceTotal } from '../../../@helpers/helperFunctions'
 
 function NewInvoice() {
     const navigate = useNavigate()
 
     const [currency, setCurrency] = useState('NGN')
 
+    const [customerCountry, setCustomerCountry] = useState('')
+
     const [customerExists, setCustomerExists] = useState(false)
 
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value)
-        // console.log(currency)
     }
 
     const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-    //profile && console.log('from create inoice ', profile)
-
-    const pageStatus = () => {
-        if(!profile?.data?.bank_account_detail || !profile?.data?.merchant_account_profile || !profile?.data?.profile){
-            return true
-        }else{
-            return false
-        }
-    }
-    // console.log(pageStatus())
-
-    const calculateSubTotal = (data) => {
-        const sum = data.reduce((accumulator, curr) => {
-            return accumulator += +curr.price
-        }, 0)
-        //console.log(sum.toFixed(2))
-        sum.toFixed(2)
-        return sum
-    }
-
-    const calculateTax=(data)=>{
-        const total = calculateSubTotal(data)
-        const sendTotal = ((total * 7.5) / 100).toFixed(2)
-        return +sendTotal
-    }
-
-    const calculateInvoiceTotal = (data)=>{
-        return (calculateSubTotal(data)+calculateTax(data)).toFixed(2)
-    }
-    //console.log(invoiceData)
-    //console.log(calculateSubTotal(invoiceData))
 
     const [invoice_due_date, onChange] = useState(new Date());
 
@@ -93,7 +64,7 @@ function NewInvoice() {
             invoice_due_date
         }
         console.log(values)
-        //createInvoiceMutation.mutate(values)
+        createInvoiceMutation.mutate(values)
     }
 
     const NameField = (props) => {
@@ -153,7 +124,13 @@ function NewInvoice() {
             }
         }
     )
-    //countries && console.log(countries)
+
+    const { data: vatRate, isLoading: vatLoading } = useQuery(['vat',{customerCountry}], merchantService.getVat)
+
+    const countryChange =(e, setFieldValue) => {
+        setFieldValue('customer_country',e.target.value)
+        setCustomerCountry(e.currentTarget.value)
+    }
 
     const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', unit: 'kg', total: '' }
     return (
@@ -170,7 +147,7 @@ function NewInvoice() {
                 }
                 
             </div>
-            <div className='box w-full flex flex-col' disabled={pageStatus()}>
+            <div className='box w-full flex flex-col' disabled={pageStatus(profile?.data?.bank_account_detail,profile?.data?.merchant_account_profile,profile?.data?.profile)}>
                 <div className='w-full flex justify-between border-b-2 border-cyan-900 px-3 py-2'>
                     <h2 className=''>Create Invoice</h2>
                     <select name='currency' onChange={handleCurrencyChange} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
@@ -188,7 +165,7 @@ function NewInvoice() {
                             customer_phone: '',
                             invoice_due_date: '',
                             invoice_items: [Empty_invoice_items],
-                            country: '',
+                            customer_country: '',
                             sender_name: '',
                             sender_phone: '',
                             sender_address: '',
@@ -244,10 +221,11 @@ function NewInvoice() {
                                     </div>
                                     <div className=''>
                                         <SelectField
-                                            name='country'
+                                            name='customer_country'
                                             label="Customer's Country*"
-                                            value={values.country}
+                                            value={values.customer_country}
                                             onBlur={handleBlur}
+                                            onChange={(e)=>{countryChange(e,setFieldValue )}}
                                         >
                                             {
                                                 countriesLoading ? <option value="">Loading...</option>
@@ -440,16 +418,16 @@ function NewInvoice() {
                                                 </span>
                                             </div>
                                             <div className='flex justify-between'>
-                                                <h2 className=''>Tax(7.5%):</h2>
+                                                <h2 className=''>Tax({getTaxRate(vatRate?.data[0]?.vat_value)}%):</h2>
                                                 <span className='font-semibold gap-1 flex'>
-                                                    {helperFunctions.formatCurrency(currency,calculateTax(values.invoice_items))}
+                                                    {helperFunctions.formatCurrency(currency,calculateTax(values.invoice_items, getTaxRate(vatRate?.data[0]?.vat_value)))}
                                                 </span>
                                             </div>
                                             <div className='flex justify-between'>
                                                 <h2 className=''>Invoice Total:</h2>
                                                 <span className='font-semibold gap-1 flex'>
                                                     {/* {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>}  */}
-                                                    {helperFunctions.formatCurrency(currency,calculateInvoiceTotal(values.invoice_items))}
+                                                    {helperFunctions.formatCurrency(currency,calculateInvoiceTotal(values.invoice_items, getTaxRate(vatRate?.data[0]?.vat_value)))}
                                                 </span>
                                             </div>
                                         </div>

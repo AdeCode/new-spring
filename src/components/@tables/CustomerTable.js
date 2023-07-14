@@ -14,61 +14,6 @@ import cus3 from '../../images/dashboard/cus3.png'
 
 
 
-//nested data is ok, see accessorKeys in ColumnDef below
-// const data = [
-//     {
-//         name:'Omoyele Sowore',
-//         email:'yele@gmail.com',
-//         phone:'08023339922',
-//         created_on:'11/05/2023',
-//         invoice_number:'001',
-//         amount:308899,
-//         due_date:'25/05/2023',
-//         avatar:cus1
-//     },
-//     {
-//         name:'Adewale Olowookere',
-//         email:'yele@gmail.com',
-//         phone:'08023339922',
-//         created_on:'11/05/2023',
-//         invoice_number:'001',
-//         amount:308899,
-//         due_date:'25/05/2023',
-//         avatar:cus2
-//     },
-//     {
-//         name:'Adebayo John',
-//         email:'john@gmail.com',
-//         phone:'08023339922',
-//         created_on:'11/05/2023',
-//         invoice_number:'001',
-//         amount:308899,
-//         due_date:'25/05/2023',
-//         avatar:cus3
-//     },
-//     {
-//         name:'Adewale Olowookere',
-//         email:'john@gmail.com',
-//         phone:'08023339922',
-//         created_on:'11/05/2023',
-//         invoice_number:'001',
-//         amount:308899,
-//         due_date:'25/05/2023',
-//         avatar:cus1
-//     },
-//   {
-//     name:'Efe Adegoke',
-//     email:'efe@gmail.com',
-//     phone:'08022889922',
-//     created_on:'11/05/2023',
-//     invoice_number:'0099J',
-//     amount:238899,
-//     due_date:'15/05/2023',
-//     avatar:cus3
-//   },
-// ];
-
-
 const CustomerTable = ({data}) => {
   //should be memoized or stable
   const [currency, setCurrency] = useState('USD')
@@ -106,6 +51,11 @@ const CustomerTable = ({data}) => {
       {
         accessorKey: 'phone', //normal accessorKey
         header: 'Phone',
+        size:50,
+      },
+      {
+        accessorKey: 'country', //normal accessorKey
+        header: 'Country',
         size:50,
       },
       {

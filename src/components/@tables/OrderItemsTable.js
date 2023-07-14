@@ -57,8 +57,8 @@ const OrderItemsTable = ({data,currency}) => {
             {
               accessorKey: 'quantity',
               header: 'Quantity (kg)',
-              Cell: ({ cell }) => {
-                return <div className="text-sm font-semibold">{cell.getValue()} kg</div>
+              Cell: ({ cell, row }) => {
+                return <div className="text-sm font-semibold">{cell.getValue()} {row.original.unit}</div>
             },
               size:50,
             },

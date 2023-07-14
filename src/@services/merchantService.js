@@ -122,7 +122,8 @@ async function getMerchantService({queryKey}){
 }
 
 async function getWebInformation({queryKey}){
-    const [{type,merchantId}] = queryKey
+    console.log(queryKey)
+    const [key,{type,merchantId}] = queryKey
     const {data} = await httpService.secureInstance.get(`/merchants/web/services?merchant_id=${merchantId}&type=${type}`)
     return data
 }
@@ -143,8 +144,10 @@ async function updateVat(payload){
     return data
 }
 
-async function getVat(){
-    const {data} = await httpService.secureInstance.get('/merchants/invoices/vat')
+async function getVat({queryKey}){
+    // console.log('from service ',queryKey)
+    const [key,{customerCountry}] = queryKey
+    const {data} = await httpService.secureInstance.get(`/merchants/invoices/vat?country=${customerCountry}`)
     return data
 }
 

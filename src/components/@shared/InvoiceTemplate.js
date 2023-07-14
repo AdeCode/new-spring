@@ -19,7 +19,6 @@ function InvoiceTemplate() {
     const {state} = useContext(AuthContext)
 
     const { data: profile, isLoading, error } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-    // profile && console.log(profile)
 
     const invoiceTemplateRef = useRef(null)
 
@@ -30,7 +29,6 @@ function InvoiceTemplate() {
     const location = useLocation()
     
     const data = location.state.invoice.invoice
-    //console.log(data)
 
     const styles = {
         container: {
@@ -132,7 +130,7 @@ function InvoiceTemplate() {
                                             return (
                                                 <tr className='' key={invoice.item_name}>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.item_name}</td>
-                                                    <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.quantity}</td>
+                                                    <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.quantity} {invoice?.unit}</td>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.cbm}</td>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.price}</td>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.price}</td>
