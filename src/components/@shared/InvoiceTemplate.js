@@ -29,6 +29,7 @@ function InvoiceTemplate() {
     const location = useLocation()
     
     const data = location.state.invoice.invoice
+    console.log(data)
 
     const styles = {
         container: {
@@ -88,6 +89,15 @@ function InvoiceTemplate() {
                             </div>
                             <h3 className='text-base'>{data?.email}</h3>
                             <h3 className='text-base'>{data?.phone}</h3>
+                            <div className='flex justify-between'>
+                                <h3 className=''>Sender's Name:</h3><span className='font-medium'>{data?.sender_name}</span>
+                            </div>
+                            <div className='flex justify-between'>
+                                <h3 className=''>Sender's Address:</h3><span className='font-medium'>{data?.sender_address}</span>
+                            </div>
+                            <div className='flex justify-between'>
+                                <h3 className=''>Sender's Phone:</h3><span className='font-medium'>{data?.sender_phone}</span>
+                            </div>
                         </div>
                         <div className='w-[300px] border flex flex-col'>
                             <div className='flex border-b justify-between py-1 px-2'>

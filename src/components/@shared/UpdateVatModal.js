@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 import SelectField from './SelectField';
 
 
-function UpdateVatModal ({data}) {
+function UpdateVatModal ({data, handleClose}) {
     console.log(data)
     const queryClient = useQueryClient()
     const { data: countries, isLoading: countriesLoading } = useQuery(['countries'],
@@ -29,6 +29,7 @@ function UpdateVatModal ({data}) {
                 theme: "colored",
             })
             queryClient.invalidateQueries('vats')
+            handleClose()
         },
         onError: err => {
             console.log(err)

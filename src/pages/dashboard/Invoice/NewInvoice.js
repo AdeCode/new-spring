@@ -107,7 +107,7 @@ function NewInvoice() {
 
         return (
             <div className='flex flex-col'>
-                <label htmlFor='name' className='font-medium text-base text-label mb-[6px]'>Customer Name</label>
+                <label htmlFor='name' className='font-medium text-base text-label mb-[6px]'>Receiver Name</label>
                 <input {...props} {...field} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' />
                 {!!meta.touched && !!meta.error && <div className='text-red-500'>{meta.error}</div>}
             </div>
@@ -166,6 +166,7 @@ function NewInvoice() {
                             invoice_due_date: '',
                             invoice_items: [Empty_invoice_items],
                             customer_country: '',
+                            customer_address: '',
                             sender_name: '',
                             sender_phone: '',
                             sender_address: '',
@@ -205,7 +206,7 @@ function NewInvoice() {
                                         <InputField
                                             name='customer_phone'
                                             type='text'
-                                            label='Customer Phone'
+                                            label='Receiver Phone'
                                             placeholder='e.g. 08033889999'
                                         // disabled
                                         />
@@ -214,7 +215,7 @@ function NewInvoice() {
                                         <InputField
                                             name='customer_email'
                                             type='email'
-                                            label='Customer Email'
+                                            label='Receiver Email'
                                             placeholder='e.g. user@mail.com'
                                             disabled={customerExists}
                                         />
@@ -222,7 +223,7 @@ function NewInvoice() {
                                     <div className=''>
                                         <SelectField
                                             name='customer_country'
-                                            label="Customer's Country*"
+                                            label="Receiver's Country*"
                                             value={values.customer_country}
                                             onBlur={handleBlur}
                                             onChange={(e)=>{countryChange(e,setFieldValue )}}
@@ -251,6 +252,14 @@ function NewInvoice() {
                                             type='text'
                                             placeholder='e.g. Olawale James'
                                             disabled={customerExists}
+                                        />
+                                    </div>
+                                    <div className='grow'>
+                                        <InputField
+                                            name='customer_address'
+                                            type='text'
+                                            label="Receiver's Address"
+                                            placeholder='e.g. 2 Houston Street NY'
                                         />
                                     </div>
                                     <div className='grow'>
