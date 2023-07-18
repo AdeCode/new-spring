@@ -145,9 +145,13 @@ async function updateVat(payload){
 }
 
 async function getVat({queryKey}){
-    // console.log('from service ',queryKey)
     const [key,{customerCountry}] = queryKey
     const {data} = await httpService.secureInstance.get(`/merchants/invoices/vat?country=${customerCountry}`)
+    return data
+}
+
+async function getAllVat(){
+    const {data} = await httpService.secureInstance.get(`/merchants/invoices/vat/all`)
     return data
 }
 
@@ -179,7 +183,8 @@ const merchantService = {
     deleteWebInformation,
     addVat,
     getVat,
-    updateVat
+    updateVat,
+    getAllVat
 }
 
 export default merchantService

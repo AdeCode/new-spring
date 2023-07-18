@@ -29,7 +29,7 @@ function InvoiceTemplate() {
     const location = useLocation()
     
     const data = location.state.invoice.invoice
-    console.log(data)
+    // console.log(data)
 
     const styles = {
         container: {
@@ -163,7 +163,7 @@ function InvoiceTemplate() {
                                     <h2 className=''>Subtotal:</h2><span className=''>{helperFunctions.formatCurrency(data?.currency, data?.sub_total)}</span>
                                 </div>
                                 <div className='flex justify-between py-2 px-2'>
-                                    <h2 className=''>Tax:(7.5%)</h2><span className=''>{helperFunctions.formatCurrency(data?.currency, (data?.sub_total * data?.tax))}</span>
+                                    <h2 className=''>Tax:({data?.vat * 100} %)</h2><span className=''>{helperFunctions.formatCurrency(data?.currency, (data?.sub_total * data?.vat))}</span>
                                 </div>
                                 <div className='flex justify-between py-4 px-2 bg-slate-400 text-black'>
                                     <h2 className='font-semibold'>Grand Total:</h2><span className='font-semibold'>{helperFunctions.formatCurrency(data?.currency, data?.total_cost)}</span>
