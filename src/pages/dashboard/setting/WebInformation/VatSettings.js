@@ -27,6 +27,9 @@ function VatSettings() {
     const { data: vats, isLoading: vatLoading } = useQuery(['vats',{customerCountry:''}], merchantService.getVat)
     console.log(vats?.data)
 
+    const { data: Allvats } = useQuery('vats', merchantService.getAllVat)
+    Allvats && console.log(Allvats?.data)
+
     const manageVATMutation = useMutation(merchantService.addVat, {
         onSuccess: res => {
             console.log(res)
@@ -185,7 +188,7 @@ function VatSettings() {
                             visible={true}
                         />
                         :
-                        vats?.data?.map(vat => (
+                        Allvats?.data?.map(vat => (
                             <div key={vat.id} className='flex gap-1 w-[300px] justify-between'>
                                 <div className='flex gap-3'>
                                     <h3 className='w-[200px]'>{vat?.country}: </h3><span className='w-[50px]'>{vat.vat_value} %</span>

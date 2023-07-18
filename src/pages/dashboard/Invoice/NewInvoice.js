@@ -63,7 +63,7 @@ function NewInvoice() {
             currency,
             invoice_due_date
         }
-        console.log(values)
+        //console.log(values)
         createInvoiceMutation.mutate(values)
     }
 
@@ -75,6 +75,7 @@ function NewInvoice() {
         const [field, meta] = useField(props)
 
         useEffect(() => {
+            setFieldValue('vat',vatRate?.data[0]?.vat_value ? vatRate?.data[0]?.vat_value : 0)
             let isCurrent = true;
             if (customer_phone && customer_phone.length > 10) {
                 //make API call
@@ -170,6 +171,7 @@ function NewInvoice() {
                             sender_name: '',
                             sender_phone: '',
                             sender_address: '',
+                            vat: vatRate?.data[0]?.vat_value ? vatRate?.data[0]?.vat_value : vatRate?.data?.vat_value
                         }}
                         validationSchema={
                             Yup.object({

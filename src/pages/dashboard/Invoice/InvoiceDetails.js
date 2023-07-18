@@ -79,7 +79,7 @@ function InvoiceDetails() {
                             </div>
                             <div className='flex gap-3'>
                                 <h2 className='min-w-[250px] text-gray text-base'>Customer Country</h2>
-                                <span className='font-medium text-base'>{invoice?.invoice?.country}</span>
+                                <span className='font-medium text-base'>{invoice?.invoice?.customer_country}</span>
                             </div>
                         </div>
                     </div>
