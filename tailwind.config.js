@@ -12,11 +12,15 @@ module.exports = {
         'gray':'#6A707E',
         'lightDark':'#324054',
         'lightBrown': '#979797',
-        'darkGray': '#555B6A'
+        'darkGray': '#555B6A',
+        'bgCover': 'rgba(38, 50, 56, 0.50)',
 
       },
       backgroundImage: {
         'signinBg': "url('./images/dashboard/signin-image.png')",
+        'cargoBg': "url('./images/home/cargobg.png')",
+        'cargoBgMob': "url('./images/home/cargoBgMobile.png')",
+        
       }
     },
   },
