@@ -53,52 +53,59 @@ function Navbar() {
                                     <MdOutlineKeyboardArrowDown className=''/>
                                 </span>
 
-                                <div className='sub-menu absolute z-[1] bg-white lg:min-w-[500px] top-12 h-[300px] py-4 px-4'>
+                                <div className='sub-menu absolute z-[1] bg-white lg:min-w-[500px] top-12 right-0 h-[300px] py-4 px-4 rounded-2xl'>
                                     <div className='flex gap-4 px-4'>
                                         <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Multi-currency Digital Wallets</h3>
-                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For logistics firms looking to simplify budgeting and expense management processes</p> */}
+                                            <h3 className='text-left #001533 font-medium mb-2'>Invoicing</h3>
+                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>Generate instant Invoice for your customers.</p>
                                         </div>
                                         <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Invoicing/Payment Link</h3>
-                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For manufacturing firms to help streamline approval and expense management for easier production process.</p> */}
+                                            <h3 className='text-left #001533 font-medium mb-2'>Communication Channels</h3>
+                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>Keep up communication with your customers &amp; team all in one place.</p>
                                         </div>
                                         <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Multi-currency Card Issuing</h3>
-                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For educational institutes that value a sseamless payment solution</p> */}
+                                            <h3 className='text-left #001533 font-medium mb-2'>Digital Freight Manifest</h3>
+                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>Generate instant digital lading/unlading manifest for all your freights.</p>
+                                        </div>
+                                        <div className='lg:w-[200px]'>
+                                            <h3 className='text-left #001533 font-medium mb-2'>Access Control</h3>
+                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>Have user management for your entire team across the globe.</p>
                                         </div>
                                     </div>
                                     <div className='flex gap-4 px-4'>
                                         <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Communication Channels</h3>
-                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For finance companies that required a detailed and simple approach to book keeping</p> */}
+                                            <h3 className='text-left #001533 font-medium mb-2'>Vendor Profile</h3>
+                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>Create a profile for your freight business for more visibility across the globe</p>
                                         </div>
                                         <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Global Business Accounts</h3>
-                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For food and hospitality firms to reduce purchase and service time to enable delivery of effective services.</p> */}
+                                            <h3 className='text-left #001533 font-medium mb-2'>Global Payments</h3>
+                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>Send invoices and get paid immediately.</p>
                                         </div>
                                         <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Cargo Vendor/Business Search</h3>
-                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For fast-paced software businesses in need of a platform that can keep up with and boost their growth</p> */}
+                                            <h3 className='text-left #001533 font-medium mb-2'>Corporate &amp; Business Wallet</h3>
+                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>Get corporate account and generate instant virtual business wallet & cards.</p>
                                         </div>
                                     </div>
-                                    <div className='flex gap-4 px-4'>
+                                    {/* <div className='flex gap-4 px-4'>
                                         <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Transfers &amp; FX</h3>
-                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For event planners looking for real-time insight as they spend.</p> */}
+                                            <h3 className='text-left #001533 font-medium mb-2'>Transfers &amp; FX</h3>
+                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For event planners looking for real-time insight as they spend.</p>
                                         </div>
                                         <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Vendor &amp; Team Management</h3>
-                                            {/* <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For event planners looking for real-time insight as they spend.</p> */}
+                                            <h3 className='text-left #001533 font-medium mb-2'>Vendor &amp; Team Management</h3>
+                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For event planners looking for real-time insight as they spend.</p>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </li>
                             <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold text-lg lg:m-0'>
-                                <NavLink to='/bus' style={style}>SpringPay</NavLink>
+                                <a href='https://calendly.com/spring_freight/30min' target='blank'>Book a demo</a>
                             </li>
                             <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold text-lg lg:m-0'>
-                                <NavLink to='/search-vendors' style={style}>Business Search</NavLink>
+                                <NavLink to='/business-signup' style={style}>Sign Up</NavLink>
+                            </li>
+                            <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold text-lg lg:m-0'>
+                                <NavLink to='/' className='text-white py-4 md:w-[182px] w-[150px] text-center rounded-md btn'>Login</NavLink>
                             </li>
                             {/* <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
                                 <span className='menu flex items-center gap-[3px] lg:gap-[6px] cursor-pointer font-semibold text-lg lg:m-0 pb-[24.6px] lg:p-0 leading-[20px]'>
@@ -148,7 +155,7 @@ function Navbar() {
                             </li>  */}
                         </ul>
                     </div>
-                    <div className='lg:mt-0 mt-[6px] lg:flex hidden lg:gap-2 gap-[2px] lg:py-2'>
+                    {/* <div className='lg:mt-0 mt-[6px] lg:flex hidden lg:gap-2 gap-[2px] lg:py-2'>
                         <a href='https://play.google.com/store/apps/details?id=com.getspring.finance' target='_blank' rel='noreferrer' className='flex play-store items-center border-[2px] border-[#E2E4E8] lg:py-[6px] py-[2px] lg:px-5 px-[5px] rounded-[4px] lg:gap-4 lg:w-[199px]'>
                             <div>
                                 <img src={play} alt='play store'/>
@@ -170,7 +177,7 @@ function Navbar() {
                                 <h3 className='font-bold lg:text-lg text-[4.8px] text-white'>App Store</h3>
                             </div>
                         </button>
-                    </div>
+                    </div> */}
                     <button className='lg:hidden flex' onClick={toggleMobileMenu}>
                         <img src={menu} alt='menu' />
                     </button>
@@ -186,6 +193,12 @@ const Nav = styled.div`
     margin:0;
     padding: 0;
     /* padding-bottom: 50px; */
+
+    .btn{
+        background: var(--demo-1, linear-gradient(128deg, #6199DB 0%, #4BCA69 100%));
+box-shadow: 0px 1px 2px 0px rgba(105, 81, 255, 0.05);
+
+    }
 
     nav{
         background: #EFFCF3;

@@ -78,7 +78,7 @@ function Footer() {
                 </nav>
             </div>
             <div className='hidden lg:flex mt-[57.7px]'>
-                <h5 className='w-full text-[16px] leading-[20px] text-left'>Springstack Technologies Limited is a Financial technology company and not a Bank. We partnered with banks who are duly licensed by the Central Bank of Nigeria and partners with PCI DSS compliance &amp; other required financial licenses.</h5>
+                <h5 className='w-full text-[16px] leading-[20px] text-left'>Springstack Technologies Limited is a Financial Technology and Digital Freight Management for Africa. We manage the entire processing of freight by air and ocean using software to provide invoices, freight manifest generation, customers document management, payments, omni-channel communication and user access control.</h5>
             </div>
             <div className='footer-bottom lg:flex lg:mt-10 lg:justify-between lg:border-t-[1px] lg:border-gray lg:h-[104.9px] lg:items-center'>
                 <div className='text-[12px] lg:text-[16px] lg:leading-[19px] lg:font-normal leading-[15px] font-medium mt-[22.6px] lg:m-0'>
@@ -153,7 +153,8 @@ export default Footer
 
 const Foot = styled.footer`
     /* background: linear-gradient(128.03deg, rgba(97, 153, 219, 0.1) -0.78%, rgba(75, 202, 105, 0.1) 90.56%); */
-    background: #4BCA69;
+    //background: #4BCA69;
+    background: var(--placeholder, linear-gradient(128deg, rgba(97, 153, 219, 0.10) 0%, rgba(75, 202, 105, 0.10) 100%));
 
     .form{
         box-shadow: 0px 32px 84px rgba(14, 86, 124, 0.165308);
