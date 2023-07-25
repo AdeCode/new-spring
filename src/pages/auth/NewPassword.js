@@ -8,7 +8,7 @@ import OtpInput from 'react-otp-input';
 import authService from '../../@services/authService'
 import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useLocation, Link } from 'react-router-dom'
 import PreviousPage from '../../components/@shared/PreviousPage'
 
 
@@ -51,7 +51,9 @@ function NewPassword() {
         <PreviousPage/>
         <div className='flex flex-col items-center'>
             <div className='mb-5'>
-                <img src={logo} alt='logo'/>
+                <Link to='/home'>
+                    <img src={logo} alt='logo'/>
+                </Link>
             </div>
             <div className='bg-white form px-16 py-7 flex flex-col items-center'>
                 <h2 className='text-[#373737] font-bold text-2xl mb-7'>Create New Password</h2>
