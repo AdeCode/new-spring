@@ -53,13 +53,16 @@ function BusinessSignup() {
 
     return (
         <Div className='flex flex-col items-center justify-center bg-white w-full pt-7 pb-7'>
-            <div className='mb-5'>
-                <img src={logo} alt='logo'/>
+            <div className='md:mb-5 mb-3'>
+                <Link to='/home'>
+                    <img src={logo} alt='logo'/>
+                </Link>
             </div>
-            <div className='bg-white w-[500px] h-auto shadow pt-12 rounded-md pb-7'>
-                <h2 className='text-center font-bold text-3xl lg:text-2xl'>Create your business account</h2>
-                <p className='px-[80px]'>
-                    In few steps, you can start to create invoices, order a USD, EURO, GBP &amp; NGN account, send and receive money from your customers globally.                </p>
+            <div className='bg-white w-full md:w-[500px] h-auto shadow pt-12 rounded-md pb-7'>
+                <h2 className='text-center font-bold text-lg md:text-3xl lg:text-2xl'>Create your business account</h2>
+                <p className='md:px-[80px] px-7 text-center mb-3'>
+                    In few steps, start Generating invoices for your customers, Unloading/Loading Manifest, Receive Payments &amp; Communicate with your team across the globe.                
+                </p>
                 <div className='flex justify-center'>
                     <Formik
                         isValid

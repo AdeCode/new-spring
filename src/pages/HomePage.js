@@ -7,72 +7,93 @@ import freight from '../images/home/freight.png'
 import search from '../images/home/search.png'
 import reports from '../images/home/reports.png'
 import card from '../images/home/card.png'
+import access from '../images/home/access.png'
+import invoicing from '../images/home/invoicing.png'
+import seamless from '../images/home/seamless-payment.png'
+import easy from '../images/home/easy-process.png'
+import digital from '../images/home/digital.png'
+import providus from '../images/home/providus.png'
+import providusmobile from '../images/home/providusmobile.png'
+import bridgemobile from '../images/home/bridgemobile.png'
+import bridgecard from '../images/home/bridgecard.png'
 import WaitListForm from '../components/WaitListForm'
+import {Link } from "react-router-dom"
+
 
 function HomePage() {
     return (
         <Section className='flex flex-col w-full'>
-            <div className='bg-[#EFFCF3] w-full flex flex-col lg:justify-center lg:items-center pb-8 px-5 lg:px-0 lg:pt-6'>
-                <h1 className='lg:w-[1039px] mb-10 text-left lg:text-center text-[26px] lg:text-[40px] font-semibold lg:font-normal leading-9 lg:leading-[53px]'>
-                    Seamless Global Banking & Management Solution for Freight Businesses in Africa.
-                </h1>
-                <p className='text-blue hidden lg:flex lg:w-[776px] lg:text-center text-left lg:mb-20 text-xl font-medium'>Time automate and scale your freight business to process payments quickly, manage and monitor from anywhere.</p>
-                <div className='flex flex-col mb-5 lg:flex-row lg:items-center'>
-                    <h2 className='lg:font-normal text-blue lg:text-black lg:text-3xl text-sm font-bold lg:w-[580px] text-left mb-5'>Spring is your all-in-one payment, management & communication platform for freight & logistic business.</h2>
-                    <div className='lg:w-[700px] lg:h-[500px]'>
-                        <img src={desk} alt='spring' />
+            <div className="flex w-full md:bg-cargoBg bg-cargoBgMob md:h-screen h-[270px] bg-center bg-cover">
+                <div className='bg-bgCover w-full h-full flex flex-col justify-center items-center'>
+                    <h2 className='text-white font-bold md:text-6xl text-xl text-center lg:w-[980px] lg:mb-[100px] mb-8'>Digitizing Freight Management, Documentation &amp; Payments.</h2>
+                    <div className='flex gap-4'>
+                        <Link to='/' className='text-white text-center cursor-pointer text-lg py-3 md:w-[182px] w-[130px] font-semibold rounded-md btn'>Login</Link>
+                        <Link to='/business-signup' className='text-lg py-3 text-center cursor-pointer md:w-[182px] w-[130px] font-semibold rounded-md bg-white text-green-800'>Sign Up</Link>
+                        {/* <button className='text-white text-lg py-3 md:w-[182px] w-[130px] font-semibold rounded-md bg-green-700'>Login</button> */}
+                        {/* <button className='text-lg py-3 md:w-[182px] w-[130px] font-semibold rounded-md bg-white text-green-800'>Sign Up</button> */}
                     </div>
-                    {/* <div className='w-[700px] h-[500px]'>
-                    <img src={dskM} alt='spring'/>
-                </div> */}
                 </div>
-                <WaitListForm/>
+            </div>
+            <div className='bg-[#D3FDE0] w-full flex flex-col items-center py-7 px-4'>
+                <h2 className='mb-5 font-medium md:text-4xl text-base lg:w-[1000px] md:w-[600px] text-center'>WE BELIEVE IN INNOVATION &amp; COLLABORATION BY BRINGING GLOBAL DIGITIZATION SOLUTION TO FREIGHT MANAGEMENT &amp; PAYMENTS.</h2>
+                <p className='text-[#979797] md:text-2xl text-sm lg:px-[200px] text-center md:mb-[135px] mb-10'>We help freight businesses either via Air, Ocean &amp; Inland Transport, manage their entire process of item collection of cargo goods, invoicing customers across the globe, collecting payments and generating port manifest across the globe for last mile distribution.</p>
+                <a 
+                    href='https://calendly.com/spring_freight/30min' 
+                    target='blank'
+                    className='text-white text-center cursor-pointer btn text-2xl font-semibold py-4 lg:w-[300px] rounded-md px-4'
+                >BOOK A DEMO
+                </a>
+                {/* <button className='text-white bg-green-700 text-2xl font-semibold py-4 lg:w-[300px] rounded-md px-4'>BOOK A DEMO</button> */}
+            </div>
+            <div className='bg-[#EFFCF3] py-[80px] px-5 flex flex-col gap-[70px] md:flex-row justify-center md:gap-20'>
+                <div className='flex flex-col md:w-[360px]'>
+                    <div className='flex justify-center mb-10'>
+                        <img src={invoicing} alt='invoicing' className='w-[150px]'/>
+                    </div>
+                    <h3 className='mb-[22px] font-medium md:text-3xl text-2xl'>Invoicing &amp; Collaboration</h3>
+                    <p className='text-left'>Invoice your new &amp; returning customers, while you also create and  share freight manifest information with your colleagues at country dest. </p>
+                </div>
+                <div className='flex flex-col md:w-[360px]'>
+                    <div className='flex justify-center mb-10'>
+                        <img src={seamless} alt='seamless payments' className='w-[150px]'/>
+                    </div>
+                    <h3 className='mb-[22px] font-medium md:text-3xl text-2xl'>Tracking &amp; Seamless Payment</h3>
+                    <p className='text-left'>Get corporate account with business virtual wallet for all payments and track all paid invoices across different regions, while you forget about manual paper work.</p>
+                </div>
+                <div className='flex flex-col md:w-[360px]'>
+                    <div className='flex justify-center mb-10'>
+                        <img src={access} alt='access' className='w-[150px]'/>
+                    </div>
+                    <h3 className='mb-[22px] font-medium md:text-3xl text-2xl'>Communication &amp; Access Control</h3>
+                    <p className='text-left'>Keep up communication with your customers daily and control workers access easily across regions.</p>
+                </div>
             </div>
             <div className='bg-[#D3FDE0] py-[80px] px-5'>
-                <div className='flex flex-col-reverse lg:flex-row justify-center mb-[100px] gap-6'>
+                <div className='flex flex-col-reverse lg:flex-row justify-center items-center mb-[100px] gap-6'>
                     <div className='flex flex-col lg:w-[461px]'>
-                        <h2 className='mb-5 font-medium lg:text-[40px] text-2xl leading-tight'>Make an instant Cross-border Payment for your Cargo Release</h2>
-                        <h3 className='font-normal lg:text-base text-sm text-left'>Instead of stressful way of exchanging currencies to pay your cargo vendor, you can make use of Spring multi-currency solution (mobile app or web) to make an instant payment.
-                            Your payment will be confirmed in real-time with your cargo vendor.</h3>
+                        <h2 className='mb-5 font-medium lg:text-[46px] text-2xl leading-tight'>Fast &amp; Easy Process</h2>
+                        <h3 className='font-normal lg:text-base text-sm md:text-left'>This is the end of paper invoicing to process daily cargo goods, using our platform to generate invoice, manage customers, collect payments etc. eliminates anything paper work instantly.</h3>
                     </div>
-                    <img src={payment} alt='payment' width='600px' height='450px' />
+                    <img src={easy} alt='easy process' width='600px' height='450px' />
                 </div>
-                <div className='flex flex-col-reverse lg:flex-row-reverse justify-center mb-[100px] gap-6'>
+                <div className='flex flex-col-reverse lg:flex-row-reverse justify-center items-center mb-[100px] gap-6'>
                     <div className='flex flex-col lg:w-[461px]'>
-                        <h2 className='mb-5 font-medium lg:text-[40px] text-2xl leading-tight text-left'>Let your freight business reach new markets with foreign currency accounts</h2>
-                        <h3 className='font-normal lg:text-base text-sm text-left'>Open business accounts in EUR, GBP & USD within minutes.
-                            Generate instant invoice and accept payments from international customers in their preferred currency.
-                            You can also hold and pay in foreign currency, or make payout in the same currency, or convert and withdraw in USD using outstanding FX rates.
+                        <h2 className='mb-5 font-medium lg:text-[40px] text-2xl leading-tight text-left'>Digitization at your finger tips</h2>
+                        <h3 className='font-normal lg:text-base text-sm md:text-left'>All digital documentation of your customer’s freight, payment history, proper addressing systems etc. will always be visible to you &amp; your team across the globe.
                         </h3>
                     </div>
-                    <img src={freight} alt='freight' width='600px' height='450px' />
-                </div>
-                <div className='flex flex-col-reverse lg:flex-row justify-center mb-[100px] gap-6'>
-                    <div className='flex flex-col lg:w-[461px]'>
-                        <h2 className='mb-5 font-medium lg:text-[40px] text-2xl leading-tight text-left'>Search for freight businesses, make request and payments in one place</h2>
-                        <h3 className='font-normal lg:text-base text-sm text-left'>You can search for various cargo vendors and other SMEs all in one place, while you make payment in any currency.</h3>
-                    </div>
-                    <img src={search} alt='search' width='600px' height='450px' />
-                </div>
-                <div className='flex flex-col-reverse lg:flex-row-reverse justify-center mb-[100px] gap-6'>
-                    <div className='flex flex-col lg:w-[461px]'>
-                        <h2 className='mb-5 font-medium lg:text-[40px] text-2xl leading-tight text-left'>Skip manual reports and manage all your customers information & transactions in one place</h2>
-                        <h3 className='font-normal lg:text-base text-sm text-left'>Take control of your business, manage your customer’s information, paying clients and transactions in one place.
-                            Export clean transaction data directly in csv and upload to any accounting software. This saves you hours on manual accounting & bookkeeping.
-                        </h3>
-                    </div>
-                    <img src={reports} alt='reports' width='600px' height='450px' />
-                </div>
-                <div className='flex flex-col-reverse lg:flex-row justify-center mb-[100px] gap-6'>
-                    <div className='flex flex-col lg:w-[461px]'>
-                        <h2 className='mb-5 font-medium lg:text-[40px] text-2xl leading-tight text-left'>Take advantage of our borderless 3D secure virtual USD & NAIRA Cards</h2>
-                        <h3 className='font-normal lg:text-base text-sm text-left'>Manage Online subscriptions seamlessly make payments online or even issue team members virtual dollar cards while being protected from overcharges and fraud.
-                        </h3>
-                    </div>
-                    <img src={card} alt='card' width='600px' height='450px' />
+                    <img src={digital} alt='digital' width='600px' height='450px' />
                 </div>
             </div>
-
+            <div className='bg-[#EFFCF3] py-[50px] px-5 flex flex-col items-center'>
+                <h2 className='font-medium md:text-[50px]'>Our Partners</h2>
+                <div className='flex md:gap-9'>
+                    <img src={providus} alt='providus' className='hidden md:flex w-28 h-20'/>
+                    <img src={providusmobile} alt='providus' className='md:hidden'/>
+                    <img src={bridgecard} alt='bridgecard' className='hidden md:flex w-28 h-20'/>
+                    <img src={bridgemobile} alt='providus' className='md:hidden'/>
+                </div>
+            </div>
         </Section>
     )
 }
@@ -80,6 +101,12 @@ function HomePage() {
 const Section = styled.section`
     margin:0;
     padding: 0;
+
+    .btn{
+        background: var(--demo-1, linear-gradient(128deg, #6199DB 0%, #4BCA69 100%));
+box-shadow: 0px 1px 2px 0px rgba(105, 81, 255, 0.05);
+
+    }
 `
 
 export default HomePage

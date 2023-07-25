@@ -35,6 +35,8 @@ import CustomerInvoiceList from './pages/dashboard/customer/CustomerInvoiceList'
 import InvoicePreview from './pages/dashboard/customer/InvoicePreview';
 import FormComponent from './pages/dashboard/FormStep'
 import SearchVendors from './pages/SearchVendors';
+import WebInfo from './pages/dashboard/WebInfo';
+import NewHome from './pages/NewHome'
 
 function Routers (){
     return (
@@ -46,6 +48,7 @@ function Routers (){
                     {/* <Route path='/' element={<Login/>}></Route> */}
                     <Route element={<Layout/>}>
                         <Route path='/home' element={<HomePage/>}></Route>
+                        <Route path='/new-home' element={<NewHome/>}></Route>
                         <Route path='/bus' element={<Business/>}></Route>
                         <Route path='/about' element={<About/>}></Route>
                         <Route path='/terms-and-condition' element={<TermsAndConditions/>}></Route>
@@ -82,6 +85,7 @@ function Routers (){
                         <Route path='/dashboard/customers/:customerId' element={<CustomerInvoiceList/>}></Route>     
                         <Route path='/dashboard/customers/invoice/:invoiceCode' element={<InvoicePreview/>}></Route>     
                         <Route path='/settings/personal-information' element={<PersonalInformation/>}></Route>     
+                        <Route path='/settings/web-information' element={<WebInfo/>}></Route>     
                         <Route path='/dashboard/payouts' element={<FormComponent/>}></Route>     
                     </Route>
                 </Routes>

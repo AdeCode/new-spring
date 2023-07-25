@@ -2,9 +2,11 @@ import { style } from '@mui/system'
 import React from 'react'
 import styled from 'styled-components'
 
-function VendorCard({ name, category, image, address, imageAlt, phone }) {
+function VendorCard({ name, category, image, address, imageAlt, phone, handleClick }) {
+    //console.log(services)
+
     return (
-        <Card className='card px-5 py-3 bg-white max-w-[350px] min-w-[350px] rounded-xl flex flex-col justify-between mb-3 max-h-[220px]'>
+        <Card onClick={handleClick} className='card cursor-pointer px-5 py-3 bg-white max-w-[350px] min-w-[350px] rounded-xl flex flex-col justify-between mb-3 max-h-[220px]'>
             <div className='max-h-[100px] min-h-[100px] flex justify-between'>
                 <img className='w-[80px] h-[80px] rounded-[50%] object-contain' src={image} alt={imageAlt} />
                 <div className='flex flex-col'>

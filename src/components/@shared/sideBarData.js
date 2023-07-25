@@ -211,6 +211,12 @@ export const SidebarData = [
 			icon: <span className="material-symbols-outlined">info</span>,
 			cName: "sub-nav",
 		},
+		{
+			title: "Web Information",
+			path: "/settings/web-information",
+			icon: <span className="material-symbols-outlined">settings</span>,
+			cName: "sub-nav",
+		},
 	],
 },
 // {

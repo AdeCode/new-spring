@@ -19,7 +19,6 @@ function InvoiceTemplate() {
     const {state} = useContext(AuthContext)
 
     const { data: profile, isLoading, error } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-    // profile && console.log(profile)
 
     const invoiceTemplateRef = useRef(null)
 
@@ -30,7 +29,7 @@ function InvoiceTemplate() {
     const location = useLocation()
     
     const data = location.state.invoice.invoice
-    //console.log(data)
+    // console.log(data)
 
     const styles = {
         container: {
@@ -90,6 +89,15 @@ function InvoiceTemplate() {
                             </div>
                             <h3 className='text-base'>{data?.email}</h3>
                             <h3 className='text-base'>{data?.phone}</h3>
+                            <div className='flex justify-between'>
+                                <h3 className=''>Sender's Name:</h3><span className='font-medium'>{data?.sender_name}</span>
+                            </div>
+                            <div className='flex justify-between'>
+                                <h3 className=''>Sender's Address:</h3><span className='font-medium'>{data?.sender_address}</span>
+                            </div>
+                            <div className='flex justify-between'>
+                                <h3 className=''>Sender's Phone:</h3><span className='font-medium'>{data?.sender_phone}</span>
+                            </div>
                         </div>
                         <div className='w-[300px] border flex flex-col'>
                             <div className='flex border-b justify-between py-1 px-2'>
@@ -132,7 +140,7 @@ function InvoiceTemplate() {
                                             return (
                                                 <tr className='' key={invoice.item_name}>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.item_name}</td>
-                                                    <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.quantity}</td>
+                                                    <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.quantity} {invoice?.unit}</td>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.cbm}</td>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.price}</td>
                                                     <td className='m-0 text-center py-3 text-sm font-medium'>{invoice?.price}</td>
@@ -155,7 +163,7 @@ function InvoiceTemplate() {
                                     <h2 className=''>Subtotal:</h2><span className=''>{helperFunctions.formatCurrency(data?.currency, data?.sub_total)}</span>
                                 </div>
                                 <div className='flex justify-between py-2 px-2'>
-                                    <h2 className=''>Tax:(7.5%)</h2><span className=''>{helperFunctions.formatCurrency(data?.currency, (data?.sub_total * data?.tax))}</span>
+                                    <h2 className=''>Tax:({data?.vat * 100} %)</h2><span className=''>{helperFunctions.formatCurrency(data?.currency, (data?.sub_total * data?.vat))}</span>
                                 </div>
                                 <div className='flex justify-between py-4 px-2 bg-slate-400 text-black'>
                                     <h2 className='font-semibold'>Grand Total:</h2><span className='font-semibold'>{helperFunctions.formatCurrency(data?.currency, data?.total_cost)}</span>

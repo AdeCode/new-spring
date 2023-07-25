@@ -9,9 +9,11 @@ import { AuthContext } from '../../contexts/AuthContexts'
 import SelectField from '../@shared/SelectField'
 import styled from 'styled-components'
 import { TroubleshootOutlined } from '@mui/icons-material'
+import TextField from '../@shared/TextField'
+import ServicesInput from '../@shared/ServicesInput'
 
 
-function BankInfo({data}) {
+function BankInfo({ data }) {
     //console.log(data?.bank_account_detail)
     const queryClient = useQueryClient()
     const [selectedCode, setSelectedCode] = useState('')
@@ -41,50 +43,50 @@ function BankInfo({data}) {
         }
     })
 
-    const extractSelectedBankDetails = async(banks, selectedBank) => {
-        try{
-            if(!!banks){
+    const extractSelectedBankDetails = async (banks, selectedBank) => {
+        try {
+            if (!!banks) {
                 const selectedDetails = await banks?.data.banks.filter(bank => bank.bankName === selectedBank)
                 return selectedDetails
             }
-        }catch(err){
+        } catch (err) {
             //console.log(err)
         }
-        
+
     }
 
     let nameLoading = false
 
     const BankNameField = (props) => {
         let {
-            values: { account_number, bank_name, account_name},setFieldValue} = useFormikContext();
+            values: { account_number, bank_name, account_name }, setFieldValue } = useFormikContext();
 
-        const [field, meta] = useField(props)    
+        const [field, meta] = useField(props)
 
         useEffect(() => {
             extractSelectedBankDetails(banks, bank_name)
                 .then(res => setSelectedCode(res[0]?.bankCode))
-           
+
             let isCurrent = true;
             if ((account_number.length > 9) && bank_name) {
                 //make API call
                 nameLoading = true
                 merchantService.confirmBankDetails({
-                        accountNumber: account_number,
-                        bankCode: selectedCode
-                    })
+                    accountNumber: account_number,
+                    bankCode: selectedCode
+                })
                     .then(res => {
                         if (res.data) {
                             //console.log(res.data)
                             setFieldValue('account_name', res.data.accountName);
                             nameLoading = false
-                        }else{
+                        } else {
                             // setCustomerExists(false)
                         }
                     },
                         (err) => {
                             console.log(err)
-                          
+
                         }
                     )
             }
@@ -92,7 +94,7 @@ function BankInfo({data}) {
             return () => {
                 isCurrent = false;
             };
-        }, [props.name, account_number, bank_name,setFieldValue])
+        }, [props.name, account_number, bank_name, setFieldValue])
 
         return (
             <Div className='flex flex-col'>
@@ -100,15 +102,15 @@ function BankInfo({data}) {
                 <select {...props} {...field} name={props.name} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'>
                     {
                         bankLoading ? <option value=''>Loading...</option> :
-                        <>
-                            {/* <option value=''>Select your bank</option> */}
-                            {
-                                banks.data.banks.map(({bankCode, bankName}) => {
-                                    return <option value={bankName} key={bankCode}>{bankName}</option>
-                                })
-                            }
-                            
-                        </>
+                            <>
+                                {/* <option value=''>Select your bank</option> */}
+                                {
+                                    banks.data.banks.map(({ bankCode, bankName }) => {
+                                        return <option value={bankName} key={bankCode}>{bankName}</option>
+                                    })
+                                }
+
+                            </>
                     }
                 </select>
                 {/* <input {...props} {...field} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' /> */}
@@ -215,10 +217,10 @@ function BankInfo({data}) {
 
     const onSubmit = (values) => {
         //console.log(values)
-        if(!!data?.bank_account_detail){
+        if (!!data?.bank_account_detail) {
             //patch
             updateAccountDetailsMutation.mutate(values)
-        }else{
+        } else {
             //post
             saveAccountDetailsMutation.mutate(values)
         }
@@ -264,7 +266,7 @@ function BankInfo({data}) {
                                         <BankNameField
                                             name='bank_name'
                                             text='text'
-                                            // onChange={()=>handleBankChange(values.bank_name)}
+                                        // onChange={()=>handleBankChange(values.bank_name)}
                                         />
                                         {/* <SelectField
                                             name='bank_name'
@@ -299,7 +301,7 @@ function BankInfo({data}) {
                             </div>
                             <div className='flex w-full gap-4 py-3'>
                                 <div className='flex flex-col min-w-[350px]'>
-                                    
+
                                 </div>
                                 <div className='grow flex gap-4'>
                                     <div className='grow flex'>
@@ -312,7 +314,7 @@ function BankInfo({data}) {
                                         <h2 className='font-medium mr-1'>Account Name: </h2>
                                         <span className='font-normal'>{nameLoading ? 'Loading...' : values?.account_name}</span>
                                     </div>
-                                    
+
                                 </div>
                             </div>
                             <div className='flex w-full gap-4 py-3'>
@@ -335,15 +337,15 @@ function BankInfo({data}) {
                             </div>
                             <div className='flex w-full gap-4 py-3'>
                                 <div className='flex flex-col min-w-[350px]'>
-                                <div className='w-full flex flex-col items-center'>
+                                    <div className='w-full flex flex-col items-center'>
                                         <div className='form-control flex flex-col mb-4 relative border-none lg:border'>
                                             <div className='flex justify-center'>
                                                 <div className='mb-3 max-w-[100px] max-h-[100px]'>
                                                     {
                                                         values.cac_document ?
-                                                        <img src={data?.profile?.cac_document} alt={data?.profile?.business_name} />
-                                                        :
-                                                        <span class="material-symbols-outlined">image</span>
+                                                            <img src={data?.profile?.cac_document} alt={data?.profile?.business_name} />
+                                                            :
+                                                            <span class="material-symbols-outlined">image</span>
                                                     }
                                                 </div>
                                             </div>
@@ -366,9 +368,9 @@ function BankInfo({data}) {
                                                     <div className='mb-3 max-w-[100px] max-h-[100px]'>
                                                         {
                                                             values.utility_bill ?
-                                                            <img src={data?.profile?.utility_bill} alt={data?.profile?.business_name} />
-                                                            :
-                                                            <span class="material-symbols-outlined">image</span>
+                                                                <img src={data?.profile?.utility_bill} alt={data?.profile?.business_name} />
+                                                                :
+                                                                <span class="material-symbols-outlined">image</span>
                                                         }
                                                     </div>
                                                 </div>
@@ -383,6 +385,41 @@ function BankInfo({data}) {
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div className='flex w-full gap-3 py-3'>
+                                <div className='grow'>
+                                    <TextField
+                                        name='official_address'
+                                        type='text'
+                                        label='Regions shipped to'
+                                        placeholder='Enter the regions you ships to'
+                                        component="textarea"
+                                        rows='4'
+                                        defaultValue={values.official_address}
+                                    />
+                                </div>
+                                <div className='grow'>
+                                    <TextField
+                                        name='official_address'
+                                        type='text'
+                                        label='Contraband Items'
+                                        placeholder='Enter the regions you ships to'
+                                        component="textarea"
+                                        rows='4'
+                                        defaultValue={values.official_address}
+                                    />
+                                </div>
+                                <div className='grow'>
+                                    <TextField
+                                        name='official_address'
+                                        type='text'
+                                        label='Regions shipped to'
+                                        placeholder='Our Services'
+                                        component="textarea"
+                                        rows='4'
+                                        defaultValue={values.official_address}
+                                    />
                                 </div>
                             </div>
                             <div className='flex justify-end'>

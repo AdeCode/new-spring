@@ -84,6 +84,12 @@ async function getVendors({queryKey}){
     return data
 }
 
+async function getVendor({queryKey}){
+    const [_key, {hash}] = queryKey
+    const {data} = await httpService.guestInstance.get(`/merchants/business/list?merchant_hash=${hash}`)
+    return data
+}
+
 async function getMerchantProfile(){
     const {data} = await httpService.secureInstance.get('/merchants/profile')
     return data
@@ -91,6 +97,61 @@ async function getMerchantProfile(){
 
 async function getBankList(){
     const {data} = await httpService.guestInstance.get('/merchants/bank/list')
+    return data
+}
+
+async function addMerchantService(payload){
+    const {data} = await httpService.secureInstance.post('/merchants/web/services',payload)
+    return data
+}
+
+async function addMerchantDeliveryRegion(payload){
+    const {data} = await httpService.secureInstance.post('/merchants/web/services',payload)
+    return data
+}
+
+async function deleteMerchantService(payload){
+    const {data} = await httpService.secureInstance.post(`/merchants/web/services?id=2`)
+    return data
+}
+
+async function getMerchantService({queryKey}){
+    const [_key, {selectedMerchantId}] = queryKey
+    const {data} = await httpService.guestInstance.get(`/merchants/web/services?merchant_id=${selectedMerchantId}`)
+    return data
+}
+
+async function getWebInformation({queryKey}){
+    console.log(queryKey)
+    const [key,{type,merchantId}] = queryKey
+    const {data} = await httpService.secureInstance.get(`/merchants/web/services?merchant_id=${merchantId}&type=${type}`)
+    return data
+}
+
+async function deleteWebInformation(itemId){
+    const {data} = await httpService.secureInstance.delete(`/merchants/web/services?id=${itemId}`)
+    return data
+}
+
+async function addVat(payload){
+    const {data} = await httpService.secureInstance.post('/merchants/invoices/vat', payload)
+    return data
+}
+
+async function updateVat(payload){
+    const {vat_id} = payload
+    const {data} = await httpService.secureInstance.patch(`/merchants/invoices/vat?vat_id=${vat_id}`, payload)
+    return data
+}
+
+async function getVat({queryKey}){
+    const [key,{customerCountry}] = queryKey
+    const {data} = await httpService.secureInstance.get(`/merchants/invoices/vat?country=${customerCountry}`)
+    return data
+}
+
+async function getAllVat(){
+    const {data} = await httpService.secureInstance.get(`/merchants/invoices/vat/all`)
     return data
 }
 
@@ -112,7 +173,18 @@ const merchantService = {
     getBankList,
     confirmBankDetails,
     getVendors,
-    updateAccountDetails
+    updateAccountDetails,
+    getVendor,
+    addMerchantService,
+    deleteMerchantService,
+    getMerchantService,
+    addMerchantDeliveryRegion,
+    getWebInformation,
+    deleteWebInformation,
+    addVat,
+    getVat,
+    updateVat,
+    getAllVat
 }
 
 export default merchantService

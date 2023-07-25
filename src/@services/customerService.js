@@ -6,12 +6,19 @@ async function fetchCustomerByPhoneNumber(phoneNumber){
     return data
 }
 
-async function fetchMerchantCustomers(){
-    const {data} = await httpService.secureInstance.get('/customers/user')
+async function fetchMerchantCustomers({queryKey}){
+    const [_key, {selectedCountry}] = queryKey
+    const {data} = await httpService.secureInstance.get(`/customers/user?country=${selectedCountry}`)
+    // const {data} = await httpService.secureInstance.get(`/customers/user`)
     return data
 }
 
-async function fetchAllCustomers(){
+async function fetchAllCustomers(country){
+    const {data} = await httpService.secureInstance.get(`/merchants/customers/list?${country}`)
+    return data
+}
+
+async function searchCustomers(){
     const {data} = await httpService.secureInstance.get(`/merchants/customers/list`)
     return data
 }
@@ -26,7 +33,8 @@ const customerService = {
     fetchCustomerByPhoneNumber,
     fetchMerchantCustomers,
     fetchAllCustomers,
-    fetchCustomerInvoices
+    fetchCustomerInvoices,
+    searchCustomers
 }
 
 export default customerService

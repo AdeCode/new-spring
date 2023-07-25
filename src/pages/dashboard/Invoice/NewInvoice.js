@@ -17,60 +17,25 @@ import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import helperFunctions from '../../../@helpers/helperFunctions'
 import AlertBox from '../../../components/AlertBox'
-
-
-
+import axios from 'axios'
+import SelectField from '../../../components/@shared/SelectField'
+import QuantityUnitField from '../../../components/@shared/QuantityUnitField'
+import { getTaxRate, pageStatus, calculateSubTotal, calculateTax, calculateInvoiceTotal } from '../../../@helpers/helperFunctions'
 
 function NewInvoice() {
     const navigate = useNavigate()
 
-    const [currency, setCurrency] = useState('USD')
+    const [currency, setCurrency] = useState('NGN')
+
+    const [customerCountry, setCustomerCountry] = useState('')
 
     const [customerExists, setCustomerExists] = useState(false)
 
-    const [enable, setEnable] = useState(false)
-
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value)
-        // console.log(currency)
     }
 
     const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-    //profile && console.log('from create inoice ', profile)
-
-    // if(!profile?.data?.bank_account_detail || !profile?.data?.merchant_account_profile || !profile?.data?.profile){
-    //     setEnable(true)
-    // }
-
-    const pageStatus = () => {
-        if(!profile?.data?.bank_account_detail || !profile?.data?.merchant_account_profile || !profile?.data?.profile){
-            return true
-        }else{
-            return false
-        }
-    }
-    // console.log(pageStatus())
-
-    const calculateSubTotal = (data) => {
-        const sum = data.reduce((accumulator, curr) => {
-            return accumulator += +curr.price
-        }, 0)
-        //console.log(sum.toFixed(2))
-        sum.toFixed(2)
-        return sum
-    }
-
-    const calculateTax=(data)=>{
-        const total = calculateSubTotal(data)
-        const sendTotal = ((total * 7.5) / 100).toFixed(2)
-        return +sendTotal
-    }
-
-    const calculateInvoiceTotal = (data)=>{
-        return (calculateSubTotal(data)+calculateTax(data)).toFixed(2)
-    }
-    //console.log(invoiceData)
-    //console.log(calculateSubTotal(invoiceData))
 
     const [invoice_due_date, onChange] = useState(new Date());
 
@@ -98,7 +63,7 @@ function NewInvoice() {
             currency,
             invoice_due_date
         }
-        console.log(values)
+        //console.log(values)
         createInvoiceMutation.mutate(values)
     }
 
@@ -110,6 +75,7 @@ function NewInvoice() {
         const [field, meta] = useField(props)
 
         useEffect(() => {
+            setFieldValue('vat',vatRate?.data[0]?.vat_value ? vatRate?.data[0]?.vat_value : 0)
             let isCurrent = true;
             if (customer_phone && customer_phone.length > 10) {
                 //make API call
@@ -142,14 +108,32 @@ function NewInvoice() {
 
         return (
             <div className='flex flex-col'>
-                <label htmlFor='name' className='font-medium text-base text-label mb-[6px]'>Customer Name</label>
+                <label htmlFor='name' className='font-medium text-base text-label mb-[6px]'>Receiver Name</label>
                 <input {...props} {...field} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' />
                 {!!meta.touched && !!meta.error && <div className='text-red-500'>{meta.error}</div>}
             </div>
         );
     }
 
-    const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', total: '' }
+    const { data: countries, isLoading: countriesLoading, error } = useQuery(['countries'],
+        async () => {
+            try {
+                const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
+                return res.data.data
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    )
+
+    const { data: vatRate, isLoading: vatLoading } = useQuery(['vat',{customerCountry}], merchantService.getVat)
+
+    const countryChange =(e, setFieldValue) => {
+        setFieldValue('customer_country',e.target.value)
+        setCustomerCountry(e.currentTarget.value)
+    }
+
+    const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', unit: 'kg', total: '' }
     return (
         <Invoice className='px-[50px]'>
             <div className='flex justify-between'>
@@ -164,12 +148,12 @@ function NewInvoice() {
                 }
                 
             </div>
-            <div className='box w-full flex flex-col' disabled={pageStatus()}>
+            <div className='box w-full flex flex-col' disabled={pageStatus(profile?.data?.bank_account_detail,profile?.data?.merchant_account_profile,profile?.data?.profile)}>
                 <div className='w-full flex justify-between border-b-2 border-cyan-900 px-3 py-2'>
                     <h2 className=''>Create Invoice</h2>
                     <select name='currency' onChange={handleCurrencyChange} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
-                        <option value='USD' defaultValue>USD</option>
                         <option value='NGN' >NGN</option>
+                        <option value='USD' defaultValue>USD</option>
                     </select>
                 </div>
                 <div className='px-3 w-full'>
@@ -182,6 +166,12 @@ function NewInvoice() {
                             customer_phone: '',
                             invoice_due_date: '',
                             invoice_items: [Empty_invoice_items],
+                            customer_country: '',
+                            customer_address: '',
+                            sender_name: '',
+                            sender_phone: '',
+                            sender_address: '',
+                            vat: vatRate?.data[0]?.vat_value ? vatRate?.data[0]?.vat_value : vatRate?.data?.vat_value
                         }}
                         validationSchema={
                             Yup.object({
@@ -211,17 +201,14 @@ function NewInvoice() {
                             })
                         }}
                     >
-                        {({ isSubmitting, isValid, handleChange, values, errors, setFieldValue }) => (
+                        {({ isSubmitting, isValid, handleChange, handleBlur, values, errors, setFieldValue }) => (
                             <Form className='flex flex-col py-2'>
-                                {/* {
-                                    values.customer_phone > 10 ? setPhoneNumber(values.customer_phone) : null
-                                } */}
                                 <div className='flex w-full gap-2'>
                                     <div className='grow'>
                                         <InputField
                                             name='customer_phone'
                                             type='text'
-                                            label='Customer Phone'
+                                            label='Receiver Phone'
                                             placeholder='e.g. 08033889999'
                                         // disabled
                                         />
@@ -230,13 +217,36 @@ function NewInvoice() {
                                         <InputField
                                             name='customer_email'
                                             type='email'
-                                            label='Customer Email'
+                                            label='Receiver Email'
                                             placeholder='e.g. user@mail.com'
                                             disabled={customerExists}
                                         />
                                     </div>
+                                    <div className=''>
+                                        <SelectField
+                                            name='customer_country'
+                                            label="Receiver's Country*"
+                                            value={values.customer_country}
+                                            onBlur={handleBlur}
+                                            onChange={(e)=>{countryChange(e,setFieldValue )}}
+                                        >
+                                            {
+                                                countriesLoading ? <option value="">Loading...</option>
+                                                    :
+                                                    <>
+                                                        <option value="">Select Country</option>
+                                                        {
+                                                            countries?.map((country,index) => {
+                                                                return (
+                                                                    <option value={country.name} key={country.ise3}>{country.name}</option>
+                                                                )
+                                                            })
+                                                        }
+                                                    </>
+                                            }
+                                        </SelectField>
+                                    </div>
                                 </div>
-
                                 <div className='flex w-full gap-2'>
                                     <div className='grow'>
                                         <NameField
@@ -246,14 +256,46 @@ function NewInvoice() {
                                             disabled={customerExists}
                                         />
                                     </div>
-                                    <div className='grow-0'>
+                                    <div className='grow'>
+                                        <InputField
+                                            name='customer_address'
+                                            type='text'
+                                            label="Receiver's Address"
+                                            placeholder='e.g. 2 Houston Street NY'
+                                        />
+                                    </div>
+                                    <div className='grow'>
                                         <div className='flex flex-col'>
                                             <label htmlFor='date' className='font-medium text-base text-label mb-[6px]'>Due Date</label>
                                             <DateTimePicker onChange={onChange} value={invoice_due_date} className='' />
                                         </div>
                                     </div>
-
-
+                                </div>
+                                <div className='flex w-full gap-2 pt-3'>
+                                    <div className='grow-0'>
+                                        <InputField
+                                            name='sender_name'
+                                            type='text'
+                                            label="Sender's Name"
+                                            placeholder='e.g. Adegoke James'
+                                        />
+                                    </div>
+                                    <div className='grow-0'>
+                                        <InputField
+                                            name='sender_phone'
+                                            type='text'
+                                            label="Sender's Phone"
+                                            placeholder='e.g. 08022889900'
+                                        />
+                                    </div>
+                                    <div className='grow'>
+                                        <InputField
+                                            name='sender_address'
+                                            type='text'
+                                            label="Sender's Address"
+                                            placeholder='e.g. 2, Kumapayi Street, Ikeja, Lagos'
+                                        />
+                                    </div>
                                 </div>
                                 <div className='flex flex-col mt-3'>
                                     <h2 className=''>Order Items</h2>
@@ -276,7 +318,43 @@ function NewInvoice() {
                                                                         />
                                                                         <ErrorMessage name={`invoice_items[${index}].item_name`} component="div" className='text-red-500' />
                                                                     </div>
-                                                                    <div className='flex grow-0 flex-col'>
+                                                                    <div className='flex grow-0'>
+                                                                        <QuantityUnitField
+                                                                            name={`invoice_items.${index}.quantity`}
+                                                                            type='number'
+                                                                            label="Quantity*"
+                                                                            value={`invoice_items.${index}.unit`}
+                                                                            // value={values.unit}
+                                                                            onBlur={handleBlur}
+                                                                            unit={`invoice_items.${index}.unit`}
+                                                                        >
+                                                                            <option value="kg">kg</option>
+                                                                            <option value="carton">carton</option>
+                                                                            <option value="litres">litres</option>
+                                                                        </QuantityUnitField>
+                                                                        {/* <div className='flex flex-col'>
+                                                                            <label className='font-medium text-base text-label mb-[6px]'>Quantity (kg)</label>
+                                                                            <Field
+                                                                                name={`invoice_items.${index}.quantity`}
+                                                                                type='number'
+                                                                                placeholder='item quantity'
+                                                                                className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
+                                                                            />
+                                                                            <ErrorMessage name={`invoice_items[${index}].quantity`} component="div" className='text-red-500' />
+                                                                        </div>
+                                                                        <SelectField
+                                                                            name='unit'
+                                                                            label="Unit*"
+                                                                            value={values.unit}
+                                                                            onBlur={handleBlur}
+                                                                        >
+                                                                            <option value="kg">kg</option>
+                                                                            <option value="carton">carton</option>
+                                                                            <option value="litres">litres</option>
+                                                                        </SelectField> */}
+
+
+                                                                        {/* 
                                                                         <label className='font-medium text-base text-label mb-[6px]'>Quantity (kg)</label>
                                                                         <Field
                                                                             name={`invoice_items.${index}.quantity`}
@@ -284,7 +362,7 @@ function NewInvoice() {
                                                                             placeholder='item quantity'
                                                                             className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
                                                                         />
-                                                                        <ErrorMessage name={`invoice_items[${index}].quantity`} component="div" className='text-red-500' />
+                                                                        <ErrorMessage name={`invoice_items[${index}].quantity`} component="div" className='text-red-500' /> */}
                                                                     </div>
                                                                     <div className='flex grow-0 flex-col'>
                                                                         <label className='font-medium text-base text-label mb-[6px]'>Price 
@@ -321,7 +399,7 @@ function NewInvoice() {
                                                                         />
                                                                         <ErrorMessage name={`invoice_items[${index}].total`} component="div" className='text-red-500' />
                                                                     </div>
-                                                                    <div className='flex items-end lg:pb-3'>
+                                                                    <div className='flex items-center lg:pb-3'>
                                                                         <span onClick={() => remove(index)} disabled={isSubmitting} className="material-symbols-outlined cursor-pointer disabled:opacity-50 text-red-600">delete</span>
                                                                     </div>
                                                                 </div>
@@ -351,16 +429,16 @@ function NewInvoice() {
                                                 </span>
                                             </div>
                                             <div className='flex justify-between'>
-                                                <h2 className=''>Tax(7.5%):</h2>
+                                                <h2 className=''>Tax({getTaxRate(vatRate?.data[0]?.vat_value)}%):</h2>
                                                 <span className='font-semibold gap-1 flex'>
-                                                    {helperFunctions.formatCurrency(currency,calculateTax(values.invoice_items))}
+                                                    {helperFunctions.formatCurrency(currency,calculateTax(values.invoice_items, getTaxRate(vatRate?.data[0]?.vat_value)))}
                                                 </span>
                                             </div>
                                             <div className='flex justify-between'>
                                                 <h2 className=''>Invoice Total:</h2>
                                                 <span className='font-semibold gap-1 flex'>
                                                     {/* {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>}  */}
-                                                    {helperFunctions.formatCurrency(currency,calculateInvoiceTotal(values.invoice_items))}
+                                                    {helperFunctions.formatCurrency(currency,calculateInvoiceTotal(values.invoice_items, getTaxRate(vatRate?.data[0]?.vat_value)))}
                                                 </span>
                                             </div>
                                         </div>
