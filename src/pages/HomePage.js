@@ -48,21 +48,21 @@ function HomePage() {
             <div className='bg-[#EFFCF3] py-[80px] px-5 flex flex-col gap-[70px] md:flex-row justify-center md:gap-20'>
                 <div className='flex flex-col md:w-[360px]'>
                     <div className='flex justify-center mb-10'>
-                        <img src={invoicing} alt='invoicing'/>
+                        <img src={invoicing} alt='invoicing' className='w-[150px]'/>
                     </div>
                     <h3 className='mb-[22px] font-medium md:text-3xl text-2xl'>Invoicing &amp; Collaboration</h3>
                     <p className='text-left'>Invoice your new &amp; returning customers, while you also create and  share freight manifest information with your colleagues at country dest. </p>
                 </div>
                 <div className='flex flex-col md:w-[360px]'>
                     <div className='flex justify-center mb-10'>
-                        <img src={seamless} alt='seamless payments'/>
+                        <img src={seamless} alt='seamless payments' className='w-[150px]'/>
                     </div>
                     <h3 className='mb-[22px] font-medium md:text-3xl text-2xl'>Tracking &amp; Seamless Payment</h3>
                     <p className='text-left'>Get corporate account with business virtual wallet for all payments and track all paid invoices across different regions, while you forget about manual paper work.</p>
                 </div>
                 <div className='flex flex-col md:w-[360px]'>
                     <div className='flex justify-center mb-10'>
-                        <img src={access} alt='access'/>
+                        <img src={access} alt='access' className='w-[150px]'/>
                     </div>
                     <h3 className='mb-[22px] font-medium md:text-3xl text-2xl'>Communication &amp; Access Control</h3>
                     <p className='text-left'>Keep up communication with your customers daily and control workers access easily across regions.</p>
@@ -76,7 +76,7 @@ function HomePage() {
                     </div>
                     <img src={easy} alt='easy process' width='600px' height='450px' />
                 </div>
-                <div className='flex flex-col-reverse lg:flex-row-reverse justify-center mb-[100px] gap-6'>
+                <div className='flex flex-col-reverse lg:flex-row-reverse justify-center items-center mb-[100px] gap-6'>
                     <div className='flex flex-col lg:w-[461px]'>
                         <h2 className='mb-5 font-medium lg:text-[40px] text-2xl leading-tight text-left'>Digitization at your finger tips</h2>
                         <h3 className='font-normal lg:text-base text-sm md:text-left'>All digital documentation of your customer’s freight, payment history, proper addressing systems etc. will always be visible to you &amp; your team across the globe.
@@ -85,12 +85,12 @@ function HomePage() {
                     <img src={digital} alt='digital' width='600px' height='450px' />
                 </div>
             </div>
-            <div className='bg-[#EFFCF3] py-[80px] px-5 flex flex-col items-center'>
-                <h2 className='font-medium md:text-[56px]'>Our Partners</h2>
+            <div className='bg-[#EFFCF3] py-[50px] px-5 flex flex-col items-center'>
+                <h2 className='font-medium md:text-[50px]'>Our Partners</h2>
                 <div className='flex md:gap-9'>
-                    <img src={providus} alt='providus' className='hidden md:flex'/>
+                    <img src={providus} alt='providus' className='hidden md:flex w-28 h-20'/>
                     <img src={providusmobile} alt='providus' className='md:hidden'/>
-                    <img src={bridgecard} alt='bridgecard' className='hidden md:flex'/>
+                    <img src={bridgecard} alt='bridgecard' className='hidden md:flex w-28 h-20'/>
                     <img src={bridgemobile} alt='providus' className='md:hidden'/>
                 </div>
             </div>

@@ -45,11 +45,14 @@ function MerchantLogin() {
         // console.log(phoneNumberRef.current.length)
     }
 
+
     return (
         <Div className='flex justify-center bg-white w-full'>
-            <div className='w-full flex flex-col items-center justify-center items-center h-screen'>
+            <div className='w-full flex flex-col justify-center items-center h-screen'>
                 <div className='mb-5'>
-                    <img src={logo} alt='logo'/>
+                    <Link to='/home'>
+                        <img src={logo} alt='logo'/>
+                    </Link>
                 </div>
                 <div className='bg-white w-[500px] h-[500px] shadow pt-12 rounded-md mt-7'>
                     <h2 className='text-center font-bold text-3xl lg:text-2xl'>Sign in</h2>
@@ -91,7 +94,7 @@ function MerchantLogin() {
                                         onChange={(e)=>{handleInputChange(e,handleChange)}}
                                     />
                                     <Link to='/business-forgot-password' className='text-end text-[#1BB6EF] font-normal text-sm mb-2'>Forgot password?</Link>
-                                    <Link to='/select-user-type' className='text-end text-[#1BB6EF] font-normal text-sm'>Create new account</Link>
+                                    <Link to='/business-signup' className='text-end text-[#1BB6EF] font-normal text-sm'>Create new account</Link>
                                     <button type="submit" disabled={!isValid} className='btn w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                         {
                                             loginMutation.isLoading ?
