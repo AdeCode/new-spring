@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NotFound from './pages/NotFound';
 import Layout from './common/Layout';
-import HomePage from './pages/HomePage';
+// import HomePage from './pages/HomePage';
 import Business from './pages/Business';
 import About from './pages/About';
 import TermsAndConditions from './pages/TermsAndConditions';
@@ -36,7 +36,7 @@ import InvoicePreview from './pages/dashboard/customer/InvoicePreview';
 import FormComponent from './pages/dashboard/FormStep'
 import SearchVendors from './pages/SearchVendors';
 import WebInfo from './pages/dashboard/WebInfo';
-import NewHome from './pages/NewHome'
+// import NewHome from './pages/NewHome'
 
 function Routers (){
     return (
@@ -47,8 +47,8 @@ function Routers (){
                     <Route path='/select-user-type' element={<UserType/>}></Route>
                     {/* <Route path='/' element={<Login/>}></Route> */}
                     <Route element={<Layout/>}>
-                        <Route path='/home' element={<HomePage/>}></Route>
-                        <Route path='/new-home' element={<NewHome/>}></Route>
+                        {/* <Route path='/home' element={<HomePage/>}></Route> */}
+                        {/* <Route path='/new-home' element={<NewHome/>}></Route> */}
                         <Route path='/bus' element={<Business/>}></Route>
                         <Route path='/about' element={<About/>}></Route>
                         <Route path='/terms-and-condition' element={<TermsAndConditions/>}></Route>
