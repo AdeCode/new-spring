@@ -5,8 +5,7 @@ import SubMenu from './SubMenu';
 import {useNavigate} from 'react-router-dom'
 import {SidebarData} from '../../components/@shared/sideBarData'
 import { AuthContext } from '../../contexts/AuthContexts';
-import { url } from '../../@services/httpService';
-import {Link} from 'react-router-dom'
+
 
 function Sidebar() {
     const [open, setOpen] = useState(false)
@@ -28,9 +27,7 @@ function Sidebar() {
 
     return (
         <Div className='sidebar w-fit lg:h-[100vh] sticky overflow-y-scroll p-3 bg-white text-[#324054]'>
-            <Link to={`${url}`} className={`${open ? 'hidden' : 'flex'} mb-2`}>
-                <img src={Logo} alt='logo'/>
-            </Link>
+            <img src={Logo} alt='logo' className={`${open ? 'hidden' : 'flex'} mb-4`}/>
             {/* {
                 open ? 
                 <button className='' onClick={toggleButton}>
