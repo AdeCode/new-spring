@@ -387,7 +387,7 @@ function BankInfo({ data }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className='flex w-full gap-3 py-3'>
+                            {/* <div className='flex w-full gap-3 py-3'>
                                 <div className='grow'>
                                     <TextField
                                         name='official_address'
@@ -421,7 +421,7 @@ function BankInfo({ data }) {
                                         defaultValue={values.official_address}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className='flex justify-end'>
                                 <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                     {
