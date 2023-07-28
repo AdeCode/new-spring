@@ -9,6 +9,7 @@ import {toast} from 'react-toastify'
 import { Link, useNavigate } from 'react-router-dom'
 import merchantService from '../../../@services/merchantService'
 import PreviousPage from '../../../components/@shared/PreviousPage'
+import { url } from '../../../@services/httpService'
 
 
 function MerchantForgotPassword() {
@@ -47,7 +48,7 @@ function MerchantForgotPassword() {
         <PreviousPage/>
         <div className='flex flex-col items-center'>
             <div className='mb-5'>
-                <Link to='/home'>
+                <Link to={`${url}`}>
                     <img src={logo} alt='logo'/>
                 </Link>
             </div>

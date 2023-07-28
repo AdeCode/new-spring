@@ -9,6 +9,7 @@ import { AuthContext } from '../../../contexts/AuthContexts'
 import InputField from '../../../components/@shared/InputField'
 import merchantService from '../../../@services/merchantService'
 import logo from '../../../images/home/logo1.png'
+import { url } from '../../../@services/httpService'
 
 
 function MerchantLogin() {
@@ -50,7 +51,7 @@ function MerchantLogin() {
         <Div className='flex justify-center bg-white w-full'>
             <div className='w-full flex flex-col justify-center items-center h-screen'>
                 <div className='mb-5'>
-                    <Link to='/home'>
+                    <Link to={`${url}`}>
                         <img src={logo} alt='logo'/>
                     </Link>
                 </div>
