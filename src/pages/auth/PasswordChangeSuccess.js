@@ -2,6 +2,8 @@ import React from 'react'
 import styled from 'styled-components'
 import logo from '../../images/logo1.png'
 import unlock from '../../images/auth/unlock.png'
+import {Link} from 'react-router-dom'
+import { url } from '../../@services/httpService'
 
 
 function PasswordChangeSuccess() {
@@ -10,7 +12,9 @@ function PasswordChangeSuccess() {
     <Box className='flex justify-center pt-[107px]'>
         <div className='flex flex-col items-center'>
             <div className='mb-5'>
-                <img src={logo} alt='logo'/>
+                <Link to={`${url}`}>
+                    <img src={logo} alt='logo'/>
+                </Link>
             </div>
             <div className=''>
                 <img src={unlock} alt='unlocked'/>

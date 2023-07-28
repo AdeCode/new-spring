@@ -10,6 +10,7 @@ import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import PreviousPage from '../../components/@shared/PreviousPage'
+import { url } from '../../@services/httpService'
 
 
 
@@ -51,7 +52,7 @@ function NewPassword() {
         <PreviousPage/>
         <div className='flex flex-col items-center'>
             <div className='mb-5'>
-                <Link to='/home'>
+                <Link to={`${url}`}>
                     <img src={logo} alt='logo'/>
                 </Link>
             </div>

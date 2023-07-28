@@ -1,6 +1,8 @@
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 
+// export const url = './'
+export const url = 'https://getspring.finance/'
 
 const secureInstance = axios.create({
     baseURL: 'https://qipbzv4fxl.execute-api.us-east-1.amazonaws.com/sandbox/',
