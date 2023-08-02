@@ -36,6 +36,7 @@ import InvoicePreview from './pages/dashboard/customer/InvoicePreview';
 import FormComponent from './pages/dashboard/FormStep'
 import SearchVendors from './pages/SearchVendors';
 import WebInfo from './pages/dashboard/WebInfo';
+import CreateRole from './pages/dashboard/setting/roles/CreateRole';
 // import NewHome from './pages/NewHome'
 
 function Routers (){
@@ -77,6 +78,7 @@ function Routers (){
                         <Route path='/settings/manage-users' element={<ManageUsers/>}></Route>                       
                         <Route path='/settings/user-settings' element={<UserSettings/>}></Route>                       
                         <Route path='/settings/user-roles' element={<UserRoles/>}></Route>                       
+                        <Route path='/settings/create-role' element={<CreateRole/>}></Route>                       
                         <Route path='/invoice/generate' element={<NewInvoice/>}></Route>                       
                         <Route path='/invoice' element={<InvoiceIndex/>}></Route>                       
                         <Route path='/invoice/details/:invoiceCode' element={<InvoiceDetails/>}></Route>                       
