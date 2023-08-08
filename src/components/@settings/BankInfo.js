@@ -77,11 +77,9 @@ function BankInfo({ data }) {
                 })
                     .then(res => {
                         if (res.data) {
-                            //console.log(res.data)
-                            setFieldValue('account_name', res.data.accountName);
+                            // setFieldValue('account_name', res.data.accountName);
                             nameLoading = false
                         } else {
-                            // setCustomerExists(false)
                         }
                     },
                         (err) => {
@@ -105,7 +103,7 @@ function BankInfo({ data }) {
                             <>
                                 {/* <option value=''>Select your bank</option> */}
                                 {
-                                    banks.data.banks.map(({ bankCode, bankName }) => {
+                                    banks?.data?.banks.map(({ bankCode, bankName }) => {
                                         return <option value={bankName} key={bankCode}>{bankName}</option>
                                     })
                                 }
@@ -305,14 +303,14 @@ function BankInfo({ data }) {
                                 </div>
                                 <div className='grow flex gap-4'>
                                     <div className='grow flex'>
-                                        {/* <InputField
+                                        <InputField
                                             name='account_name'
                                             type='text'
                                             label='Enter your Account Name'
                                             placeholder='e.g. Moshood Abiola'
-                                        /> */}
-                                        <h2 className='font-medium mr-1'>Account Name: </h2>
-                                        <span className='font-normal'>{nameLoading ? 'Loading...' : values?.account_name}</span>
+                                        />
+                                        {/* <h2 className='font-medium mr-1'>Account Name: </h2>
+                                        <span className='font-normal'>{nameLoading ? 'Loading...' : values?.account_name}</span> */}
                                     </div>
 
                                 </div>
