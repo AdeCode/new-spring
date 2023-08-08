@@ -27,7 +27,7 @@ function Sidebar() {
 
     return (
         <Div className='sidebar w-fit lg:h-[100vh] sticky overflow-y-scroll p-3 bg-white text-[#324054]'>
-            <img src={Logo} alt='logo' className={`${open ? 'hidden' : 'flex'}`}/>
+            <img src={Logo} alt='logo' className={`${open ? 'hidden' : 'flex'} mb-4`}/>
             {/* {
                 open ? 
                 <button className='' onClick={toggleButton}>

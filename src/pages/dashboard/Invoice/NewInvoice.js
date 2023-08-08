@@ -21,6 +21,11 @@ import axios from 'axios'
 import SelectField from '../../../components/@shared/SelectField'
 import QuantityUnitField from '../../../components/@shared/QuantityUnitField'
 import { getTaxRate, pageStatus, calculateSubTotal, calculateTax, calculateInvoiceTotal } from '../../../@helpers/helperFunctions'
+import { useNameField, useCountriesQuery, useGetCountryVat, useGetReceiverAddress } from '../../../components/@shared/invoiceUtils'
+import { Modal } from '@mui/material'
+import ReceiverAddress from '../../../components/@shared/ReceiverAddress'
+import SenderAddressModal from '../../../components/@shared/SenderAddressModal'
+
 
 function NewInvoice() {
     const navigate = useNavigate()
@@ -31,9 +36,17 @@ function NewInvoice() {
 
     const [customerExists, setCustomerExists] = useState(false)
 
+    const [customerId, setCustomerId] = useState(null)
+
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value)
     }
+    const { data: countries, isLoading: countriesLoading } = useCountriesQuery();
+    // const {data:addresses,isLoading:addressLoading} = useGetReceiverAddress();
+    const { data: addresses, isLoading: addressLoading } = useQuery(['receiverAddress'], merchantService.getReceiverAddress)
+    // console.log(addresses.data)
+    const { data: merchantAddresses, isLoading: merchantAddressLoading } = useQuery(['merchant_address'], merchantService.getMerchantAddress)
+    merchantAddresses && console.log(merchantAddresses.data)
 
     const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
 
@@ -42,7 +55,6 @@ function NewInvoice() {
     const createInvoiceMutation = useMutation(merchantService.createInvoice, {
         onSuccess: res => {
             console.log(res)
-            //dispatch({ type: 'LOGIN', payload: res.data })
             toast.success(res.message, {
                 theme: "colored",
             })
@@ -58,7 +70,7 @@ function NewInvoice() {
     })
 
     const onSubmit = (values) => {
-        values={
+        values = {
             ...values,
             currency,
             invoice_due_date
@@ -75,7 +87,7 @@ function NewInvoice() {
         const [field, meta] = useField(props)
 
         useEffect(() => {
-            setFieldValue('vat',vatRate?.data[0]?.vat_value ? vatRate?.data[0]?.vat_value : 0)
+            setFieldValue('vat', vatRate?.data[0]?.vat_value ? vatRate?.data[0]?.vat_value : 0)
             let isCurrent = true;
             if (customer_phone && customer_phone.length > 10) {
                 //make API call
@@ -84,10 +96,12 @@ function NewInvoice() {
                     .then(res => {
                         //console.log(res)
                         if (!!isCurrent && res.data) {
+                            console.log('user id: ', res.data.id)
+                            setCustomerId(res.data.id)
                             setFieldValue(props.name, res.data.name);
                             setFieldValue('customer_email', res.data.email);
                             setCustomerExists(true)
-                        }else{
+                        } else {
                             setCustomerExists(false)
                         }
                     },
@@ -115,27 +129,54 @@ function NewInvoice() {
         );
     }
 
-    const { data: countries, isLoading: countriesLoading, error } = useQuery(['countries'],
-        async () => {
-            try {
-                const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
-                return res.data.data
-            } catch (error) {
-                console.log(error)
-            }
-        }
-    )
+    const { data: vatRate } = useGetCountryVat(customerCountry)
 
-    const { data: vatRate, isLoading: vatLoading } = useQuery(['vat',{customerCountry}], merchantService.getVat)
-
-    const countryChange =(e, setFieldValue) => {
-        setFieldValue('customer_country',e.target.value)
+    const countryChange = (e, setFieldValue) => {
+        setFieldValue('customer_country', e.target.value)
         setCustomerCountry(e.currentTarget.value)
     }
 
     const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', unit: 'kg', total: '' }
+
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = (hash) => {
+        setOpen(true)
+    };
+    const handleClose = () => setOpen(false);
+
+    const [openModal, setOpenModal] = useState(false);
+
+    const handleOpenModal = (hash) => {
+        setOpenModal(true)
+    };
+    const handleCloseModal = () => setOpenModal(false);
+
     return (
         <Invoice className='px-[50px]'>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#ffffff' }}
+            >
+                <ReceiverAddress
+                    handleClose={handleClose}
+                    customerId={customerId}
+                />
+            </Modal>
+            <Modal
+                open={openModal}
+                onClose={handleCloseModal}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+                sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', backgroundColor: '#ffffff' }}
+            >
+                <SenderAddressModal
+                    handleClose={handleCloseModal}
+                />
+            </Modal>
             <div className='flex justify-between'>
                 <Link onClick={() => navigate(-1)} className='flex gap-2 items-center mb-6'>
                     <span className="material-symbols-outlined">keyboard_backspace</span><h2 className=''>Back</h2>
@@ -146,9 +187,9 @@ function NewInvoice() {
                         message={<Link to='/settings/personal-information'>Click here to complete your compliance requirements to access invoice creation</Link>}
                     />
                 }
-                
+
             </div>
-            <div className='box w-full flex flex-col' disabled={pageStatus(profile?.data?.bank_account_detail,profile?.data?.merchant_account_profile,profile?.data?.profile)}>
+            <div className='box w-full flex flex-col' disabled={pageStatus(profile?.data?.bank_account_detail, profile?.data?.merchant_account_profile, profile?.data?.profile)}>
                 <div className='w-full flex justify-between border-b-2 border-cyan-900 px-3 py-2'>
                     <h2 className=''>Create Invoice</h2>
                     <select name='currency' onChange={handleCurrencyChange} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
@@ -168,9 +209,12 @@ function NewInvoice() {
                             invoice_items: [Empty_invoice_items],
                             customer_country: '',
                             customer_address: '',
+                            customer_city: '',
+                            customer_state: '',
                             sender_name: '',
                             sender_phone: '',
                             sender_address: '',
+                            customer_id: '',
                             vat: vatRate?.data[0]?.vat_value ? vatRate?.data[0]?.vat_value : vatRate?.data?.vat_value
                         }}
                         validationSchema={
@@ -181,17 +225,17 @@ function NewInvoice() {
                                 customer_phone: Yup.string().required("Please enter customer  phone number"),
                                 invoice_items: Yup.array(Yup.object({
                                     item_name: Yup.string().required('Item name is required'),
-                                    quantity: Yup.number().required('Quantity is required').min(1,'minimum of one quantity required'),
-                                    price: Yup.number().required('Price is required').min(1,'must be greater than zero'),
+                                    quantity: Yup.number().required('Quantity is required').min(1, 'minimum of one quantity required'),
+                                    price: Yup.number().required('Price is required').min(1, 'must be greater than zero'),
                                     cbm: Yup.number().required('CBM is required'),
                                     total: Yup.number(),
-                                })).min(1,'Enter at least 1 invoice item'),
+                                })).min(1, 'Enter at least 1 invoice item'),
                             })
                         }
                         onSubmit={(values, { setSubmitting, resetForm }) => {
                             setSubmitting(false)
                             onSubmit(values)
-                            console.log('form fields ',values)
+                            console.log('form fields ', values)
                             resetForm({
                                 customer_email: '',
                                 customer_name: '',
@@ -222,13 +266,23 @@ function NewInvoice() {
                                             disabled={customerExists}
                                         />
                                     </div>
+                                    <div className='grow'>
+                                        <NameField
+                                            name='customer_name'
+                                            type='text'
+                                            placeholder='e.g. Olawale James'
+                                            disabled={customerExists}
+                                        />
+                                    </div>
+                                </div>
+                                <div className='flex w-full gap-2'>
                                     <div className=''>
                                         <SelectField
                                             name='customer_country'
                                             label="Receiver's Country*"
                                             value={values.customer_country}
                                             onBlur={handleBlur}
-                                            onChange={(e)=>{countryChange(e,setFieldValue )}}
+                                            onChange={(e) => { countryChange(e, setFieldValue) }}
                                         >
                                             {
                                                 countriesLoading ? <option value="">Loading...</option>
@@ -236,7 +290,7 @@ function NewInvoice() {
                                                     <>
                                                         <option value="">Select Country</option>
                                                         {
-                                                            countries?.map((country,index) => {
+                                                            countries?.map((country, index) => {
                                                                 return (
                                                                     <option value={country.name} key={country.ise3}>{country.name}</option>
                                                                 )
@@ -246,31 +300,63 @@ function NewInvoice() {
                                             }
                                         </SelectField>
                                     </div>
-                                </div>
-                                <div className='flex w-full gap-2'>
-                                    <div className='grow'>
-                                        <NameField
-                                            name='customer_name'
-                                            type='text'
-                                            placeholder='e.g. Olawale James'
-                                            disabled={customerExists}
-                                        />
-                                    </div>
-                                    <div className='grow'>
+                                    {/* <div className='grow'>
                                         <InputField
                                             name='customer_address'
                                             type='text'
                                             label="Receiver's Address"
                                             placeholder='e.g. 2 Houston Street NY'
                                         />
-                                    </div>
-                                    <div className='grow'>
+                                    </div> */}
+                                    <div className=''>
                                         <div className='flex flex-col'>
                                             <label htmlFor='date' className='font-medium text-base text-label mb-[6px]'>Due Date</label>
                                             <DateTimePicker onChange={onChange} value={invoice_due_date} className='' />
                                         </div>
                                     </div>
                                 </div>
+                                {
+                                    addresses?.data?.length > 0 ?
+                                        <div>
+                                            {
+                                                // !!customerExists &&
+                                                <>
+                                                    <div>
+                                                        <SelectField
+                                                            name='customer_address'
+                                                            label="Receiver's Address*"
+                                                            value={values.customer_address}
+                                                            onBlur={handleBlur}
+                                                        // onChange={(e)=>{countryChange(e,setFieldValue )}}
+                                                        >
+                                                            {
+                                                                addressLoading ? <option value="">Loading...</option>
+                                                                    :
+                                                                    <>
+                                                                        <option value="">Select Address</option>
+                                                                        {
+                                                                            addresses.data?.map((address) => {
+                                                                                return (
+                                                                                    <option value={address?.house_no + " " + address.address + " " + address.city + " " + address.state + " " + address.country} key={address.uid}>
+                                                                                        {address?.house_no ? address?.house_no : ''}{" " + address.address + " " + address.city + " " + address.state + " " + address.country}
+                                                                                    </option>
+                                                                                )
+                                                                            })
+                                                                        }
+                                                                    </>
+                                                            }
+                                                        </SelectField>
+                                                    </div>
+                                                </>
+                                            }
+                                            <button onClick={() => handleOpen()} type='button' className='flex border border-green-700 text-green-700 items-center text-base py-2 px-3 rounded-md hover:bg-green-700 hover:text-white'>
+                                                <span className="material-symbols-outlined disabled:opacity-50 text-green-700 hover:text-white">add</span>
+                                                New Receiver Address
+                                            </button>
+                                        </div>
+                                        : null
+                                }
+
                                 <div className='flex w-full gap-2 pt-3'>
                                     <div className='grow-0'>
                                         <InputField
@@ -289,18 +375,60 @@ function NewInvoice() {
                                         />
                                     </div>
                                     <div className='grow'>
-                                        <InputField
+                                        {/* <InputField
                                             name='sender_address'
                                             type='text'
                                             label="Sender's Address"
                                             placeholder='e.g. 2, Kumapayi Street, Ikeja, Lagos'
-                                        />
+                                        /> */}
+                                        {
+                                            merchantAddresses.data.length > 0 ? 
+                                            <SelectField
+                                                name='sender_address'
+                                                label="Sender's Address*"
+                                                value={values.sender_address}
+                                                onBlur={handleBlur}
+                                                // onChange={(e)=>{countryChange(e,setFieldValue )}}
+                                            >
+                                                {
+                                                    merchantAddressLoading ? <option value="">Loading...</option>
+                                                        :
+                                                        <>
+                                                            <option value="">Select Address</option>
+                                                            {
+                                                                merchantAddresses.data?.map((address) => {
+                                                                    return (
+                                                                        <option value={address?.house_no + " " + address.address + " " + address.city + " " + address.state + " " + address.country} key={address.uid}>
+                                                                            {address?.house_no ? address?.house_no : ''}{" " + address.address + " " + address.city + " " + address.state + " " + address.country}
+                                                                        </option>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </>
+                                                }
+                                            </SelectField>
+                                            : 
+                                            <button onClick={() => handleOpenModal()} type='button' className='flex border border-green-700 text-green-700 items-center py-2 px-3 rounded-md hover:bg-green-700 hover:text-white'>
+                                                <span className="material-symbols-outlined disabled:opacity-50 text-green-700 hover:text-white">add</span>
+                                                Create Sender Address
+                                            </button> 
+                                        }
+                                        
                                     </div>
+                                </div>
+                                <div>
+                                    {
+                                        merchantAddresses.data.length > 0 &&
+                                        <button onClick={() => handleOpenModal()} type='button' className='flex border border-green-700 text-green-700 items-center py-2 px-3 rounded-md hover:bg-green-700 hover:text-white'>
+                                            <span className="material-symbols-outlined disabled:opacity-50 text-green-700 hover:text-white">add</span>
+                                            New Sender Address
+                                        </button>
+                                    }
                                 </div>
                                 <div className='flex flex-col mt-3'>
                                     <h2 className=''>Order Items</h2>
                                     <p className=''>*You should enter at least 1 item</p>
-                                    <div className='flex flex-col w-full'>
+                                    <div className='flex flex-col max-w-[600px] box-border'>
                                         <FieldArray name='invoice_items'>
                                             {
                                                 ({ push, remove, }) => (
@@ -332,40 +460,9 @@ function NewInvoice() {
                                                                             <option value="carton">carton</option>
                                                                             <option value="litres">litres</option>
                                                                         </QuantityUnitField>
-                                                                        {/* <div className='flex flex-col'>
-                                                                            <label className='font-medium text-base text-label mb-[6px]'>Quantity (kg)</label>
-                                                                            <Field
-                                                                                name={`invoice_items.${index}.quantity`}
-                                                                                type='number'
-                                                                                placeholder='item quantity'
-                                                                                className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
-                                                                            />
-                                                                            <ErrorMessage name={`invoice_items[${index}].quantity`} component="div" className='text-red-500' />
-                                                                        </div>
-                                                                        <SelectField
-                                                                            name='unit'
-                                                                            label="Unit*"
-                                                                            value={values.unit}
-                                                                            onBlur={handleBlur}
-                                                                        >
-                                                                            <option value="kg">kg</option>
-                                                                            <option value="carton">carton</option>
-                                                                            <option value="litres">litres</option>
-                                                                        </SelectField> */}
-
-
-                                                                        {/* 
-                                                                        <label className='font-medium text-base text-label mb-[6px]'>Quantity (kg)</label>
-                                                                        <Field
-                                                                            name={`invoice_items.${index}.quantity`}
-                                                                            type='number'
-                                                                            placeholder='item quantity'
-                                                                            className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
-                                                                        />
-                                                                        <ErrorMessage name={`invoice_items[${index}].quantity`} component="div" className='text-red-500' /> */}
                                                                     </div>
                                                                     <div className='flex grow-0 flex-col'>
-                                                                        <label className='font-medium text-base text-label mb-[6px]'>Price 
+                                                                        <label className='font-medium text-base text-label mb-[6px]'>Price
                                                                             {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>} (unit)
                                                                         </label>
                                                                         <Field
@@ -425,20 +522,20 @@ function NewInvoice() {
                                             <div className='flex justify-between'>
                                                 <h2 className=''>Sub total:</h2>
                                                 <span className='font-semibold gap-1 flex'>
-                                                    {helperFunctions.formatCurrency(currency,calculateSubTotal(values.invoice_items))}
+                                                    {helperFunctions.formatCurrency(currency, calculateSubTotal(values.invoice_items))}
                                                 </span>
                                             </div>
                                             <div className='flex justify-between'>
                                                 <h2 className=''>Tax({getTaxRate(vatRate?.data[0]?.vat_value)}%):</h2>
                                                 <span className='font-semibold gap-1 flex'>
-                                                    {helperFunctions.formatCurrency(currency,calculateTax(values.invoice_items, getTaxRate(vatRate?.data[0]?.vat_value)))}
+                                                    {helperFunctions.formatCurrency(currency, calculateTax(values.invoice_items, getTaxRate(vatRate?.data[0]?.vat_value)))}
                                                 </span>
                                             </div>
                                             <div className='flex justify-between'>
                                                 <h2 className=''>Invoice Total:</h2>
                                                 <span className='font-semibold gap-1 flex'>
                                                     {/* {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>}  */}
-                                                    {helperFunctions.formatCurrency(currency,calculateInvoiceTotal(values.invoice_items, getTaxRate(vatRate?.data[0]?.vat_value)))}
+                                                    {helperFunctions.formatCurrency(currency, calculateInvoiceTotal(values.invoice_items, getTaxRate(vatRate?.data[0]?.vat_value)))}
                                                 </span>
                                             </div>
                                         </div>

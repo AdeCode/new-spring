@@ -9,6 +9,7 @@ import merchantService from '../../../@services/merchantService'
 import InputField from '../../../components/@shared/InputField'
 import { AuthContext } from '../../../contexts/AuthContexts'
 import logo from '../../../images/home/logo1.png'
+import { url } from '../../../@services/httpService'
 
 function BusinessSignup() {
     const navigate = useNavigate()
@@ -54,7 +55,7 @@ function BusinessSignup() {
     return (
         <Div className='flex flex-col items-center justify-center bg-white w-full pt-7 pb-7'>
             <div className='md:mb-5 mb-3'>
-                <Link to='/home'>
+                <Link to={`${url}`}>
                     <img src={logo} alt='logo'/>
                 </Link>
             </div>

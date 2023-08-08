@@ -41,7 +41,7 @@ function Navbar() {
             <nav className='flex py-5 px-7  justify-between lg:gap-5 lg:h-[80px] items-center' id='top'>
                 <div className='flex justify-between items-center w-full lg:px-[50px]'>
                     <div className='logo w-[90px] lg:w-[120px]'>
-                        <Link to='./'>
+                        <Link to='./home'>
                             <img src={logo} alt='Spring Finance Logo' />
                         </Link>
                     </div>
@@ -60,7 +60,7 @@ function Navbar() {
                                     Mobile products here...
                                 </div> */}
 
-                                <div className='sub-menu absolute z-[1] bg-white w-[300px] md:min-w-[700px] top-12 h-[300px] py-4 px-4 rounded-2xl'>
+                                <div className='sub-menu absolute z-[1] bg-white w-[300px] md:min-w-[600px] lg:min-w-[900px] top-12 h-[300px] py-4 px-4 rounded-2xl'>
                                     <div className='flex flex-col md:flex-row gap-2 md:gap-4 md:px-4'>
                                         <div className='md:w-[200px]'>
                                             <h3 className='text-left #001533 font-medium md:mb-2'>Invoicing</h3>

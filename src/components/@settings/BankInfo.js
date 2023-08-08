@@ -77,11 +77,9 @@ function BankInfo({ data }) {
                 })
                     .then(res => {
                         if (res.data) {
-                            //console.log(res.data)
-                            setFieldValue('account_name', res.data.accountName);
+                            // setFieldValue('account_name', res.data.accountName);
                             nameLoading = false
                         } else {
-                            // setCustomerExists(false)
                         }
                     },
                         (err) => {
@@ -105,7 +103,7 @@ function BankInfo({ data }) {
                             <>
                                 {/* <option value=''>Select your bank</option> */}
                                 {
-                                    banks.data.banks.map(({ bankCode, bankName }) => {
+                                    banks?.data?.banks.map(({ bankCode, bankName }) => {
                                         return <option value={bankName} key={bankCode}>{bankName}</option>
                                     })
                                 }
@@ -305,14 +303,14 @@ function BankInfo({ data }) {
                                 </div>
                                 <div className='grow flex gap-4'>
                                     <div className='grow flex'>
-                                        {/* <InputField
+                                        <InputField
                                             name='account_name'
                                             type='text'
                                             label='Enter your Account Name'
                                             placeholder='e.g. Moshood Abiola'
-                                        /> */}
-                                        <h2 className='font-medium mr-1'>Account Name: </h2>
-                                        <span className='font-normal'>{nameLoading ? 'Loading...' : values?.account_name}</span>
+                                        />
+                                        {/* <h2 className='font-medium mr-1'>Account Name: </h2>
+                                        <span className='font-normal'>{nameLoading ? 'Loading...' : values?.account_name}</span> */}
                                     </div>
 
                                 </div>
@@ -387,7 +385,7 @@ function BankInfo({ data }) {
                                     </div>
                                 </div>
                             </div>
-                            <div className='flex w-full gap-3 py-3'>
+                            {/* <div className='flex w-full gap-3 py-3'>
                                 <div className='grow'>
                                     <TextField
                                         name='official_address'
@@ -421,7 +419,7 @@ function BankInfo({ data }) {
                                         defaultValue={values.official_address}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className='flex justify-end'>
                                 <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                     {

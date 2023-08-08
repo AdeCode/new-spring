@@ -155,7 +155,32 @@ async function getAllVat(){
     return data
 }
 
+async function getReceiverAddress(){
+    const {data} = await httpService.secureInstance.get(`/merchants/invoices/addresses/customer`)
+    return data
+}
+
+async function getMerchantAddress(){
+    const {data} = await httpService.secureInstance.get(`/merchants/invoices/addresses/merchant`)
+    return data
+}
+
+async function createReceiverAddress(payload){
+    const {data} = await httpService.secureInstance.post(`/merchants/invoices/addresses/customer`, payload)
+    return data
+}
+
+async function createSenderAddress(payload){
+    const {data} = await httpService.secureInstance.post(`/merchants/invoices/addresses/merchant`, payload)
+    return data
+}
+
+
 const merchantService = {
+    getMerchantAddress,
+    createSenderAddress,
+    getReceiverAddress,
+    createReceiverAddress,
     login,
     registerBusiness,
     logout,

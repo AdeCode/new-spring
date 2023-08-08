@@ -77,7 +77,7 @@ function Footer() {
                     </ul>
                 </nav>
             </div>
-            <div className='hidden lg:flex mt-[57.7px]'>
+            <div className='flex md:mt-[57.7px] mt-5'>
                 <h5 className='w-full text-[16px] leading-[20px] text-left'>Springstack Technologies Limited is a Financial Technology and Digital Freight Management for Africa. We manage the entire processing of freight by air and ocean using software to provide invoices, freight manifest generation, customers document management, payments, omni-channel communication and user access control.</h5>
             </div>
             <div className='footer-bottom lg:flex lg:mt-10 lg:justify-between lg:border-t-[1px] lg:border-gray lg:h-[104.9px] lg:items-center'>

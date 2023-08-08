@@ -9,6 +9,7 @@ import InputField from '../../components/@shared/InputField'
 import authService from '../../@services/authService'
 import { AuthContext } from '../../contexts/AuthContexts'
 import logo from '../../images/home/logo1.png'
+import { url } from '../../@services/httpService'
 
 
 function Login() {
@@ -42,7 +43,9 @@ function Login() {
         <Div className='flex justify-center bg-white w-full'>
             <div className='w-full flex flex-col items-center justify-center items-center h-screen'>
                 <div className='mb-5'>
-                    <img src={logo} alt='logo'/>
+                    <Link to={`${url}`}>
+                        <img src={logo} alt='logo'/>
+                    </Link>
                 </div>
                 <div className='bg-white w-[500px] h-[500px] shadow pt-12 rounded-md mt-7'>
                     <h2 className='text-center font-bold text-3xl lg:text-2xl'>Sign in</h2>

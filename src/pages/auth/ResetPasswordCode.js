@@ -5,6 +5,8 @@ import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import InputField from '../../components/@shared/InputField'
 import OtpInput from 'react-otp-input';
+import { url } from '../../@services/httpService'
+import {Link} from 'react-router-dom'
 
 
 function ResetPasswordCode() {
@@ -20,7 +22,9 @@ function ResetPasswordCode() {
     <Box className='flex justify-center pt-[107px]'>
         <div className='flex flex-col items-center'>
             <div className='mb-5'>
-                <img src={logo} alt='logo'/>
+                <Link to={`${url}`}>
+                    <img src={logo} alt='logo'/>
+                </Link>
             </div>
             <div className='bg-white form px-16 py-7 flex flex-col items-center'>
                 <h2 className='text-[#373737] font-bold text-2xl mb-7'>Forget Password</h2>
