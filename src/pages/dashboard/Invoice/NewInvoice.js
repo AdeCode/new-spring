@@ -382,7 +382,7 @@ function NewInvoice() {
                                             placeholder='e.g. 2, Kumapayi Street, Ikeja, Lagos'
                                         /> */}
                                         {
-                                            merchantAddresses.data.length > 0 ? 
+                                            merchantAddresses?.data?.length > 0 ? 
                                             <SelectField
                                                 name='sender_address'
                                                 label="Sender's Address*"
@@ -418,7 +418,7 @@ function NewInvoice() {
                                 </div>
                                 <div>
                                     {
-                                        merchantAddresses.data.length > 0 &&
+                                        merchantAddresses?.data?.length > 0 &&
                                         <button onClick={() => handleOpenModal()} type='button' className='flex border border-green-700 text-green-700 items-center py-2 px-3 rounded-md hover:bg-green-700 hover:text-white'>
                                             <span className="material-symbols-outlined disabled:opacity-50 text-green-700 hover:text-white">add</span>
                                             New Sender Address
