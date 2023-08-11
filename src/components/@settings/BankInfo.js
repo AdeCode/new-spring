@@ -261,31 +261,16 @@ function BankInfo({ data }) {
                                 </div>
                                 <div className='grow flex gap-4'>
                                     <div className='grow'>
-                                        <BankNameField
+                                        {/* <BankNameField
                                             name='bank_name'
                                             text='text'
-                                        // onChange={()=>handleBankChange(values.bank_name)}
-                                        />
-                                        {/* <SelectField
+                                        /> */}
+                                        <InputField
                                             name='bank_name'
-                                            label='Enter your bank Name'
                                             type='text'
-                                        >
-                                            {
-                                                bankLoading ? <option value="">Loading...</option>
-                                                    :
-                                                    <>
-                                                        <option value="">Select Bank</option>
-                                                        {
-                                                            banks?.data.map(bank => {
-                                                                return (
-                                                                    <option value={bank.bankCode} key={bank.bankCode}>{bank.bankName}</option>
-                                                                )
-                                                            })
-                                                        }
-                                                    </>
-                                            }
-                                        </SelectField> */}
+                                            label='Enter Bank Name*'
+                                            placeholder='e.g. Wema Bank'
+                                        />
                                     </div>
                                     <div className='grow'>
                                         <InputField

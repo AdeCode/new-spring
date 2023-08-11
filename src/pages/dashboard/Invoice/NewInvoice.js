@@ -357,7 +357,7 @@ function NewInvoice() {
                                         : null
                                 }
 
-                                <div className='flex w-full gap-2 pt-3'>
+                                <div className='flex items-center w-full gap-2 pt-3'>
                                     <div className='grow-0'>
                                         <InputField
                                             name='sender_name'
