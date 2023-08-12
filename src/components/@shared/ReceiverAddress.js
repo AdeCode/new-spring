@@ -58,8 +58,24 @@ function ReceiverAddress ({handleClose,customerId}) {
 
     const onSubmit = (values) => {
         console.log(values)
-        createReceiverAddressMutation.mutate(values)
-        // createAddress.mutate(values)
+        if(!customerId){
+            //save to local storage
+            const address = {
+                country: values.country,
+                state: values.state,
+                city: values.city,
+                house_no: values.house_no,
+                address: values.address,
+                zip_code: values.zip_code,
+            }
+            localStorage.setItem('receiver_address', JSON.stringify(address))
+            toast.success("Receiver's Address saved", {
+                theme: "colored",
+            })
+            handleClose()
+        }else{
+            createReceiverAddressMutation.mutate(values)
+        }
     }
 
     return (
