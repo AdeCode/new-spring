@@ -28,7 +28,6 @@ function Dashboard() {
     //unpaidInvoices && console.log('unpaid', unpaidInvoices.invoices)
 
     const { data: profile } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-    console.log(profile)
     return (
         <DashboardSection>
             <h2 className='font-normal text-lg text-gray'>Welcome {profile?.data?.profile?.business_name},</h2>
