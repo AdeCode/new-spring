@@ -38,6 +38,9 @@ function NewInvoice() {
 
     const [customerId, setCustomerId] = useState(null)
 
+    const newUserAdd = JSON.parse(localStorage.getItem('receiver_address'))
+    // newUserAdd&&console.log(newUserAdd)
+
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value)
     }
@@ -46,7 +49,7 @@ function NewInvoice() {
     const { data: addresses, isLoading: addressLoading } = useQuery(['receiverAddress'], merchantService.getReceiverAddress)
     // console.log(addresses.data)
     const { data: merchantAddresses, isLoading: merchantAddressLoading } = useQuery(['merchant_address'], merchantService.getMerchantAddress)
-    merchantAddresses && console.log(merchantAddresses.data)
+    // merchantAddresses && console.log(merchantAddresses.data)
 
     const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
 
@@ -58,6 +61,10 @@ function NewInvoice() {
             toast.success(res.message, {
                 theme: "colored",
             })
+            //
+            if(newUserAdd){
+                localStorage.removeItem('receiver_address')
+            }
             navigate('/invoice')
             // QueryClient.invalidateQueries('invoices')
         },
@@ -319,7 +326,7 @@ function NewInvoice() {
                                     addresses?.data?.length > 0 ?
                                         <div>
                                             {
-                                                // !!customerExists &&
+                                                // !!customerExists && 
                                                 <>
                                                     <div>
                                                         <SelectField
@@ -330,6 +337,7 @@ function NewInvoice() {
                                                         // onChange={(e)=>{countryChange(e,setFieldValue )}}
                                                         >
                                                             {
+                                                                !!customerExists ?
                                                                 addressLoading ? <option value="">Loading...</option>
                                                                     :
                                                                     <>
@@ -344,6 +352,15 @@ function NewInvoice() {
                                                                             })
                                                                         }
                                                                     </>
+                                                                :
+                                                                <>
+                                                                    {
+                                                                        newUserAdd &&
+                                                                        <option value={newUserAdd?.house_no + " " +newUserAdd.address + " " + newUserAdd.city + " " + newUserAdd.state + " " + newUserAdd.country}>
+                                                                            {newUserAdd?.house_no ? newUserAdd?.house_no : ''}{" " + newUserAdd.address + " " + newUserAdd.city + " " + newUserAdd.state + " " + newUserAdd.country}
+                                                                        </option>
+                                                                    }
+                                                                </>
                                                             }
                                                         </SelectField>
                                                     </div>

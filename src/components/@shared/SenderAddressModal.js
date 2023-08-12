@@ -29,14 +29,14 @@ function SenderAddressModal ({handleClose}) {
         },
         { enabled: !!selectedCountry }
     )
-    state && console.log(state.states)
+    // state && console.log(state.states)
 
 
     const handleCountryChange = (e, handleChange) => {
         //console.log(e.currentTarget.value)
         setSelectedCountry(e.currentTarget.value)
         handleChange(e)
-        console.log(selectedCountry)
+        // console.log(selectedCountry)
     }
    
     const createReceiverAddressMutation = useMutation(merchantService.createSenderAddress, {
@@ -44,7 +44,7 @@ function SenderAddressModal ({handleClose}) {
             toast.success(res.message, {
                 theme: "colored",
             })
-            queryClient.invalidateQueries('receiverAddress')
+            queryClient.invalidateQueries('merchant_address')
             handleClose()
         },
         onError: err => {
@@ -56,7 +56,7 @@ function SenderAddressModal ({handleClose}) {
     })
 
     const onSubmit = (values) => {
-        console.log(values)
+        // console.log(values)
         createReceiverAddressMutation.mutate(values)
         // createAddress.mutate(values)
     }
