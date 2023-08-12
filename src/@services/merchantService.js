@@ -175,8 +175,14 @@ async function createSenderAddress(payload){
     return data
 }
 
+async function getRoles(){
+    const {data} = await httpService.secureInstance.get(`/merchants/auth/accounts/roles`)
+    return data
+}
+
 
 const merchantService = {
+    getRoles,
     getMerchantAddress,
     createSenderAddress,
     getReceiverAddress,

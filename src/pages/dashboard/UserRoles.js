@@ -2,6 +2,8 @@ import React from 'react'
 import BackNav from '../../components/@shared/BackNav'
 import RolesTable from '../../components/@tables/RolesTable'
 import {useNavigate} from 'react-router-dom'
+import { useQuery } from 'react-query'
+import merchantService from '../../@services/merchantService'
 
 function UserRoles() {
   const navigate = useNavigate()
@@ -10,6 +12,8 @@ function UserRoles() {
     navigate('/settings/create-role')
   }
   
+  const { data: roles, isLoading: roleLoading } = useQuery(['roles'], merchantService.getRoles)
+  roles&&console.log(roles)
   return (
     <div>
         {/* <Link onClick={() => navigate(-1)} className='flex gap-2 items-center mb-6'>
