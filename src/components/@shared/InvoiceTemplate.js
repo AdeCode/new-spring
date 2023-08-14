@@ -29,7 +29,6 @@ function InvoiceTemplate() {
     const location = useLocation()
     
     const data = location.state.invoice.invoice
-    // console.log(data)
 
     const styles = {
         container: {
