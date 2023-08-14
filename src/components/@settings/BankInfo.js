@@ -22,9 +22,9 @@ function BankInfo({ data }) {
 
     const { data: banks, isLoading: bankLoading, error } = useQuery(['banks'], merchantService.getBankList)
     // banks && console.log('from banks ', banks)
-    error && toast.error(error.message, {
-        theme: "colored",
-    })
+    // error && toast.error(error.message, {
+    //     theme: "colored",
+    // })
 
     const lookUpBankDetailsMutation = useMutation(merchantService.saveAccountDetails, {
         onSuccess: res => {
@@ -50,9 +50,7 @@ function BankInfo({ data }) {
                 return selectedDetails
             }
         } catch (err) {
-            //console.log(err)
         }
-
     }
 
     let nameLoading = false

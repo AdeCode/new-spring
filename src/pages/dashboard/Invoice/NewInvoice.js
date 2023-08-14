@@ -103,7 +103,7 @@ function NewInvoice() {
                     .then(res => {
                         //console.log(res)
                         if (!!isCurrent && res.data) {
-                            console.log('user id: ', res.data.id)
+                            // console.log('user id: ', res.data.id)
                             setCustomerId(res.data.id)
                             setFieldValue(props.name, res.data.name);
                             setFieldValue('customer_email', res.data.email);
@@ -143,7 +143,7 @@ function NewInvoice() {
         setCustomerCountry(e.currentTarget.value)
     }
 
-    const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', unit: 'kg', total: '' }
+    const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', unit: '', total: '' }
 
     const [open, setOpen] = useState(false);
 
@@ -230,6 +230,10 @@ function NewInvoice() {
                                     .required("email field can not be empty"),
                                 customer_name: Yup.string().required("Please enter customer name"),
                                 customer_phone: Yup.string().required("Please enter customer  phone number"),
+                                //customer_address: Yup.string().required("Please enter receiver's address"),
+                                sender_name: Yup.string().required("Please enter sender's number"),
+                                sender_phone: Yup.string().required("Please enter sender  phone number"),
+                                sender_address:  Yup.string().required("Please enter sender's address"),
                                 invoice_items: Yup.array(Yup.object({
                                     item_name: Yup.string().required('Item name is required'),
                                     quantity: Yup.number().required('Quantity is required').min(1, 'minimum of one quantity required'),
@@ -468,7 +472,7 @@ function NewInvoice() {
                                                                             name={`invoice_items.${index}.quantity`}
                                                                             type='number'
                                                                             label="Quantity*"
-                                                                            value={`invoice_items.${index}.unit`}
+                                                                            //value={`invoice_items.${index}.unit`}
                                                                             // value={values.unit}
                                                                             onBlur={handleBlur}
                                                                             unit={`invoice_items.${index}.unit`}
@@ -569,7 +573,7 @@ function NewInvoice() {
                                     {/* <Field component="textarea" rows="4" value={""}></Field> */}
                                 </div>
                                 <div className='flex justify-end'>
-                                    <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
+                                    <button type="submit" disabled={isSubmitting} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                         {
                                             createInvoiceMutation.isLoading ?
                                                 "Loading..."
