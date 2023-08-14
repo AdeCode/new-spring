@@ -229,7 +229,15 @@ function BankInfo({ data }) {
             <Formik
                 isValid
                 initialValues={
-                    initialState
+                    {
+                        account_number: data?.bank_account_detail?.bank_account_number,
+                        bank_name: data?.bank_account_detail?.bank_name,
+                        account_name: data?.bank_account_detail?.bank_account_name,
+                        tin_number: data?.profile?.tin_number,
+                        cac_document: data?.profile?.cac_document,
+                        utility_bill: data?.profile?.utility_bill,
+                        company_rc_number: data?.profile?.company_rc_number,
+                    }
                 }
                 validationSchema={
                     Yup.object({
@@ -242,11 +250,6 @@ function BankInfo({ data }) {
                     setSubmitting(false)
                     onSubmit(values)
                     //console.log(values)
-                    resetForm({
-                        account_number: '',
-                        bank_name: '',
-                        account_name: '',
-                    })
                 }}
             >
                 {({ isSubmitting, isValid, handleChange, values, errors, setFieldValue }) => (
@@ -295,7 +298,6 @@ function BankInfo({ data }) {
                                         {/* <h2 className='font-medium mr-1'>Account Name: </h2>
                                         <span className='font-normal'>{nameLoading ? 'Loading...' : values?.account_name}</span> */}
                                     </div>
-
                                 </div>
                             </div>
                             <div className='flex w-full gap-4 py-3'>
