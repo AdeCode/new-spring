@@ -38,6 +38,9 @@ function NewInvoice() {
 
     const [customerId, setCustomerId] = useState(null)
 
+    const newUserAdd = JSON.parse(localStorage.getItem('receiver_address'))
+    // newUserAdd&&console.log(newUserAdd)
+
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value)
     }
@@ -46,7 +49,7 @@ function NewInvoice() {
     const { data: addresses, isLoading: addressLoading } = useQuery(['receiverAddress'], merchantService.getReceiverAddress)
     // console.log(addresses.data)
     const { data: merchantAddresses, isLoading: merchantAddressLoading } = useQuery(['merchant_address'], merchantService.getMerchantAddress)
-    merchantAddresses && console.log(merchantAddresses.data)
+    // merchantAddresses && console.log(merchantAddresses.data)
 
     const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
 
@@ -58,6 +61,10 @@ function NewInvoice() {
             toast.success(res.message, {
                 theme: "colored",
             })
+            //
+            if (newUserAdd) {
+                localStorage.removeItem('receiver_address')
+            }
             navigate('/invoice')
             // QueryClient.invalidateQueries('invoices')
         },
@@ -96,7 +103,7 @@ function NewInvoice() {
                     .then(res => {
                         //console.log(res)
                         if (!!isCurrent && res.data) {
-                            console.log('user id: ', res.data.id)
+                            // console.log('user id: ', res.data.id)
                             setCustomerId(res.data.id)
                             setFieldValue(props.name, res.data.name);
                             setFieldValue('customer_email', res.data.email);
@@ -132,11 +139,11 @@ function NewInvoice() {
     const { data: vatRate } = useGetCountryVat(customerCountry)
 
     const countryChange = (e, setFieldValue) => {
-        setFieldValue('customer_country', e.target.value)
+        setFieldValue('sender_country', e.target.value)
         setCustomerCountry(e.currentTarget.value)
     }
 
-    const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', unit: 'kg', total: '' }
+    const Empty_invoice_items = { item_name: '', quantity: 0, price: '', cbm: '', unit: '', total: '' }
 
     const [open, setOpen] = useState(false);
 
@@ -207,7 +214,7 @@ function NewInvoice() {
                             customer_phone: '',
                             invoice_due_date: '',
                             invoice_items: [Empty_invoice_items],
-                            customer_country: '',
+                            sender_country: '',
                             customer_address: '',
                             customer_city: '',
                             customer_state: '',
@@ -223,6 +230,10 @@ function NewInvoice() {
                                     .required("email field can not be empty"),
                                 customer_name: Yup.string().required("Please enter customer name"),
                                 customer_phone: Yup.string().required("Please enter customer  phone number"),
+                                //customer_address: Yup.string().required("Please enter receiver's address"),
+                                sender_name: Yup.string().required("Please enter sender's number"),
+                                sender_phone: Yup.string().required("Please enter sender  phone number"),
+                                sender_address: Yup.string().required("Please enter sender's address"),
                                 invoice_items: Yup.array(Yup.object({
                                     item_name: Yup.string().required('Item name is required'),
                                     quantity: Yup.number().required('Quantity is required').min(1, 'minimum of one quantity required'),
@@ -276,89 +287,68 @@ function NewInvoice() {
                                     </div>
                                 </div>
                                 <div className='flex w-full gap-2'>
-                                    <div className=''>
-                                        <SelectField
-                                            name='customer_country'
-                                            label="Receiver's Country*"
-                                            value={values.customer_country}
-                                            onBlur={handleBlur}
-                                            onChange={(e) => { countryChange(e, setFieldValue) }}
-                                        >
-                                            {
-                                                countriesLoading ? <option value="">Loading...</option>
-                                                    :
+
+                                    {
+                                        addresses?.data?.length > 0 ?
+                                            <div className='grow'>
+                                                {
+                                                    // !!customerExists && 
                                                     <>
-                                                        <option value="">Select Country</option>
-                                                        {
-                                                            countries?.map((country, index) => {
-                                                                return (
-                                                                    <option value={country.name} key={country.ise3}>{country.name}</option>
-                                                                )
-                                                            })
-                                                        }
+                                                        <div>
+                                                            <SelectField
+                                                                name='customer_address'
+                                                                label="Receiver's Address*"
+                                                                value={values.customer_address}
+                                                                onBlur={handleBlur}
+                                                            // onChange={(e)=>{countryChange(e,setFieldValue )}}
+                                                            >
+                                                                {
+                                                                    !!customerExists ?
+                                                                        addressLoading ? <option value="">Loading...</option>
+                                                                            :
+                                                                            <>
+                                                                                <option value="">Select Address</option>
+                                                                                {
+                                                                                    addresses.data?.map((address) => {
+                                                                                        return (
+                                                                                            <option value={address?.house_no + " " + address.address + " " + address.city + " " + address.state + " " + address.country} key={address.uid}>
+                                                                                                {address?.house_no ? address?.house_no : ''}{" " + address.address + " " + address.city + " " + address.state + " " + address.country}
+                                                                                            </option>
+                                                                                        )
+                                                                                    })
+                                                                                }
+                                                                            </>
+                                                                        :
+                                                                        <>
+                                                                            {
+                                                                                newUserAdd &&
+                                                                                <option value={newUserAdd?.house_no + " " + newUserAdd.address + " " + newUserAdd.city + " " + newUserAdd.state + " " + newUserAdd.country}>
+                                                                                    {newUserAdd?.house_no ? newUserAdd?.house_no : ''}{" " + newUserAdd.address + " " + newUserAdd.city + " " + newUserAdd.state + " " + newUserAdd.country}
+                                                                                </option>
+                                                                            }
+                                                                        </>
+                                                                }
+                                                            </SelectField>
+                                                        </div>
                                                     </>
-                                            }
-                                        </SelectField>
-                                    </div>
-                                    {/* <div className='grow'>
-                                        <InputField
-                                            name='customer_address'
-                                            type='text'
-                                            label="Receiver's Address"
-                                            placeholder='e.g. 2 Houston Street NY'
-                                        />
-                                    </div> */}
-                                    <div className=''>
+                                                }
+                                                <button onClick={() => handleOpen()} type='button' className='flex border border-green-700 text-green-700 items-center text-base py-2 px-3 rounded-md hover:bg-green-700 hover:text-white'>
+                                                    <span className="material-symbols-outlined disabled:opacity-50 text-green-700 hover:text-white">add</span>
+                                                    New Receiver Address
+                                                </button>
+                                            </div>
+                                            : null
+                                    }
+                                    <div className='grow-0'>
                                         <div className='flex flex-col'>
                                             <label htmlFor='date' className='font-medium text-base text-label mb-[6px]'>Due Date</label>
                                             <DateTimePicker onChange={onChange} value={invoice_due_date} className='' />
                                         </div>
                                     </div>
                                 </div>
-                                {
-                                    addresses?.data?.length > 0 ?
-                                        <div>
-                                            {
-                                                // !!customerExists &&
-                                                <>
-                                                    <div>
-                                                        <SelectField
-                                                            name='customer_address'
-                                                            label="Receiver's Address*"
-                                                            value={values.customer_address}
-                                                            onBlur={handleBlur}
-                                                        // onChange={(e)=>{countryChange(e,setFieldValue )}}
-                                                        >
-                                                            {
-                                                                addressLoading ? <option value="">Loading...</option>
-                                                                    :
-                                                                    <>
-                                                                        <option value="">Select Address</option>
-                                                                        {
-                                                                            addresses.data?.map((address) => {
-                                                                                return (
-                                                                                    <option value={address?.house_no + " " + address.address + " " + address.city + " " + address.state + " " + address.country} key={address.uid}>
-                                                                                        {address?.house_no ? address?.house_no : ''}{" " + address.address + " " + address.city + " " + address.state + " " + address.country}
-                                                                                    </option>
-                                                                                )
-                                                                            })
-                                                                        }
-                                                                    </>
-                                                            }
-                                                        </SelectField>
-                                                    </div>
-                                                </>
-                                            }
-                                            <button onClick={() => handleOpen()} type='button' className='flex border border-green-700 text-green-700 items-center text-base py-2 px-3 rounded-md hover:bg-green-700 hover:text-white'>
-                                                <span className="material-symbols-outlined disabled:opacity-50 text-green-700 hover:text-white">add</span>
-                                                New Receiver Address
-                                            </button>
-                                        </div>
-                                        : null
-                                }
 
                                 <div className='flex items-center w-full gap-2 pt-3'>
-                                    <div className='grow-0'>
+                                    <div className='grow'>
                                         <InputField
                                             name='sender_name'
                                             type='text'
@@ -366,7 +356,7 @@ function NewInvoice() {
                                             placeholder='e.g. Adegoke James'
                                         />
                                     </div>
-                                    <div className='grow-0'>
+                                    <div className='grow'>
                                         <InputField
                                             name='sender_phone'
                                             type='text'
@@ -375,6 +365,34 @@ function NewInvoice() {
                                         />
                                     </div>
                                     <div className='grow'>
+                                        <div className=''>
+                                            <SelectField
+                                                name='sender_country'
+                                                label="Sender's Country*"
+                                                value={values.sender_country}
+                                                onBlur={handleBlur}
+                                                onChange={(e) => { countryChange(e, setFieldValue) }}
+                                            >
+                                                {
+                                                    countriesLoading ? <option value="">Loading...</option>
+                                                        :
+                                                        <>
+                                                            <option value="">Select Country</option>
+                                                            {
+                                                                countries?.map((country, index) => {
+                                                                    return (
+                                                                        <option value={country.name} key={country.ise3}>{country.name}</option>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </>
+                                                }
+                                            </SelectField>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className='grow'>
                                         {/* <InputField
                                             name='sender_address'
                                             type='text'
@@ -382,38 +400,38 @@ function NewInvoice() {
                                             placeholder='e.g. 2, Kumapayi Street, Ikeja, Lagos'
                                         /> */}
                                         {
-                                            merchantAddresses?.data?.length > 0 ? 
-                                            <SelectField
-                                                name='sender_address'
-                                                label="Sender's Address*"
-                                                value={values.sender_address}
-                                                onBlur={handleBlur}
+                                            merchantAddresses?.data?.length > 0 ?
+                                                <SelectField
+                                                    name='sender_address'
+                                                    label="Sender's Address*"
+                                                    value={values.sender_address}
+                                                    onBlur={handleBlur}
                                                 // onChange={(e)=>{countryChange(e,setFieldValue )}}
-                                            >
-                                                {
-                                                    merchantAddressLoading ? <option value="">Loading...</option>
-                                                        :
-                                                        <>
-                                                            <option value="">Select Address</option>
-                                                            {
-                                                                merchantAddresses.data?.map((address) => {
-                                                                    return (
-                                                                        <option value={address?.house_no + " " + address.address + " " + address.city + " " + address.state + " " + address.country} key={address.uid}>
-                                                                            {address?.house_no ? address?.house_no : ''}{" " + address.address + " " + address.city + " " + address.state + " " + address.country}
-                                                                        </option>
-                                                                    )
-                                                                })
-                                                            }
-                                                        </>
-                                                }
-                                            </SelectField>
-                                            : 
-                                            <button onClick={() => handleOpenModal()} type='button' className='flex border border-green-700 text-green-700 items-center py-2 px-3 rounded-md hover:bg-green-700 hover:text-white'>
-                                                <span className="material-symbols-outlined disabled:opacity-50 text-green-700 hover:text-white">add</span>
-                                                Create Sender Address
-                                            </button> 
+                                                >
+                                                    {
+                                                        merchantAddressLoading ? <option value="">Loading...</option>
+                                                            :
+                                                            <>
+                                                                <option value="">Select Address</option>
+                                                                {
+                                                                    merchantAddresses.data?.map((address) => {
+                                                                        return (
+                                                                            <option value={address?.house_no + " " + address.address + " " + address.city + " " + address.state + " " + address.country} key={address.uid}>
+                                                                                {address?.house_no ? address?.house_no : ''}{" " + address.address + " " + address.city + " " + address.state + " " + address.country}
+                                                                            </option>
+                                                                        )
+                                                                    })
+                                                                }
+                                                            </>
+                                                    }
+                                                </SelectField>
+                                                :
+                                                <button onClick={() => handleOpenModal()} type='button' className='flex border border-green-700 text-green-700 items-center py-2 px-3 rounded-md hover:bg-green-700 hover:text-white'>
+                                                    <span className="material-symbols-outlined disabled:opacity-50 text-green-700 hover:text-white">add</span>
+                                                    Create Sender Address
+                                                </button>
                                         }
-                                        
+
                                     </div>
                                 </div>
                                 <div>
@@ -451,7 +469,7 @@ function NewInvoice() {
                                                                             name={`invoice_items.${index}.quantity`}
                                                                             type='number'
                                                                             label="Quantity*"
-                                                                            value={`invoice_items.${index}.unit`}
+                                                                            //value={`invoice_items.${index}.unit`}
                                                                             // value={values.unit}
                                                                             onBlur={handleBlur}
                                                                             unit={`invoice_items.${index}.unit`}
@@ -552,7 +570,7 @@ function NewInvoice() {
                                     {/* <Field component="textarea" rows="4" value={""}></Field> */}
                                 </div>
                                 <div className='flex justify-end'>
-                                    <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
+                                    <button type="submit" disabled={isSubmitting} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                         {
                                             createInvoiceMutation.isLoading ?
                                                 "Loading..."

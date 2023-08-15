@@ -7,6 +7,7 @@ import OrderItemsTable from '../../../components/@tables/OrderItemsTable'
 import { useQuery } from 'react-query'
 import invoiceService from '../../../@services/invoiceService'
 import helperFunctions from '../../../@helpers/helperFunctions'
+import { currencyFormatter } from '../../../@helpers/helperFunctions'
 
 function InvoiceDetails() {
     const navigate = useNavigate()
@@ -14,7 +15,7 @@ function InvoiceDetails() {
     const {invoiceCode} = useParams()
 
     const {data:invoice, isLoading, error, isError} = useQuery(['invoice',{invoiceCode}], invoiceService.getInvoicesByCode)
-    invoice && console.log(invoice)
+    // invoice && console.log(invoice)
 
     const gotoPreview = () => {
         navigate('/invoice/template', {
@@ -95,13 +96,21 @@ function InvoiceDetails() {
                             </div>
                             <div className='flex w-[200px] flex-col gap-3 border border-y-cyan-950'>
                                 <div className='flex justify-between px-2'>
-                                    <h2 className='text-gray'>Subtotal:</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.sub_total)}</span>
+                                    <h2 className='text-gray'>Subtotal:</h2>
+                                    <span>
+                                        {currencyFormatter(invoice?.invoice?.currency,invoice?.invoice?.sub_total)}
+                                    </span>
                                 </div>
                                 <div className='flex justify-between px-2'>
-                                    <h2 className='text-gray'>Tax(7.5%):</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.sub_total*invoice?.invoice?.tax)}</span>
+                                    <h2 className='text-gray'>Tax({invoice?.invoice?.vat * 100} %):</h2><span>
+                                        {currencyFormatter(invoice?.invoice?.currency,(invoice?.invoice?.sub_total*invoice?.invoice?.vat))}
+                                    </span>
                                 </div>
                                 <div className='flex justify-between py-1 px-2 font-bold'>
-                                    <h2 className='text-black'>Grand total:</h2><span>{helperFunctions.formatCurrency(invoice?.invoice?.currency,invoice?.invoice?.total_cost)}</span>
+                                    <h2 className='text-black'>Grand total:</h2>
+                                    <span>
+                                        {currencyFormatter(invoice?.invoice?.currency,invoice?.invoice?.total_cost)}
+                                    </span>
                                 </div>
                             </div>
                     </div>

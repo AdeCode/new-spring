@@ -99,11 +99,9 @@ function BusinessProfile({data}) {
         { enabled: !!selectedCountry }
     )
 
-    //state && console.log('states ',state.states)
 
     const updateMerchantProfileMutation = useMutation(merchantService.updateProfile, {
         onSuccess: res => {
-            //console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })

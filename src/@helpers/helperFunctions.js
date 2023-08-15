@@ -27,6 +27,31 @@ function formatCurrency(currency, price){
     }
 }
 
+export const currencyFormatter = (currency, price) => {
+    switch(currency){
+        case 'NGN':
+            return (new Intl.NumberFormat('en-NG', {
+                style: 'currency',
+                currency: 'NGN'
+              })).format(price)
+
+        case 'Naira':
+            return (new Intl.NumberFormat('en-NG', {
+                style: 'currency',
+                currency: 'NGN'
+              })).format(price)
+
+        case 'USD':
+            return (new Intl.NumberFormat('en-NG', {
+                style: 'currency',
+                currency: 'USD',
+                currencyDisplay: 'narrowSymbol',
+              })).format(price)
+        default:
+            return price
+    }
+}
+
 function nairaFormat(price){
     return (new Intl.NumberFormat('en-NG', {
         style: 'currency',
