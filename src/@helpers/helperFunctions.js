@@ -52,6 +52,16 @@ export const currencyFormatter = (currency, price) => {
     }
 }
 
+export const mergeData = (data) => {
+    const newData = []
+    for (let i=0; i<data.length; i++) {
+        for(let k=0; k<data[i].length; k++) {
+            newData.push(data[i][k])
+        }
+    }
+    return newData
+}
+
 function nairaFormat(price){
     return (new Intl.NumberFormat('en-NG', {
         style: 'currency',

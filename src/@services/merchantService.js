@@ -150,6 +150,12 @@ async function getVat({queryKey}){
     return data
 }
 
+export const deleteVat = async (uid) => {
+    console.log('from service ',uid)
+    const {data} = await httpService.secureInstance.delete(`/merchants/invoices/vat?uid=${uid}`)
+    return data
+}
+
 async function getAllVat(){
     const {data} = await httpService.secureInstance.get(`/merchants/invoices/vat/all`)
     return data
@@ -175,8 +181,55 @@ async function createSenderAddress(payload){
     return data
 }
 
+export const createPermission = async (payload) => {
+    const {data} = await httpService.secureInstance.post(`/merchants/auth/accounts/permissions`, payload)
+    return data
+}
+
+export const createRole = async (payload) => {
+    const {data} = await httpService.secureInstance.post(`/merchants/auth/accounts/roles`, payload)
+    return data
+}
+
+export const createUser = async (payload) => {
+    const {data} = await httpService.secureInstance.post(`/merchants/auth/accounts`, payload)
+    return data
+}
+
+export const getUsers = async () => {
+    const {data} = await httpService.secureInstance.get(`/merchants/auth/accounts`)
+    return data
+}
+
+async function getRole(){
+    const {data} = await httpService.secureInstance.get(`/merchants/auth/accounts/roles?id=1`)
+    return data
+}
+
+export const getRoles = async () => {
+    const {data} = await httpService.secureInstance.get(`/merchants/auth/accounts/roles`)
+    return data
+}
+
+export const getGroupPermissions = async () => {
+    const {data} = await httpService.secureInstance.get(`/merchants/auth/accounts/permissions/groups`)
+    return data
+}
+
+export const getPermissions = async () => {
+    const {data} = await httpService.secureInstance.get(`/merchants/auth/accounts/permissions`)
+    return data
+}
+
+export const getPermission = async ({queryKey}) => {
+    const [key,{permissionId}] = queryKey
+    const {data} = await httpService.secureInstance.get(`/merchants/auth/accounts/permissions?id=${permissionId}`)
+    return data
+}
+
 
 const merchantService = {
+    getRoles,
     getMerchantAddress,
     createSenderAddress,
     getReceiverAddress,

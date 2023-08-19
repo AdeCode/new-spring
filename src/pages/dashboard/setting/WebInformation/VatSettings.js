@@ -11,6 +11,7 @@ import axios from 'axios'
 import { ThreeDots } from 'react-loader-spinner'
 import { Modal } from '@mui/material'
 import UpdateVatModal from '../../../../components/@shared/UpdateVatModal'
+import { deleteVat } from '../../../../@services/merchantService'
 
 
 function VatSettings() {
@@ -25,10 +26,10 @@ function VatSettings() {
     }
 
     const { data: vats, isLoading: vatLoading } = useQuery(['vats',{customerCountry:''}], merchantService.getVat)
-    console.log(vats?.data)
+    // console.log(vats?.data)
 
     const { data: Allvats } = useQuery('vats', merchantService.getAllVat)
-    Allvats && console.log(Allvats?.data)
+    // Allvats && console.log(Allvats?.data)
 
     const manageVATMutation = useMutation(merchantService.addVat, {
         onSuccess: res => {
@@ -49,6 +50,26 @@ function VatSettings() {
     const onSubmit = (values) => {
         //console.log(values)
         manageVATMutation.mutate(values)
+    }
+
+    const deleteVatMutation = useMutation(deleteVat, {
+        onSuccess: res => {
+            console.log(res)
+            toast.success(res.message, {
+                theme: "colored",
+            })
+            queryClient.invalidateQueries('vats')
+        },
+        onError: err => {
+            console.log(err)
+            toast.error(err.response.data.error, {
+                theme: "colored",
+            })
+        }
+    })
+
+    const deleteVatValue = (uid) => {
+        deleteVatMutation.mutate(uid)
     }
 
     const { data: countries, isLoading: countriesLoading } = useQuery(['countries'],
@@ -116,7 +137,7 @@ function VatSettings() {
                             <div className='flex w-full gap-4 py-3'>
                                 <div className='flex flex-col w-[350px]'>
                                     <h2 className='font font-medium'>VAT Status</h2>
-                                    <p className='text-gray font-normal'>Toggle to modify VAT</p>
+                                    <p className='text-gray font-normal'>Toggle to create VAT</p>
                                 </div>
                                 <div className='grow flex gap-4'>
                                     <div className='grow flex items-center'>
@@ -189,7 +210,7 @@ function VatSettings() {
                         />
                         :
                         Allvats?.data?.map(vat => (
-                            <div key={vat.id} className='flex gap-1 w-[300px] justify-between'>
+                            <div key={vat.id} className='flex gap-1 w-[400px] justify-between'>
                                 <div className='flex gap-3'>
                                     <h3 className='w-[200px]'>{vat?.country}: </h3><span className='w-[50px]'>{vat.vat_value} %</span>
                                 </div>
@@ -198,6 +219,14 @@ function VatSettings() {
                                 >
                                     edit
                                 </span>
+                                <span class="material-symbols-outlined text-red-700 cursor-pointer" 
+                                    onClick={()=>deleteVatValue(vat?.id)}
+                                >
+                                    delete_forever
+                                </span>
+                                {/* <div>
+                                    <button onClick={()=>deleteVatValue(vat?.id)} >Delete</button>
+                                </div> */}
                             </div>
                         ))
                     }
