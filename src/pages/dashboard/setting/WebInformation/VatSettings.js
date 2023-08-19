@@ -48,7 +48,6 @@ function VatSettings() {
     })
 
     const onSubmit = (values) => {
-        //console.log(values)
         manageVATMutation.mutate(values)
     }
 
@@ -224,9 +223,6 @@ function VatSettings() {
                                 >
                                     delete_forever
                                 </span>
-                                {/* <div>
-                                    <button onClick={()=>deleteVatValue(vat?.id)} >Delete</button>
-                                </div> */}
                             </div>
                         ))
                     }
