@@ -18,7 +18,7 @@ import Dashboard from './pages/dashboard/Dashboard';
 import SpringPay from './pages/dashboard/SpringPay';
 import ManageUsers from './pages/dashboard/ManageUsers';
 import UserSettings from './pages/dashboard/UserSettings';
-import UserRoles from './pages/dashboard/UserRoles';
+import UserRoles from './pages/dashboard/setting/roles/UserRoles';
 import NewInvoice from './pages/dashboard/Invoice/NewInvoice';
 import InvoiceIndex from './pages/dashboard/Invoice/Index';
 import InvoiceDetails from './pages/dashboard/Invoice/InvoiceDetails';
@@ -37,6 +37,9 @@ import FormComponent from './pages/dashboard/FormStep'
 import SearchVendors from './pages/SearchVendors';
 import WebInfo from './pages/dashboard/WebInfo';
 import CreateRole from './pages/dashboard/setting/roles/CreateRole';
+import UserPermissions from './pages/dashboard/setting/roles/UserPermissions';
+import CreatePermission from './pages/dashboard/setting/permissions/CreatePermission';
+import PermissionDetails from './pages/dashboard/setting/permissions/PermissionDetails';
 // import NewHome from './pages/NewHome'
 
 function Routers (){
@@ -78,7 +81,10 @@ function Routers (){
                         <Route path='/settings/manage-users' element={<ManageUsers/>}></Route>                       
                         <Route path='/settings/user-settings' element={<UserSettings/>}></Route>                       
                         <Route path='/settings/user-roles' element={<UserRoles/>}></Route>                       
+                        <Route path='/settings/user-permissions' element={<UserPermissions/>}></Route> 
+                        <Route path='/settings/user-permissions/:permissionId' element={<PermissionDetails/>}></Route>                                             
                         <Route path='/settings/create-role' element={<CreateRole/>}></Route>                       
+                        <Route path='/settings/create-permission' element={<CreatePermission/>}></Route>                       
                         <Route path='/invoice/generate' element={<NewInvoice/>}></Route>                       
                         <Route path='/invoice' element={<InvoiceIndex/>}></Route>                       
                         <Route path='/invoice/details/:invoiceCode' element={<InvoiceDetails/>}></Route>                       

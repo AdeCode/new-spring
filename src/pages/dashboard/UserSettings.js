@@ -3,12 +3,18 @@ import { Link, useNavigate } from 'react-router-dom'
 import UsersTable from '../../components/@tables/UsersTable'
 import { Modal } from '@mui/material'
 import CreateUserModal from '../../components/@shared/CreateUserModal'
+import { getUsers } from '../../@services/merchantService'
+import { useQuery } from 'react-query'
 
 function UserSettings() {
     const navigate = useNavigate()
 
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
+
+    const { data: users } = useQuery(['users'], getUsers)
+    console.log(users)
+
 
   return (
     <div>

@@ -146,7 +146,7 @@ const InvoiceTable = ({ data, currency }) => {
                                                 payload: {status: payloadStatus}
                                             }
                                         ); 
-                                        console.log(row.original.invoice_code) 
+                                        //console.log(row.original.invoice_code) 
                                     }
                                     }
                                     name="toggle"

@@ -1,24 +1,32 @@
 import React from 'react'
 import BackNav from '../../../../components/@shared/BackNav'
-import { Formik, Form, Field } from 'formik'
+import { Formik, Form, Field, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import InputField from '../../../../components/@shared/InputField'
 import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import authService from '../../../../@services/authService'
+import { useQuery } from 'react-query'
+import { getPermissions, createRole } from '../../../../@services/merchantService'
+import { ThreeDots } from 'react-loader-spinner'
+
 
 
 function CreateRole() {
     const navigate = useNavigate()
 
-    const createRoleMutation = useMutation(authService.registerCustomer, {
+    const { data: permissions, isLoading } = useQuery(['permission'], getPermissions)
+    permissions && console.log(permissions)
+
+
+    const createRoleMutation = useMutation(createRole, {
         onSuccess: res => {
             console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
-            navigate('/dashboard')
+            navigate('/settings/user-roles')
         },
         onError: err => {
             console.log(err)
@@ -30,6 +38,7 @@ function CreateRole() {
 
     const onSubmit = (values) => {
         console.log(values)
+        createRoleMutation.mutate(values)
     }
 
     return (
@@ -38,24 +47,16 @@ function CreateRole() {
                 info="Back"
             />
             <h2 className='font-bold text-xl'>Create New Role</h2>
-            {/* <div className='flex justify-between mb-3'>
-                <h2 className=''>Create a new role and select permissions</h2>
-                <button
-                    className='bg-green-700 text-white py-2 rounded-md px-5 flex items-center gap-1'
-                >
-                    Save New Role
-                </button>
-            </div> */}
             <Formik
                 isValid
                 initialValues={{
                     role_name: '',
                     permissions: [],
-                    user_management: []
                 }}
                 validationSchema={
                     Yup.object({
                         role_name: Yup.string().required("Please enter role name"),
+                        permissions: Yup.array().min(1, 'Select at least 1 invoice permission'),
                     })
                 }
                 onSubmit={(values, { setSubmitting }) => {
@@ -63,7 +64,7 @@ function CreateRole() {
                     onSubmit(values)
                 }}
             >
-                {({ isSubmitting, values, isValid }) => (
+                {({ isSubmitting, values, isValid, setFieldValue }) => (
                     <Form className='flex flex-col'>
                         <div className='flex justify-between mb-3'>
                             <h2 className=''>Create a new role and select permissions</h2>
@@ -86,54 +87,58 @@ function CreateRole() {
                                 placeholder='e.g. Olawale'
                             />
                         </div>
-                        <div className='bg-white rounded-lg p-2 mb-2'>
-                            <h2 className='font-semibold text-lg'>Overview</h2>
-                            <label className='flex items-baseline gap-3'>
-                                <Field 
-                                    type="checkbox" 
-                                    name="permissions" 
-                                    value="One" 
-                                    className='accent-gray'
+                        {
+                            isLoading ?
+                                <ThreeDots
+                                    height="80"
+                                    width="80"
+                                    radius="9"
+                                    color="#4fa94d"
+                                    ariaLabel="three-dots-loading"
+                                    wrapperStyle={{}}
+                                    wrapperClassName=""
+                                    visible={true}
                                 />
-                                <div className='flex flex-col'>
-                                    <h2 className='font-semibold text-base'>Contact Support</h2>
-                                    <p className='w-[300px]'>User is able to contact support with complaints and inquiries</p>
-                                </div>
-                            </label>
-                        </div>
-                        <div className='bg-white rounded-lg p-2 mb-2'>
-                            <h2 className='font-semibold text-lg'>User-management</h2>
-                            <div  role="group" className='flex'>
-                                <label className='flex items-baseline gap-3'>
-                                    <Field type="checkbox" name="user_management" value="create_user" className='accent-gray' />
-                                    <div className='flex flex-col'>
-                                        <h2 className='font-semibold text-base'>Create User</h2>
-                                        <p className='w-[300px]'>User has access to create a user</p>
-                                    </div>
-                                </label>
-                                <label className='flex items-baseline gap-3'>
-                                    <Field type="checkbox" name="user_management" value="view_users" className='accent-gray' />
-                                    <div className='flex flex-col'>
-                                        <h2 className='font-semibold text-base'>View all users</h2>
-                                        <p className='w-[300px]'>User has acceess to all created users</p>
-                                    </div>
-                                </label>
-                                <label className='flex items-baseline gap-3'>
-                                    <Field type="checkbox" name="user_management" value="export_users" className='accent-gray' />
-                                    <div className='flex flex-col'>
-                                        <h2 className='font-semibold text-base'>Export users</h2>
-                                        <p className='w-[300px]'>User is able to contact support with complaints and inquiries</p>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                        {/* <button type="submit" disabled={!isValid} className='btn w-full rounded-md py-[11px] text-white bg-green-700 text-[16px] mt-[6px]'>
-                            {
-                                createRoleMutation.isLoading ?
-                                    "Loading..."
-                                    : "Continue"
-                            }
-                        </button> */}
+                                :
+                                <>
+                                    {
+                                        permissions?.permissions.map((permission, index) => (
+                                            <div className='bg-white rounded-lg p-2 mb-2' key={index}>
+                                                <h2 className='font-semibold text-lg'>{permission[0].group_name}</h2>
+                                                <div role="group" className='flex flex-wrap'>
+                                                    {
+                                                        permission?.map((permit, index) => (
+                                                            <label className='flex items-baseline gap-3 py-2' key={index}>
+                                                                <Field
+                                                                    type="checkbox"
+                                                                    name="permissions"
+                                                                    value={permit.permission_id}
+                                                                    className='accent-gray'
+                                                                    checked={values.permissions.includes(permit.permission_id)}
+                                                                    onChange={(e) => {
+                                                                        const isChecked = e.target.checked;
+                                                                        if (isChecked) {
+                                                                            setFieldValue('permissions', [...values.permissions, permit.permission_id]);
+                                                                        } else {
+                                                                            setFieldValue('permissions', values.permissions.filter(item => item !== permit.permission_id));
+                                                                        }
+                                                                    }}
+                                                                />
+                                                                <div className='flex flex-col'>
+                                                                    <h2 className='font-semibold text-base'>{permit.permission_name}</h2>
+                                                                    <p className='w-[250px] text-sm'>{permit.description}</p>
+                                                                </div>
+                                                            </label>
+                                                        ))
+                                                    }
+                                                </div>
+                                            </div>
+                                        ))
+
+                                    }
+                                    <ErrorMessage name='permissions' component="div" className='text-red-500' />
+                                </>
+                        }
                     </Form>
                 )}
             </Formik>

@@ -4,56 +4,33 @@ import {
 } from '@mui/material';
 import MaterialReactTable from 'material-react-table';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+import { mergeData } from '../../@helpers/helperFunctions';
 
+function PermissionsTable({data}) {   
 
-// const data = [
-//     {
-//         roleName: 'Backend Engineer',
-//         dateCreated: '17/12/2022',
-//         noOfUsers: 0,
-//         permissionsCount: 5,
-//         status: 'active'
-//     },
-//     {
-//         roleName: 'Chief Technology Officer',
-//         dateCreated: '17/12/2022',
-//         noOfUsers: 0,
-//         permissionsCount: 5,
-//         status: 'active'
-//     },
-//     {
-//         roleName: 'Super Admin',
-//         dateCreated: '17/12/2022',
-//         noOfUsers: 0,
-//         permissionsCount: 5,
-//         status: 'active'
-//     },
-   
-// ];
-
-function RolesTable({data}) {
+    const newData = mergeData(data)
+    
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'role_name',
-                header: 'Role Name',
+                accessorKey: 'permission_name',
+                header: 'Permission Name',
                 size:50,
             },
-            // {
-            //   accessorKey: 'dateCreated',
-            //   header: 'Date Created',
-            //   size:50,
-            // },
-            // {
-            //   accessorKey: 'noOfUsers',
-            //   header: 'No of Users',
-            //   size:50,
-            // },
             {
-              accessorKey: 'permission_count',
-              header: 'Permissions Count',
+              accessorKey: 'group_name',
+              header: 'Permission Group',
               size:50,
             },
+            {
+                header: 'View Permission',
+                Cell: ({ cell, row }) => {
+                    return <Link to={`/settings/user-permissions/${row.original.permission_id}`} className='cursor-pointer text-green-800'>
+                    <span className="material-symbols-outlined" >visibility</span>
+                </Link>
+                },
+            }
             // {
             //     accessorKey: 'status',
             //     header: 'Status',
@@ -77,7 +54,7 @@ function RolesTable({data}) {
             <MaterialReactTable
                 state={{ isLoading: false }}
                 columns={columns}
-                data={data ?? []}
+                data={newData ?? []}
                 enableColumnActions={true}
                 enableRowNumbers
                 enableTopToolbar={false}
@@ -92,7 +69,6 @@ function RolesTable({data}) {
                 renderTopToolbarCustomActions={() => (
                     <Box sx={{display:'flex',paddingTop: '20px', alignItems:'center', gap:'10px',paddingLeft: '12px' }}>
                         <div className=''>
-                        <p className='text-[#6A707E] text-xl'>Your Pending Payment</p>
                         </div>
                     </Box>
 
@@ -158,4 +134,4 @@ const Section = styled.section`
   
 `
 
-export default RolesTable
+export default PermissionsTable

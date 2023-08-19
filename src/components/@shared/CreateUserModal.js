@@ -3,31 +3,22 @@ import React from 'react'
 import InputField from './InputField'
 import * as Yup from 'yup'
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import axios from 'axios';
-import merchantService from '../../@services/merchantService';
 import { toast } from 'react-toastify'
-import SelectField from './SelectField';
+import { createUser, getRoles } from '../../@services/merchantService';
 
 
 function CreateUserModal ({handleClose}) {
     const queryClient = useQueryClient()
-    const { data: countries, isLoading: countriesLoading } = useQuery(['countries'],
-        async () => {
-            try {
-                const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
-                return res.data.data
-            } catch (error) {
-                console.log(error)
-            }
-        }
-    )
+    
+    const { data: roles, isLoading: roleLoading } = useQuery(['roles'], getRoles)
+    console.log(roles)
 
-    const updateVATMutation = useMutation(merchantService.updateVat, {
+    const updateVATMutation = useMutation(createUser, {
         onSuccess: res => {
             toast.success(res.message, {
                 theme: "colored",
             })
-            queryClient.invalidateQueries('vats')
+            // queryClient.invalidateQueries('vats')
             handleClose()
         },
         onError: err => {
@@ -59,13 +50,15 @@ function CreateUserModal ({handleClose}) {
             <Formik
                 isValid
                 initialValues={{
-                    full_name: '',
+                    first_name: '',
+                    last_name: '',
                     email: '',
-                    role: []
+                    roles: []
                 }}
                 validationSchema={
                     Yup.object({
-                        full_name: Yup.string().required('Name field is required'),
+                        first_name: Yup.string().required('First name is required'),
+                        last_name: Yup.string().required('Last name is required'),
                         email: Yup.string().email("Invalid email address")
                         .required("email field can not be empty"),
                     })
@@ -83,10 +76,18 @@ function CreateUserModal ({handleClose}) {
                                 <div className='grow flex-col gap-4'>
                                     <div className='grow'>
                                         <InputField
-                                            name='full_name'
+                                            name='first_name'
                                             type='text'
-                                            label='Full Name'
-                                            placeholder='e.g. Dayo Adelabu'
+                                            label='First Name'
+                                            placeholder='e.g. Dayo'
+                                        />
+                                    </div>
+                                    <div className='grow'>
+                                        <InputField
+                                            name='last_name'
+                                            type='text'
+                                            label='Last Name'
+                                            placeholder='e.g. Adelabu'
                                         />
                                     </div>
                                     <div className='grow'>
@@ -101,7 +102,29 @@ function CreateUserModal ({handleClose}) {
                                     <div  role="group">
                                         <h2 className='font-medium text-base text-label mb-[6px]'>Select Role</h2>
                                         <div className=''>
-                                            <label className='flex items-baseline gap-3'>
+                                            {
+                                                roles?.roles.map((role, index) => (
+                                                    <label className='flex items-baseline gap-3' key={index}>
+                                                        <Field 
+                                                            type="checkbox" 
+                                                            name="roles"
+                                                            value={role.role_id} 
+                                                            className='accent-gray' 
+                                                            checked={values.roles.includes(role.role_id)}
+                                                            onChange={(e) => {
+                                                                const isChecked = e.target.checked;
+                                                                if (isChecked) {
+                                                                  setFieldValue('roles', [...values.roles, role.role_id]);
+                                                                } else {
+                                                                  setFieldValue('roles', values.roles.filter(item => item !== role.role_id));
+                                                                }
+                                                              }}
+                                                        />
+                                                        <h3 className='font-medium text-sm'>{role.role_name}</h3>
+                                                    </label>
+                                                ))
+                                            }
+                                            {/* <label className='flex items-baseline gap-3'>
                                                 <Field type="checkbox" name="role" value="backend_engineer" className='accent-gray' />
                                                 <h3 className='font-medium text-sm'>Backend Engineer</h3>
                                             </label>
@@ -112,7 +135,7 @@ function CreateUserModal ({handleClose}) {
                                             <label className='flex items-baseline gap-3'>
                                                 <Field type="checkbox" name="role" value="super_admin" className='accent-gray' />
                                                 <h3 className='font-medium text-sm'>Super Admin</h3>
-                                            </label>
+                                            </label> */}
                                         </div>
                                     </div>
                                     </div>
