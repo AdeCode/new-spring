@@ -25,10 +25,10 @@ function VatSettings() {
         setChecked(e.target.checked)
     }
 
-    const { data: vats, isLoading: vatLoading } = useQuery(['vats',{customerCountry:''}], merchantService.getVat)
+    //const { data: vats } = useQuery(['vats',{customerCountry:''}], merchantService.getVat)
     // console.log(vats?.data)
 
-    const { data: Allvats } = useQuery('vats', merchantService.getAllVat)
+    const { data: Allvats, isLoading } = useQuery('vats', merchantService.getAllVat)
     // Allvats && console.log(Allvats?.data)
 
     const manageVATMutation = useMutation(merchantService.addVat, {
@@ -48,7 +48,6 @@ function VatSettings() {
     })
 
     const onSubmit = (values) => {
-        //console.log(values)
         manageVATMutation.mutate(values)
     }
 
@@ -197,7 +196,7 @@ function VatSettings() {
                 <h3 className='font-semibold mb-3'>Available country VATs: </h3>
                 <div className='flex flex-col gap-2'>
                     {
-                        vatLoading ? 
+                        isLoading ? 
                         <ThreeDots 
                             height="80" 
                             width="80" 
@@ -220,13 +219,10 @@ function VatSettings() {
                                     edit
                                 </span>
                                 <span class="material-symbols-outlined text-red-700 cursor-pointer" 
-                                    onClick={()=>deleteVatValue(vat?.id)}
+                                    onClick={()=>deleteVatValue(vat?.uid)}
                                 >
                                     delete_forever
                                 </span>
-                                {/* <div>
-                                    <button onClick={()=>deleteVatValue(vat?.id)} >Delete</button>
-                                </div> */}
                             </div>
                         ))
                     }

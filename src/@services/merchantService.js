@@ -201,10 +201,10 @@ export const getUsers = async () => {
     return data
 }
 
-async function getRole(){
-    const {data} = await httpService.secureInstance.get(`/merchants/auth/accounts/roles?id=1`)
-    return data
-}
+// async function getRole(){
+//     const {data} = await httpService.secureInstance.get(`/merchants/auth/accounts/roles?id=1`)
+//     return data
+// }
 
 export const getRoles = async () => {
     const {data} = await httpService.secureInstance.get(`/merchants/auth/accounts/roles`)
