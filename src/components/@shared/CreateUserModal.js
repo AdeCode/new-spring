@@ -103,6 +103,7 @@ function CreateUserModal ({handleClose}) {
                                         <h2 className='font-medium text-base text-label mb-[6px]'>Select Role</h2>
                                         <div className=''>
                                             {
+                                                roles?.roles.length > 0 ?
                                                 roles?.roles.map((role, index) => (
                                                     <label className='flex items-baseline gap-3' key={index}>
                                                         <Field 
@@ -123,6 +124,8 @@ function CreateUserModal ({handleClose}) {
                                                         <h3 className='font-medium text-sm'>{role.role_name}</h3>
                                                     </label>
                                                 ))
+                                                :
+                                                '*Please create roles to select from'
                                             }
                                             {/* <label className='flex items-baseline gap-3'>
                                                 <Field type="checkbox" name="role" value="backend_engineer" className='accent-gray' />
