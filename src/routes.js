@@ -37,7 +37,7 @@ import FormComponent from './pages/dashboard/FormStep'
 import SearchVendors from './pages/SearchVendors';
 import WebInfo from './pages/dashboard/WebInfo';
 import CreateRole from './pages/dashboard/setting/roles/CreateRole';
-import UserPermissions from './pages/dashboard/setting/roles/UserPermissions';
+import UserPermissions from './pages/dashboard/setting/permissions/UserPermissions';
 import CreatePermission from './pages/dashboard/setting/permissions/CreatePermission';
 import PermissionDetails from './pages/dashboard/setting/permissions/PermissionDetails';
 // import NewHome from './pages/NewHome'

@@ -48,9 +48,16 @@ function UserPermissions() {
                     :
                     <>
                         <h2>Permissions</h2>
-                        <PermissionsTable
-                            data={permissions?.permissions}
-                        />
+                        {
+                            permissions?.permissions.length > 0 ?
+                            <PermissionsTable
+                                data={permissions?.permissions}
+                            />
+                            :
+                            'You currently have no permissions, click the create permissions button above to create permission'
+                            
+                        }
+                        
                     </>
             }
 

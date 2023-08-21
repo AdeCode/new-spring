@@ -47,9 +47,17 @@ function UserRoles() {
             visible={true}
           />
           :
-          <RolesTable
-            data={roles?.roles}
-          />
+          <>
+            {
+              roles.roles.length > 0 ?
+              <RolesTable
+                data={roles?.roles}
+              />
+              :
+              'You currently have no roles available, click the create role button above to create a new role'
+            }
+          </>
+          
       }
     </div>
   )

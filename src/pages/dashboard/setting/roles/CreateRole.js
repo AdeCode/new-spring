@@ -56,7 +56,7 @@ function CreateRole() {
                 validationSchema={
                     Yup.object({
                         role_name: Yup.string().required("Please enter role name"),
-                        permissions: Yup.array().min(1, 'Select at least 1 invoice permission'),
+                        permissions: Yup.array().min(1, 'Select at least 1 permission'),
                     })
                 }
                 onSubmit={(values, { setSubmitting }) => {
@@ -102,6 +102,7 @@ function CreateRole() {
                                 :
                                 <>
                                     {
+                                        permissions?.permissions.length > 0 ?
                                         permissions?.permissions.map((permission, index) => (
                                             <div className='bg-white rounded-lg p-2 mb-2' key={index}>
                                                 <h2 className='font-semibold text-lg'>{permission[0].group_name}</h2>
@@ -134,6 +135,8 @@ function CreateRole() {
                                                 </div>
                                             </div>
                                         ))
+                                        :
+                                        'No permission to render'
 
                                     }
                                     <ErrorMessage name='permissions' component="div" className='text-red-500' />
