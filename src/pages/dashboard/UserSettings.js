@@ -12,8 +12,7 @@ function UserSettings() {
     const [open, setOpen] = useState(false);
     const handleClose = () => setOpen(false);
 
-    const { data: users } = useQuery(['users'], getUsers)
-    console.log(users)
+    const { data: users, isLoading } = useQuery(['users'], getUsers)
 
 
   return (
@@ -44,7 +43,14 @@ function UserSettings() {
             </button>
         </div>
         <h3 className=''>Users</h3>
-        <UsersTable/>
+        {
+          isLoading ? 
+          'Loading...' :
+          <UsersTable
+            data={users?.user_accounts}
+          />
+        }
+        
     </div>
   )
 }

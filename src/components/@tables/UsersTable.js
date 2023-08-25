@@ -32,13 +32,14 @@ const data = [
    
 ];
 
-function UsersTable() {
+function UsersTable({data}) {
     const [open, setOpen] = useState(false);
+    const [userId, setUserId] = useState(null)
     const handleClose = () => setOpen(false);
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'fullName',
+                accessorFn: (row) => `${row.first_name} ${row.last_name}`,
                 header: 'Full Name',
                 size:50,
             },
@@ -48,13 +49,18 @@ function UsersTable() {
                 size:50,
             },
             {
-              accessorKey: 'dateCreated',
+              accessorKey: 'created_at',
               header: 'Date Created',
               size:50,
             },
             {
-                accessorKey: 'role',
+                //accessorKey: 'roles',
                 header: 'Role',
+                Cell: ({ cell, row }) => {
+                    return <div>
+                        {row.original.roles.map(role => (role.role_name+', '))}
+                    </div>
+                },
             },
             {
                 header: 'Edit',
@@ -63,7 +69,7 @@ function UsersTable() {
                     return <div>
                         <span 
                             className="material-symbols-outlined text-lg cursor-pointer"
-                            onClick={()=>setOpen(true)}    
+                            onClick={()=>{setOpen(true);setUserId(row.original.id)}}    
                         >
                             edit
                         </span>
@@ -100,7 +106,7 @@ function UsersTable() {
             >
                 <UpdateUserModal
                     handleClose={handleClose}
-                    // data={modalData}
+                    userId={userId}
                 />
             </Modal>
             <MaterialReactTable

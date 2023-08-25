@@ -1,4 +1,4 @@
-import { Form, Formik, Field } from 'formik';
+import { Form, Formik, Field, ErrorMessage } from 'formik';
 import React from 'react'
 import InputField from './InputField'
 import * as Yup from 'yup'
@@ -13,7 +13,7 @@ function CreateUserModal ({handleClose}) {
     const { data: roles, isLoading: roleLoading } = useQuery(['roles'], getRoles)
     console.log(roles)
 
-    const updateVATMutation = useMutation(createUser, {
+    const createUserMutation = useMutation(createUser, {
         onSuccess: res => {
             toast.success(res.message, {
                 theme: "colored",
@@ -31,7 +31,7 @@ function CreateUserModal ({handleClose}) {
 
     const onSubmit = (values) => {
         //console.log(values)
-        updateVATMutation.mutate(values)
+        createUserMutation.mutate(values)
     }
 
     return (
@@ -61,6 +61,7 @@ function CreateUserModal ({handleClose}) {
                         last_name: Yup.string().required('Last name is required'),
                         email: Yup.string().email("Invalid email address")
                         .required("email field can not be empty"),
+                        roles: Yup.array().min(1, 'Select at least one role')
                     })
                 }
                 onSubmit={(values, { setSubmitting, resetForm }) => {
@@ -127,25 +128,14 @@ function CreateUserModal ({handleClose}) {
                                                 :
                                                 '*Please create roles to select from'
                                             }
-                                            {/* <label className='flex items-baseline gap-3'>
-                                                <Field type="checkbox" name="role" value="backend_engineer" className='accent-gray' />
-                                                <h3 className='font-medium text-sm'>Backend Engineer</h3>
-                                            </label>
-                                            <label className='flex items-baseline gap-3'>
-                                                <Field type="checkbox" name="role" value="cto" className='accent-gray' />
-                                                <h3 className='font-medium text-sm'>Chief Technology Officer</h3>
-                                            </label>
-                                            <label className='flex items-baseline gap-3'>
-                                                <Field type="checkbox" name="role" value="super_admin" className='accent-gray' />
-                                                <h3 className='font-medium text-sm'>Super Admin</h3>
-                                            </label> */}
+                                            <ErrorMessage name='roles' component="div" className='text-red-500' />
                                         </div>
                                     </div>
                                     </div>
                                     <div className='flex justify-end items-center grow'>
                                         <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 w-full cursor-pointer rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                             {
-                                                updateVATMutation.isLoading ?
+                                                createUserMutation.isLoading ?
                                                     "Loading..."
                                                     : "CREATE"
                                             }

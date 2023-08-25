@@ -227,6 +227,17 @@ export const getPermission = async ({queryKey}) => {
     return data
 }
 
+export const getSubUser = async ({queryKey}) => {
+    const [key,{userId}] = queryKey
+    const {data} = await httpService.secureInstance.get(`/merchants/auth/accounts?id=${userId}`)
+    return data
+}
+
+export const updateUser = async (payload) => {
+    const {data} = await httpService.secureInstance.patch(`/merchants/auth/accounts`,payload)
+    return data
+}
+
 
 const merchantService = {
     getRoles,
