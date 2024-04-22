@@ -43,21 +43,20 @@ function IdentityVerification() {
                 const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
                 return res.data.data
             } catch (error) {
-                console.log(error)
+                toast.error('Could not load states data',{
+                    theme:'colored'
+                });
             }
         }
     )
-    //countries && console.log(countries)
 
     const identityVerificationMutation = useMutation(merchantService.saveKycIdentity, {
         onSuccess: res => {
-            console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -65,7 +64,6 @@ function IdentityVerification() {
     })
 
     const onSubmit = (values) => {
-        console.log(values)
         identityVerificationMutation.mutate(values)
     }
     return (
@@ -97,7 +95,6 @@ function IdentityVerification() {
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(false)
                     onSubmit(values)
-                    //console.log(values)
                     resetForm({
                         kyc_type: '',
                         kyc_number: '',
@@ -183,15 +180,6 @@ function IdentityVerification() {
                                 </div>
                                 <div className='flex w-full gap-4 py-3'>
                                     <Div className='grow flex flex-col items-center gap-4 border h-fit py-5 rounded-lg'>
-                                        {/* <h3 className='text-[#40525E] opacity-70 text-sm'>Upload a document that shows your profile details</h3>
-                                        <div className='grow'>
-                                            <InputField
-                                                name='account_name'
-                                                type='text'
-                                                label='Enter your Account Name'
-                                                placeholder='e.g. Moshood Abiola'
-                                            />
-                                        </div> */}
                                         <div className='form-control flex flex-col mb-4 relative border-none lg:border'>
                                             <label htmlFor={'cac_document'} className='font-medium text-base text-label mb-[6px]'>Upload a document that shows your profile details</label>
                                             <input

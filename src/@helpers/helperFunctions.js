@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 
 function formatCurrency(currency, price){
@@ -117,13 +118,12 @@ const getCountries = async() => {
         loading = false
         return res.data.data
     }catch(error){
-        console.log(error)
+        toast.error('Unable to load countries',{
+            theme: "colored",
+        })
     }
-
-    //return {data, loading}
 }
 
-// const 
 
 export const getTaxRate = (rate) => {
     if(!!rate){

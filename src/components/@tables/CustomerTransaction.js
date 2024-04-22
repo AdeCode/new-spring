@@ -10,7 +10,6 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import helperFunctions from '../../@helpers/helperFunctions'
 
 
-//nested data is ok, see accessorKeys in ColumnDef below
 const data = [
     {
         transactionRef: 'T293093506489996',
@@ -70,11 +69,10 @@ const data = [
 
 
 const CustomerTransaction = () => {
-    //should be memoized or stable
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'transactionRef', //normal accessorKey
+                accessorKey: 'transactionRef', 
                 header: 'Transaction Ref',
                 Cell: ({ cell }) => {
                     return <div className="text-[#171F4C] text-sm font-semibold">{cell.getValue()}</div>
@@ -142,8 +140,6 @@ const CustomerTransaction = () => {
 
     return (
         <Section>
-            {/* <div className='title bg-white w-full text-[#334D6E] text-base pl-[18px] pt-5'>Recent Customers</div> */}
-            {/* <div className='' onClick={handleExportData}>Export</div> */}
             <MaterialReactTable
                 state={{ isLoading: false }}
                 columns={columns}
@@ -160,15 +156,8 @@ const CustomerTransaction = () => {
                 }}
                 renderTopToolbarCustomActions={() => (
                     <Box sx={{display:'flex',paddingTop: '20px', alignItems:'center', gap:'10px',paddingLeft: '12px' }}>
-                        {/* <Box sx={{display:'flex',flexDirection:'column',alignItems:'center',}}>
-                            <Typography color="#334D6E" variant="h2" sx={{ fontSize: '16px',paddingLeft:'0px'}}>
-                                Transactions History
-                            </Typography>
-                            <p>List of payouts done by the user</p>
-                        </Box> */}
                         <div className=''>
                         <p className='text-[#6A707E] text-xl'>Transactions History</p>
-                        {/* <p className='text-[#6A707E] text-[13px]'>List of payouts done by the user</p> */}
 
                         </div>
                         
@@ -185,9 +174,7 @@ const CustomerTransaction = () => {
                 }}
                 muiTableBodyProps={{
                     sx: {
-                        //stripe the rows, make odd rows a darker color
                         '& tr:nth-of-type(odd)': {
-                            //backgroundColor: '#f5f5f5',
                             borderBottom: '2px solid green',
                             borderColor: 'green',
                         },
@@ -207,7 +194,6 @@ const CustomerTransaction = () => {
                 }}
 
                 muiTableHeadCellProps={{
-                    //simple styling with the `sx` prop, works just like a style prop in this example
                     sx: {
                         fontWeight: 'normal',
                         fontSize: '12px',
@@ -218,23 +204,14 @@ const CustomerTransaction = () => {
 
                 muiTableBodyRowProps={({ row }) => ({
                     onClick: (event) => {
-                        //console.info(event, row.id);
-                        console.log('clicked ' + row.original.address)
                     },
                     sx: {
-                        cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+                        cursor: 'pointer', 
                         border: 'none',
                         color: '#273240',
                         paddingLeft: '10px'
                     },
                 })}
-            // renderDetailPanel={({ row }) => (
-            //     <div>
-            //       <span>First Name: {row.original.name.firstName}</span>
-            //       <span>Last Name: {row.original.name.lastName}</span>
-            //       <span>Address: {row.original.address}</span>
-            //     </div>
-            //   )}
 
             />
         </Section>
@@ -250,7 +227,6 @@ const Section = styled.section`
         padding-left: 20px !important;
     }
     .MuiTableRow-root:hover{
-        //background-color: green;
     }
     
     .MuiTableCell-root .MuiTableCell-head{

@@ -10,9 +10,7 @@ import { ThreeDots } from 'react-loader-spinner'
 function Regions({merchantId}) {
     const queryClient = useQueryClient()
 
-    merchantId && console.log(merchantId)
     const { data: regions, isLoading } = useQuery(['regions',{type:'region', merchantId}], merchantService.getWebInformation)
-    //regions && console.log(regions)
 
     const deleteServiceMutation = useMutation(merchantService.deleteWebInformation, {
         onSuccess: res => {
@@ -22,7 +20,6 @@ function Regions({merchantId}) {
             queryClient.invalidateQueries('regions')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -41,7 +38,6 @@ function Regions({merchantId}) {
             queryClient.invalidateQueries('regions')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })

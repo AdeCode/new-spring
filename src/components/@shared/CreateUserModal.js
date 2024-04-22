@@ -11,18 +11,15 @@ function CreateUserModal ({handleClose}) {
     const queryClient = useQueryClient()
     
     const { data: roles, isLoading: roleLoading } = useQuery(['roles'], getRoles)
-    console.log(roles)
 
     const createUserMutation = useMutation(createUser, {
         onSuccess: res => {
             toast.success(res.message, {
                 theme: "colored",
             })
-            // queryClient.invalidateQueries('vats')
             handleClose()
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -30,7 +27,6 @@ function CreateUserModal ({handleClose}) {
     })
 
     const onSubmit = (values) => {
-        //console.log(values)
         createUserMutation.mutate(values)
     }
 

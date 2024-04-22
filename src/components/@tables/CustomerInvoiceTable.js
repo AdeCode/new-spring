@@ -15,7 +15,6 @@ import invoiceService from '../../@services/invoiceService';
 import { toast } from 'react-toastify';
 
 
-// nested data is ok, see accessorKeys in ColumnDef below
 const data = [
     {
         creation_date: "2023-05-26 15:50:41",
@@ -75,7 +74,6 @@ const data = [
 
 
 function CustomerInvoiceTable({data}) {
-  // console.log('customer invoice',data)
     const [currency, setCurrency] = useState('USD')
     const queryClient = useQueryClient()
 
@@ -83,8 +81,6 @@ function CustomerInvoiceTable({data}) {
 
   const toggleInvoiceMutation = useMutation(invoiceService.toggleInvoiceStatus, {
     onSuccess: res => {
-        console.log(res)
-        //dispatch({ type: 'LOGIN', payload: res.data })
         toast.success(res.message, {
             theme: "colored",
         })
@@ -92,7 +88,6 @@ function CustomerInvoiceTable({data}) {
 
     },
     onError: err => {
-        console.log(err)
         toast.error(err.response.data.error, {
             theme: "colored",
         })
@@ -100,7 +95,6 @@ function CustomerInvoiceTable({data}) {
 })
 
   const onToggle = (values) => {
-    //console.log(values)
    
     toggleInvoiceMutation.mutate(values)
 }
@@ -111,22 +105,22 @@ function CustomerInvoiceTable({data}) {
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'invoice_code', //normal accessorKey
+        accessorKey: 'invoice_code', 
         header: 'Invoice Number',
         size:50,
       },
       {
-        accessorKey: 'created_at', //normal accessorKey
+        accessorKey: 'created_at', 
         header: 'Date Created',
         size:50,
       },
       {
-        accessorKey: 'currency', //normal accessorKey
+        accessorKey: 'currency', 
         header: 'Currency',
         size:50,
       },
       {
-        accessorKey: 'status', //normal accessorKey
+        accessorKey: 'status', 
         header: 'Status',
         Cell: ({ renderedCellValue, row }) => {
           return <div className={`${row.original.status === 'PAID' ? 'text-green-700' : 'text-yellow-600'} `}>
@@ -136,12 +130,12 @@ function CustomerInvoiceTable({data}) {
         size:50,
       },
       {
-        accessorKey: 'total_cost', //normal accessorKey
+        accessorKey: 'total_cost', 
         header: 'Total Cost',
         size:50,
       },
       {
-        accessorKey: 'due_date', //normal accessorKey
+        accessorKey: 'due_date', 
         header: 'Due Date',
         size:50,
       },
@@ -167,7 +161,6 @@ function CustomerInvoiceTable({data}) {
                         color: 'green',
                         '&.Mui-checked': {
                             color: "green",
-                            //backgroundClip:"green",
                         },
                         '&.MuiSwitch-thumb-checked': {
                             color: "#404042",
@@ -185,12 +178,9 @@ function CustomerInvoiceTable({data}) {
                                   invoice_code: row.original.invoice_code,
                                   payload: {status: payloadStatus}
                                 }); 
-                              console.log(row.original.invoice_code) 
                             }
-                                // handleToggleChange(row.original.id)
                             }
                             name="toggle"
-                            // disabled={row.original.status==='PAID'}
                             color="primary"
                             sx={{
                                 color: '#404042',
@@ -205,7 +195,6 @@ function CustomerInvoiceTable({data}) {
                             }}
                         />
                     }
-                // label="Approve"
                 />
             </div>
         },
@@ -233,7 +222,6 @@ function CustomerInvoiceTable({data}) {
 
   const handleCurrencyChange = (e) => {
     setCurrency(e.target.value)
-    console.log(currency)
 }
 
   return (
@@ -265,9 +253,7 @@ function CustomerInvoiceTable({data}) {
                 }}
                 muiTableBodyProps={{
                     sx: {
-                      //stripe the rows, make odd rows a darker color
                       '& tr:nth-of-type(odd)': {
-                        //backgroundColor: '#f5f5f5',
                         borderBottom:'2px solid green',
                         borderColor: 'green',
                       },
@@ -286,7 +272,6 @@ function CustomerInvoiceTable({data}) {
                   }}
                 
                 muiTableHeadCellProps={{
-                    //simple styling with the `sx` prop, works just like a style prop in this example
                     sx: {
                       fontWeight: 'normal',
                       fontSize: '12px',
@@ -297,11 +282,10 @@ function CustomerInvoiceTable({data}) {
 
                 muiTableBodyRowProps={({ row }) => ({
                     onClick: (event) => {
-                      //console.info(event, row.id);
-                      // console.log('clicked '+row.original.userName)
+                     
                     },
                     sx: {
-                      cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+                      cursor: 'pointer', 
                       border: 'none',
                       color:'#273240',
                       paddingLeft:'10px'
@@ -320,7 +304,6 @@ const Section = styled.section`
         padding-left: 20px !important;
     }
     .MuiTableRow-root:hover{
-        //background-color: green;
     }
     
     .MuiTableCell-root .MuiTableCell-head{

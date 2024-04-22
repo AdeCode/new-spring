@@ -19,7 +19,6 @@ function Login() {
 
     const loginMutation = useMutation(authService.login, {
         onSuccess: res => {
-            // console.log(res)
             dispatch({ type: 'LOGIN', payload: res.data })
             toast.success(res.message, {
                 theme: "colored",
@@ -27,7 +26,6 @@ function Login() {
             navigate('/dashboard')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -41,7 +39,7 @@ function Login() {
 
     return (
         <Div className='flex justify-center bg-white w-full'>
-            <div className='w-full flex flex-col items-center justify-center items-center h-screen'>
+            <div className='w-full flex flex-col justify-center items-center h-screen'>
                 <div className='mb-5'>
                     <Link to={`${url}`}>
                         <img src={logo} alt='logo'/>

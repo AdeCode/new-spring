@@ -11,7 +11,6 @@ function Services({merchantId}) {
     const queryClient = useQueryClient()
 
     const { data: services, isLoading } = useQuery(['service',{type:'service', merchantId}], merchantService.getWebInformation)
-    services && console.log(services)
 
     const deleteServiceMutation = useMutation(merchantService.deleteWebInformation, {
         onSuccess: res => {
@@ -21,7 +20,6 @@ function Services({merchantId}) {
             queryClient.invalidateQueries('service')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -34,14 +32,12 @@ function Services({merchantId}) {
 
     const addServicesMutation = useMutation(merchantService.addMerchantService, {
         onSuccess: res => {
-            console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
             queryClient.invalidateQueries('service')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -49,7 +45,6 @@ function Services({merchantId}) {
     })
 
     const onSubmit = (values) => {
-        console.log(values)
         addServicesMutation.mutate(values)
     }
 
@@ -72,7 +67,6 @@ function Services({merchantId}) {
                         type: "service",
                         value: values.service
                     })
-                    //console.log('all values ', values)
                     resetForm({
                         service: '',
                     })

@@ -10,7 +10,6 @@ function DoughnutChart() {
           'Approved',
           'Pending',
           'Under review',
-          // 'Rejected'
         ],
         datasets: [{
           label: 'Monthly Activity',
@@ -19,7 +18,6 @@ function DoughnutChart() {
             '#634DEE',
             '#DFDAFF',
             '#4BCA69',
-            // 'rgba(75, 192, 192, 0.2)'
           ],
           hoverOffset: 4
         }]

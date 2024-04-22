@@ -18,7 +18,6 @@ const data = [
         fullName: 'Ayodeji Oyenekan',
         email: 'ayodeji@springcash.co',
         dateCreated: '17/12/2022',
-        // role: ['Super Admin', 'Chief Technology Officer'],
         role: 'Chief Technology Officer',
         status: 'active'
     },
@@ -54,7 +53,6 @@ function UsersTable({data}) {
               size:50,
             },
             {
-                //accessorKey: 'roles',
                 header: 'Role',
                 Cell: ({ cell, row }) => {
                     return <div>
@@ -139,9 +137,7 @@ function UsersTable({data}) {
                 }}
                 muiTableBodyProps={{
                     sx: {
-                        //stripe the rows, make odd rows a darker color
                         '& tr:nth-of-type(odd)': {
-                            //backgroundColor: '#f5f5f5',
                             borderBottom: '2px solid green',
                             borderColor: 'green',
                         },
@@ -161,7 +157,6 @@ function UsersTable({data}) {
                 }}
 
                 muiTableHeadCellProps={{
-                    //simple styling with the `sx` prop, works just like a style prop in this example
                     sx: {
                         fontWeight: 'normal',
                         fontSize: '12px',
@@ -183,7 +178,6 @@ const Section = styled.section`
         padding-left: 20px !important;
     }
     .MuiTableRow-root:hover{
-        //background-color: green;
     }
     
     .MuiTableCell-root .MuiTableCell-head{

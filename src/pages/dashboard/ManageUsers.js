@@ -31,15 +31,6 @@ function ManageUsers() {
                         <h4 className='w-[200px] text-gray'>Manage user roles within your company</h4>
                     </div>
                 </Link>
-                {/* <Link to='/settings/user-permissions' className='flex gap-4 bg-white py-3 px-2 rounded-md cursor-pointer'>
-                    <span className="material-symbols-outlined bg-gray w-[50px] h-[50px] rounded-[50%] flex items-center justify-center text-white">shuffle_on</span>
-                    <div className='flex flex-col mt-3'>
-                        <div className='flex gap-2 items-center text-[#4BCA69]'>
-                            <h3 className=''>Manage Permission</h3><span className="material-symbols-outlined">trending_flat</span>
-                        </div>
-                        <h4 className='w-[200px] text-gray'>Manage permissions within your company</h4>
-                    </div>
-                </Link> */}
             </div>
         </div>
     </div>

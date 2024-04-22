@@ -13,14 +13,12 @@ function CustomerSignup() {
 
     const signUpMutation = useMutation(authService.registerCustomer, {
         onSuccess: res => {
-            console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
             navigate('/dashboard')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -29,7 +27,6 @@ function CustomerSignup() {
 
 
     const onSubmit = (values) => {
-        //console.log(values)
         signUpMutation.mutate(values)
     }
     return (
@@ -74,9 +71,6 @@ function CustomerSignup() {
                     >
                         {({ isSubmitting, values, isValid }) => (
                             <Form className='flex flex-col w-[70%]'>
-                                {/* <span className="material-icons">&#xE87C;</span> */}
-                                {/* <span className="material-symbols-outlined">toggle_on</span>
-                                <span className="material-symbols-outlined">visibility</span> */}
                                 <InputField
                                     name='first_name'
                                     type='text'

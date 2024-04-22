@@ -1,7 +1,6 @@
 import httpService from "./httpService";
 
 async function fetchCustomerByPhoneNumber(phoneNumber){
-    //const [_key, {phoneNumber}] = queryKey
     const {data} = await httpService.secureInstance.get(`/customers/user?phone_number=${phoneNumber}`)
     return data
 }
@@ -9,7 +8,6 @@ async function fetchCustomerByPhoneNumber(phoneNumber){
 async function fetchMerchantCustomers({queryKey}){
     const [_key, {selectedCountry}] = queryKey
     const {data} = await httpService.secureInstance.get(`/customers/user?country=${selectedCountry}`)
-    // const {data} = await httpService.secureInstance.get(`/customers/user`)
     return data
 }
 

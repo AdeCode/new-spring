@@ -6,31 +6,6 @@ import MaterialReactTable from 'material-react-table';
 import styled from 'styled-components';
 
 
-// const data = [
-//     {
-//         roleName: 'Backend Engineer',
-//         dateCreated: '17/12/2022',
-//         noOfUsers: 0,
-//         permissionsCount: 5,
-//         status: 'active'
-//     },
-//     {
-//         roleName: 'Chief Technology Officer',
-//         dateCreated: '17/12/2022',
-//         noOfUsers: 0,
-//         permissionsCount: 5,
-//         status: 'active'
-//     },
-//     {
-//         roleName: 'Super Admin',
-//         dateCreated: '17/12/2022',
-//         noOfUsers: 0,
-//         permissionsCount: 5,
-//         status: 'active'
-//     },
-   
-// ];
-
 function RolesTable({data}) {
     const columns = useMemo(
         () => [
@@ -39,34 +14,11 @@ function RolesTable({data}) {
                 header: 'Role Name',
                 size:50,
             },
-            // {
-            //   accessorKey: 'dateCreated',
-            //   header: 'Date Created',
-            //   size:50,
-            // },
-            // {
-            //   accessorKey: 'noOfUsers',
-            //   header: 'No of Users',
-            //   size:50,
-            // },
             {
               accessorKey: 'permission_count',
               header: 'Permissions Count',
               size:50,
             },
-            // {
-            //     accessorKey: 'status',
-            //     header: 'Status',
-            //     enableClickToCopy: false,
-            //     Cell: ({ cell, row }) => {
-            //         return <div 
-            //         className={`${row.original.status === 'active' ? 'bg-[#34A853]' : 'bg-yellow-600'} rounded-lg text-sm text-center py-1 font-semibold`}
-            //         >
-            //             {cell.getValue()}
-            //         </div>
-            //     },
-            //     size:50,
-            // },
         ],
         [],
     );
@@ -104,9 +56,7 @@ function RolesTable({data}) {
                 }}
                 muiTableBodyProps={{
                     sx: {
-                        //stripe the rows, make odd rows a darker color
                         '& tr:nth-of-type(odd)': {
-                            //backgroundColor: '#f5f5f5',
                             borderBottom: '2px solid green',
                             borderColor: 'green',
                         },
@@ -126,7 +76,6 @@ function RolesTable({data}) {
                 }}
 
                 muiTableHeadCellProps={{
-                    //simple styling with the `sx` prop, works just like a style prop in this example
                     sx: {
                         fontWeight: 'normal',
                         fontSize: '12px',
@@ -148,7 +97,6 @@ const Section = styled.section`
         padding-left: 20px !important;
     }
     .MuiTableRow-root:hover{
-        //background-color: green;
     }
     
     .MuiTableCell-root .MuiTableCell-head{

@@ -40,13 +40,11 @@ function OccupationStatus() {
 
     const occupationStatusMutation = useMutation(merchantService.saveKycOccupation, {
         onSuccess: res => {
-            console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -54,7 +52,6 @@ function OccupationStatus() {
     })
 
     const onSubmit = (values) => {
-        // console.log(values)
         occupationStatusMutation.mutate(values)
     }
     return (
@@ -82,7 +79,6 @@ function OccupationStatus() {
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(false)
                     onSubmit(values)
-                    console.log(values)
                     resetForm({
                         kyc_type: '',
                         kyc_number: '',
@@ -120,8 +116,6 @@ function OccupationStatus() {
                                             <option value="">Select status</option>
                                             <option value="employed">Employed</option>
                                             <option value="unemployed">Unemployed</option>
-                                            {/* <option value="self_employed">Self Employed</option>
-                                            <option value="student">Student</option> */}
                                         </SelectField>
                                     </div>
                                     <div className='grow'>

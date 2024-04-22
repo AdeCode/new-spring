@@ -26,7 +26,6 @@ function UserSettings() {
             >
                 <CreateUserModal
                     handleClose={handleClose}
-                    // data={modalData}
                 />
             </Modal>
         <Link onClick={() => navigate(-1)} className='flex gap-2 items-center mb-6'>

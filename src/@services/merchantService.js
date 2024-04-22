@@ -122,7 +122,6 @@ async function getMerchantService({queryKey}){
 }
 
 async function getWebInformation({queryKey}){
-    console.log(queryKey)
     const [key,{type,merchantId}] = queryKey
     const {data} = await httpService.secureInstance.get(`/merchants/web/services?merchant_id=${merchantId}&type=${type}`)
     return data
@@ -151,7 +150,6 @@ async function getVat({queryKey}){
 }
 
 export const deleteVat = async (uid) => {
-    console.log('from service ',uid)
     const {data} = await httpService.secureInstance.delete(`/merchants/invoices/vat?uid=${uid}`)
     return data
 }
@@ -201,10 +199,6 @@ export const getUsers = async () => {
     return data
 }
 
-// async function getRole(){
-//     const {data} = await httpService.secureInstance.get(`/merchants/auth/accounts/roles?id=1`)
-//     return data
-// }
 
 export const getRoles = async () => {
     const {data} = await httpService.secureInstance.get(`/merchants/auth/accounts/roles`)

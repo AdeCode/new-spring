@@ -15,7 +15,6 @@ function InvoiceDetails() {
     const {invoiceCode} = useParams()
 
     const {data:invoice, isLoading, error, isError} = useQuery(['invoice',{invoiceCode}], invoiceService.getInvoicesByCode)
-    // invoice && console.log(invoice)
 
     const gotoPreview = () => {
         navigate('/invoice/template', {
@@ -43,10 +42,6 @@ function InvoiceDetails() {
                     </div>
                     <div className='flex justify-between mb-3 px-4 py-2 shadow-md hover:shadow-lg'>
                         <div className='flex flex-col'>
-                            {/* <div className='flex gap-3'>
-                                <h2 className='min-w-[250px] text-base text-gray'>Invoice Shareable Link</h2>
-                                <span className=''>https://merchant.sultan.invoice.com</span>
-                            </div> */}
                             <div className='flex gap-3'>
                                 <h2 className='min-w-[250px] text-gray text-base'>Invoice ID</h2>
                                 <span className='font-medium text-base'>{invoice?.invoice?.invoice_code}</span>
@@ -130,11 +125,6 @@ const Invoice = styled.div`
         box-shadow: 10px 50px 50px 50px rgba(0, 0, 0, 0.07);
         border-radius: 6px;
     }
-
-    /* .react-datetime-picker{
-        height:40px;
-        padding: 8px;
-    } */
 
     .react-datetime-picker__wrapper{
         height:40px;

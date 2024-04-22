@@ -69,7 +69,6 @@ const Sidebar = styled.section`
     color: #324054;
     justify-content: space-between;
     align-items: center;
-    /* padding: 20px; */
     list-style: none;
     height: 50px;
     text-decoration: none;

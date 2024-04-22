@@ -23,8 +23,5 @@ body {
   .menu{
     @apply text-2xl mb-6 font-medium
   }
-/* 
-  .desktop{
-    @apply  bg-orange-300 block
-  } */
+
 }

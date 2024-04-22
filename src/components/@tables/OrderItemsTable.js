@@ -10,7 +10,6 @@ import IosShareIcon from '@mui/icons-material/IosShare';
 import helperFunctions from '../../@helpers/helperFunctions';
 
 
-//nested data is ok, see accessorKeys in ColumnDef below
 const data = [
     {
         items: 'Air conditioner',
@@ -45,12 +44,10 @@ const data = [
 
 
 const OrderItemsTable = ({data,currency}) => {
-    //console.log(data)
-    //should be memoized or stable
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'item_name', //normal accessorKey
+                accessorKey: 'item_name', 
                 header: 'Items',
                 size:50,
             },
@@ -118,8 +115,6 @@ const OrderItemsTable = ({data,currency}) => {
                             <IosShareIcon sx={{ fontSize: 14 }}/> Export
                         </span>
                     </Box>
-            {/* <div className='title bg-white w-full text-[#334D6E] text-base pl-[18px] pt-5'>Invoice Items</div>
-            <div className='' onClick={handleExportData}>Export</div> */}
             <MaterialReactTable
                 state={{ isLoading: false }}
                 columns={columns}
@@ -154,9 +149,7 @@ const OrderItemsTable = ({data,currency}) => {
                 }}
                 muiTableBodyProps={{
                     sx: {
-                        //stripe the rows, make odd rows a darker color
                         '& tr:nth-of-type(odd)': {
-                            //backgroundColor: '#f5f5f5',
                             borderBottom: '2px solid green',
                             borderColor: 'green',
                         },
@@ -176,7 +169,6 @@ const OrderItemsTable = ({data,currency}) => {
                 }}
 
                 muiTableHeadCellProps={{
-                    //simple styling with the `sx` prop, works just like a style prop in this example
                     sx: {
                         fontWeight: 'normal',
                         fontSize: '12px',
@@ -187,24 +179,14 @@ const OrderItemsTable = ({data,currency}) => {
 
                 muiTableBodyRowProps={({ row }) => ({
                     onClick: (event) => {
-                        //console.info(event, row.id);
-                        console.log('clicked ' + row.original.address)
                     },
                     sx: {
-                        cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+                        cursor: 'pointer', 
                         border: 'none',
                         color: '#273240',
                         paddingLeft: '10px'
                     },
                 })}
-            // renderDetailPanel={({ row }) => (
-            //     <div>
-            //       <span>First Name: {row.original.name.firstName}</span>
-            //       <span>Last Name: {row.original.name.lastName}</span>
-            //       <span>Address: {row.original.address}</span>
-            //     </div>
-            //   )}
-
             />
         </Section>
 
@@ -219,7 +201,6 @@ const Section = styled.section`
         padding-left: 20px !important;
     }
     .MuiTableRow-root:hover{
-        //background-color: green;
     }
     
     .MuiTableCell-root .MuiTableCell-head{

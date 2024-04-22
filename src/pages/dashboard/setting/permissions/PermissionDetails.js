@@ -7,7 +7,6 @@ function PermissionDetails() {
     const {permissionId} = useParams()
 
     const {data:permission, isLoading, error, isError} = useQuery(['permission',{permissionId}], getPermission)
-    permission && console.log(permission)
 
   return (
     <div>PermissionDetails for {permissionId}</div>

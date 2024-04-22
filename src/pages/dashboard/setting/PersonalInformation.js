@@ -54,7 +54,6 @@ function PersonalInformation() {
     };
 
     const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-    // profile && console.log('from profile ', profile)
 
     return (
         <div>
@@ -114,26 +113,6 @@ function PersonalInformation() {
                                 }}
                                 label="KYC" {...a11yProps(3)}
                             />
-                            {/* <Tab 
-                            sx={{
-                                '&.Mui-selected': {
-                                    color: "green",
-                                    fontSize:'bold',
-                                    borderBottom:'2px solid green',
-                                },
-                            }}
-                            label="RESET CARD PIN" {...a11yProps(4)} 
-                        />
-                        <Tab 
-                            sx={{
-                                '&.Mui-selected': {
-                                    color: "green",
-                                    fontSize:'bold',
-                                    borderBottom:'2px solid green',
-                                },
-                            }}
-                            label="RESET TRANSACTION PIN" {...a11yProps(5)} 
-                        /> */}
                         </Tabs>
                     </Box>
                     {
@@ -159,12 +138,6 @@ function PersonalInformation() {
                                         data={profile?.data}
                                     />
                                 </TabPanel>
-                                {/* <TabPanel value={value} index={4}>
-                                    <Uploader/>
-                                </TabPanel>
-                                <TabPanel value={value} index={5}>
-                                    <AccountBusiness/>
-                                </TabPanel> */}
                             </>
                     }
 

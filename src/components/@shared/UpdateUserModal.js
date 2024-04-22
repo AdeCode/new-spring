@@ -21,7 +21,6 @@ function UpdateUserModal({ handleClose, userId }) {
         })
         return rolesArr
     }
-    console.log(getIds(user?.user_accounts?.roles))
 
     const updateUserMutation = useMutation(updateUser, {
         onSuccess: res => {
@@ -32,7 +31,6 @@ function UpdateUserModal({ handleClose, userId }) {
             handleClose()
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -40,7 +38,6 @@ function UpdateUserModal({ handleClose, userId }) {
     })
 
     const onSubmit = (values) => {
-        //console.log(values)
         updateUserMutation.mutate(values)
     }
 

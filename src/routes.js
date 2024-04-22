@@ -40,7 +40,6 @@ import CreateRole from './pages/dashboard/setting/roles/CreateRole';
 import UserPermissions from './pages/dashboard/setting/permissions/UserPermissions';
 import CreatePermission from './pages/dashboard/setting/permissions/CreatePermission';
 import PermissionDetails from './pages/dashboard/setting/permissions/PermissionDetails';
-// import NewHome from './pages/NewHome'
 
 function Routers (){
     return (
@@ -49,10 +48,8 @@ function Routers (){
                 <Routes>
                     <Route path='/' element={<MerchantLogin/>}></Route>
                     <Route path='/select-user-type' element={<UserType/>}></Route>
-                    {/* <Route path='/' element={<Login/>}></Route> */}
                     <Route element={<Layout/>}>
                         <Route path='/home' element={<HomePage/>}></Route>
-                        {/* <Route path='/new-home' element={<NewHome/>}></Route> */}
                         <Route path='/bus' element={<Business/>}></Route>
                         <Route path='/about' element={<About/>}></Route>
                         <Route path='/terms-and-condition' element={<TermsAndConditions/>}></Route>

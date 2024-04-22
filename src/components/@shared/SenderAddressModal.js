@@ -12,7 +12,6 @@ import axios from 'axios';
 function SenderAddressModal ({handleClose}) {
     const {data:countries,isLoading:countriesLoading} = useCountriesQuery();
     const queryClient = useQueryClient()
-    // const createAddress = useCreateReceiverAddress()
     const [selectedCountry, setSelectedCountry] = useState(null)
 
     const { data: state, isLoading: statesLoading, error: statesError } = useQuery(['states', { selectedCountry }],
@@ -24,19 +23,17 @@ function SenderAddressModal ({handleClose}) {
                     });
                 return res.data.data
             } catch (error) {
-                console.log(error)
+                toast.error('Could not load data',{
+                    theme:'colored'
+                })
             }
         },
         { enabled: !!selectedCountry }
     )
-    // state && console.log(state.states)
-
 
     const handleCountryChange = (e, handleChange) => {
-        //console.log(e.currentTarget.value)
         setSelectedCountry(e.currentTarget.value)
         handleChange(e)
-        // console.log(selectedCountry)
     }
    
     const createReceiverAddressMutation = useMutation(merchantService.createSenderAddress, {
@@ -48,7 +45,6 @@ function SenderAddressModal ({handleClose}) {
             handleClose()
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -56,9 +52,7 @@ function SenderAddressModal ({handleClose}) {
     })
 
     const onSubmit = (values) => {
-        // console.log(values)
         createReceiverAddressMutation.mutate(values)
-        // createAddress.mutate(values)
     }
 
     return (
@@ -74,7 +68,6 @@ function SenderAddressModal ({handleClose}) {
                     house_no: '',
                     address: '',
                     zip_code: '',
-                    // vat_id: data?.vat_id
                 }}
                 validationSchema={
                     Yup.object({
@@ -117,12 +110,6 @@ function SenderAddressModal ({handleClose}) {
                                         </SelectField>
                                     </div>
                                     <div className='grow'>
-                                        {/* <InputField
-                                            name='state'
-                                            type='text'
-                                            label='State'
-                                            placeholder='e.g. Ohio'
-                                        /> */}
                                         <SelectField
                                             name='state'
                                             label='State'
@@ -134,7 +121,6 @@ function SenderAddressModal ({handleClose}) {
                                                     <>
                                                         {
                                                             state?.states.map((state,index) => {
-                                                                // console.log(state.name.includes(values.State))
                                                                 return (
                                                                     <option 
                                                                         value={state.name} 

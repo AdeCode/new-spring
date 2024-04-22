@@ -22,9 +22,6 @@ function HomePage() {
                     <div className='lg:w-[700px] lg:h-[500px]'>
                         <img src={desk} alt='spring' />
                     </div>
-                    {/* <div className='w-[700px] h-[500px]'>
-                    <img src={dskM} alt='spring'/>
-                </div> */}
                 </div>
                 <WaitListForm/>
             </div>

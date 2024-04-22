@@ -53,7 +53,6 @@ function WebInfo() {
     };
 
     const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-    // profile && console.log('from profile ', profile)
 
     return (
         <div>

@@ -21,12 +21,6 @@ import helperFunctions from '../../@helpers/helperFunctions';
 const InvoiceTable = ({ data, currency }) => {
 
     const queryClient = useQueryClient()
-
-    console.log(data)
-
-    //should be memoized or stable
-    // console.log(currency)
-    // console.log('from table ',data)
     const [toggle, setToggle] = useState(false)
     const navigate = useNavigate()
 
@@ -39,15 +33,12 @@ const InvoiceTable = ({ data, currency }) => {
 
     const toggleInvoiceMutation = useMutation(invoiceService.toggleInvoiceStatus, {
         onSuccess: res => {
-            console.log(res)
-            //dispatch({ type: 'LOGIN', payload: res.data })
             toast.success(res.message, {
                 theme: "colored",
             })
             queryClient.invalidateQueries('invoices')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -55,13 +46,6 @@ const InvoiceTable = ({ data, currency }) => {
     })
 
     const onToggle = (values) => {
-        //console.log(values)
-        // values = {
-        //     ...values,
-        //     payload: {
-        //         "status": "PAID"
-        //     }
-        // }
         toggleInvoiceMutation.mutate(values)
     }
 
@@ -69,7 +53,7 @@ const InvoiceTable = ({ data, currency }) => {
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'status', //normal accessorKey
+                accessorKey: 'status', 
                 header: 'Status',
                 Cell: ({ renderedCellValue, row }) => {
                     return <div className={`${row.original.status === 'PAID' ? 'text-green-700' : 'text-yellow-600'} `}>
@@ -96,7 +80,6 @@ const InvoiceTable = ({ data, currency }) => {
                 header: 'Amount',
                 Cell: ({ cell,row }) => {
                     return <div className="text-sm font-semibold flex gap-1">
-                        {/* {currency === 'USD' ? <span>&#65284;</span> : <span>&#8358;</span>} */}
                         {helperFunctions.formatCurrency(row.original.currency,cell.getValue())}
                     </div>
                 },
@@ -127,7 +110,6 @@ const InvoiceTable = ({ data, currency }) => {
                                 color: 'green',
                                 '&.Mui-checked': {
                                     color: "green",
-                                    //backgroundClip:"green",
                                 },
                                 '&.MuiSwitch-thumb-checked': {
                                     color: "#404042",
@@ -146,11 +128,9 @@ const InvoiceTable = ({ data, currency }) => {
                                                 payload: {status: payloadStatus}
                                             }
                                         ); 
-                                        //console.log(row.original.invoice_code) 
                                     }
                                     }
                                     name="toggle"
-                                    // disabled={row.original.status==='PAID'}
                                     color="primary"
                                     sx={{
                                         color: '#404042',
@@ -165,7 +145,6 @@ const InvoiceTable = ({ data, currency }) => {
                                     }}
                                 />
                             }
-                        // label="Approve"
                         />
                     </div>
                 },
@@ -208,7 +187,6 @@ const InvoiceTable = ({ data, currency }) => {
                 data={data?.invoices || []}
                 enableColumnActions={true}
                 enableRowNumbers
-                // enableRowActions
                 rowNumberMode="original"
                 muiTablePaperProps={{
                     elevation: 0,
@@ -236,9 +214,7 @@ const InvoiceTable = ({ data, currency }) => {
                 }}
                 muiTableBodyProps={{
                     sx: {
-                        //stripe the rows, make odd rows a darker color
                         '& tr:nth-of-type(odd)': {
-                            //backgroundColor: '#f5f5f5',
                             borderBottom: '2px solid green',
                             borderColor: 'green',
                         },
@@ -258,7 +234,6 @@ const InvoiceTable = ({ data, currency }) => {
                 }}
 
                 muiTableHeadCellProps={{
-                    //simple styling with the `sx` prop, works just like a style prop in this example
                     sx: {
                         fontWeight: 'normal',
                         fontSize: '12px',
@@ -266,47 +241,6 @@ const InvoiceTable = ({ data, currency }) => {
                         opacity: '0.5',
                     },
                 }}
-
-
-            // renderRowActionMenuItems={({ closeMenu, row }) => [
-
-            //     row.original.status === 'pending' ?
-            //         <MenuItem
-            //             key={1}
-            //             onClick={() => {
-            //                 console.log(row.original.id)
-            //                 //approvePaymentMutation.mutate({order_ref:row.original.order_ref})
-            //                 closeMenu();
-            //             }}
-            //             sx={{ m: 0,color:'green' }}
-            //         >
-            //             <ListItemIcon>
-            //             <span className="material-symbols-outlined text-green-700">task_alt</span>
-            //             </ListItemIcon>
-            //             Approve
-            //         </MenuItem>
-            //     :
-            //     null
-            //     ,
-            //     <MenuItem
-            //       key={0}
-            //       onClick={() => {
-            //         // View profile logic...
-            //         console.log(row.original.id)
-            //         //navigate(`/dashboard/payment/${row.original.reference}`)
-            //         navigate('/invoice/details')
-            //         closeMenu();
-            //       }}
-            //       sx={{ m: 0 }}
-            //     >
-            //       <ListItemIcon>
-            //         <span className="material-symbols-outlined">info</span>
-            //       </ListItemIcon>
-            //       View Details
-            //     </MenuItem>,
-
-            //   ]}
-
             />
         </Section>
 
@@ -321,7 +255,6 @@ const Section = styled.section`
         padding-left: 20px !important;
     }
     .MuiTableRow-root:hover{
-        //background-color: green;
     }
     
     .MuiTableCell-root .MuiTableCell-head{

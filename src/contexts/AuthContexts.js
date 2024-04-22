@@ -14,7 +14,6 @@ function AuthContextProvider({children}) {
       localDataState.isAuthenticated = isAuth
       localDataState.user=JSON.parse(localData)
       return localDataState.user ? localDataState : {}
-      // return localData ? JSON.parse(localData) : {}
     })
   return (
     <AuthContext.Provider value={{state, dispatch}}>

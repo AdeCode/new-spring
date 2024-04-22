@@ -29,8 +29,6 @@ function HomePage() {
                     <div className='flex gap-4'>
                         <Link to='/' className='text-white text-center cursor-pointer text-lg py-3 md:w-[182px] w-[130px] font-semibold rounded-md btn'>Login</Link>
                         <Link to='/business-signup' className='text-lg py-3 text-center cursor-pointer md:w-[182px] w-[130px] font-semibold rounded-md bg-white text-green-800'>Sign Up</Link>
-                        {/* <button className='text-white text-lg py-3 md:w-[182px] w-[130px] font-semibold rounded-md bg-green-700'>Login</button> */}
-                        {/* <button className='text-lg py-3 md:w-[182px] w-[130px] font-semibold rounded-md bg-white text-green-800'>Sign Up</button> */}
                     </div>
                 </div>
             </div>
@@ -43,7 +41,6 @@ function HomePage() {
                     className='text-white text-center cursor-pointer btn text-2xl font-semibold py-4 lg:w-[300px] rounded-md px-4'
                 >BOOK A DEMO
                 </a>
-                {/* <button className='text-white bg-green-700 text-2xl font-semibold py-4 lg:w-[300px] rounded-md px-4'>BOOK A DEMO</button> */}
             </div>
             <div className='bg-[#EFFCF3] py-[80px] px-5 flex flex-col gap-[70px] md:flex-row justify-center md:gap-20'>
                 <div className='flex flex-col md:w-[360px]'>

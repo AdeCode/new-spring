@@ -3,7 +3,6 @@ import React from 'react'
 import styled from 'styled-components'
 
 function VendorCard({ name, category, image, address, imageAlt, phone, handleClick }) {
-    //console.log(services)
 
     return (
         <Card onClick={handleClick} className='card cursor-pointer px-5 py-3 bg-white max-w-[350px] min-w-[350px] rounded-xl flex flex-col justify-between mb-3 max-h-[220px]'>
@@ -16,7 +15,6 @@ function VendorCard({ name, category, image, address, imageAlt, phone, handleCli
             </div>
             <hr className='text-gray my-1' />
             <div className='flex flex-col gap-2 bg-white h-auto'>
-                {/* <p className='text-gray text-sm'>{description}</p> */}
                 <span className='flex gap-2'>
                     <span class="material-symbols-outlined text-green-800">call</span>
                     <h3 className='text-sm'>{phone}</h3>
@@ -27,17 +25,6 @@ function VendorCard({ name, category, image, address, imageAlt, phone, handleCli
                 </span>
             </div>
         </Card>
-        // <Card className='card w-[350px] max-w-[350px] min-w-[350px] mb-3 max-h-[500px]'>
-        //     <div className='max-h-[250px] min-h-[250px]'>
-        //         <img className='w-[350px] h-[250px] object-cover' src={image} alt={imageAlt}/>
-        //     </div>
-        //     <div className='px-5 py-3 flex flex-col gap-4 bg-white'>
-        //         <h3 className='font-semibold'>{name}</h3>
-        //         <p className='text-gray text-sm'>{description}</p>
-        //         <h3 className='text-base'>{address}</h3>
-        //     </div>
-        // </Card>
-
     )
 }
 

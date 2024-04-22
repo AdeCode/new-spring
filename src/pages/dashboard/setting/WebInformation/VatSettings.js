@@ -25,22 +25,16 @@ function VatSettings() {
         setChecked(e.target.checked)
     }
 
-    //const { data: vats } = useQuery(['vats',{customerCountry:''}], merchantService.getVat)
-    // console.log(vats?.data)
-
     const { data: Allvats, isLoading } = useQuery('vats', merchantService.getAllVat)
-    // Allvats && console.log(Allvats?.data)
 
     const manageVATMutation = useMutation(merchantService.addVat, {
         onSuccess: res => {
-            console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
             queryClient.invalidateQueries('vats')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -53,14 +47,12 @@ function VatSettings() {
 
     const deleteVatMutation = useMutation(deleteVat, {
         onSuccess: res => {
-            console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
             queryClient.invalidateQueries('vats')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -77,7 +69,9 @@ function VatSettings() {
                 const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
                 return res.data.data
             } catch (error) {
-                console.log(error)
+                toast.error(error.response.data.error || 'Could not load data', {
+                    theme: "colored",
+                })
             }
         }
     )
@@ -86,7 +80,6 @@ function VatSettings() {
     const updateVat = (value, country, id) => {
         setOpen(true)
         setModalData({value: value, country: country, vat_id: id})
-        //updateVATMutation.mutate(itemId)
     }
 
     const [open, setOpen] = useState(false);
@@ -125,9 +118,6 @@ function VatSettings() {
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(false)
                     onSubmit(values)
-                    // resetForm({
-                    //     service: '',
-                    // })
                 }}
             >
                 {({ isSubmitting, isValid, handleChange, handleBlur, values, errors, setFieldValue }) => (

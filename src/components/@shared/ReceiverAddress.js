@@ -12,8 +12,6 @@ import axios from 'axios';
 function ReceiverAddress ({handleClose,customerId}) {
     const {data:countries,isLoading:countriesLoading} = useCountriesQuery();
     const queryClient = useQueryClient()
-    console.log(customerId)
-    // const createAddress = useCreateReceiverAddress()
     const [selectedCountry, setSelectedCountry] = useState(null)
 
     const { data: state, isLoading: statesLoading, error: statesError } = useQuery(['states', { selectedCountry }],
@@ -25,19 +23,18 @@ function ReceiverAddress ({handleClose,customerId}) {
                     });
                 return res.data.data
             } catch (error) {
-                console.log(error)
+                toast.error(error?.response?.data?.error || 'Could not load data', {
+                    theme: "colored",
+                })
             }
         },
         { enabled: !!selectedCountry }
     )
-    state && console.log(state.states)
 
 
     const handleCountryChange = (e, handleChange) => {
-        //console.log(e.currentTarget.value)
         setSelectedCountry(e.currentTarget.value)
         handleChange(e)
-        console.log(selectedCountry)
     }
    
     const createReceiverAddressMutation = useMutation(merchantService.createReceiverAddress, {
@@ -49,7 +46,6 @@ function ReceiverAddress ({handleClose,customerId}) {
             handleClose()
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -57,9 +53,7 @@ function ReceiverAddress ({handleClose,customerId}) {
     })
 
     const onSubmit = (values) => {
-        console.log(values)
         if(!customerId){
-            //save to local storage
             const address = {
                 country: values.country,
                 state: values.state,
@@ -92,7 +86,6 @@ function ReceiverAddress ({handleClose,customerId}) {
                     house_no: '',
                     address: '',
                     zip_code: '',
-                    // vat_id: data?.vat_id
                 }}
                 validationSchema={
                     Yup.object({
@@ -135,12 +128,6 @@ function ReceiverAddress ({handleClose,customerId}) {
                                         </SelectField>
                                     </div>
                                     <div className='grow'>
-                                        {/* <InputField
-                                            name='state'
-                                            type='text'
-                                            label='State'
-                                            placeholder='e.g. Ohio'
-                                        /> */}
                                         <SelectField
                                             name='state'
                                             label='State'
@@ -152,7 +139,6 @@ function ReceiverAddress ({handleClose,customerId}) {
                                                     <>
                                                         {
                                                             state?.states.map((state,index) => {
-                                                                // console.log(state.name.includes(values.State))
                                                                 return (
                                                                     <option 
                                                                         value={state.name} 

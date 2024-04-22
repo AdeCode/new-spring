@@ -14,21 +14,15 @@ import ServicesInput from '../@shared/ServicesInput'
 
 
 function BankInfo({ data }) {
-    //console.log(data?.bank_account_detail)
     const queryClient = useQueryClient()
     const [selectedCode, setSelectedCode] = useState('')
 
     const [businessLogo, setBusinessLogo] = useState('')
 
     const { data: banks, isLoading: bankLoading, error } = useQuery(['banks'], merchantService.getBankList)
-    // banks && console.log('from banks ', banks)
-    // error && toast.error(error.message, {
-    //     theme: "colored",
-    // })
-
+    
     const lookUpBankDetailsMutation = useMutation(merchantService.saveAccountDetails, {
         onSuccess: res => {
-            //console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
@@ -36,7 +30,6 @@ function BankInfo({ data }) {
             queryClient.invalidateQueries('merchant_profile')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -67,6 +60,7 @@ function BankInfo({ data }) {
 
             let isCurrent = true;
             if ((account_number.length > 9) && bank_name) {
+
                 //make API call
                 nameLoading = true
                 merchantService.confirmBankDetails({
@@ -75,14 +69,12 @@ function BankInfo({ data }) {
                 })
                     .then(res => {
                         if (res.data) {
-                            // setFieldValue('account_name', res.data.accountName);
                             nameLoading = false
                         } else {
                         }
                     },
                         (err) => {
-                            console.log(err)
-
+                            
                         }
                     )
             }
@@ -99,7 +91,6 @@ function BankInfo({ data }) {
                     {
                         bankLoading ? <option value=''>Loading...</option> :
                             <>
-                                {/* <option value=''>Select your bank</option> */}
                                 {
                                     banks?.data?.banks.map(({ bankCode, bankName }) => {
                                         return <option value={bankName} key={bankCode}>{bankName}</option>
@@ -109,7 +100,6 @@ function BankInfo({ data }) {
                             </>
                     }
                 </select>
-                {/* <input {...props} {...field} className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg' /> */}
                 {!!meta.touched && !!meta.error && <div className='text-red-500'>{meta.error}</div>}
             </Div>
         );
@@ -122,7 +112,6 @@ function BankInfo({ data }) {
             fileReader.onload = () => {
                 setBusinessLogo(fileReader.result)
                 resolve(fileReader.result);
-                // console.log('outside ', businessLogo)
             };
             fileReader.onerror = (error) => {
                 reject(error);
@@ -181,14 +170,12 @@ function BankInfo({ data }) {
 
     const saveAccountDetailsMutation = useMutation(merchantService.saveAccountDetails, {
         onSuccess: res => {
-            //console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
             queryClient.invalidateQueries('merchant_profile')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -197,14 +184,12 @@ function BankInfo({ data }) {
 
     const updateAccountDetailsMutation = useMutation(merchantService.updateAccountDetails, {
         onSuccess: res => {
-            //console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
             queryClient.invalidateQueries('merchant_profile')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -212,7 +197,6 @@ function BankInfo({ data }) {
     })
 
     const onSubmit = (values) => {
-        //console.log(values)
         if (!!data?.bank_account_detail) {
             //patch
             updateAccountDetailsMutation.mutate(values)
@@ -249,7 +233,6 @@ function BankInfo({ data }) {
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(false)
                     onSubmit(values)
-                    //console.log(values)
                 }}
             >
                 {({ isSubmitting, isValid, handleChange, values, errors, setFieldValue }) => (
@@ -262,10 +245,6 @@ function BankInfo({ data }) {
                                 </div>
                                 <div className='grow flex gap-4'>
                                     <div className='grow'>
-                                        {/* <BankNameField
-                                            name='bank_name'
-                                            text='text'
-                                        /> */}
                                         <InputField
                                             name='bank_name'
                                             type='text'
@@ -295,8 +274,6 @@ function BankInfo({ data }) {
                                             label='Enter your Account Name'
                                             placeholder='e.g. Moshood Abiola'
                                         />
-                                        {/* <h2 className='font-medium mr-1'>Account Name: </h2>
-                                        <span className='font-normal'>{nameLoading ? 'Loading...' : values?.account_name}</span> */}
                                     </div>
                                 </div>
                             </div>
@@ -370,41 +347,6 @@ function BankInfo({ data }) {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className='flex w-full gap-3 py-3'>
-                                <div className='grow'>
-                                    <TextField
-                                        name='official_address'
-                                        type='text'
-                                        label='Regions shipped to'
-                                        placeholder='Enter the regions you ships to'
-                                        component="textarea"
-                                        rows='4'
-                                        defaultValue={values.official_address}
-                                    />
-                                </div>
-                                <div className='grow'>
-                                    <TextField
-                                        name='official_address'
-                                        type='text'
-                                        label='Contraband Items'
-                                        placeholder='Enter the regions you ships to'
-                                        component="textarea"
-                                        rows='4'
-                                        defaultValue={values.official_address}
-                                    />
-                                </div>
-                                <div className='grow'>
-                                    <TextField
-                                        name='official_address'
-                                        type='text'
-                                        label='Regions shipped to'
-                                        placeholder='Our Services'
-                                        component="textarea"
-                                        rows='4'
-                                        defaultValue={values.official_address}
-                                    />
-                                </div>
-                            </div> */}
                             <div className='flex justify-end'>
                                 <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                     {

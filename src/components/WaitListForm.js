@@ -16,7 +16,6 @@ function WaitListForm() {
 
     async function submitForm(e) {
         e.preventDefault()
-        console.log('submitting')
         if (validate(formData.email) === false) {
             return toast.error("The email field can not be empty.", {
                 theme: "colored",
@@ -34,7 +33,6 @@ function WaitListForm() {
         }
         await fetch('https://geolocation-db.com/json/', { method: 'GET' }).then((res) => {
             res.json().then((json) => {
-                console.log(json)
                 const bodyParams = {
                     "email": formData.email,
                     "businessName": formData.businessName,
@@ -47,7 +45,6 @@ function WaitListForm() {
                     "longitude": json.longitude,
                     "form": 1
                 };
-                console.log(bodyParams)
 
                 submitWaitlist(bodyParams)
             })
@@ -65,7 +62,6 @@ function WaitListForm() {
         })
         const json = await response.json()
         if (response.ok) {
-            console.log(json)
             toast.success(json.data.message, {
                 theme: "colored",
             })

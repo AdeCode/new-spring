@@ -154,7 +154,7 @@ function InvoiceTemplate() {
                             <div className='w-[500px] flex gap-3'>
                                 <h3 className='text-neutral-700'>Notes:</h3>
                                 <textarea className='p-2 bg-inherit border opacity-70' defaultValue={data?.note || ''} id="note" name="note" rows="3" cols="70" readOnly>
-                                    {/* {data?.note} */}
+                                    
                                 </textarea>
                             </div>
                             <div className='border flex flex-col w-[300px]'>
@@ -184,7 +184,6 @@ function InvoiceTemplate() {
                                 <Button type="submit" disabled={!agree} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] disabled:opacity-60 disabled:cursor-not-allowed w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>Pay Now</Button>
 
                             </div>
-                            {/* <button className=''>Pay Now</button> */}
                         </div>
                         <div className='flex justify-between mt-4'>
                             <div className='flex gap-2'>
@@ -202,7 +201,6 @@ function InvoiceTemplate() {
                     </div>
                 </div>
             </div>
-            {/* <InvoiceFooter /> */}
         </Div>
 
     )

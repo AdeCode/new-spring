@@ -1,8 +1,8 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Formik, Form, useField, useFormikContext, FieldArray, Field, ErrorMessage } from 'formik'
+import React, { useState } from 'react'
+import { Formik, Form, useField, useFormikContext, ErrorMessage } from 'formik'
 import * as Yup from 'yup'
 import InputField from '../@shared/InputField'
-import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import TextField from '../@shared/TextField'
 import SelectField from '../@shared/SelectField'
 import avatar from '../../images/business/avatar.png'
@@ -10,11 +10,8 @@ import merchantService from '../../@services/merchantService'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import helperFunctions from '../../@helpers/helperFunctions'
-import { AuthContext } from '../../contexts/AuthContexts'
 
 function BusinessProfile({data}) {
-    // console.log('data details: ',data)
     const queryClient = useQueryClient()
 
     let initialState={}
@@ -26,13 +23,9 @@ function BusinessProfile({data}) {
             email_address: data?.profile?.email_address,
             city: data?.profile?.city,
             country: data?.profile?.country,
-            // State: 'Lagos State',
             State: data.profile.State ? data.profile.State : '',
             official_address: data?.profile?.official_address,
             description: data?.profile?.description,
-            // tin_number: data?.profile?.tin_number,
-            // cac_document: data?.profile?.cac_document,
-            // utility_bill: data?.profile?.utility_bill,
             business_owner_username: data?.profile?.business_owner_username,
             business_category: data?.profile?.business_category,
             zip_code: data?.profile?.zip_code,
@@ -49,9 +42,6 @@ function BusinessProfile({data}) {
             State: '',
             official_address: '',
             description: '',
-            // tin_number: '',
-            // cac_document: '',
-            // utility_bill: '',
             business_owner_username: '',
             business_category: '',
             zip_code: '',
@@ -64,25 +54,23 @@ function BusinessProfile({data}) {
 
     const [selectedCountry, setSelectedCountry] = useState(data?.profile?.country ? data?.profile?.country : '')
 
-    //console.log(states)
 
     const navigate = useNavigate()
 
     const { data: businessCategory, isLoading: businessCategoryLoading, error: businessCategoryError } = useQuery(['business_categories'], merchantService.getBusinessCategories)
-    // businessCategory && console.log(businessCategory.data)
 
     const { data: countries, isLoading: countriesLoading, error } = useQuery(['countries'],
         async () => {
             try {
                 const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
-                //console.log(res.data.data);
                 return res.data.data
             } catch (error) {
-                console.log(error)
+                toast.error(error?.message,{
+                    theme: "colored"
+                })
             }
         }
     )
-    //countries && console.log(countries)
 
     const { data: state, isLoading: statesLoading, error: statesError } = useQuery(['states', { selectedCountry }],
         async () => {
@@ -93,7 +81,9 @@ function BusinessProfile({data}) {
                     });
                 return res.data.data
             } catch (error) {
-                console.log(error)
+                toast.error('Could not load data', {
+                    theme: "colored",
+                })
             }
         },
         { enabled: !!selectedCountry }
@@ -108,7 +98,6 @@ function BusinessProfile({data}) {
             queryClient.invalidateQueries('merchant_profile')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -116,14 +105,11 @@ function BusinessProfile({data}) {
     })
 
     const onSubmit = (values) => {
-        //console.log(values)
         updateMerchantProfileMutation.mutate(values)
     }
 
     const handleCountryChange = (e, handleChange) => {
-        //console.log(e.currentTarget.value)
         setSelectedCountry(e.currentTarget.value)
-        //console.log(selectedCountry)
         handleChange(e)
     }
 
@@ -134,7 +120,6 @@ function BusinessProfile({data}) {
             fileReader.onload = () => {
                 setBusinessLogo(fileReader.result)
                 resolve(fileReader.result);
-                // console.log('outside ', businessLogo)
             };
             fileReader.onerror = (error) => {
                 reject(error);
@@ -144,13 +129,16 @@ function BusinessProfile({data}) {
 
     const handleBusinessLogo = async (e, setFieldValue) => {
         const file = e.target.files[0];
+
         //check the size of image 
         if (file?.size / 1024 / 1024 < 2) {
             const base64 = await convertToBase64(file);
             setFieldValue('business_logo', base64);
         }
         else {
-            toast.error('Image size must be of 2MB or less');
+            toast.error('Image size must be of 2MB or less',{
+                theme: "colored",
+            });
         };
     };
 
@@ -165,7 +153,9 @@ function BusinessProfile({data}) {
                 setFieldValue(props.name, base64);
             }
             else {
-                toast.error('Image size must be of 2MB or less');
+                toast.error('Image size must be of 2MB or less',{
+                    theme: "colored",
+                });
             };
             handleChange(e)
         };
@@ -188,13 +178,14 @@ function BusinessProfile({data}) {
 
         const onFileChange = async (e, setFieldValue) => {
             let file = e.target.files[0];
-            //console.log('selected file ', file)
             if (file?.size / 1024 / 1024 < 2) {
                 const base64 = await convertToBase64(file);
                 setFieldValue(props.name, base64);
             }
             else {
-                toast.error('Image size must be 2MB or less');
+                toast.error('Image size must be 2MB or less',{
+                    theme: "colored",
+                });
             };
         }
 
@@ -218,14 +209,15 @@ function BusinessProfile({data}) {
 
         const onFileChange = async (e, setFieldValue) => {
             let file = e.target.files[0];
-            //console.log('selected file ', file)
 
             if (file?.size / 1024 / 1024 < 2) {
                 const base64 = await convertToBase64(file);
                 setFieldValue('business_logo', base64);
             }
             else {
-                toast.error('Image size must be of 2MB or less');
+                toast.error('Image size must be of 2MB or less',{
+                    theme: "colored",
+                });
             };
         }
 
@@ -251,25 +243,7 @@ function BusinessProfile({data}) {
                 isValid
                 initialValues={
                     initialState
-                //     {
-                //     business_name: '',
-                //     website_url: '',
-                //     email_address: '',
-                //     company_rc_number: '',
-                //     country: '',
-                //     State: '',
-                //     official_address: '',
-                //     description: '',
-                //     tin_number: '10299303',
-                //     cac_document: '',
-                //     utility_bill: '',
-                //     business_owner_username: '',
-                //     business_category: '',
-                //     zip_code: '',
-                //     office_address_number: '',
-                //     business_logo: '',
-                // }
-            }
+                }
                 validationSchema={
                     Yup.object({
                         email_address: Yup.string().email("Invalid email address")
@@ -382,7 +356,6 @@ function BusinessProfile({data}) {
                                                     <>
                                                         {
                                                             state?.states.map((state,index) => {
-                                                                // console.log(state.name.includes(values.State))
                                                                 return (
                                                                     <option 
                                                                         value={state.name} 
@@ -419,42 +392,6 @@ function BusinessProfile({data}) {
                                     <h2 className='font-normal text-[#40525E] text-sm opacity-70'>Upload your Business Logo</h2>
                                     <ErrorMessage name='business_logo' component="div" className='text-red-500' />
                                 </div>
-
-
-
-
-
-                                {/* <FileUploader
-                                    type="file"
-                                    name="business_logo"
-                                    label='Upload utility bill'
-                                /> */}
-
-
-
-
-                                {/* <div className=''>
-                                    <input
-                                        name='business_logo'
-                                        type='file'
-                                        className='form-control'
-                                        onChange={(e) => handleIcon(e, setFieldValue)}
-                                    />
-                                </div> */}
-
-                                {/* <BusinessLogoField
-                                    type="file" 
-                                    name="business_logo"
-                                    // onChange={onFileChange}
-                                /> */}
-                                {/* <div className='w-[380px]'>
-                                    <InputField
-                                        name='business_logo'
-                                        type='text'
-                                        label='Business Logo'
-                                        placeholder='e.g. 096453627181'
-                                    />
-                                </div> */}
                                 <div className='flex gap-4 grow'>
                                     <div className='grow'>
                                         <TextField
@@ -519,30 +456,6 @@ function BusinessProfile({data}) {
                                         placeholder='e.g. 002'
                                     />
                                 </div>
-                                {/* <div className='flex w-[300px] justify-center items-center'>
-                                    <div className='w-full flex flex-col items-center'>
-                                        <div className='form-control flex flex-col mb-4 relative border-none lg:border'>
-                                            <div className='flex justify-center'>
-                                                <div className='mb-3 max-w-[100px] max-h-[100px]'>
-                                                    {
-                                                        values.cac_document ?
-                                                        <img src={data?.profile?.cac_document} alt={data?.profile?.business_name} />
-                                                        :
-                                                        <span class="material-symbols-outlined">image</span>
-                                                    }
-                                                </div>
-                                            </div>
-                                            <label htmlFor={'cac_document'} className='font-medium text-base text-label mb-[6px]'>Upload your CAC document</label>
-                                            <input
-                                                name='cac_document'
-                                                type='file'
-                                                className='form-control'
-                                                onChange={(e) => handleCacDoc(e, setFieldValue,)}
-                                            />
-                                            <ErrorMessage name='cac_document' component="div" className='text-red-500' />
-                                        </div>
-                                    </div>
-                                </div> */}
                             </div>
                             <div className='flex w-full gap-4 py-3'>
                                 <div className='w-[350px]'>
@@ -555,30 +468,6 @@ function BusinessProfile({data}) {
                                 </div>
                             </div>
                             <div className='flex w-full gap-4 py-3'>
-                                {/* <div className='grow'>
-                                    <div className='w-full flex flex-col items-center'>
-                                        <div className='form-control flex flex-col items-center mb-4 relative border-none lg:border'>
-                                            <div className='flex justify-center'>
-                                                <div className='mb-3 max-w-[100px] max-h-[100px]'>
-                                                    {
-                                                        values.utility_bill ?
-                                                        <img src={data?.profile?.utility_bill} alt={data?.profile?.business_name} />
-                                                        :
-                                                        <span class="material-symbols-outlined">image</span>
-                                                    }
-                                                </div>
-                                            </div>
-                                            <label htmlFor={'cac_document'} className='font-medium text-base text-label mb-[6px]'>Upload your Utility bill</label>
-                                            <input
-                                                name='utility_bill'
-                                                type='file'
-                                                className='form-control'
-                                                onChange={(e) => handleIcon(e, setFieldValue,)}
-                                            />
-                                            <ErrorMessage name='utility_bill' component="div" className='text-red-500' />
-                                        </div>
-                                    </div>
-                                </div> */}
 
                             </div>
 

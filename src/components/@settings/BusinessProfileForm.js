@@ -176,16 +176,6 @@ function BusinessProfileForm() {
                                 </div>
 
                             </div>
-
-                            {/* <div className='flex justify-end'>
-                                <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
-                                    {
-                                        updateProfileMutation.isLoading ?
-                                            "Loading..."
-                                            : "Save Changes"
-                                    }
-                                </button>
-                            </div> */}
                         </div>
   )
 }

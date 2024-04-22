@@ -16,16 +16,12 @@ function RecentCustomers() {
 
   const handleCurrencyChange = (e) => {
     setCurrency(e.target.value)
-    console.log(currency)
   }
 
   const { data: customers, isLoading, error } = useQuery(['invoices',{selectedCountry}], customerService.fetchMerchantCustomers)
-  // const { data: customers, isLoading, error } = useQuery('invoices', customerService.fetchMerchantCustomers)
-  //customers && console.log(customers)
 
   const handleCountryChange = (e) => {
     setSelectedCountry(e.currentTarget.value)
-    console.log(selectedCountry)
   }
 
   const { data: countries, isLoading: countriesLoading } = useQuery(['countries'],
@@ -34,7 +30,6 @@ function RecentCustomers() {
                 const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
                 return res.data.data
             } catch (error) {
-                console.log(error)
             }
         }
     )
@@ -64,15 +59,7 @@ function RecentCustomers() {
             }
           </select>
         </div>
-        {/* <Typography variant="h5" sx={{ fontSize: '16px' }}>
-          Select Invoice Currency
-          <select name='currency' onChange={handleCurrencyChange} className='py-3 px-3 ml-1 rounded-md text-blue_text border border-gray'>
-            <option value='USD' defaultValue>USD</option>
-            <option value='Naira' >Naira</option>
-          </select>
-        </Typography> */}
       </Box>
-      {/* <h2 className='text-[#6A707E] text-2xl'>Welcome eSky Cargo Ltd,</h2> */}
       {
         isLoading ? 'Data loading...'
           :

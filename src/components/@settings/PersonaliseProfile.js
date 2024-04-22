@@ -1,17 +1,13 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Formik, Form } from 'formik'
 import * as Yup from 'yup'
 import InputField from '../@shared/InputField'
-import { TextField } from '@mui/material'
-import { QueryClient, useMutation, useQuery, useQueryClient } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 import merchantService from '../../@services/merchantService'
-import { AuthContext } from '../../contexts/AuthContexts'
 import { toast } from 'react-toastify'
 
 
 function PersonaliseProfile({ data }) {
-    //const { data: profile, isLoading, error } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-    //profile && console.log('from profile ', profile)
     const queryClient = useQueryClient()
     const merchantData = data?.merchant_account_profile
 
@@ -37,7 +33,6 @@ function PersonaliseProfile({ data }) {
 
     const saveAccountProfileMutation = useMutation(merchantService.saveAccountProfile, {
         onSuccess: res => {
-            //console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
@@ -45,7 +40,6 @@ function PersonaliseProfile({ data }) {
 
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -53,7 +47,6 @@ function PersonaliseProfile({ data }) {
     })
 
     const onSubmit = (values) => {
-        //console.log('submitting ',values)
         saveAccountProfileMutation.mutate(values)
     }
 
@@ -80,7 +73,6 @@ function PersonaliseProfile({ data }) {
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(false)
                     onSubmit(values)
-                    //console.log('all values ', values)
                     resetForm({
                         email: '',
                         customer_name: '',
@@ -152,32 +144,6 @@ function PersonaliseProfile({ data }) {
                                 </div>
                             </div>
 
-                            {/* <h2 className='font-semibold text-black'>Password Update</h2>
-                            <hr className='text-[#40525E] opacity-50' />
-                            <div className='flex w-full gap-4 py-3'>
-                                <div className='flex flex-col w-[350px]'>
-                                    <h2 className='font font-medium'>Change your password</h2>
-                                    <p className='text-gray font-normal'>You can change your password here easily</p>
-                                </div>
-                                <div className='grow'>
-                                    <InputField
-                                        name='old_password'
-                                        type='password'
-                                        label='Old Password'
-                                        placeholder='********'
-                                        icon={true}
-                                    />
-                                </div>
-                                <div className='grow'>
-                                    <InputField
-                                        name='new_password'
-                                        type='password'
-                                        label='New Password'
-                                        placeholder='********'
-                                        icon={true}
-                                    />
-                                </div>
-                            </div> */}
                             <div className='flex justify-end'>
                                 <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                     {

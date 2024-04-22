@@ -11,7 +11,6 @@ function Contraband({merchantId}) {
     const queryClient = useQueryClient()
 
     const { data: contraband, isLoading } = useQuery(['contraband',{type:'contraband', merchantId}], merchantService.getWebInformation)
-    contraband && console.log(contraband)
 
     const deleteServiceMutation = useMutation(merchantService.deleteWebInformation, {
         onSuccess: res => {
@@ -21,7 +20,6 @@ function Contraband({merchantId}) {
             queryClient.invalidateQueries('contraband')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -34,14 +32,12 @@ function Contraband({merchantId}) {
 
     const addContrabandMutation = useMutation(merchantService.addMerchantDeliveryRegion, {
         onSuccess: res => {
-            console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
             queryClient.invalidateQueries('contraband')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -49,7 +45,6 @@ function Contraband({merchantId}) {
     })
 
     const onSubmit = (values) => {
-        console.log(values)
         addContrabandMutation.mutate(values)
     }
 

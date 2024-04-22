@@ -19,7 +19,6 @@ function MerchantLogin() {
 
     const loginMutation = useMutation(merchantService.login, {
         onSuccess: res => {
-            console.log(res)
             dispatch({ type: 'LOGIN', payload: res.data })
             toast.success(res.message, {
                 theme: "colored",
@@ -27,7 +26,6 @@ function MerchantLogin() {
             navigate('/dashboard')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -39,11 +37,8 @@ function MerchantLogin() {
         loginMutation.mutate(values)
     }
 
-    const handleInputChange=(e,handleChange)=>{
-        //console.log(e.currentTarget.value)
-        
+    const handleInputChange=(e,handleChange)=>{        
         handleChange(e)
-        // console.log(phoneNumberRef.current.length)
     }
 
 
