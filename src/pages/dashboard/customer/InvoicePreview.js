@@ -27,7 +27,6 @@ function InvoicePreview() {
     const navigate = useNavigate()
 
     const { data: invoice, isLoading, error, isError } = useQuery(['invoice', { invoiceCode }], invoiceService.getInvoicesByCode)
-    invoice && console.log(invoice)
 
     const handleGeneratePdf = () => {
         const doc = new jsPDF({
@@ -36,7 +35,6 @@ function InvoicePreview() {
             unit: 'px',
         });
 
-        // Adding the fonts.
         doc.setFont('Inter-Regular', 'normal');
 
         doc.html(invoiceTemplateRef.current, {
@@ -47,14 +45,9 @@ function InvoicePreview() {
     }
 
     const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
-    profile && console.log(profile)
-    // const location = useLocation()
-    // const data = location.state.invoice.invoice
-    // console.log(data)
-
+   
     const styles = {
         container: {
-            // background:'blue',
             display: 'flex',
             flexDirection: 'column',
             width: '100%'
@@ -230,7 +223,6 @@ function InvoicePreview() {
                     </div>
             }
 
-            {/* <InvoiceFooter/> */}
         </>
     )
 }

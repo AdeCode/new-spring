@@ -10,7 +10,6 @@ import SelectField from './SelectField';
 
 
 function UpdateVatModal ({data, handleClose}) {
-    console.log(data)
     const queryClient = useQueryClient()
     const { data: countries, isLoading: countriesLoading } = useQuery(['countries'],
         async () => {
@@ -18,7 +17,9 @@ function UpdateVatModal ({data, handleClose}) {
                 const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
                 return res.data.data
             } catch (error) {
-                console.log(error)
+                toast.error(error.response.data.error, {
+                    theme: "colored",
+                })
             }
         }
     )
@@ -32,7 +33,6 @@ function UpdateVatModal ({data, handleClose}) {
             handleClose()
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -40,7 +40,6 @@ function UpdateVatModal ({data, handleClose}) {
     })
 
     const onSubmit = (values) => {
-        //console.log(values)
         updateVATMutation.mutate(values)
     }
 

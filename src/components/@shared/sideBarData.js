@@ -16,30 +16,6 @@ import { MdKeyboardArrowUp } from "react-icons/md";
 
 
 export const SidebarData = [
-// {
-// 	title: "Transaction",
-// 	path: "/about-us",
-// 	iconClosed: <MdKeyboardArrowDown />,
-// 	iconOpened: <MdKeyboardArrowUp />,
-
-// 	subNav: [
-// 		{
-// 			title: "Users",
-// 			path: "",
-// 			icon: <FiUsers />,
-// 		},
-// 		{
-// 			title: "Waitlist",
-// 			path: "/dashboard/waitlist",
-// 			icon: <FiFileText />,
-// 		},
-// 		{
-// 			title: "Customers",
-// 			path: "/dashboard/customers",
-// 			icon: <FiUser />,
-// 		},
-// 	],
-// },
 {
 	title: "Invoices",
 	path: "",
@@ -61,58 +37,6 @@ export const SidebarData = [
 		},
 	],
 },
-// {
-// 	title: "SpringPay",
-// 	path: "",
-// 	iconClosed: <MdKeyboardArrowDown />,
-// 	iconOpened: <MdKeyboardArrowUp />,
-
-// 	subNav: [
-// 		{
-// 			title: "SpringPay",
-// 			path: "/springpay",
-// 			icon: <FiBriefcase />,
-// 			cName: "sub-nav",
-// 		},
-// 		{
-// 			title: "Generate New Invoice",
-// 			path: "/invoice/generate",
-// 			icon: <FiBriefcase />,
-// 			cName: "sub-nav",
-// 		},
-// 		{
-// 			title: "Add/Receive NGN",
-// 			path: "",
-// 			icon: <IoSchoolOutline />,
-// 			cName: "sub-nav",
-// 		},
-// 		{
-// 			title: "Send NGN",
-// 			path: "",
-// 			icon: <IoSchoolOutline />,
-// 			cName: "sub-nav",
-// 		},
-// 		{
-// 			title: "Add NGN to FX Wallets",
-// 			path: "",
-// 			icon: <IoSchoolOutline />,
-// 			cName: "sub-nav",
-// 		},
-// 		{
-// 			title: "Global Payout",
-// 			path: "",
-// 			icon: <IoSchoolOutline />,
-// 			cName: "sub-nav",
-// 		},
-// 		{
-// 			title: "Receive USD, GBP & EUR",
-// 			path: "",
-// 			icon: <IoSchoolOutline />,
-// 			cName: "sub-nav",
-// 		},
-// 	],
-// },
-
 {
 	title: "Customers",
 	path: "",
@@ -129,69 +53,6 @@ export const SidebarData = [
 		
 	],
 },
-// {
-// 	title: "Wallets/Cards",
-// 	path: "",
-// 	iconClosed: <MdKeyboardArrowDown />,
-// 	iconOpened: <MdKeyboardArrowUp />,
-
-// 	subNav: [
-// 		{
-// 			title: "Payins",
-// 			path: "/formik",
-// 			icon: <FiBriefcase />,
-// 			cName: "sub-nav",
-// 		},
-// 		{
-// 			title: "Payouts",
-// 			path: "/dashboard/payouts",
-// 			icon: <IoSchoolOutline />,
-// 			cName: "sub-nav",
-// 		},
-// 	],
-// },
-// {
-// 	title: "Communication",
-// 	path: "",
-// 	iconClosed: <MdKeyboardArrowDown />,
-// 	iconOpened: <MdKeyboardArrowUp />,
-
-// 	subNav: [
-// 		{
-// 			title: "Countries",
-// 			path: "",
-// 			icon: <BiWorld />,
-// 			cName: "sub-nav",
-// 		},
-// 		{
-// 			title: "Institutions",
-// 			path: "",
-// 			icon: <IoSchoolOutline />,
-// 			cName: "sub-nav",
-// 		},
-// 	],
-// },
-// {
-// 	title: "Reports",
-// 	path: "",
-// 	iconClosed: <MdKeyboardArrowDown />,
-// 	iconOpened: <MdKeyboardArrowUp />,
-
-// 	subNav: [
-// 		{
-// 			title: "Businesses",
-// 			path: "",
-// 			icon: <FiBriefcase />,
-// 			cName: "sub-nav",
-// 		},
-// 		{
-// 			title: "API requests",
-// 			path: "",
-// 			icon: <AiOutlineApi />,
-// 			cName: "sub-nav",
-// 		},
-// 	],
-// },
 {
 	title: "Settings",
 	path: "",
@@ -219,26 +80,4 @@ export const SidebarData = [
 		},
 	],
 },
-// {
-// 	title: "Support",
-// 	path: "",
-// 	iconClosed: <MdKeyboardArrowDown />,
-// 	iconOpened: <MdKeyboardArrowUp />,
-
-// 	subNav: [
-// 		{
-// 			title: "Businesses",
-// 			path: "",
-// 			icon: <FiBriefcase />,
-// 			cName: "sub-nav",
-// 		},
-// 		{
-// 			title: "API requests",
-// 			path: "",
-// 			icon: <AiOutlineApi />,
-// 			cName: "sub-nav",
-// 		},
-// 	],
-// },
-
 ];

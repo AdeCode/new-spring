@@ -39,17 +39,13 @@ function NewInvoice() {
     const [customerId, setCustomerId] = useState(null)
 
     const newUserAdd = JSON.parse(localStorage.getItem('receiver_address'))
-    // newUserAdd&&console.log(newUserAdd)
 
     const handleCurrencyChange = (e) => {
         setCurrency(e.target.value)
     }
     const { data: countries, isLoading: countriesLoading } = useCountriesQuery();
-    // const {data:addresses,isLoading:addressLoading} = useGetReceiverAddress();
     const { data: addresses, isLoading: addressLoading } = useQuery(['receiverAddress'], merchantService.getReceiverAddress)
-    // console.log(addresses.data)
     const { data: merchantAddresses, isLoading: merchantAddressLoading } = useQuery(['merchant_address'], merchantService.getMerchantAddress)
-    // merchantAddresses && console.log(merchantAddresses.data)
 
     const { data: profile, isLoading: profileLoading } = useQuery(['merchant_profile'], merchantService.getMerchantProfile)
 
@@ -57,19 +53,15 @@ function NewInvoice() {
 
     const createInvoiceMutation = useMutation(merchantService.createInvoice, {
         onSuccess: res => {
-            console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
-            //
             if (newUserAdd) {
                 localStorage.removeItem('receiver_address')
             }
             navigate('/invoice')
-            // QueryClient.invalidateQueries('invoices')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -82,7 +74,6 @@ function NewInvoice() {
             currency,
             invoice_due_date
         }
-        //console.log(values)
         createInvoiceMutation.mutate(values)
     }
 
@@ -101,9 +92,7 @@ function NewInvoice() {
                 const phoneNumber = customer_phone
                 customerService.fetchCustomerByPhoneNumber(phoneNumber)
                     .then(res => {
-                        //console.log(res)
                         if (!!isCurrent && res.data) {
-                            // console.log('user id: ', res.data.id)
                             setCustomerId(res.data.id)
                             setFieldValue(props.name, res.data.name);
                             setFieldValue('customer_email', res.data.email);
@@ -113,11 +102,9 @@ function NewInvoice() {
                         }
                     },
                         (err) => {
-                            console.log('customer doesnt exists')
                             setFieldValue(props.name, '');
                             setFieldValue('customer_email', '');
                             setCustomerExists(false)
-                            //console.log(err)
                         }
                     )
             }
@@ -230,7 +217,6 @@ function NewInvoice() {
                                     .required("email field can not be empty"),
                                 customer_name: Yup.string().required("Please enter customer name"),
                                 customer_phone: Yup.string().required("Please enter customer  phone number"),
-                                //customer_address: Yup.string().required("Please enter receiver's address"),
                                 sender_name: Yup.string().required("Please enter sender's number"),
                                 sender_phone: Yup.string().required("Please enter sender  phone number"),
                                 sender_address: Yup.string().required("Please enter sender's address"),
@@ -246,7 +232,6 @@ function NewInvoice() {
                         onSubmit={(values, { setSubmitting, resetForm }) => {
                             setSubmitting(false)
                             onSubmit(values)
-                            console.log('form fields ', values)
                             resetForm({
                                 customer_email: '',
                                 customer_name: '',
@@ -265,7 +250,6 @@ function NewInvoice() {
                                             type='text'
                                             label='Receiver Phone'
                                             placeholder='e.g. 08033889999'
-                                        // disabled
                                         />
                                     </div>
                                     <div className='grow'>
@@ -292,7 +276,6 @@ function NewInvoice() {
                                         addresses?.data?.length > 0 ?
                                             <div className='grow'>
                                                 {
-                                                    // !!customerExists && 
                                                     <>
                                                         <div>
                                                             <SelectField
@@ -300,7 +283,6 @@ function NewInvoice() {
                                                                 label="Receiver's Address*"
                                                                 value={values.customer_address}
                                                                 onBlur={handleBlur}
-                                                            // onChange={(e)=>{countryChange(e,setFieldValue )}}
                                                             >
                                                                 {
                                                                     !!customerExists ?
@@ -393,12 +375,6 @@ function NewInvoice() {
                                 </div>
                                 <div>
                                     <div className='grow'>
-                                        {/* <InputField
-                                            name='sender_address'
-                                            type='text'
-                                            label="Sender's Address"
-                                            placeholder='e.g. 2, Kumapayi Street, Ikeja, Lagos'
-                                        /> */}
                                         {
                                             merchantAddresses?.data?.length > 0 ?
                                                 <SelectField
@@ -406,7 +382,6 @@ function NewInvoice() {
                                                     label="Sender's Address*"
                                                     value={values.sender_address}
                                                     onBlur={handleBlur}
-                                                // onChange={(e)=>{countryChange(e,setFieldValue )}}
                                                 >
                                                     {
                                                         merchantAddressLoading ? <option value="">Loading...</option>
@@ -469,8 +444,6 @@ function NewInvoice() {
                                                                             name={`invoice_items.${index}.quantity`}
                                                                             type='number'
                                                                             label="Quantity*"
-                                                                            //value={`invoice_items.${index}.unit`}
-                                                                            // value={values.unit}
                                                                             onBlur={handleBlur}
                                                                             unit={`invoice_items.${index}.unit`}
                                                                         >
@@ -509,7 +482,6 @@ function NewInvoice() {
                                                                             placeholder='Total'
                                                                             className='h-10 py-2 px-[14px] text-input_text text-sm font-[450] rounded-lg'
                                                                             value={values.invoice_items[index].price}
-                                                                            // onChange={()=>{setFieldValue(`invoice_items.${index}.total`,values.invoice_items[index].price);handleChange()}}
                                                                             disabled
                                                                         />
                                                                         <ErrorMessage name={`invoice_items[${index}].total`} component="div" className='text-red-500' />
@@ -552,7 +524,6 @@ function NewInvoice() {
                                             <div className='flex justify-between'>
                                                 <h2 className=''>Invoice Total:</h2>
                                                 <span className='font-semibold gap-1 flex'>
-                                                    {/* {currency === 'USD' ? <span>&#65284;</span> : <span className='pl-1'>&#8358;</span>}  */}
                                                     {helperFunctions.formatCurrency(currency, calculateInvoiceTotal(values.invoice_items, getTaxRate(vatRate?.data[0]?.vat_value)))}
                                                 </span>
                                             </div>
@@ -567,7 +538,6 @@ function NewInvoice() {
                                         rows='4'
                                     />
 
-                                    {/* <Field component="textarea" rows="4" value={""}></Field> */}
                                 </div>
                                 <div className='flex justify-end'>
                                     <button type="submit" disabled={isSubmitting} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>

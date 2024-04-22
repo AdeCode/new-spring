@@ -21,13 +21,10 @@ function AccountBusiness() {
     const updateProfileMutation = () => {}
 
     const handleSubmit = () => {
-        // Perform form submission logic here
-        // e.g., send data to a server or perform processing
-        console.log('Form submitted');
+        
     };
 
     const onSubmit = (values) => {
-        console.log(values)
     }
 
     const renderStepContent = (step) => {
@@ -40,7 +37,6 @@ function AccountBusiness() {
                 return (
                     <BusinessProfileForm />
                 );
-            // ... render other steps
             default:
                 return null;
         }
@@ -95,7 +91,6 @@ function AccountBusiness() {
                 onSubmit={(values, { setSubmitting, resetForm }) => {
                     setSubmitting(false)
                     onSubmit(values)
-                    //console.log(values)
                     resetForm({
                         customer_email: '',
                         customer_name: '',
@@ -119,9 +114,6 @@ function AccountBusiness() {
                             </button>
                         )}
                         {step === 2 && (
-                            // <button type="button" onClick={handleSubmit}>
-                            //     Submit
-                            // </button>
                             <button type="submit" disabled={!isValid} className='btn bg-green-700 hover:bg-green-600 lg:w-[200px] w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                 Submit
                             </button>

@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
 import logodark from '../images/home/Logo-dark.png'
-// import { GoArrowUp } from "react-icons/go";
 import {Link } from "react-router-dom"
 
 function Footer() {
@@ -11,18 +10,7 @@ function Footer() {
                 <img src={logodark} alt='dark logo' />
                 <nav className='hidden lg:flex'>
                     <ul className='list-none flex gap-[53px] text-base leading-[17px] font-medium items-center'>
-                        {/* <li>
-                            <a href='./'>Product</a>
-                        </li>
-                        <li>
-                            <a href='./'>Industries</a>
-                        </li> */}
-                        {/* <li>
-                            <a href='./'>About</a>
-                        </li>
-                        <li>
-                            <a href='./'>FAQ</a>
-                        </li> */}
+
                     </ul>
                 </nav>
                 <nav className='lg:hidden'>
@@ -58,22 +46,6 @@ function Footer() {
                                 </svg>
                             </a>
                         </li>
-                        {/* <li>
-                            <a href='linkedin.com' target='_blank' rel='noreferrer'>
-                                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <g clip-path="url(#clip0_4395_48283)">
-                                        <path d="M4.38629 15.4921H0.508301V5.04272H4.38629V15.4921Z" fill="#263238" />
-                                        <path d="M15.4922 15.4921H11.693L11.6946 10.8694C11.7106 10.119 11.4077 9.50015 10.8846 9.21378C10.5254 9.01703 10.1121 9.01648 9.72424 9.20599L9.69073 15.4921H5.7146V5.04272H9.69312V5.46744C10.9292 4.96628 12.2399 5.0386 13.379 5.69009C14.6628 6.42453 15.4922 7.78226 15.4922 9.14914V15.4921Z" fill="#263238" />
-                                        <path d="M2.43933 4.39032C1.3656 4.39032 0.492188 3.51599 0.492188 2.44125C0.492188 1.36652 1.3656 0.492188 2.43933 0.492188C3.51288 0.492188 4.38629 1.36652 4.38629 2.44125C4.38629 3.51599 3.51288 4.39032 2.43933 4.39032Z" fill="#263238" />
-                                    </g>
-                                    <defs>
-                                        <clipPath id="clip0_4395_48283">
-                                            <rect width="16" height="16" fill="white" />
-                                        </clipPath>
-                                    </defs>
-                                </svg>
-                            </a>
-                        </li> */}
                     </ul>
                 </nav>
             </div>
@@ -152,8 +124,6 @@ function Footer() {
 export default Footer
 
 const Foot = styled.footer`
-    /* background: linear-gradient(128.03deg, rgba(97, 153, 219, 0.1) -0.78%, rgba(75, 202, 105, 0.1) 90.56%); */
-    //background: #4BCA69;
     background: var(--placeholder, linear-gradient(128deg, rgba(97, 153, 219, 0.10) 0%, rgba(75, 202, 105, 0.10) 100%));
 
     .form{

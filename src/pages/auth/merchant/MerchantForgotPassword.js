@@ -19,7 +19,6 @@ function MerchantForgotPassword() {
 
     const forgotPasswordMutation = useMutation(merchantService.verifyEmail, {
         onSuccess: res => {
-            // console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
@@ -31,7 +30,6 @@ function MerchantForgotPassword() {
 
         },
         onError: err => {
-            console.log(err.message)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })

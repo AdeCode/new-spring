@@ -15,7 +15,6 @@ import cus3 from '../../images/dashboard/cus3.png'
 
 
 const CustomerTable = ({data}) => {
-  //should be memoized or stable
   const [currency, setCurrency] = useState('USD')
 
   const navigate = useNavigate()
@@ -25,7 +24,7 @@ const CustomerTable = ({data}) => {
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'name', //normal accessorKey
+        accessorKey: 'name', 
         header: 'Full Name',
         Cell: ({cell, row}) => {
           return <div className="text-[#273240] font-semibold flex gap-2 items-center">
@@ -49,12 +48,12 @@ const CustomerTable = ({data}) => {
 
       },
       {
-        accessorKey: 'phone', //normal accessorKey
+        accessorKey: 'phone', 
         header: 'Phone',
         size:50,
       },
       {
-        accessorKey: 'country', //normal accessorKey
+        accessorKey: 'country', 
         header: 'Country',
         size:50,
       },
@@ -63,7 +62,6 @@ const CustomerTable = ({data}) => {
         header: 'Action',
         Cell: ({cell, row}) => {
             return <Link to={`/dashboard/customers/${row.original.id}`} className="flex items-center bg-[#55BA6A] rounded-[5px] py-[6px] px-2 text-white w-fit">
-                    {/* <span className="material-symbols-outlined">visibility</span> */}
                     View Invoices
                   </Link>
         },
@@ -91,14 +89,11 @@ const CustomerTable = ({data}) => {
 
   const handleCurrencyChange = (e) => {
     setCurrency(e.target.value)
-    console.log(currency)
 }
 
 
   return (
         <Section>
-            {/* <div className='title bg-white w-full text-[#334D6E] text-base pl-[18px] pt-5'>Recent Customers</div> */}
-            {/* <div className='' onClick={handleExportData}>Export</div> */}
             <MaterialReactTable 
                 state={{ isLoading: false }}
                 columns={columns} 
@@ -136,9 +131,7 @@ const CustomerTable = ({data}) => {
                 }}
                 muiTableBodyProps={{
                     sx: {
-                      //stripe the rows, make odd rows a darker color
                       '& tr:nth-of-type(odd)': {
-                        //backgroundColor: '#f5f5f5',
                         borderBottom:'2px solid green',
                         borderColor: 'green',
                       },
@@ -157,7 +150,6 @@ const CustomerTable = ({data}) => {
                   }}
                 
                 muiTableHeadCellProps={{
-                    //simple styling with the `sx` prop, works just like a style prop in this example
                     sx: {
                       fontWeight: 'normal',
                       fontSize: '12px',
@@ -168,11 +160,9 @@ const CustomerTable = ({data}) => {
 
                 muiTableBodyRowProps={({ row }) => ({
                     onClick: (event) => {
-                      //console.info(event, row.id);
-                      console.log('clicked '+row.original.userName)
                     },
                     sx: {
-                      cursor: 'pointer', //you might want to change the cursor too when adding an onClick
+                      cursor: 'pointer',
                       border: 'none',
                       color:'#273240',
                       paddingLeft:'10px'
@@ -192,7 +182,6 @@ const Section = styled.section`
         padding-left: 20px !important;
     }
     .MuiTableRow-root:hover{
-        //background-color: green;
     }
     
     .MuiTableCell-root .MuiTableCell-head{

@@ -14,7 +14,6 @@ function InvoiceIndex() {
     const navigate = useNavigate()
 
     const { data: invoices, isLoading, error } = useQuery(['invoices',{ status, currency }], invoiceService.getAllInvoices)
-    //invoices && console.log(invoices)
 
     const getNumberOfPaidInvoices = (data) => {
         const count = data.filter(item => item.status === "PAID")
@@ -36,8 +35,6 @@ function InvoiceIndex() {
         return sumTotal
     }
 
-    // invoices && console.log(totalPaidInvoices(invoices.invoices))
-
     const getNumberOfUnpaidInvoices = (data) => {    
         const count = data.filter(invoice => invoice.status === "UNPAID")
         return count.length
@@ -58,13 +55,6 @@ function InvoiceIndex() {
 
                 <div className='w-full border-b-2 border-green-700 px-2 flex justify-between items-center py-2'>
                     <h2 className='text-base font-semibold lg:text-xl'>Invoices</h2>
-                    {/* <div className='flex gap-4'>
-                        <select name='currency' onChange={(e) => setCurrency(e.target.value)} className='py-3 px-3 rounded-md text-blue_text border border-[#FBFCFE]'>
-                            <option value='USD' defaultValue>USD</option>
-                            <option value='Naira' >Naira</option>
-                        </select>
-                        <Link to='/invoice/generate' className='flex rounded-md items-center py-2 px-3 bg-green-700 hover:bg-green-600 text-white'><span className="material-symbols-outlined">add</span>Create Invoice</Link>
-                    </div> */}
                     <div className='flex gap-3'>
                     <div className='flex items-center gap-2'>
                         <h2 className='font-semibold text-lg'>Status:</h2>
@@ -111,15 +101,6 @@ function InvoiceIndex() {
                                         <h3 className='text-base text-gray'>Overdue Invoices</h3>
                                     </div>
                                 </div>
-                                {/* <div className='shadow-md hover:shadow-lg flex flex-col w-[250px] h-[150px] py-2 px-2'>
-                                    <span className='flex justify-end'>0%</span>
-                                    <div className='flex flex-col'>
-                                        <h2 className='font-semibold flex gap-1 text-3xl text-green-600'>
-                                            {invoices && helperFunctions.formatCurrency(currency, invoices?.analysis?.total_paid_invoices)}
-                                        </h2>
-                                        <h3 className='text-base text-gray'>Paid Invoices</h3>
-                                    </div>
-                                </div> */}
                             </div>
                             <div className='px-2 w-full shadow-md'>
 
@@ -144,11 +125,6 @@ const Invoice = styled.div`
         box-shadow: 10px 50px 50px 50px rgba(0, 0, 0, 0.07);
         border-radius: 6px;
     }
-
-    /* .react-datetime-picker{
-        height:40px;
-        padding: 8px;
-    } */
 
     .react-datetime-picker__wrapper{
         height:40px;

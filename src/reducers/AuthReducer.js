@@ -17,7 +17,6 @@ export const authReducer = (state, action) => {
             localStorage.setItem('isAuthenticated',false)
             localStorage.setItem('user',null)
             localStorage.setItem('token','')
-            //localStorage.clear()
             return {
                 ...state,
                 isAuthenticated:false,

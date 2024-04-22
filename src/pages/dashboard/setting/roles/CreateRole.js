@@ -6,7 +6,6 @@ import InputField from '../../../../components/@shared/InputField'
 import { useMutation } from 'react-query'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import authService from '../../../../@services/authService'
 import { useQuery } from 'react-query'
 import { getPermissions, createRole } from '../../../../@services/merchantService'
 import { ThreeDots } from 'react-loader-spinner'
@@ -17,19 +16,16 @@ function CreateRole() {
     const navigate = useNavigate()
 
     const { data: permissions, isLoading } = useQuery(['permission'], getPermissions)
-    permissions && console.log(permissions)
 
 
     const createRoleMutation = useMutation(createRole, {
         onSuccess: res => {
-            console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
             navigate('/settings/user-roles')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -37,7 +33,6 @@ function CreateRole() {
     })
 
     const onSubmit = (values) => {
-        console.log(values)
         createRoleMutation.mutate(values)
     }
 

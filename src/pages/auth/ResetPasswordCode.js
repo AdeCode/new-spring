@@ -15,7 +15,6 @@ function ResetPasswordCode() {
     const submitMutation = ()=>{}
 
     const onSubmit = (values) => {
-        console.log(values)
     }
 
   return (

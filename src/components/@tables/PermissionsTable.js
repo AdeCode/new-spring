@@ -31,19 +31,6 @@ function PermissionsTable({data}) {
                 </Link>
                 },
             }
-            // {
-            //     accessorKey: 'status',
-            //     header: 'Status',
-            //     enableClickToCopy: false,
-            //     Cell: ({ cell, row }) => {
-            //         return <div 
-            //         className={`${row.original.status === 'active' ? 'bg-[#34A853]' : 'bg-yellow-600'} rounded-lg text-sm text-center py-1 font-semibold`}
-            //         >
-            //             {cell.getValue()}
-            //         </div>
-            //     },
-            //     size:50,
-            // },
         ],
         [],
     );
@@ -80,9 +67,7 @@ function PermissionsTable({data}) {
                 }}
                 muiTableBodyProps={{
                     sx: {
-                        //stripe the rows, make odd rows a darker color
                         '& tr:nth-of-type(odd)': {
-                            //backgroundColor: '#f5f5f5',
                             borderBottom: '2px solid green',
                             borderColor: 'green',
                         },
@@ -102,7 +87,6 @@ function PermissionsTable({data}) {
                 }}
 
                 muiTableHeadCellProps={{
-                    //simple styling with the `sx` prop, works just like a style prop in this example
                     sx: {
                         fontWeight: 'normal',
                         fontSize: '12px',
@@ -124,7 +108,6 @@ const Section = styled.section`
         padding-left: 20px !important;
     }
     .MuiTableRow-root:hover{
-        //background-color: green;
     }
     
     .MuiTableCell-root .MuiTableCell-head{

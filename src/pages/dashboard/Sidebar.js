@@ -28,19 +28,6 @@ function Sidebar() {
     return (
         <Div className='sidebar w-fit lg:h-[100vh] sticky overflow-y-scroll p-3 bg-white text-[#324054]'>
             <img src={Logo} alt='logo' className={`${open ? 'hidden' : 'flex'} mb-4`}/>
-            {/* {
-                open ? 
-                <button className='' onClick={toggleButton}>
-                    <img src={mobileLogo} alt='mobile-logo' />
-                </button>
-                :
-                <div className={`btn p-[15px] cursor-pointer flex gap-[18.5px] w-[248px] ${open ? 'hidden' : 'flex'} mb-9`}
-                    onClick={toggleButton}
-                >
-                    <img src={menu} alt='menu'/>
-                    <h3 className='font-medium text-base'>Dashboard</h3>
-                </div>
-            } */}
             <div className={`btn p-[15px] cursor-pointer flex gap-[18.5px] w-[248px] mb-9`}
                 onClick={()=>navigate('/dashboard')}>
                 <span className="material-symbols-outlined">menu</span>

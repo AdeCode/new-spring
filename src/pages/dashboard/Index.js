@@ -31,7 +31,6 @@ function Index() {
 }
 
 const Container = styled.div`
-    /* background: rgba(246, 246, 246, 0.34); */
 
     
 `

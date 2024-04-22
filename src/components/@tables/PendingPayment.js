@@ -7,7 +7,6 @@ import {
 import helperFunctions from '../../@helpers/helperFunctions'
 
 
-//nested data is ok, see accessorKeys in ColumnDef below
 const data = [
     {
         transactionRef: 'T293093506',
@@ -37,11 +36,10 @@ const data = [
 
 
 const PendingPayment = ({data}) => {
-    //should be memoized or stable
     const columns = useMemo(
         () => [
             {
-                accessorKey: 'invoice_code', //normal accessorKey
+                accessorKey: 'invoice_code', 
                 header: 'Invoice Code',
                 Cell: ({ cell }) => {
                     return <div className="text-[#171F4C] text-sm font-semibold">{cell.getValue()}</div>
@@ -125,9 +123,7 @@ const PendingPayment = ({data}) => {
                 }}
                 muiTableBodyProps={{
                     sx: {
-                        //stripe the rows, make odd rows a darker color
                         '& tr:nth-of-type(odd)': {
-                            //backgroundColor: '#f5f5f5',
                             borderBottom: '2px solid green',
                             borderColor: 'green',
                         },
@@ -147,7 +143,6 @@ const PendingPayment = ({data}) => {
                 }}
 
                 muiTableHeadCellProps={{
-                    //simple styling with the `sx` prop, works just like a style prop in this example
                     sx: {
                         fontWeight: 'normal',
                         fontSize: '12px',
@@ -169,7 +164,6 @@ const Section = styled.section`
         padding-left: 20px !important;
     }
     .MuiTableRow-root:hover{
-        //background-color: green;
     }
     
     .MuiTableCell-root .MuiTableCell-head{

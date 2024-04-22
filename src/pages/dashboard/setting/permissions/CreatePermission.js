@@ -19,14 +19,12 @@ function CreatePermission() {
 
     const CreatePermissionMutation = useMutation(createPermission, {
         onSuccess: res => {
-            console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
             navigate('/settings/user-permissions')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -34,7 +32,6 @@ function CreatePermission() {
     })
 
     const onSubmit = (values) => {
-        console.log(values)
         CreatePermissionMutation.mutate(values)
     }
 
@@ -125,7 +122,6 @@ function CreatePermission() {
                                                 />
                                                 <div className='flex flex-col'>
                                                     <h2 className='font-semibold text-base'>{permission.group_name}</h2>
-                                                    {/* <p className='w-[300px]'>User has access to create a user</p> */}
                                                 </div>
                                             </label>
                                         ))
@@ -134,14 +130,6 @@ function CreatePermission() {
                                 <ErrorMessage name='permission_group_id' component="div" className='text-red-500'/>
                             </div>
                         }
-                        
-                        {/* <button type="submit" disabled={!isValid} className='btn w-full rounded-md py-[11px] text-white bg-green-700 text-[16px] mt-[6px]'>
-                            {
-                                CreatePermissionMutation.isLoading ?
-                                    "Loading..."
-                                    : "Continue"
-                            }
-                        </button> */}
                     </Form>
                 )}
             </Formik>

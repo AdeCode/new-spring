@@ -23,14 +23,12 @@ function NewPassword() {
 
     const resetPasswordMutation = useMutation(authService.resetPassword, {
         onSuccess: res => {
-            // console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
             navigate('/login')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -43,7 +41,6 @@ function NewPassword() {
             otp:otp,
             email:location.state.email
         }
-        // console.log(values)
         resetPasswordMutation.mutate(values)
     }
 

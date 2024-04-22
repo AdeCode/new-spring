@@ -22,14 +22,12 @@ function BusinessNewPassword() {
 
     const resetPasswordMutation = useMutation(merchantService.resetPassword, {
         onSuccess: res => {
-            // console.log(res)
             toast.success(res.message, {
                 theme: "colored",
             })
             navigate('/business-login')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -42,7 +40,6 @@ function BusinessNewPassword() {
             otp:otp,
             email:location.state.email
         }
-        // console.log(values)
         resetPasswordMutation.mutate(values)
     }
 

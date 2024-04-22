@@ -4,7 +4,6 @@ const FormComponent = () => {
   const [step, setStep] = useState(1);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  // ... other form fields
 
   const handleNext = () => {
     setStep(step + 1);
@@ -15,9 +14,7 @@ const FormComponent = () => {
   };
 
   const handleSubmit = () => {
-    // Perform form submission logic here
-    // e.g., send data to a server or perform processing
-    console.log('Form submitted',name,email);
+   
   };
 
   const RenderStepContent = (step) => {
@@ -44,7 +41,6 @@ const FormComponent = () => {
             />
           </div>
         );
-      // ... render other steps
       default:
         return null;
     }

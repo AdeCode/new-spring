@@ -4,33 +4,19 @@ import styled from 'styled-components'
 
 
 function ServicesInput() {
-
-    //const [services, setServices] = useState([])
-
     let services = []
 
     const [enteredService, setEnteredService] = useState('')
 
     const handleChange = (e) => {
         setEnteredService(e.currentTarget.value)
-        // console.log(e.target.value)
-        // if(e.key === 'Enter'){
-        //     console.log('entered enter key pressed')
-        // }
     }
 
     const handleKeyDown = event => {
-        //console.log('User pressed: ', event.key);
     
         if (event.key === ',' && enteredService !== '') {
-          // 👇️ your logic here
           services.push(enteredService);
-        //   if(!services.includes(enteredService)){
-        //     services.push(enteredService);
-        //   }
-        //   console.log('Enter key pressed , ✅');
         }
-        console.log(services)
       };
  
   return (

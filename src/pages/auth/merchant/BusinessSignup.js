@@ -14,25 +14,19 @@ import { url } from '../../../@services/httpService'
 function BusinessSignup() {
     const navigate = useNavigate()
 
-    const {dispatch} = useContext(AuthContext)
 
-    const handleInputChange=(e,handleChange)=>{
-        //console.log(e.currentTarget.value)
-       
+    const handleInputChange=(e,handleChange)=>{       
         handleChange(e)
     }
 
     const signUpMutation = useMutation(merchantService.registerBusiness, {
         onSuccess: res => {
-            console.log(res)
-            //dispatch({ type: 'LOGIN', payload: res.data })
             toast.success(res.message, {
                 theme: "colored",
             })
             navigate('/business-login')
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
@@ -47,7 +41,6 @@ function BusinessSignup() {
             first_name:splitName[0],
             last_name:splitName[1],
         }
-        //console.log(values)
         signUpMutation.mutate(values)
     }
 
@@ -69,22 +62,18 @@ function BusinessSignup() {
                         isValid
                         initialValues={{
                             full_name: '',
-                            // last_name: '',
                             business_name: '',
                             business_username: '',
                             email: '',
                             password: '',
-                            // confirmPassword: '',
                         }}
                         validationSchema={
                             Yup.object({
                                 email: Yup.string()
                                     .email("Invalid email address")
                                     .required("Email field is required"),
-                                // first_name:Yup.string().required("pleas enter first name"),
                                 full_name:Yup.string().required("Name field is required").matches(/ /gi,'Please enter your full name'),
                                 business_name:Yup.string().required("Business name field is required"),
-                                // pin:Yup.string().required("Please enter pin"),
                                 business_username:Yup.string().required("Business user name field is required"),
                                 password: Yup.string().required('Password is required')
                                 .min(8, 'Password must be 8 characters long')
@@ -92,7 +81,6 @@ function BusinessSignup() {
                                 .matches(/[a-z]/, 'Password requires a lowercase letter')
                                 .matches(/[A-Z]/, 'Password requires an uppercase letter')
                                 .matches(/[^\w]/, 'Password requires a symbol'),
-                                // confirmPassword: Yup.string().label('confirm password').required().oneOf([Yup.ref('password'), null], 'Passwords must match'),
                             })
                         }
                         onSubmit={(values, { setSubmitting }) => {
@@ -102,9 +90,6 @@ function BusinessSignup() {
                     >
                         {({ isSubmitting, values, isValid, handleChange }) => (
                             <Form className='flex flex-col w-[70%]'>
-                                {/* <span className="material-icons">&#xE87C;</span> */}
-                                {/* <span className="material-symbols-outlined">toggle_on</span>
-                                <span className="material-symbols-outlined">visibility</span> */}
                                 <InputField
                                     name='full_name'
                                     type='text'
@@ -112,12 +97,6 @@ function BusinessSignup() {
                                     placeholder='e.g. Olusegun Kolawole'
                                     onChange={(e)=>{handleInputChange(e,handleChange)}}
                                 />
-                                {/* <InputField
-                                    name='last_name'
-                                    type='text'
-                                    label='Last Name'
-                                    placeholder='Enter your last name'
-                                /> */}
                                 <InputField
                                     name='business_name'
                                     type='text'
@@ -132,13 +111,6 @@ function BusinessSignup() {
                                     onChange={(e)=>{handleInputChange(e,handleChange)}}
                                     placeholder='e.g. @giglogistics'
                                 />
-                                {/* <InputField
-                                    name='pin'
-                                    type='text'
-                                    label='Pin'
-                                    onChange={(e)=>{handleInputChange(e,handleChange)}}
-                                    placeholder='Enter your your pin'
-                                /> */}
                                 <InputField
                                     name='email'
                                     type='email'
@@ -154,13 +126,6 @@ function BusinessSignup() {
                                     placeholder='*********'
                                     icon={true}
                                 />
-                                {/* <InputField
-                                    name='confirmPassword'
-                                    type='password'
-                                    label='Confirm Password'
-                                    placeholder='*********'
-                                    icon={true}
-                                /> */}
                                 <Link to='/business-login' className='text-end text-[#1BB6EF] font-normal text-sm'>Have an account? Login</Link>
                                 <button type="submit" disabled={!isValid} className='btn w-full rounded-md py-[11px] text-white text-[16px] mt-[6px]'>
                                     {

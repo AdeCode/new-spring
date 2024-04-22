@@ -29,7 +29,6 @@ function Navbar() {
     const toggleMobileMenu = () => {
         setMobileMenu(!mobileMenu)
         setActive(!active)
-        console.log(mobileMenu)
     }
 
     const style = ({ isActive }) => ({
@@ -56,10 +55,6 @@ function Navbar() {
                                     <h3 className='flex new font-normal text-xs py-1 px-3 rounded-2xl'>New</h3>
                                     <MdOutlineKeyboardArrowDown className=''/>
                                 </span>
-                                {/* <div hidden={showProducts}>
-                                    Mobile products here...
-                                </div> */}
-
                                 <div className='sub-menu absolute z-[1] bg-white w-[300px] md:min-w-[600px] lg:min-w-[900px] top-12 h-[300px] py-4 px-4 rounded-2xl'>
                                     <div className='flex flex-col md:flex-row gap-2 md:gap-4 md:px-4'>
                                         <div className='md:w-[200px]'>
@@ -93,16 +88,6 @@ function Navbar() {
                                             <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>Get corporate account and generate instant virtual business wallet & cards.</p>
                                         </div>
                                     </div>
-                                    {/* <div className='flex gap-4 px-4'>
-                                        <div className='lg:w-[200px]'>
-                                            <h3 className='text-left #001533 font-medium mb-2'>Transfers &amp; FX</h3>
-                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For event planners looking for real-time insight as they spend.</p>
-                                        </div>
-                                        <div className='lg:w-[200px]'>
-                                            <h3 className='text-left #001533 font-medium mb-2'>Vendor &amp; Team Management</h3>
-                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For event planners looking for real-time insight as they spend.</p>
-                                        </div>
-                                    </div> */}
                                 </div>
                             </li>
                             <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold text-lg lg:m-0'>
@@ -114,52 +99,6 @@ function Navbar() {
                             <li onClick={handleShowProducts} className='flex md:hidden items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold text-lg lg:m-0'>
                                 <NavLink to='/' className='text-white py-4 md:w-[182px] w-[150px] text-center rounded-md btn'>Login</NavLink>
                             </li>
-                            {/* <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
-                                <span className='menu flex items-center gap-[3px] lg:gap-[6px] cursor-pointer font-semibold text-lg lg:m-0 pb-[24.6px] lg:p-0 leading-[20px]'>
-                                    SpringPay
-                                    <MdOutlineKeyboardArrowDown />
-                                </span>
-                                <div className='sub-menu absolute z-[1] bg-white lg:min-w-[500px] top-12 h-[300px] py-4 px-4'>
-                                    <div className='flex gap-4 px-4'>
-                                        <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Logistics</h3>
-                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For logistics firms looking to simplify budgeting and expense management processes</p>
-                                        </div>
-                                        <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Manufacturing</h3>
-                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For manufacturing firms to help streamline approval and expense management for easier production process.</p>
-                                        </div>
-                                        <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Education</h3>
-                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For educational institutes that value a sseamless payment solution</p>
-                                        </div>
-                                    </div>
-                                    <div className='flex gap-4 px-4'>
-                                        <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Finance</h3>
-                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For finance companies that required a detailed and simple approach to book keeping</p>
-                                        </div>
-                                        <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Food and Hospitality</h3>
-                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For food and hospitality firms to reduce purchase and service time to enable delivery of effective services.</p>
-                                        </div>
-                                        <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Tech</h3>
-                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For fast-paced software businesses in need of a platform that can keep up with and boost their growth</p>
-                                        </div>
-                                    </div>
-                                    <div className='flex gap-4 px-4'>
-                                        <div className='lg:w-[200px]'>
-                                            <h3 className='text-left text-blue font-medium mb-2'>Event planning</h3>
-                                            <p className='text-base w-full lg:text-xs max-w-[200px] text-left font-normal'>For event planners looking for real-time insight as they spend.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li> */}
-                           
-                            {/* <li onClick={closeMenu} className='flex items-center flex-row lg:items-center lg:gap-[6px] cursor-pointer font-medium text-[22px] pb-[22px] lg:p-0 leading-[20px]  lg:font-semibold lg:text-lg lg:m-0'>
-                                <NavLink to='/about' style={style}>About</NavLink>
-                            </li>  */}
                         </ul>
                     </div>
                     <div className='hidden md:flex'>
@@ -167,29 +106,6 @@ function Navbar() {
                             <NavLink to='/' className='text-white py-4 md:w-[182px] w-[150px] text-center rounded-md btn'>Login</NavLink>
                         </li>
                     </div>
-                    {/* <div className='lg:mt-0 mt-[6px] lg:flex hidden lg:gap-2 gap-[2px] lg:py-2'>
-                        <a href='https://play.google.com/store/apps/details?id=com.getspring.finance' target='_blank' rel='noreferrer' className='flex play-store items-center border-[2px] border-[#E2E4E8] lg:py-[6px] py-[2px] lg:px-5 px-[5px] rounded-[4px] lg:gap-4 lg:w-[199px]'>
-                            <div>
-                                <img src={play} alt='play store'/>
-                            </div>
-                            <div className='flex flex-col items-start'>
-                                <h4 className='text-[#7C8087] font-normal lg:text-xs text-[3px]'>Get it on</h4>
-                                <h3 className='font-bold lg:text-lg text-[4.8px] text-left'>Google Play</h3>
-                            </div>
-                        </a>
-                        <button className='flex app-store items-center lg:py-[6px] py-[2px] lg:px-5 px-1 rounded-[4px] lg:gap-4 gap-1 lg:w-[199px]'>
-                            <div className='hidden lg:flex'>
-                                <img src={apple} alt='app store'/>
-                            </div>
-                            <div className='lg:hidden'>
-                                <img src={appleM} alt='app store'/>
-                            </div>
-                            <div className='flex flex-col items-start'>
-                                <h4 className='text-white font-normal lg:text-xs text-[3px]'>Coming soon</h4>
-                                <h3 className='font-bold lg:text-lg text-[4.8px] text-white'>App Store</h3>
-                            </div>
-                        </button>
-                    </div> */}
                     <button className='lg:hidden flex' onClick={toggleMobileMenu}>
                         <img src={menu} alt='menu' />
                     </button>
@@ -204,7 +120,6 @@ export default Navbar
 const Nav = styled.div`
     margin:0;
     padding: 0;
-    /* padding-bottom: 50px; */
 
     .btn{
         background: var(--demo-1, linear-gradient(128deg, #6199DB 0%, #4BCA69 100%));
@@ -214,11 +129,6 @@ const Nav = styled.div`
 
     nav{
         background: #EFFCF3;
-
-        /* @media (max-width: 420px) {
-            background: white;
-        } */
-
         .new{
             background: linear-gradient(128.03deg, rgba(97, 153, 219, 0.1) -0.78%, rgba(75, 202, 105, 0.1) 90.56%);
         }
@@ -232,8 +142,6 @@ const Nav = styled.div`
         .right{
             .btn{
                 display: flex;
-                /* justify-content: center;
-                align-items: center; */
                 padding: 8px 20px;
                 background: linear-gradient(128.03deg, #6199DB -0.78%, #4BCA69 90.56%);
                 box-shadow: 0px 1px 2px rgba(16, 24, 40, 0.05);

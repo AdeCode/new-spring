@@ -1,7 +1,6 @@
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'
 
-// export const url = './'
 export const url = 'https://getspring.finance/'
 
 const secureInstance = axios.create({
@@ -21,7 +20,6 @@ secureInstance.interceptors.request.use(
         const accessToken = JSON.parse(localStorage.getItem('token'));
         if(accessToken) {
             config.headers['Authorization'] = `Bearer-Token ${accessToken}`;
-            // config.headers['bearer-token'] = `${accessToken}`;
         }
         return config;  
       },
@@ -31,23 +29,18 @@ secureInstance.interceptors.request.use(
 );
 
 secureInstance.interceptors.response.use(
-    //response
     response => {
-        // console.log(response)
         if (response.status === 401) {
             window.location = '/';
         }
         return response;
     },
     error => {
-        console.log(error.message)
-        //handle unauthorize error
+        //handle unauthorized error
         if (error.response.status === 401) {
             window.location = '/';
-            //return Promise.reject(error);
         }
         if (error.response.status === 422) {
-            console.log('Can not process request');
             return Promise.reject(error);
         }
         return Promise.reject(error);

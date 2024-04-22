@@ -21,7 +21,6 @@ export const useNameField = (props,setCustomerExists,vatRate) => {
             const phoneNumber = customer_phone
             customerService.fetchCustomerByPhoneNumber(phoneNumber)
                 .then(res => {
-                    //console.log(res)
                     if (!!isCurrent && res.data) {
                         setFieldValue(props.name, res.data.name);
                         setFieldValue('customer_email', res.data.email);
@@ -31,11 +30,9 @@ export const useNameField = (props,setCustomerExists,vatRate) => {
                     }
                 },
                     (err) => {
-                        console.log('customer doesnt exists')
                         setFieldValue(props.name, '');
                         setFieldValue('customer_email', '');
                         setCustomerExists(false)
-                        //console.log(err)
                     }
                 )
         }
@@ -63,16 +60,16 @@ export const useCountriesQuery = () => {
                 const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`);
                 return res.data.data
             } catch (error) {
-                console.log(error)
+                toast.error(error?.response?.data?.error || 'Could not load data', {
+                    theme: "colored",
+                })
             }
         }
     )
-    // const {data,isLoading,error} = countryQuery
     return {...countryQuery}
 }
 
 export const useStatesQuery = (payload) => {
-    console.log(payload)
     const stateQuery = useQuery(
         ['states'],
         async () => {
@@ -80,12 +77,13 @@ export const useStatesQuery = (payload) => {
                 const res = await axios.get(`https://countriesnow.space/api/v0.1/countries/states`,payload);
                 return res.data.data
             } catch (error) {
-                console.log(error)
+                toast.error(error.response.data.error, {
+                    theme: "colored",
+                })
             }
         },
         { enabled: !!payload.country }
     )
-    // const {data,isLoading,error} = stateQuery
     return {...stateQuery}
 }
 
@@ -111,7 +109,6 @@ export const useCreateReceiverAddress = payload => {
             return response;
         },
         onError: err => {
-            console.log(err)
             toast.error(err.response.data.error, {
                 theme: "colored",
             })
